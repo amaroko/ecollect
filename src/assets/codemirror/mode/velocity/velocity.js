@@ -13,26 +13,26 @@
 
 CodeMirror.defineMode("velocity", function() {
     function parseWords(str) {
-        var obj = {}, words = str.split(" ");
-        for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+        const obj = {}, words = str.split(" ");
+        for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
         return obj;
     }
 
-    var keywords = parseWords("#end #else #break #stop #[[ #]] " +
-                              "#{end} #{else} #{break} #{stop}");
-    var functions = parseWords("#if #elseif #foreach #set #include #parse #macro #define #evaluate " +
-                               "#{if} #{elseif} #{foreach} #{set} #{include} #{parse} #{macro} #{define} #{evaluate}");
-    var specials = parseWords("$foreach.count $foreach.hasNext $foreach.first $foreach.last $foreach.topmost $foreach.parent.count $foreach.parent.hasNext $foreach.parent.first $foreach.parent.last $foreach.parent $velocityCount $!bodyContent $bodyContent");
-    var isOperatorChar = /[+\-*&%=<>!?:\/|]/;
+    const keywords = parseWords("#end #else #break #stop #[[ #]] " +
+        "#{end} #{else} #{break} #{stop}");
+    const functions = parseWords("#if #elseif #foreach #set #include #parse #macro #define #evaluate " +
+        "#{if} #{elseif} #{foreach} #{set} #{include} #{parse} #{macro} #{define} #{evaluate}");
+    const specials = parseWords("$foreach.count $foreach.hasNext $foreach.first $foreach.last $foreach.topmost $foreach.parent.count $foreach.parent.hasNext $foreach.parent.first $foreach.parent.last $foreach.parent $velocityCount $!bodyContent $bodyContent");
+    const isOperatorChar = /[+\-*&%=<>!?:\/|]/;
 
     function chain(stream, state, f) {
         state.tokenize = f;
         return f(stream, state);
     }
     function tokenBase(stream, state) {
-        var beforeParams = state.beforeParams;
+        const beforeParams = state.beforeParams;
         state.beforeParams = false;
-        var ch = stream.next();
+        const ch = stream.next();
         // start of unparsed string?
         if ((ch == "'") && !state.inString && state.inParams) {
             state.lastTokenWasBuiltin = false;
@@ -102,7 +102,7 @@ CodeMirror.defineMode("velocity", function() {
         else {
             // get the whole word
             stream.eatWhile(/[\w\$_{}@]/);
-            var word = stream.current();
+            const word = stream.current();
             // is it one of the listed keywords?
             if (keywords && keywords.propertyIsEnumerable(word))
                 return "keyword";
@@ -128,7 +128,7 @@ CodeMirror.defineMode("velocity", function() {
 
     function tokenString(quote) {
         return function(stream, state) {
-            var escaped = false, next, end = false;
+            let escaped = false, next, end = false;
             while ((next = stream.next()) != null) {
                 if ((next == quote) && !escaped) {
                     end = true;
@@ -147,7 +147,7 @@ CodeMirror.defineMode("velocity", function() {
     }
 
     function tokenComment(stream, state) {
-        var maybeEnd = false, ch;
+        let maybeEnd = false, ch;
         while (ch = stream.next()) {
             if (ch == "#" && maybeEnd) {
                 state.tokenize = tokenBase;
@@ -159,7 +159,7 @@ CodeMirror.defineMode("velocity", function() {
     }
 
     function tokenUnparsed(stream, state) {
-        var maybeEnd = 0, ch;
+        let maybeEnd = 0, ch;
         while (ch = stream.next()) {
             if (ch == "#" && maybeEnd == 2) {
                 state.tokenize = tokenBase;

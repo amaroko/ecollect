@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../../environments/environment';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { DataService } from '../../../../services/data.service';
+import {environment} from '../../../../../environments/environment';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {DataService} from '../../../../services/data.service';
 
 @Component({
   selector: 'app-custcontacts',
@@ -21,14 +21,14 @@ export class CustContactsComponent implements OnInit {
   addcontact: any = {};
   username: string;
   edit = false;
-  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
+  mobNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$';
   emailPattern = '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$';
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService,
-    private spinner: NgxSpinnerService,
-    public dataService: DataService) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService,
+              private spinner: NgxSpinnerService,
+              public dataService: DataService) {
     //
   }
 

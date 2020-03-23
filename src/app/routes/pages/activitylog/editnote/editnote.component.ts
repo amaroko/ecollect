@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../../environments/environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {environment} from '../../../../../environments/environment';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 const URL = environment.valor;
 
@@ -25,9 +25,9 @@ export class EditnoteComponent implements OnInit {
   submitted = false;
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService,
-    private formBuilder: FormBuilder) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService,
+              private formBuilder: FormBuilder) {
     //
   }
 
@@ -85,7 +85,7 @@ export class EditnoteComponent implements OnInit {
       notedate: this.note.notedate,
     };
     this.ecolService.updatenote(body).subscribe(data => {
-      swal('Successful!', 'Note updated!', 'success').then(function() {
+      swal('Successful!', 'Note updated!', 'success').then(function () {
         window.history.back();
       });
       //
@@ -105,21 +105,23 @@ export class EditnoteComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.editnoteForm.controls; }
+  get f() {
+    return this.editnoteForm.controls;
+  }
 
   buildForm() {
     // get static data
     this.editnoteForm = this.formBuilder.group({
-      id: [{ value: this.note.id, disabled: true }],
-      accnumber: [{ value: this.note.accnumber, disabled: true }],
-      custnumber: [{ value: this.note.custnumber, disabled: true }],
-      notemade: [{ value: this.note.notemade, disabled: false }],
-      notedate: [{ value: this.note.notedate, disabled: true }],
-      owner: [{ value: this.note.owner, disabled: true }]
+      id: [{value: this.note.id, disabled: true}],
+      accnumber: [{value: this.note.accnumber, disabled: true}],
+      custnumber: [{value: this.note.custnumber, disabled: true}],
+      notemade: [{value: this.note.notemade, disabled: false}],
+      notedate: [{value: this.note.notedate, disabled: true}],
+      owner: [{value: this.note.owner, disabled: true}]
     });
   }
 
-  cancel () {
+  cancel() {
     window.history.back();
   }
 

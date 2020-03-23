@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {Router} from '@angular/router';
 
@@ -11,7 +11,9 @@ import {Router} from '@angular/router';
 export class ListComponent implements OnInit {
 
   guarantors: any;
-  constructor(private ecolService: EcolService, private router: Router) { }
+
+  constructor(private ecolService: EcolService, private router: Router) {
+  }
 
   ngOnInit() {
 
@@ -29,12 +31,12 @@ export class ListComponent implements OnInit {
     });
   }
 
-  update (id) {
+  update(id) {
     // redirect to ListComponent
     this.router.navigate(['/guarantors/editguarantor/' + id]);
   }
 
-  addnew () {
+  addnew() {
     // redirect to ListComponent
     this.router.navigate(['/guarantors/newguarantor']);
   }

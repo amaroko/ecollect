@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormControl, ValidatorFn} from '@angular/forms';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -12,6 +12,7 @@ export class RolesComponent implements OnInit {
 
   valForm: FormGroup;
   settingActive = 1;
+
   constructor(fb: FormBuilder, private ecolService: EcolService) {
     // Model Driven validation
     this.valForm = fb.group({
@@ -43,84 +44,94 @@ export class RolesComponent implements OnInit {
       // console.log('Valid!');
       // console.log(value);
       // prepare permission data
-        this.ecolService.loader();
-        const body0 = {
-          attr: value.administrator,
-          role_id: value.role_id,
-          perm_id: 'administrator'
-        };
+      this.ecolService.loader();
+      const body0 = {
+        attr: value.administrator,
+        role_id: value.role_id,
+        perm_id: 'administrator'
+      };
 
-        const body1 = {
-          attr: value.teamleader,
-          role_id: value.role_id,
-          perm_id: 'teamleader'
-        };
+      const body1 = {
+        attr: value.teamleader,
+        role_id: value.role_id,
+        perm_id: 'teamleader'
+      };
 
-        const body2 = {
-          attr: value.remedial,
-          role_id: value.role_id,
-          perm_id: 'remedial'
-        };
+      const body2 = {
+        attr: value.remedial,
+        role_id: value.role_id,
+        perm_id: 'remedial'
+      };
 
-        const body3 = {
-          attr: value.external_agents,
-          role_id: value.role_id,
-          perm_id: 'external_agents'
-        };
+      const body3 = {
+        attr: value.external_agents,
+        role_id: value.role_id,
+        perm_id: 'external_agents'
+      };
 
-        const body4 = {
-          attr: value.configurations,
-          role_id: value.role_id,
-          perm_id: 'configurations'
-        };
+      const body4 = {
+        attr: value.configurations,
+        role_id: value.role_id,
+        perm_id: 'configurations'
+      };
 
-        const body5 = {
-          attr: value.dashboard,
-          role_id: value.role_id,
-          perm_id: 'dashboard'
-        };
+      const body5 = {
+        attr: value.dashboard,
+        role_id: value.role_id,
+        perm_id: 'dashboard'
+      };
 
-        const body6 = {
-          attr: value.collection,
-          role_id: value.role_id,
-          perm_id: 'collection'
-        };
+      const body6 = {
+        attr: value.collection,
+        role_id: value.role_id,
+        perm_id: 'collection'
+      };
 
-        const body7 = {
-          attr: value.teamleader,
-          role_id: value.role_id,
-          perm_id: 'teamleader'
-        };
+      const body7 = {
+        attr: value.teamleader,
+        role_id: value.role_id,
+        perm_id: 'teamleader'
+      };
 
-        const body8 = {
-          attr: value.mcoopcash,
-          role_id: value.role_id,
-          perm_id: 'mcoopcash'
-        };
+      const body8 = {
+        attr: value.mcoopcash,
+        role_id: value.role_id,
+        perm_id: 'mcoopcash'
+      };
 
-        const body9 = {
-          attr: value.creditcards,
-          role_id: value.role_id,
-          perm_id: 'creditcards'
-        };
+      const body9 = {
+        attr: value.creditcards,
+        role_id: value.role_id,
+        perm_id: 'creditcards'
+      };
 
-        const body10 = {
-          attr: value.activity,
-          role_id: value.role_id,
-          perm_id: 'activity'
-        };
+      const body10 = {
+        attr: value.activity,
+        role_id: value.role_id,
+        perm_id: 'activity'
+      };
 
-        this.ecolService.setpermissions(body1).subscribe(data => { });
-        this.ecolService.setpermissions(body2).subscribe(data => { });
-        this.ecolService.setpermissions(body3).subscribe(data => { });
-        this.ecolService.setpermissions(body4).subscribe(data => { });
-        this.ecolService.setpermissions(body5).subscribe(data => { });
-        this.ecolService.setpermissions(body6).subscribe(data => { });
-        this.ecolService.setpermissions(body7).subscribe(data => { });
-        this.ecolService.setpermissions(body8).subscribe(data => { });
-        this.ecolService.setpermissions(body9).subscribe(data => { });
+      this.ecolService.setpermissions(body1).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body2).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body3).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body4).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body5).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body6).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body7).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body8).subscribe(data => {
+      });
+      this.ecolService.setpermissions(body9).subscribe(data => {
+      });
 
-      this.ecolService.setpermissions(body10).subscribe(data => { });
+      this.ecolService.setpermissions(body10).subscribe(data => {
+      });
       this.ecolService.setpermissions(body0).subscribe(data => {
         swal('Successful!', 'Permissions set!', 'success');
       }, error => {

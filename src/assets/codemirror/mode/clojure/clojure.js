@@ -17,27 +17,27 @@
 "use strict";
 
 CodeMirror.defineMode("clojure", function (options) {
-    var BUILTIN = "builtin", COMMENT = "comment", STRING = "string", CHARACTER = "string-2",
+    const BUILTIN = "builtin", COMMENT = "comment", STRING = "string", CHARACTER = "string-2",
         ATOM = "atom", NUMBER = "number", BRACKET = "bracket", KEYWORD = "keyword", VAR = "variable";
-    var INDENT_WORD_SKIP = options.indentUnit || 2;
-    var NORMAL_INDENT_UNIT = options.indentUnit || 2;
+    const INDENT_WORD_SKIP = options.indentUnit || 2;
+    const NORMAL_INDENT_UNIT = options.indentUnit || 2;
 
     function makeKeywords(str) {
-        var obj = {}, words = str.split(" ");
-        for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+        const obj = {}, words = str.split(" ");
+        for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
         return obj;
     }
 
-    var atoms = makeKeywords("true false nil");
+    const atoms = makeKeywords("true false nil");
 
-    var keywords = makeKeywords(
-      "defn defn- def def- defonce defmulti defmethod defmacro defstruct deftype defprotocol defrecord defproject deftest " +
-      "slice defalias defhinted defmacro- defn-memo defnk defnk defonce- defunbound defunbound- defvar defvar- let letfn " +
-      "do case cond condp for loop recur when when-not when-let when-first if if-let if-not . .. -> ->> doto and or dosync " +
-      "doseq dotimes dorun doall load import unimport ns in-ns refer try catch finally throw with-open with-local-vars " +
-      "binding gen-class gen-and-load-class gen-and-save-class handler-case handle");
+    const keywords = makeKeywords(
+        "defn defn- def def- defonce defmulti defmethod defmacro defstruct deftype defprotocol defrecord defproject deftest " +
+        "slice defalias defhinted defmacro- defn-memo defnk defnk defonce- defunbound defunbound- defvar defvar- let letfn " +
+        "do case cond condp for loop recur when when-not when-let when-first if if-let if-not . .. -> ->> doto and or dosync " +
+        "doseq dotimes dorun doall load import unimport ns in-ns refer try catch finally throw with-open with-local-vars " +
+        "binding gen-class gen-and-load-class gen-and-save-class handler-case handle");
 
-    var builtins = makeKeywords(
+    const builtins = makeKeywords(
         "* *' *1 *2 *3 *agent* *allow-unresolved-vars* *assert* *clojure-version* *command-line-args* *compile-files* " +
         "*compile-path* *compiler-options* *data-readers* *e *err* *file* *flush-on-newline* *fn-loader* *in* " +
         "*math-context* *ns* *out* *print-dup* *print-length* *print-level* *print-meta* *print-readably* *read-eval* " +
@@ -82,7 +82,7 @@ CodeMirror.defineMode("clojure", function (options) {
         "symbol? sync take take-last take-nth take-while test the-ns thread-bound? time to-array to-array-2d trampoline transduce " +
         "transient tree-seq true? type unchecked-add unchecked-add-int unchecked-byte unchecked-char unchecked-dec " +
         "unchecked-dec-int unchecked-divide-int unchecked-double unchecked-float unchecked-inc unchecked-inc-int " +
-        "unchecked-int unchecked-long unchecked-multiply unchecked-multiply-int unchecked-negate unchecked-negate-int "+
+        "unchecked-int unchecked-long unchecked-multiply unchecked-multiply-int unchecked-negate unchecked-negate-int " +
         "unchecked-remainder-int unchecked-short unchecked-subtract unchecked-subtract-int underive unquote " +
         "unquote-splicing update update-in update-proxy use val vals var-get var-set var? vary-meta vec vector vector-of " +
         "vector? volatile! volatile? vreset! vswap! when when-first when-let when-not while with-bindings with-bindings* with-in-str with-loading-context " +
@@ -90,7 +90,7 @@ CodeMirror.defineMode("clojure", function (options) {
         "*default-data-reader-fn* as-> cond-> cond->> reduced reduced? send-via set-agent-send-executor! " +
         "set-agent-send-off-executor! some-> some->>");
 
-    var indentKeys = makeKeywords(
+    const indentKeys = makeKeywords(
         // Built-ins
         "ns fn def defn defmethod bound-fn if if-not case condp when while when-not when-first do future comment doto " +
         "locking proxy with-open with-precision reify deftype defrecord defprotocol extend extend-protocol extend-type " +
@@ -108,7 +108,7 @@ CodeMirror.defineMode("clojure", function (options) {
         // contrib
         "handler-case handle dotrace deftrace");
 
-    var tests = {
+    const tests = {
         digit: /\d/,
         digit_or_colon: /[\d:]/,
         hex: /[0-9a-f]/i,
@@ -171,7 +171,7 @@ CodeMirror.defineMode("clojure", function (options) {
 
     // Eat character that starts after backslash \
     function eatCharacter(stream) {
-        var first = stream.next();
+        const first = stream.next();
         // Read special literals: backspace, newline, space, return.
         // Just read all lowercase letters.
         if (first && first.match(/[a-z]/) && stream.match(/[a-z]+/, true)) {
@@ -202,11 +202,11 @@ CodeMirror.defineMode("clojure", function (options) {
             if (state.mode != "string" && stream.eatSpace()) {
                 return null;
             }
-            var returnType = null;
+            let returnType = null;
 
             switch(state.mode){
                 case "string": // multi-line string parsing mode
-                    var next, escaped = false;
+                    let next, escaped = false;
                     while ((next = stream.next()) != null) {
                         if (next == "\"" && !escaped) {
 
@@ -218,7 +218,7 @@ CodeMirror.defineMode("clojure", function (options) {
                     returnType = STRING; // continue on in string mode
                     break;
                 default: // default parsing mode
-                    var ch = stream.next();
+                    const ch = stream.next();
 
                     if (ch == "\"") {
                         state.mode = "string";
@@ -234,7 +234,9 @@ CodeMirror.defineMode("clojure", function (options) {
                     } else if (isNumber(ch,stream)){
                         returnType = NUMBER;
                     } else if (ch == "(" || ch == "[" || ch == "{" ) {
-                        var keyWord = '', indentTemp = stream.column(), letter;
+                        let keyWord = '';
+                        const indentTemp = stream.column();
+                        let letter;
                         /**
                         Either
                         (indent-word ..

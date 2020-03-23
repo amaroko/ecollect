@@ -32,18 +32,18 @@
     }
 
     function popCommand(state) {
-      var plug = state.cmdState.pop();
-      if (plug) {
+        const plug = state.cmdState.pop();
+        if (plug) {
         plug.closeBracket();
       }
     }
 
     // returns the non-default plugin closest to the end of the list
     function getMostPowerful(state) {
-      var context = state.cmdState;
-      for (var i = context.length - 1; i >= 0; i--) {
-        var plug = context[i];
-        if (plug.name == "DEFAULT") {
+        const context = state.cmdState;
+        for (let i = context.length - 1; i >= 0; i--) {
+          const plug = context[i];
+          if (plug.name == "DEFAULT") {
           continue;
         }
         return plug;
@@ -70,9 +70,9 @@
       };
     }
 
-    var plugins = {};
+      const plugins = {};
 
-    plugins["importmodule"] = addPluginPattern("importmodule", "tag", ["string", "builtin"]);
+      plugins["importmodule"] = addPluginPattern("importmodule", "tag", ["string", "builtin"]);
     plugins["documentclass"] = addPluginPattern("documentclass", "tag", ["", "atom"]);
     plugins["usepackage"] = addPluginPattern("usepackage", "tag", ["atom"]);
     plugins["begin"] = addPluginPattern("begin", "tag", ["atom"]);
@@ -91,11 +91,11 @@
 
     // called when in a normal (no environment) context
     function normal(source, state) {
-      var plug;
-      // Do we look like '\command' ?  If so, attempt to apply the plugin 'command'
+        let plug;
+        // Do we look like '\command' ?  If so, attempt to apply the plugin 'command'
       if (source.match(/^\\[a-zA-Z@]+/)) {
-        var cmdName = source.current().slice(1);
-        plug = plugins[cmdName] || plugins["DEFAULT"];
+          const cmdName = source.current().slice(1);
+          plug = plugins[cmdName] || plugins["DEFAULT"];
         plug = new plug();
         pushCommand(state, plug);
         setState(state, beginParams);
@@ -126,8 +126,8 @@
         return "keyword";
       }
 
-      var ch = source.next();
-      if (ch == "%") {
+        const ch = source.next();
+        if (ch == "%") {
         source.skipToEnd();
         return "comment";
       } else if (ch == '}' || ch == ']') {
@@ -190,8 +190,8 @@
       if (source.match(/^(\d+\.\d*|\d*\.\d+|\d+)/)) {
         return "number";
       }
-      var ch = source.next();
-      if (ch == "{" || ch == "}" || ch == "[" || ch == "]" || ch == "(" || ch == ")") {
+        const ch = source.next();
+        if (ch == "{" || ch == "}" || ch == "[" || ch == "]" || ch == "(" || ch == ")") {
         return "bracket";
       }
 
@@ -203,8 +203,9 @@
     }
 
     function beginParams(source, state) {
-      var ch = source.peek(), lastPlug;
-      if (ch == '{' || ch == '[') {
+        const ch = source.peek();
+        let lastPlug;
+        if (ch == '{' || ch == '[') {
         lastPlug = peekCommand(state);
         lastPlug.openBracket(ch);
         source.eat(ch);

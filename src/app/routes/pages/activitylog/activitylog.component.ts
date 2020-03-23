@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../services/ecol.service';
-import { DataService } from '../../../services/data.service';
-import { environment } from '../../../../environments/environment';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../services/ecol.service';
+import {DataService} from '../../../services/data.service';
+import {environment} from '../../../../environments/environment';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -29,39 +29,39 @@ export class ActivityLogComponent implements OnInit {
     private ecolService: EcolService,
     public dataService: DataService,
     private spinner: NgxSpinnerService
-    ) {
-      // test service
-      dataService.getTestData().subscribe(data => {
-        this.ptp = data;
-      });
+  ) {
+    // test service
+    dataService.getTestData().subscribe(data => {
+      this.ptp = data;
+    });
 
-      dataService.getNotesData().subscribe(data => {
-        this.notes = data;
-      });
+    dataService.getNotesData().subscribe(data => {
+      this.notes = data;
+    });
 
-      dataService.getCollateral().subscribe(data => {
-        this.totalcollaterals = data;
-      });
+    dataService.getCollateral().subscribe(data => {
+      this.totalcollaterals = data;
+    });
 
-      dataService.getContacts().subscribe(data => {
-        this.totalcontacts = data;
-      });
+    dataService.getContacts().subscribe(data => {
+      this.totalcontacts = data;
+    });
 
-      dataService.getGuarantors().subscribe(data => {
-        this.totalguarantors = data;
-      });
+    dataService.getGuarantors().subscribe(data => {
+      this.totalguarantors = data;
+    });
 
-      dataService.getFiles().subscribe(data => {
-        this.totalfiles = data;
-      });
+    dataService.getFiles().subscribe(data => {
+      this.totalfiles = data;
+    });
 
-      dataService.getPtps().subscribe(data => {
-        this.totalPtps = data;
-      });
+    dataService.getPtps().subscribe(data => {
+      this.totalPtps = data;
+    });
 
-      dataService.getWoffstoryData().subscribe(data => {
-        this.totalwoffstory = data;
-      });
+    dataService.getWoffstoryData().subscribe(data => {
+      this.totalwoffstory = data;
+    });
   }
 
   accnumber: string;
@@ -178,8 +178,8 @@ export class ActivityLogComponent implements OnInit {
       if (data && data.length) {
         this.ecolService.single_s_plans(data[0].planid).subscribe(plandata => {
           this.plan = plandata.plantitle;
-        })
-        
+        });
+
       }
     }, error => {
       console.log(error);
@@ -304,6 +304,11 @@ export class ActivityLogComponent implements OnInit {
     this.autodial_telnumber = telnumber;
   }
 
+  // returns phone number
+  num() {
+    return this.autodial_telnumber;
+  }
+
   refreshTeles() {
     this.getTeles(this.custnumber);
     alert('contacts refreshed!!');
@@ -318,5 +323,21 @@ export class ActivityLogComponent implements OnInit {
   getColor() {
     return this.plan !== 'NONE' ? '#7ac142' : 'red';
   }
+
+  copyText(val: string) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
+
 
 }

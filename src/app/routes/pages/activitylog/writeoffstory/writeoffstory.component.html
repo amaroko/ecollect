@@ -1,25 +1,30 @@
 <div class="card">
-    <div class="card-header">
-        <strong>Writeoff Story </strong>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <form #writeoffstoryForm="ngForm" (ngSubmit)="updatefunc(writeoffstoryForm)" novalidate autocomplete="off">
-                    
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea class="form-control" rows="10" [maxlength]="4000"
-                            id="writeoffstoryMessage" name="writeoffstoryMessage" #writeoffstoryMessage="ngModel" [(ngModel)]="data.writeoffstoryMessage"
-                            [ngClass]="{ 'is-invalid': writeoffstoryMessage.errors }" required></textarea>
+  <div class="card-header">
+    <strong>Writeoff Story </strong>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <form #writeoffstoryForm="ngForm" (ngSubmit)="updatefunc(writeoffstoryForm)" novalidate autocomplete="off">
 
-                            <p><strong> Maximum allowed is 4000.
-                                You have {{4000 - data.writeoffstoryMessage?.length}} characters
-                                remaining</strong></p>
-                    </div>
-                    <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!writeoffstoryForm.valid">Submit to update</button>
-                </form>
-            </div>
-        </div>
+          <div class="form-group">
+            <label>Message</label>
+            <label for="writeoffstoryMessage"></label><textarea class="form-control" rows="10" [maxlength]="4000"
+                                                                id="writeoffstoryMessage" name="writeoffstoryMessage"
+                                                                #writeoffstoryMessage="ngModel"
+                                                                [(ngModel)]="data.writeoffstoryMessage"
+                                                                [ngClass]="{ 'is-invalid': writeoffstoryMessage.errors }"
+                                                                required></textarea>
+
+            <p><strong> Maximum allowed is 4000.
+              You have {{4000 - data.writeoffstoryMessage?.length}} characters
+              remaining</strong></p>
+          </div>
+          <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!writeoffstoryForm.valid">Submit
+            to update
+          </button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

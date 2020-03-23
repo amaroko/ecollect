@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../environments/environment';
-import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
-import { GridOptions } from 'ag-grid-community';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {environment} from '../../../../environments/environment';
+import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import {HttpClient} from '@angular/common/http';
+import {GridOptions} from '@ag-grid-community/all-modules';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
+import {NgxSpinnerService} from 'ngx-spinner';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+
 declare var $: any;
 
 
@@ -15,7 +17,7 @@ declare var $: any;
   selector: 'app-sp',
   templateUrl: './sp.component.html',
   styleUrls: ['./sp.component.scss'],
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
+  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class SpComponent implements OnInit {
 
@@ -25,6 +27,7 @@ export class SpComponent implements OnInit {
   memos: any = [];
 
   gridOptions: GridOptions;
+  modules = AllModules;
 
   // Basic example
   columnDefs = [
@@ -99,13 +102,15 @@ export class SpComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
-    
+
   }
 
   gridReady(params) {
     params.api.sizeColumnsToFit();
     this.$win.on(this.resizeEvent, () => {
-      setTimeout(() => { params.api.sizeColumnsToFit(); });
+      setTimeout(() => {
+        params.api.sizeColumnsToFit();
+      });
     });
   }
 
@@ -133,9 +138,8 @@ export class SpComponent implements OnInit {
     });
   }
 
-  
 
-   editSubmit(form) {
+  editSubmit(form) {
     const body = {
       'SPTITLE': this.model.SPTITLE,
       'CONTACTPERSON': form.value.CONTACTPERSON,

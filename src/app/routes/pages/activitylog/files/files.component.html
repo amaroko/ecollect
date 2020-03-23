@@ -1,49 +1,49 @@
 <ngb-tabset type="pills">
   <!--  tab starts-->
-  <ngb-tab >
+  <ngb-tab>
     <ng-template ngbTabTitle>Uploaded files <span class="badge badge-primary">{{files?.length}}</span></ng-template>
     <ng-template ngbTabContent>
       <div class="card">
-      <!-- START table-responsive-->
-      <div  class="table-responsive">
-        <table  class="table table-hover table-bordered table-striped">
-          <thead>
-          <tr>
-            <th>custnumber#</th>
-            <th>FileName</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Owner</th>
-            <th>Date</th>
-            <th class="text-center">Download</th>
-          </tr>
-          </thead>
-          <tbody >
-          <tr  *ngFor="let d of files">
-            <td>{{d.custnumber}}</td>
-            <td>{{d.filename}}</td>
-            <td>{{d.userdesctype}}</td>
-            <td>{{d.docdesc}}</td>
-            <td>{{d.colofficer}}</td>
-            <td>{{d.stagedate}}</td>
-            <td class="text-center">
-              <button class="btn btn-outline-success btn-sm" (click)="downloadFile(d.destpath, d.filename)">
-                <i class="fa fa-download"></i>
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <!--        end of table responsible-->
-<!--        start of no data table-->
+        <!-- START table-responsive-->
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>custnumber#</th>
+              <th>FileName</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Owner</th>
+              <th>Date</th>
+              <th class="text-center">Download</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of files">
+              <td>{{d.custnumber}}</td>
+              <td>{{d.filename}}</td>
+              <td>{{d.userdesctype}}</td>
+              <td>{{d.docdesc}}</td>
+              <td>{{d.colofficer}}</td>
+              <td>{{d.stagedate}}</td>
+              <td class="text-center">
+                <button class="btn btn-outline-success btn-sm" (click)="downloadFile(d.destpath, d.filename)">
+                  <i class="fa fa-download"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <!--        end of table responsible-->
+          <!--        start of no data table-->
 
 
-      </div>
+        </div>
       </div>
     </ng-template>
   </ngb-tab>
   <ngb-tab>
-    <ng-template ngbTabTitle><b>Upload Files</b> </ng-template>
+    <ng-template ngbTabTitle><b>Upload Files</b></ng-template>
     <ng-template ngbTabContent>
       <!-- START card-->
       <div class="card">
@@ -54,18 +54,20 @@
               <div class="col-xl-8">
                 <!--<ng-select id="userdesctype" name="userdesctype" #userdesctype="ngModel" [ngModel]="model.userdesctype">
                   <ng-option *ngFor="let f of filetype" [value]="f.filetype" >{{f.filetype}}</ng-option>
-                </ng-select>--> 
-                <select id="userdesctype" name="userdesctype" #userdesctype="ngModel" [ngModel]="model.userdesctype" (change)="changeCity($event)">
-                  <option value="" disabled>Choose type of document</option>
-                  <option *ngFor="let f of filetype" [ngValue]="f.filetype">{{f.filetype}}</option>
-               </select>
+                </ng-select>-->
+                <label for="userdesctype"></label><select id="userdesctype" name="userdesctype" #userdesctype="ngModel"
+                                                          [ngModel]="model.userdesctype" (change)="changeCity($event)">
+                <option value="" disabled>Choose type of document</option>
+                <option *ngFor="let f of filetype" [ngValue]="f.filetype">{{f.filetype}}</option>
+              </select>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-xl-4 col-form-label">File Description</label>
               <div class="col-xl-8">
-              <textarea class="form-control" name="filedesc" id="filedesc" [(ngModel)]="model.filedesc"
-                        #filedesc="ngModel" rows="2"></textarea>
+                <label for="filedesc"></label><textarea class="form-control" name="filedesc" id="filedesc"
+                                                        [(ngModel)]="model.filedesc"
+                                                        #filedesc="ngModel" rows="2"></textarea>
               </div>
             </div>
 
@@ -81,11 +83,11 @@
                     <p class="text-bold">Upload options</p>
                     <label for="file1" class="file-upload">
                       <button class="btn btn-secondary btn-block">Select Multiple</button>
-                      <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
+                      <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple/>
                     </label>
                     <label for="file2" class="file-upload">
                       <button class="btn btn-secondary btn-block">Select Single</button>
-                      <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
+                      <input id="file2" type="file" ng2FileSelect [uploader]="uploader"/>
                     </label>
                   </div>
                 </div>
@@ -109,7 +111,7 @@
                       <tbody>
                       <tr *ngFor="let item of uploader.queue">
                         <td><strong>{{ item?.file?.name }}</strong></td>
-                        <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                        <td nowrap>{{ item?.file?.size / 1024 / 1024 | number:'.2' }} MB</td>
                         <td>
                           <div class="progress" style="margin-bottom: 0;">
                             <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">
@@ -118,8 +120,8 @@
                         </td>
                         <td class="text-center">
                           <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                      <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                      <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                          <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                          <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                         </td>
                         <td nowrap>
                           <button type="button" class="btn btn-info btn-xs" (click)="item.upload()"

@@ -32,26 +32,26 @@
   "use strict";
 
   CodeMirror.defineMode("sas", function () {
-    var words = {};
-    var isDoubleOperatorSym = {
-      eq: 'operator',
-      lt: 'operator',
-      le: 'operator',
-      gt: 'operator',
-      ge: 'operator',
-      "in": 'operator',
-      ne: 'operator',
-      or: 'operator'
-    };
-    var isDoubleOperatorChar = /(<=|>=|!=|<>)/;
-    var isSingleOperatorChar = /[=\(:\),{}.*<>+\-\/^\[\]]/;
+      const words = {};
+      const isDoubleOperatorSym = {
+          eq: 'operator',
+          lt: 'operator',
+          le: 'operator',
+          gt: 'operator',
+          ge: 'operator',
+          "in": 'operator',
+          ne: 'operator',
+          or: 'operator'
+      };
+      const isDoubleOperatorChar = /(<=|>=|!=|<>)/;
+      const isSingleOperatorChar = /[=\(:\),{}.*<>+\-\/^\[\]]/;
 
-    // Takes a string of words separated by spaces and adds them as
+      // Takes a string of words separated by spaces and adds them as
     // keys with the value of the first argument 'style'
     function define(style, string, context) {
       if (context) {
-        var split = string.split(' ');
-        for (var i = 0; i < split.length; i++) {
+          const split = string.split(' ');
+          for (let i = 0; i < split.length; i++) {
           words[split[i]] = {style: style, state: context};
         }
       }
@@ -94,9 +94,9 @@
     // Main function
     function tokenize(stream, state) {
       // Finally advance the stream
-      var ch = stream.next();
+        const ch = stream.next();
 
-      // BLOCKCOMMENT
+        // BLOCKCOMMENT
       if (ch === '/' && stream.eat('*')) {
         state.continueComment = true;
         return "comment";
@@ -117,13 +117,13 @@
       }
 
       // DoubleOperator match
-      var doubleOperator = ch + stream.peek();
+        const doubleOperator = ch + stream.peek();
 
-      // Match all line comments.
-      var myString = stream.string;
-      var myRegexp = /(?:^\s*|[;]\s*)(\*.*?);/ig;
-      var match = myRegexp.exec(myString);
-      if (match !== null) {
+        // Match all line comments.
+        const myString = stream.string;
+        const myRegexp = /(?:^\s*|[;]\s*)(\*.*?);/ig;
+        const match = myRegexp.exec(myString);
+        if (match !== null) {
         if (match.index === 0 && (stream.column() !== (match.index + match[0].length - 1))) {
           stream.backUp(stream.column());
           stream.skipTo(';');
@@ -138,7 +138,7 @@
           return 'comment';
         }
       } else if ((ch === '"' || ch === "'") && !state.continueString) {
-        state.continueString = ch
+        state.continueString = ch;
         return "string"
       } else if (state.continueString) {
         if (state.continueString == ch) {
@@ -174,8 +174,8 @@
       }
 
       // Matches one whole word -- even if the word is a character
-      var word;
-      if (stream.match(/[%&;\w]+/, false) != null) {
+        let word;
+        if (stream.match(/[%&;\w]+/, false) != null) {
         word = ch + stream.match(/[%&;\w]+/, true);
         if (/&/.test(word)) return 'variable'
       } else {
@@ -190,7 +190,7 @@
         return 'variable-2';
       }
 
-      word = word.toLowerCase()
+      word = word.toLowerCase();
       // Are we in a DATA Step?
       if (state.inDataStep) {
         if (word === 'run;' || stream.match(/run\s;/)) {
@@ -211,7 +211,7 @@
           if (stream.start < stream.pos)
             stream.backUp(stream.pos - stream.start);
           //advance the length of the word and return
-          for (var i = 0; i < word.length; ++i) stream.next();
+          for (let i = 0; i < word.length; ++i) stream.next();
           return words[word].style;
         }
       }

@@ -13,19 +13,19 @@
 
 CodeMirror.defineMode("sieve", function(config) {
   function words(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+      const obj = {}, words = str.split(" ");
+      for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
     return obj;
   }
 
-  var keywords = words("if elsif else stop require");
-  var atoms = words("true false not");
-  var indentUnit = config.indentUnit;
+    const keywords = words("if elsif else stop require");
+    const atoms = words("true false not");
+    const indentUnit = config.indentUnit;
 
-  function tokenBase(stream, state) {
+    function tokenBase(stream, state) {
 
-    var ch = stream.next();
-    if (ch == "/" && stream.eat("*")) {
+      const ch = stream.next();
+      if (ch == "/" && stream.eat("*")) {
       state.tokenize = tokenCComment;
       return tokenCComment(stream, state);
     }
@@ -89,9 +89,9 @@ CodeMirror.defineMode("sieve", function(config) {
     }
 
     stream.eatWhile(/\w/);
-    var cur = stream.current();
+      const cur = stream.current();
 
-    // "text:" *(SP / HTAB) (hash-comment / CRLF)
+      // "text:" *(SP / HTAB) (hash-comment / CRLF)
     // *(multiline-literal / multiline-dotstart)
     // "." CRLF
     if ((cur == "text") && stream.eat(":"))
@@ -135,8 +135,8 @@ CodeMirror.defineMode("sieve", function(config) {
   }
 
   function tokenCComment(stream, state) {
-    var maybeEnd = false, ch;
-    while ((ch = stream.next()) != null) {
+      let maybeEnd = false, ch;
+      while ((ch = stream.next()) != null) {
       if (maybeEnd && ch == "/") {
         state.tokenize = tokenBase;
         break;
@@ -148,8 +148,8 @@ CodeMirror.defineMode("sieve", function(config) {
 
   function tokenString(quote) {
     return function(stream, state) {
-      var escaped = false, ch;
-      while ((ch = stream.next()) != null) {
+        let escaped = false, ch;
+        while ((ch = stream.next()) != null) {
         if (ch == quote && !escaped)
           break;
         escaped = !escaped && ch == "\\";
@@ -170,12 +170,12 @@ CodeMirror.defineMode("sieve", function(config) {
       if (stream.eatSpace())
         return null;
 
-      return (state.tokenize || tokenBase)(stream, state);;
+      return (state.tokenize || tokenBase)(stream, state);
     },
 
     indent: function(state, _textAfter) {
-      var length = state._indent.length;
-      if (_textAfter && (_textAfter[0] == "}"))
+        let length = state._indent.length;
+        if (_textAfter && (_textAfter[0] == "}"))
         length--;
 
       if (length <0)

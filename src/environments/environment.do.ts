@@ -14,7 +14,7 @@ export const environment = {
   xlstemplate: '/root/xls/upload_notes.xlsx',
   applink: 'https://68.183.63.158',
   emailapi: 'https://68.183.63.158/demandemail/email',
-  demandsmsapi: "https://68.183.63.158:7000",
+  demandsmsapi: 'https://68.183.63.158:7000',
   auth: 'https://68.183.63.158/adlogin',
   filesapi: 'https://68.183.63.158/filesapi', // activityupload
   accplanlink: 'http://68.183.63.158:3001',

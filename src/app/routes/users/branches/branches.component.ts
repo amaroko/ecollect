@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormControl, ValidatorFn} from '@angular/forms';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -40,7 +40,9 @@ export class BranchesComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.branchForm.controls; }
+  get f() {
+    return this.branchForm.controls;
+  }
 
   submitForm($ev, value: any) {
     this.submitted = true;

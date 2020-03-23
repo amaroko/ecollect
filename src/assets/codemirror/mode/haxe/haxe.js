@@ -12,36 +12,70 @@
 "use strict";
 
 CodeMirror.defineMode("haxe", function(config, parserConfig) {
-  var indentUnit = config.indentUnit;
+    const indentUnit = config.indentUnit;
 
-  // Tokenizer
+    // Tokenizer
 
   function kw(type) {return {type: type, style: "keyword"};}
-  var A = kw("keyword a"), B = kw("keyword b"), C = kw("keyword c");
-  var operator = kw("operator"), atom = {type: "atom", style: "atom"}, attribute = {type:"attribute", style: "attribute"};
-  var type = kw("typedef");
-  var keywords = {
-    "if": A, "while": A, "else": B, "do": B, "try": B,
-    "return": C, "break": C, "continue": C, "new": C, "throw": C,
-    "var": kw("var"), "inline":attribute, "static": attribute, "using":kw("import"),
-    "public": attribute, "private": attribute, "cast": kw("cast"), "import": kw("import"), "macro": kw("macro"),
-    "function": kw("function"), "catch": kw("catch"), "untyped": kw("untyped"), "callback": kw("cb"),
-    "for": kw("for"), "switch": kw("switch"), "case": kw("case"), "default": kw("default"),
-    "in": operator, "never": kw("property_access"), "trace":kw("trace"),
-    "class": type, "abstract":type, "enum":type, "interface":type, "typedef":type, "extends":type, "implements":type, "dynamic":type,
-    "true": atom, "false": atom, "null": atom
-  };
 
-  var isOperatorChar = /[+\-*&%=<>!?|]/;
+    const A = kw("keyword a"), B = kw("keyword b"), C = kw("keyword c");
+    const operator = kw("operator"), atom = {type: "atom", style: "atom"},
+        attribute = {type: "attribute", style: "attribute"};
+    var type = kw("typedef");
+    const keywords = {
+        "if": A,
+        "while": A,
+        "else": B,
+        "do": B,
+        "try": B,
+        "return": C,
+        "break": C,
+        "continue": C,
+        "new": C,
+        "throw": C,
+        "var": kw("var"),
+        "inline": attribute,
+        "static": attribute,
+        "using": kw("import"),
+        "public": attribute,
+        "private": attribute,
+        "cast": kw("cast"),
+        "import": kw("import"),
+        "macro": kw("macro"),
+        "function": kw("function"),
+        "catch": kw("catch"),
+        "untyped": kw("untyped"),
+        "callback": kw("cb"),
+        "for": kw("for"),
+        "switch": kw("switch"),
+        "case": kw("case"),
+        "default": kw("default"),
+        "in": operator,
+        "never": kw("property_access"),
+        "trace": kw("trace"),
+        "class": type,
+        "abstract": type,
+        "enum": type,
+        "interface": type,
+        "typedef": type,
+        "extends": type,
+        "implements": type,
+        "dynamic": type,
+        "true": atom,
+        "false": atom,
+        "null": atom
+    };
 
-  function chain(stream, state, f) {
+    const isOperatorChar = /[+\-*&%=<>!?|]/;
+
+    function chain(stream, state, f) {
     state.tokenize = f;
     return f(stream, state);
   }
 
   function toUnescaped(stream, end) {
-    var escaped = false, next;
-    while ((next = stream.next()) != null) {
+      let escaped = false, next;
+      while ((next = stream.next()) != null) {
       if (next == end && !escaped)
         return true;
       escaped = !escaped && next == "\\";
@@ -57,8 +91,8 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   }
 
   function haxeTokenBase(stream, state) {
-    var ch = stream.next();
-    if (ch == '"' || ch == "'") {
+      const ch = stream.next();
+      if (ch == '"' || ch == "'") {
       return chain(stream, state, haxeTokenString(ch));
     } else if (/[\[\]{}\(\),;\:\.]/.test(ch)) {
       return ret(ch);
@@ -116,8 +150,8 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   }
 
   function haxeTokenComment(stream, state) {
-    var maybeEnd = false, ch;
-    while (ch = stream.next()) {
+      let maybeEnd = false, ch;
+      while (ch = stream.next()) {
       if (ch == "/" && maybeEnd) {
         state.tokenize = haxeTokenBase;
         break;
@@ -129,9 +163,9 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
 
   // Parser
 
-  var atomicTypes = {"atom": true, "number": true, "variable": true, "string": true, "regexp": true};
+    const atomicTypes = {"atom": true, "number": true, "variable": true, "string": true, "regexp": true};
 
-  function HaxeLexical(indented, column, type, align, prev, info) {
+    function HaxeLexical(indented, column, type, align, prev, info) {
     this.indented = indented;
     this.column = column;
     this.type = type;
@@ -141,13 +175,13 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   }
 
   function inScope(state, varname) {
-    for (var v = state.localVars; v; v = v.next)
+    for (let v = state.localVars; v; v = v.next)
       if (v.name == varname) return true;
   }
 
   function parseHaxe(state, style, type, content, stream) {
-    var cc = state.cc;
-    // Communicate our context to the combinators.
+      const cc = state.cc;
+      // Communicate our context to the combinators.
     // (Less wasteful than consing up a hundred closures on every call.)
     cx.state = state; cx.stream = stream; cx.marked = null, cx.cc = cc;
 
@@ -155,8 +189,8 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
       state.lexical.align = true;
 
     while(true) {
-      var combinator = cc.length ? cc.pop() : statement;
-      if (combinator(type, content)) {
+        const combinator = cc.length ? cc.pop() : statement;
+        if (combinator(type, content)) {
         while(cc.length && cc[cc.length - 1].lex)
           cc.pop()();
         if (cx.marked) return cx.marked;
@@ -170,14 +204,14 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   function imported(state, typename) {
     if (/[a-z]/.test(typename.charAt(0)))
       return false;
-    var len = state.importedtypes.length;
-    for (var i = 0; i<len; i++)
+      const len = state.importedtypes.length;
+      for (let i = 0; i<len; i++)
       if(state.importedtypes[i]==typename) return true;
   }
 
   function registerimport(importname) {
-    var state = cx.state;
-    for (var t = state.importedtypes; t; t = t.next)
+      const state = cx.state;
+      for (let t = state.importedtypes; t; t = t.next)
       if(t.name == importname) return;
     state.importedtypes = { name: importname, next: state.importedtypes };
   }
@@ -185,20 +219,20 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
 
   var cx = {state: null, column: null, marked: null, cc: null};
   function pass() {
-    for (var i = arguments.length - 1; i >= 0; i--) cx.cc.push(arguments[i]);
+    for (let i = arguments.length - 1; i >= 0; i--) cx.cc.push(arguments[i]);
   }
   function cont() {
     pass.apply(null, arguments);
     return true;
   }
   function inList(name, list) {
-    for (var v = list; v; v = v.next)
+    for (let v = list; v; v = v.next)
       if (v.name == name) return true;
     return false;
   }
   function register(varname) {
-    var state = cx.state;
-    if (state.context) {
+      const state = cx.state;
+      if (state.context) {
       cx.marked = "def";
       if (inList(varname, state.localVars)) return;
       state.localVars = {name: varname, next: state.localVars};
@@ -210,8 +244,9 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
 
   // Combinators
 
-  var defaultVars = {name: "this", next: null};
-  function pushcontext() {
+    const defaultVars = {name: "this", next: null};
+
+    function pushcontext() {
     if (!cx.state.context) cx.state.localVars = defaultVars;
     cx.state.context = {prev: cx.state.context, vars: cx.state.localVars};
   }
@@ -221,16 +256,16 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   }
   popcontext.lex = true;
   function pushlex(type, info) {
-    var result = function() {
-      var state = cx.state;
-      state.lexical = new HaxeLexical(state.indented, cx.stream.column(), type, null, state.lexical, info);
-    };
-    result.lex = true;
+      const result = function () {
+          const state = cx.state;
+          state.lexical = new HaxeLexical(state.indented, cx.stream.column(), type, null, state.lexical, info);
+      };
+      result.lex = true;
     return result;
   }
   function poplex() {
-    var state = cx.state;
-    if (state.lexical.prev) {
+      const state = cx.state;
+      if (state.lexical.prev) {
       if (state.lexical.type == ")")
         state.indented = state.lexical.indented;
       state.lexical = state.lexical.prev;
@@ -389,19 +424,19 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   // Interface
   return {
     startState: function(basecolumn) {
-      var defaulttypes = ["Int", "Float", "String", "Void", "Std", "Bool", "Dynamic", "Array"];
-      var state = {
-        tokenize: haxeTokenBase,
-        reAllowed: true,
-        kwAllowed: true,
-        cc: [],
-        lexical: new HaxeLexical((basecolumn || 0) - indentUnit, 0, "block", false),
-        localVars: parserConfig.localVars,
-        importedtypes: defaulttypes,
-        context: parserConfig.localVars && {vars: parserConfig.localVars},
-        indented: 0
-      };
-      if (parserConfig.globalVars && typeof parserConfig.globalVars == "object")
+        const defaulttypes = ["Int", "Float", "String", "Void", "Std", "Bool", "Dynamic", "Array"];
+        const state = {
+            tokenize: haxeTokenBase,
+            reAllowed: true,
+            kwAllowed: true,
+            cc: [],
+            lexical: new HaxeLexical((basecolumn || 0) - indentUnit, 0, "block", false),
+            localVars: parserConfig.localVars,
+            importedtypes: defaulttypes,
+            context: parserConfig.localVars && {vars: parserConfig.localVars},
+            indented: 0
+        };
+        if (parserConfig.globalVars && typeof parserConfig.globalVars == "object")
         state.globalVars = parserConfig.globalVars;
       return state;
     },
@@ -413,8 +448,8 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
         state.indented = stream.indentation();
       }
       if (stream.eatSpace()) return null;
-      var style = state.tokenize(stream, state);
-      if (type == "comment") return style;
+        const style = state.tokenize(stream, state);
+        if (type == "comment") return style;
       state.reAllowed = !!(type == "operator" || type == "keyword c" || type.match(/^[\[{}\(,;:]$/));
       state.kwAllowed = type != '.';
       return parseHaxe(state, style, type, content, stream);
@@ -422,10 +457,11 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
 
     indent: function(state, textAfter) {
       if (state.tokenize != haxeTokenBase) return 0;
-      var firstChar = textAfter && textAfter.charAt(0), lexical = state.lexical;
-      if (lexical.type == "stat" && firstChar == "}") lexical = lexical.prev;
-      var type = lexical.type, closing = firstChar == type;
-      if (type == "vardef") return lexical.indented + 4;
+        const firstChar = textAfter && textAfter.charAt(0);
+        let lexical = state.lexical;
+        if (lexical.type == "stat" && firstChar == "}") lexical = lexical.prev;
+        const type = lexical.type, closing = firstChar == type;
+        if (type == "vardef") return lexical.indented + 4;
       else if (type == "form" && firstChar == "{") return lexical.indented;
       else if (type == "stat" || type == "form") return lexical.indented + indentUnit;
       else if (lexical.info == "switch" && !closing)
@@ -454,17 +490,17 @@ CodeMirror.defineMode("hxml", function () {
     },
     token: function (stream, state) {
       var ch = stream.peek();
-      var sol = stream.sol();
+        const sol = stream.sol();
 
-      ///* comments */
+        ///* comments */
       if (ch == "#") {
         stream.skipToEnd();
         return "comment";
       }
       if (sol && ch == "-") {
-        var style = "variable-2";
+          let style = "variable-2";
 
-        stream.eat(/-/);
+          stream.eat(/-/);
 
         if (stream.peek() == "-") {
           stream.eat(/-/);

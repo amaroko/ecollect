@@ -19,42 +19,42 @@
 })(function(CodeMirror) {
   "use strict";
 
-  var languages = {
-    mscgen: {
-      "keywords" : ["msc"],
-      "options" : ["hscale", "width", "arcgradient", "wordwraparcs"],
-      "attributes" : ["label", "idurl", "id", "url", "linecolor", "linecolour", "textcolor", "textcolour", "textbgcolor", "textbgcolour", "arclinecolor", "arclinecolour", "arctextcolor", "arctextcolour", "arctextbgcolor", "arctextbgcolour", "arcskip"],
-      "brackets" : ["\\{", "\\}"], // [ and  ] are brackets too, but these get handled in with lists
-      "arcsWords" : ["note", "abox", "rbox", "box"],
-      "arcsOthers" : ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
-      "singlecomment" : ["//", "#"],
-      "operators" : ["="]
-    },
-    xu: {
-      "keywords" : ["msc"],
-      "options" : ["hscale", "width", "arcgradient", "wordwraparcs", "watermark"],
-      "attributes" : ["label", "idurl", "id", "url", "linecolor", "linecolour", "textcolor", "textcolour", "textbgcolor", "textbgcolour", "arclinecolor", "arclinecolour", "arctextcolor", "arctextcolour", "arctextbgcolor", "arctextbgcolour", "arcskip"],
-      "brackets" : ["\\{", "\\}"],  // [ and  ] are brackets too, but these get handled in with lists
-      "arcsWords" : ["note", "abox", "rbox", "box", "alt", "else", "opt", "break", "par", "seq", "strict", "neg", "critical", "ignore", "consider", "assert", "loop", "ref", "exc"],
-      "arcsOthers" : ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
-      "singlecomment" : ["//", "#"],
-      "operators" : ["="]
-    },
-    msgenny: {
-      "keywords" : null,
-      "options" : ["hscale", "width", "arcgradient", "wordwraparcs", "watermark"],
-      "attributes" : null,
-      "brackets" : ["\\{", "\\}"],
-      "arcsWords" : ["note", "abox", "rbox", "box", "alt", "else", "opt", "break", "par", "seq", "strict", "neg", "critical", "ignore", "consider", "assert", "loop", "ref", "exc"],
-      "arcsOthers" : ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
-      "singlecomment" : ["//", "#"],
-      "operators" : ["="]
-    }
-  }
+    const languages = {
+        mscgen: {
+            "keywords": ["msc"],
+            "options": ["hscale", "width", "arcgradient", "wordwraparcs"],
+            "attributes": ["label", "idurl", "id", "url", "linecolor", "linecolour", "textcolor", "textcolour", "textbgcolor", "textbgcolour", "arclinecolor", "arclinecolour", "arctextcolor", "arctextcolour", "arctextbgcolor", "arctextbgcolour", "arcskip"],
+            "brackets": ["\\{", "\\}"], // [ and  ] are brackets too, but these get handled in with lists
+            "arcsWords": ["note", "abox", "rbox", "box"],
+            "arcsOthers": ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
+            "singlecomment": ["//", "#"],
+            "operators": ["="]
+        },
+        xu: {
+            "keywords": ["msc"],
+            "options": ["hscale", "width", "arcgradient", "wordwraparcs", "watermark"],
+            "attributes": ["label", "idurl", "id", "url", "linecolor", "linecolour", "textcolor", "textcolour", "textbgcolor", "textbgcolour", "arclinecolor", "arclinecolour", "arctextcolor", "arctextcolour", "arctextbgcolor", "arctextbgcolour", "arcskip"],
+            "brackets": ["\\{", "\\}"],  // [ and  ] are brackets too, but these get handled in with lists
+            "arcsWords": ["note", "abox", "rbox", "box", "alt", "else", "opt", "break", "par", "seq", "strict", "neg", "critical", "ignore", "consider", "assert", "loop", "ref", "exc"],
+            "arcsOthers": ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
+            "singlecomment": ["//", "#"],
+            "operators": ["="]
+        },
+        msgenny: {
+            "keywords": null,
+            "options": ["hscale", "width", "arcgradient", "wordwraparcs", "watermark"],
+            "attributes": null,
+            "brackets": ["\\{", "\\}"],
+            "arcsWords": ["note", "abox", "rbox", "box", "alt", "else", "opt", "break", "par", "seq", "strict", "neg", "critical", "ignore", "consider", "assert", "loop", "ref", "exc"],
+            "arcsOthers": ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
+            "singlecomment": ["//", "#"],
+            "operators": ["="]
+        }
+    };
 
-  CodeMirror.defineMode("mscgen", function(_, modeConfig) {
-    var language = languages[modeConfig && modeConfig.language || "mscgen"]
-    return {
+    CodeMirror.defineMode("mscgen", function(_, modeConfig) {
+      const language = languages[modeConfig && modeConfig.language || "mscgen"];
+      return {
       startState: startStateFn,
       copyState: copyStateFn,
       token: produceTokenFunction(language),

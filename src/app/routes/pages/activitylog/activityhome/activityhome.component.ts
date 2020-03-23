@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
-import { environment } from '../../../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
+import {environment} from '../../../../../environments/environment';
 
 const URL = environment.valor;
 
@@ -31,8 +31,8 @@ export class ActivityHomeComponent implements OnInit {
   accwithid: any = [];
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService) {
   }
 
   ngOnInit() {

@@ -154,7 +154,7 @@
     .card {
       display: flex;
       // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
-      flex: 1 0 0%;
+      flex: 1 0 0;
       flex-direction: column;
       margin-right: $card-deck-margin;
       margin-bottom: 0; // Override the default
@@ -184,7 +184,7 @@
     // to display properly.
     > .card {
       // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
-      flex: 1 0 0%;
+      flex: 1 0 0;
       margin-bottom: 0;
 
       + .card {
@@ -201,6 +201,7 @@
           .card-header {
             border-top-right-radius: 0;
           }
+
           .card-img-bottom,
           .card-footer {
             border-bottom-right-radius: 0;
@@ -214,6 +215,7 @@
           .card-header {
             border-top-left-radius: 0;
           }
+
           .card-img-bottom,
           .card-footer {
             border-bottom-left-radius: 0;
@@ -227,6 +229,7 @@
           .card-header {
             @include border-top-radius($card-border-radius);
           }
+
           .card-img-bottom,
           .card-footer {
             @include border-bottom-radius($card-border-radius);

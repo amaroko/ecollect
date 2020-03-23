@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
-import { environment } from '../../../../../environments/environment';
-import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
-import { license } from '../../../../../../env';
-import { HttpClient } from '@angular/common/http';
+import {saveAs} from 'file-saver';
+import {environment} from '../../../../../environments/environment';
+import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {ToasterService, ToasterConfig} from 'angular2-toaster/angular2-toaster';
+import {license} from '../../../../../../env';
+import {HttpClient} from '@angular/common/http';
 
 const URL = environment.filesapi;
 const apiUrl = environment.letters_api;
@@ -49,7 +49,7 @@ export class DemandLettersComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
-  public uploader: FileUploader = new FileUploader({ url: URL });
+  public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
 
@@ -75,18 +75,22 @@ export class DemandLettersComponent implements OnInit {
     let month = '' + (currentDate.getMonth() + 1);
     const year = currentDate.getFullYear();
 
-    if (month.length < 2) { month = '0' + month; }
-    if (day.length < 2) { day = '0' + day; }
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
 
     return year + '-' + month + '-' + day;
   }
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService,
-    private spinner: NgxSpinnerService,
-    public toasterService: ToasterService,
-    private httpClient: HttpClient
+              private route: ActivatedRoute,
+              private ecolService: EcolService,
+              private spinner: NgxSpinnerService,
+              public toasterService: ToasterService,
+              private httpClient: HttpClient
   ) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -374,7 +378,9 @@ export class DemandLettersComponent implements OnInit {
                   };
                   this.ecolService.demandstatus(status).subscribe(ddstatusdata => {
                     console.log(this.demandid + ' status updated ');
-                  }, error => { console.log(error); });
+                  }, error => {
+                    console.log(error);
+                  });
                 }
                 this.popsuccessToast('Letter ready for preview');
                 this.downloadDemand(generateletterdata.message, generateletterdata.filename);
@@ -508,8 +514,8 @@ export class DemandLettersComponent implements OnInit {
     this.popinfoToast('Letter in queue');
     // await letter generation
     const uploaddata = await this.httpClient.post<any>(apiUrl + letter.demand + '/download', letter).toPromise();
-    // console.log("Data: " + JSON.stringify(uploaddata)); 
-    // console.log("Data: ", uploaddata.result); 
+    // console.log("Data: " + JSON.stringify(uploaddata));
+    // console.log("Data: ", uploaddata.result);
     if (uploaddata.result === 'success') {
       this.popsuccessToast('Letter generated ...');
       // save to history
@@ -576,12 +582,12 @@ export class DemandLettersComponent implements OnInit {
       // send demandbysms
       if (this.model.sendbysms) {
         const smsbody = {
-          "accountSid": license.accountSid,
-          "authToken": license.authToken,
-          "to": this.model.celnumber,
-          "from": license.from,
-          "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
-        }
+          'accountSid': license.accountSid,
+          'authToken': license.authToken,
+          'to': this.model.celnumber,
+          'from': license.from,
+          'body': 'Dear Customer,\nPlease download your ' + this.model.demand + ' from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department '
+        };
         this.ecolService.sendDemandsms(smsbody).subscribe(response => {
           console.log(response);
           if (response.result === 'OK') {
@@ -601,7 +607,7 @@ export class DemandLettersComponent implements OnInit {
 
     /*this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {
-        
+
         this.popsuccessToast('Letter generated ...');
         // save to history
         this.demandhisdetails = {
@@ -673,6 +679,8 @@ export class DemandLettersComponent implements OnInit {
             "authToken": license.authToken,
             "to": this.model.celnumber,
             "from": license.from,
+            // tslint:disable-next-line:max-line-length
+            // tslint:disable-next-line:max-line-length
             "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
           }
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
@@ -801,14 +809,14 @@ export class DemandLettersComponent implements OnInit {
         // send demandbysms
         if (this.model.sendbysms) {
           const smsbody = {
-            "accountSid": license.accountSid,
-            "authToken": license.authToken,
-            "to": this.model.celnumber,
-            "from": license.from,
-            "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
+            'accountSid': license.accountSid,
+            'authToken': license.authToken,
+            'to': this.model.celnumber,
+            'from': license.from,
+            'body': 'Dear Customer,\nPlease download your ' + this.model.demand + ' from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department '
           };
           //
-          //console.log(smsbody);
+          // console.log(smsbody);
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
             if (response.result === 'OK') {
@@ -835,7 +843,6 @@ export class DemandLettersComponent implements OnInit {
   }  // end generateletter
 
 
-
   sendsms(smsdata) {
     this.ecolService.sendsms(smsdata).subscribe(result => {
       swal('Successful!', 'Demand letter sent!', 'success');
@@ -853,11 +860,13 @@ export class DemandLettersComponent implements OnInit {
   }
 
   guarantorletter(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => { });
+    this.ecolService.guarantorletters(body).subscribe(data => {
+    });
   }
 
   sms(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => { });
+    this.ecolService.guarantorletters(body).subscribe(data => {
+    });
   }
 
   downloadDemand(filepath, filename) {
@@ -877,7 +886,8 @@ export class DemandLettersComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Send Email',
       showLoaderOnConfirm: true,
-      preConfirm: (email) => { },
+      preConfirm: (email) => {
+      },
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {

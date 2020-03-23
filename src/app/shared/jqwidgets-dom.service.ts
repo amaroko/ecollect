@@ -1,4 +1,3 @@
-
 import {
   Injectable,
   Injector,
@@ -15,7 +14,8 @@ export class JqxDomService {
     private componentFactoryResolver: ComponentFactoryResolver,
     private appRef: ApplicationRef,
     private injector: Injector
-  ) { }
+  ) {
+  }
 
   loadComponent(component: any, ownerElement: any) {
     // 1. Create a component reference from the component
@@ -35,7 +35,7 @@ export class JqxDomService {
 
     this.componentRef = componentRef;
 
-    return { componentRef: componentRef, domElement: domElement }
+    return {componentRef: componentRef, domElement: domElement};
   }
 
   destroy() {

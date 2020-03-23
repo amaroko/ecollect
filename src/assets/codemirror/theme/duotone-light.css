@@ -7,7 +7,7 @@ CodeMirror template by Jan T. Sott (https://github.com/idleberg), adapted by Bra
 
 .cm-s-duotone-light.CodeMirror { background: #faf8f5; color: #b29762; }
 .cm-s-duotone-light div.CodeMirror-selected { background: #e3dcce !important; }
-.cm-s-duotone-light .CodeMirror-gutters { background: #faf8f5; border-right: 0px; }
+.cm-s-duotone-light .CodeMirror-gutters { background: #faf8f5; border-right: 0; }
 .cm-s-duotone-light .CodeMirror-linenumber { color: #cdc4b1; }
 
 /* begin cursor */

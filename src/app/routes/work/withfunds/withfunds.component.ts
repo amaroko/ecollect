@@ -1,6 +1,5 @@
-
-import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../../environments/environment';
 // import { HttpClient} from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
@@ -40,54 +39,54 @@ export class WithfundsComponent implements OnInit {
             return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CUSTNUMBER',
         field: 'CUSTNUMBER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CLIENT NAME',
         field: 'CLIENT_NAME',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'DAYSINARREARS',
         field: 'DAYSINARR',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'TOTALARREARS',
         field: 'INSTAMOUNT',
         valueFormatter: this.currencyFormatter,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'OUSTBALANCE',
         field: 'OUSTBALANCE',
         valueFormatter: this.currencyFormatter,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'SETTLEACCNO',
         field: 'SETTLEACCNO',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'AROCODE',
         field: 'AROCODE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'SETTLEACCBAL',
         field: 'SETTLEACCBAL',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'COLOFFICER',
         field: 'COLOFFICER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       }
     ];
     this.defaultColDef = {
@@ -118,7 +117,7 @@ export class WithfundsComponent implements OnInit {
         fetch(environment.nodeapi + '/gridtranscwithfunds/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
-          headers: { 'Content-Type': 'application/json; charset=utf-8' }
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
         })
           .then(httpResponse => httpResponse.json())
           .then(response => {
@@ -133,6 +132,7 @@ export class WithfundsComponent implements OnInit {
 
     params.api.setServerSideDatasource(datasource);
   }
+
   currencyFormatter(params) {
     if (params.value !== undefined) {
       return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');

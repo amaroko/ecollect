@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
-import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {environment} from '../../../../environments/environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 @Component({
   selector: 'app-viewall',
   templateUrl: './viewall.component.html',
@@ -37,24 +38,24 @@ export class ViewallComponent implements OnInit {
             return '<img src="assets/img/user/loading.gif">';
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
-      { field: 'CLIENTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'IDNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ARREARS_CATEGORY', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'LOAN_TYPE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DISBURSALDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'CLIENTNAME', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'IDNUMBER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'ARREARS_CATEGORY', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'LOAN_TYPE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DISBURSALDATE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
       {
         field: 'AMOUNTDISBURSED',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
           } else {
-            return ''
+            return '';
           }
         },
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
+        filter: 'agNumberColumnFilter', filterParams: {newRowsAction: 'keep'}, aggFunc: 'sum', resizable: true
       },
       {
         field: 'REPAYMENTAMOUNT',
@@ -62,17 +63,17 @@ export class ViewallComponent implements OnInit {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
           } else {
-            return ''
+            return '';
           }
         },
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
+        filter: 'agNumberColumnFilter', filterParams: {newRowsAction: 'keep'}, aggFunc: 'sum', resizable: true
       },
-      { field: 'EMPLOYER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'LASTPAYMENTDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DUEDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'LOANSTATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ADDRESS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'PHONENUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'EMPLOYER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'LASTPAYMENTDATE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DUEDATE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'LOANSTATUS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'ADDRESS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'PHONENUMBER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
     ];
     this.defaultColDef = {
       width: 120,
@@ -80,7 +81,7 @@ export class ViewallComponent implements OnInit {
       sortable: true,
       floatingFilter: true
     };
-    this.rowModelType = "serverSide";
+    this.rowModelType = 'serverSide';
     this.cacheBlockSize = 50;
     this.maxBlocksInCache = 0;
   }
@@ -96,7 +97,7 @@ export class ViewallComponent implements OnInit {
         fetch(environment.nodeapi + '/gridmcoopcashviewall/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
-          headers: { "Content-Type": "application/json; charset=utf-8" }
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
         })
           .then(httpResponse => httpResponse.json())
           .then(response => {
@@ -105,7 +106,7 @@ export class ViewallComponent implements OnInit {
           .catch(error => {
             console.error(error);
             params.failCallback();
-          })
+          });
       }
     };
 
@@ -116,7 +117,7 @@ export class ViewallComponent implements OnInit {
     return {
       getRows(params) {
         setTimeout(function () {
-          var response = server.getResponse(params.request);
+          const response = server.getResponse(params.request);
           if (response.success) {
             params.successCallback(response.rows, response.lastRow);
           } else {
@@ -131,7 +132,7 @@ export class ViewallComponent implements OnInit {
     if (params.value !== undefined) {
       return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     } else {
-      return ''
+      return '';
     }
   }
 
@@ -147,4 +148,33 @@ export class ViewallComponent implements OnInit {
     this.username = currentUser.USERNAME;
   }
 
+  onBtnExportDataAsExcel() {
+    const exportParams = {
+      skipHeader: false,
+      allColumns: true,
+      fileName: 'export.csv'
+    };
+    const datasource = {
+      getRows(params) {
+        console.log(JSON.stringify(params.request, null, 1));
+
+        fetch(environment.nodeapi + '/gridmcoopcashviewall/viewall', {
+          method: 'post',
+          body: JSON.stringify(params.request),
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
+        })
+          .then(httpResponse => httpResponse.json())
+          .then(response => {
+            params.successCallback(response.rows, response.lastRow);
+          })
+          .catch(error => {
+            console.error(error);
+            params.failCallback();
+          });
+      }
+    };
+    this.gridApi.setServerSideDatasource(datasource);
+    this.gridApi.exportDataAsExcel(exportParams);
+  }
 }
+

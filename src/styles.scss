@@ -19,9 +19,9 @@
 
 @import '~ng2-dnd/bundles/style.css';
 
-@import '~ag-grid-community/dist/styles/ag-grid.css';
-@import '~ag-grid-community/dist/styles/ag-theme-fresh.css';
-@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import '~@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+@import '~@ag-grid-community/all-modules/dist/styles/ag-theme-fresh.css';
+@import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
 
 @import '~ika.jvectormap/jquery-jvectormap-1.2.2.css';
 
@@ -45,4 +45,4 @@
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
-@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";

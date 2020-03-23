@@ -19,23 +19,23 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
   }
 
   // These should all be Unicode extended, as per the Haskell 2010 report
-  var smallRE = /[a-z_]/;
-  var largeRE = /[A-Z]/;
-  var digitRE = /\d/;
-  var hexitRE = /[0-9A-Fa-f]/;
-  var octitRE = /[0-7]/;
-  var idRE = /[a-z_A-Z0-9'\xa1-\uffff]/;
-  var symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:]/;
-  var specialRE = /[(),;[\]`{}]/;
-  var whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
+    const smallRE = /[a-z_]/;
+    const largeRE = /[A-Z]/;
+    const digitRE = /\d/;
+    const hexitRE = /[0-9A-Fa-f]/;
+    const octitRE = /[0-7]/;
+    const idRE = /[a-z_A-Z0-9'\xa1-\uffff]/;
+    const symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:]/;
+    const specialRE = /[(),;[\]`{}]/;
+    const whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
 
   function normal(source, setState) {
     if (source.eatWhile(whiteCharRE)) {
       return null;
     }
 
-    var ch = source.next();
-    if (specialRE.test(ch)) {
+      const ch = source.next();
+      if (specialRE.test(ch)) {
       if (ch == '{' && source.eat('-')) {
         var t = "comment";
         if (source.eat('#')) {
@@ -127,10 +127,10 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
       return normal;
     }
     return function(source, setState) {
-      var currNest = nest;
-      while (!source.eol()) {
-        var ch = source.next();
-        if (ch == '{' && source.eat('-')) {
+        let currNest = nest;
+        while (!source.eol()) {
+          const ch = source.next();
+          if (ch == '{' && source.eat('-')) {
           ++currNest;
         }
         else if (ch == '-' && source.eat('}')) {
@@ -148,8 +148,8 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
 
   function stringLiteral(source, setState) {
     while (!source.eol()) {
-      var ch = source.next();
-      if (ch == '"') {
+        const ch = source.next();
+        if (ch == '"') {
         setState(normal);
         return "string";
       }
@@ -179,80 +179,82 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
   }
 
 
-  var wellKnownWords = (function() {
-    var wkw = {};
-    function setType(t) {
-      return function () {
-        for (var i = 0; i < arguments.length; i++)
-          wkw[arguments[i]] = t;
-      };
-    }
+    const wellKnownWords = (function () {
+        const wkw = {};
 
-    setType("keyword")(
-      "case", "class", "data", "default", "deriving", "do", "else", "foreign",
-      "if", "import", "in", "infix", "infixl", "infixr", "instance", "let",
-      "module", "newtype", "of", "then", "type", "where", "_");
+        function setType(t) {
+            return function () {
+                for (let i = 0; i < arguments.length; i++)
+                    wkw[arguments[i]] = t;
+            };
+        }
 
-    setType("keyword")(
-      "\.\.", ":", "::", "=", "\\", "<-", "->", "@", "~", "=>");
+        setType("keyword")(
+            "case", "class", "data", "default", "deriving", "do", "else", "foreign",
+            "if", "import", "in", "infix", "infixl", "infixr", "instance", "let",
+            "module", "newtype", "of", "then", "type", "where", "_");
 
-    setType("builtin")(
-      "!!", "$!", "$", "&&", "+", "++", "-", ".", "/", "/=", "<", "<=", "=<<",
-      "==", ">", ">=", ">>", ">>=", "^", "^^", "||", "*", "**");
+        setType("keyword")(
+            "\.\.", ":", "::", "=", "\\", "<-", "->", "@", "~", "=>");
 
-    setType("builtin")(
-      "Bool", "Bounded", "Char", "Double", "EQ", "Either", "Enum", "Eq",
-      "False", "FilePath", "Float", "Floating", "Fractional", "Functor", "GT",
-      "IO", "IOError", "Int", "Integer", "Integral", "Just", "LT", "Left",
-      "Maybe", "Monad", "Nothing", "Num", "Ord", "Ordering", "Rational", "Read",
-      "ReadS", "Real", "RealFloat", "RealFrac", "Right", "Show", "ShowS",
-      "String", "True");
+        setType("builtin")(
+            "!!", "$!", "$", "&&", "+", "++", "-", ".", "/", "/=", "<", "<=", "=<<",
+            "==", ">", ">=", ">>", ">>=", "^", "^^", "||", "*", "**");
 
-    setType("builtin")(
-      "abs", "acos", "acosh", "all", "and", "any", "appendFile", "asTypeOf",
-      "asin", "asinh", "atan", "atan2", "atanh", "break", "catch", "ceiling",
-      "compare", "concat", "concatMap", "const", "cos", "cosh", "curry",
-      "cycle", "decodeFloat", "div", "divMod", "drop", "dropWhile", "either",
-      "elem", "encodeFloat", "enumFrom", "enumFromThen", "enumFromThenTo",
-      "enumFromTo", "error", "even", "exp", "exponent", "fail", "filter",
-      "flip", "floatDigits", "floatRadix", "floatRange", "floor", "fmap",
-      "foldl", "foldl1", "foldr", "foldr1", "fromEnum", "fromInteger",
-      "fromIntegral", "fromRational", "fst", "gcd", "getChar", "getContents",
-      "getLine", "head", "id", "init", "interact", "ioError", "isDenormalized",
-      "isIEEE", "isInfinite", "isNaN", "isNegativeZero", "iterate", "last",
-      "lcm", "length", "lex", "lines", "log", "logBase", "lookup", "map",
-      "mapM", "mapM_", "max", "maxBound", "maximum", "maybe", "min", "minBound",
-      "minimum", "mod", "negate", "not", "notElem", "null", "odd", "or",
-      "otherwise", "pi", "pred", "print", "product", "properFraction",
-      "putChar", "putStr", "putStrLn", "quot", "quotRem", "read", "readFile",
-      "readIO", "readList", "readLn", "readParen", "reads", "readsPrec",
-      "realToFrac", "recip", "rem", "repeat", "replicate", "return", "reverse",
-      "round", "scaleFloat", "scanl", "scanl1", "scanr", "scanr1", "seq",
-      "sequence", "sequence_", "show", "showChar", "showList", "showParen",
-      "showString", "shows", "showsPrec", "significand", "signum", "sin",
-      "sinh", "snd", "span", "splitAt", "sqrt", "subtract", "succ", "sum",
-      "tail", "take", "takeWhile", "tan", "tanh", "toEnum", "toInteger",
-      "toRational", "truncate", "uncurry", "undefined", "unlines", "until",
-      "unwords", "unzip", "unzip3", "userError", "words", "writeFile", "zip",
-      "zip3", "zipWith", "zipWith3");
+        setType("builtin")(
+            "Bool", "Bounded", "Char", "Double", "EQ", "Either", "Enum", "Eq",
+            "False", "FilePath", "Float", "Floating", "Fractional", "Functor", "GT",
+            "IO", "IOError", "Int", "Integer", "Integral", "Just", "LT", "Left",
+            "Maybe", "Monad", "Nothing", "Num", "Ord", "Ordering", "Rational", "Read",
+            "ReadS", "Real", "RealFloat", "RealFrac", "Right", "Show", "ShowS",
+            "String", "True");
 
-    var override = modeConfig.overrideKeywords;
-    if (override) for (var word in override) if (override.hasOwnProperty(word))
-      wkw[word] = override[word];
+        setType("builtin")(
+            "abs", "acos", "acosh", "all", "and", "any", "appendFile", "asTypeOf",
+            "asin", "asinh", "atan", "atan2", "atanh", "break", "catch", "ceiling",
+            "compare", "concat", "concatMap", "const", "cos", "cosh", "curry",
+            "cycle", "decodeFloat", "div", "divMod", "drop", "dropWhile", "either",
+            "elem", "encodeFloat", "enumFrom", "enumFromThen", "enumFromThenTo",
+            "enumFromTo", "error", "even", "exp", "exponent", "fail", "filter",
+            "flip", "floatDigits", "floatRadix", "floatRange", "floor", "fmap",
+            "foldl", "foldl1", "foldr", "foldr1", "fromEnum", "fromInteger",
+            "fromIntegral", "fromRational", "fst", "gcd", "getChar", "getContents",
+            "getLine", "head", "id", "init", "interact", "ioError", "isDenormalized",
+            "isIEEE", "isInfinite", "isNaN", "isNegativeZero", "iterate", "last",
+            "lcm", "length", "lex", "lines", "log", "logBase", "lookup", "map",
+            "mapM", "mapM_", "max", "maxBound", "maximum", "maybe", "min", "minBound",
+            "minimum", "mod", "negate", "not", "notElem", "null", "odd", "or",
+            "otherwise", "pi", "pred", "print", "product", "properFraction",
+            "putChar", "putStr", "putStrLn", "quot", "quotRem", "read", "readFile",
+            "readIO", "readList", "readLn", "readParen", "reads", "readsPrec",
+            "realToFrac", "recip", "rem", "repeat", "replicate", "return", "reverse",
+            "round", "scaleFloat", "scanl", "scanl1", "scanr", "scanr1", "seq",
+            "sequence", "sequence_", "show", "showChar", "showList", "showParen",
+            "showString", "shows", "showsPrec", "significand", "signum", "sin",
+            "sinh", "snd", "span", "splitAt", "sqrt", "subtract", "succ", "sum",
+            "tail", "take", "takeWhile", "tan", "tanh", "toEnum", "toInteger",
+            "toRational", "truncate", "uncurry", "undefined", "unlines", "until",
+            "unwords", "unzip", "unzip3", "userError", "words", "writeFile", "zip",
+            "zip3", "zipWith", "zipWith3");
 
-    return wkw;
-  })();
+        const override = modeConfig.overrideKeywords;
+        if (override) for (let word in override) if (override.hasOwnProperty(word))
+            wkw[word] = override[word];
+
+        return wkw;
+    })();
 
 
-
-  return {
+    return {
     startState: function ()  { return { f: normal }; },
     copyState:  function (s) { return { f: s.f }; },
 
     token: function(stream, state) {
-      var t = state.f(stream, function(s) { state.f = s; });
-      var w = stream.current();
-      return wellKnownWords.hasOwnProperty(w) ? wellKnownWords[w] : t;
+        const t = state.f(stream, function (s) {
+            state.f = s;
+        });
+        const w = stream.current();
+        return wellKnownWords.hasOwnProperty(w) ? wellKnownWords[w] : t;
     },
 
     blockCommentStart: "{-",

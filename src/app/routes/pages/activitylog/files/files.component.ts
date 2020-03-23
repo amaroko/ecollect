@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
-import { DataService } from '../../../../services/data.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
+import {DataService} from '../../../../services/data.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
-import { environment } from '../../../../../environments/environment';
-import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import {saveAs} from 'file-saver';
+import {environment} from '../../../../../environments/environment';
+import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 const URL = environment.filesapi;
 
@@ -25,12 +25,12 @@ export class FilesComponent implements OnInit {
   files: any = [];
   username: string;
   filetype: any = [
-    { filetype: 'Other' },
-    { filetype: 'Demand Letter' },
-    { filetype: 'Customer Correspondence' }
+    {filetype: 'Other'},
+    {filetype: 'Demand Letter'},
+    {filetype: 'Customer Correspondence'}
   ];
 
-  public uploader: FileUploader = new FileUploader({ url: URL });
+  public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
 
@@ -43,9 +43,9 @@ export class FilesComponent implements OnInit {
   }
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService,
-    private dataService: DataService
+              private route: ActivatedRoute,
+              private ecolService: EcolService,
+              private dataService: DataService
   ) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -65,9 +65,9 @@ export class FilesComponent implements OnInit {
       // success
       console.log(item);
       const obj = JSON.parse(response);
-      //console.log(obj)
-      //console.log(this.model)
-      if(obj.success) {
+      // console.log(obj)
+      // console.log(this.model)
+      if (obj.success) {
         for (let i = 0; i < obj.files.length; i++) {
           const bulk = {
             'accnumber': this.accnumber,
@@ -93,7 +93,7 @@ export class FilesComponent implements OnInit {
       } else {
         swal('Oooops!', 'unable to upload file!', 'error');
       }
-      
+
     };
 
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
@@ -106,7 +106,7 @@ export class FilesComponent implements OnInit {
     /// check if logged!
     this.ecolService.ifLogged();
     this.ecolService.ifclosed();
-    
+
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 

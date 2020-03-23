@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
-import { environment } from '../../../../environments/environment';
-import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { license } from '../../../../../env';
-import { HttpClient } from '@angular/common/http';
+import {saveAs} from 'file-saver';
+import {environment} from '../../../../environments/environment';
+import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {ToasterService, ToasterConfig} from 'angular2-toaster/angular2-toaster';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {license} from '../../../../../env';
+import {HttpClient} from '@angular/common/http';
 
 const URL = environment.valor;
 const apiUrl = environment.letters_api;
@@ -103,7 +103,7 @@ export class SendLetterComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
-  public uploader: FileUploader = new FileUploader({ url: URL });
+  public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
 
@@ -129,8 +129,12 @@ export class SendLetterComponent implements OnInit {
     let month = '' + (currentDate.getMonth() + 1);
     const year = currentDate.getFullYear();
 
-    if (month.length < 2) { month = '0' + month; }
-    if (day.length < 2) { day = '0' + day; }
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
 
     return year + '-' + month + '-' + day;
   }
@@ -325,7 +329,9 @@ export class SendLetterComponent implements OnInit {
                   };
                   this.ecolService.demandstatus(status).subscribe(ddstatusdata => {
                     console.log(this.demandid + ' status updated ');
-                  }, error => { console.log(error); });
+                  }, error => {
+                    console.log(error);
+                  });
                 }
                 this.popsuccessToast('Letter ready for preview');
                 this.downloadDemand(generateletterdata.message, generateletterdata.filename);
@@ -480,14 +486,15 @@ export class SendLetterComponent implements OnInit {
       // send demandbysms
       if (this.model.sendbysms) {
         const smsbody = {
-          "accountSid": license.accountSid,
-          "authToken": license.authToken,
-          "to": this.model.celnumber,
-          "from": license.from,
-          "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
-        }
+          'accountSid': license.accountSid,
+          'authToken': license.authToken,
+          'to': this.model.celnumber,
+          'from': license.from,
+          // tslint:disable-next-line:max-line-length
+          'body': 'Dear Customer,\nPlease download your ' + this.model.demand + ' from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department '
+        };
         // if test call sendsms otherwise post to sms table
-        if(environment.sendsms) {
+        if (environment.sendsms) {
           // call sms api
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
@@ -495,7 +502,7 @@ export class SendLetterComponent implements OnInit {
               // add to history
               this.demandshistory(this.demandhisdetails);
               this.getdemandshistory(this.accnumber);
-  
+
               swal.close();
               this.popsuccessToast('Letter sent on sms!');
             } else {
@@ -509,7 +516,8 @@ export class SendLetterComponent implements OnInit {
             custnumber: this.custnumber,
             accnumber: this.accnumber,
             owner: this.username,
-            message: "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department ",
+            // tslint:disable-next-line:max-line-length
+            message: 'Dear Customer,\nPlease download your ' + this.model.demand + ' from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department ',
             arrears: 0,
             datesent: new Date(),
             telnumber: this.model.celnumber
@@ -521,7 +529,7 @@ export class SendLetterComponent implements OnInit {
             this.poperrorToast('Error: ' + error.message);
           });
         }
-        
+
       } // end demandbysms
     }
     /*this.ecolService.generateLetter(letter).subscribe(uploaddata => {
@@ -596,17 +604,17 @@ export class SendLetterComponent implements OnInit {
               }, error => {
                 console.log(error);
               });
-  
+
               swal.close();
               this.popsuccessToast('Letter sent on email!');
             }
           });
         }
-        
+
         // send demandbysms
         if(this.model.sendbysms){
           // send generated letter to DMZ
-          
+
           const smsbody = {
             "accountSid": license.accountSid,
             "authToken": license.authToken,
@@ -617,7 +625,7 @@ export class SendLetterComponent implements OnInit {
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
             if (response.result === 'OK') {
-              
+
               // add to history
               this.demandshistory(this.demandhisdetails);
               this.getdemandshistory(this.accnumber);
@@ -632,8 +640,8 @@ export class SendLetterComponent implements OnInit {
               this.ecolService.demandstatus(status).subscribe(data => {
                 //
               }, error => {console.log(error); });
-              
-  
+
+
               swal.close();
               this.popsuccessToast('Letter sent on sms');
             } else {
@@ -670,11 +678,13 @@ export class SendLetterComponent implements OnInit {
   }
 
   guarantorletter(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => { });
+    this.ecolService.guarantorletters(body).subscribe(data => {
+    });
   }
 
   sms(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => { });
+    this.ecolService.guarantorletters(body).subscribe(data => {
+    });
   }
 
   downloadFile(filepath, filename) {
@@ -703,7 +713,8 @@ export class SendLetterComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Send Email',
       showLoaderOnConfirm: true,
-      preConfirm: (email) => { },
+      preConfirm: (email) => {
+      },
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {

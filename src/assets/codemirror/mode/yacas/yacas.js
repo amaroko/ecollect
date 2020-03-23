@@ -17,32 +17,32 @@
 CodeMirror.defineMode('yacas', function(_config, _parserConfig) {
 
   function words(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+      const obj = {}, words = str.split(" ");
+      for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
     return obj;
   }
 
-  var bodiedOps = words("Assert BackQuote D Defun Deriv For ForEach FromFile " +
-                        "FromString Function Integrate InverseTaylor Limit " +
-                        "LocalSymbols Macro MacroRule MacroRulePattern " +
-                        "NIntegrate Rule RulePattern Subst TD TExplicitSum " +
-                        "TSum Taylor Taylor1 Taylor2 Taylor3 ToFile " +
-                        "ToStdout ToString TraceRule Until While");
+    const bodiedOps = words("Assert BackQuote D Defun Deriv For ForEach FromFile " +
+        "FromString Function Integrate InverseTaylor Limit " +
+        "LocalSymbols Macro MacroRule MacroRulePattern " +
+        "NIntegrate Rule RulePattern Subst TD TExplicitSum " +
+        "TSum Taylor Taylor1 Taylor2 Taylor3 ToFile " +
+        "ToStdout ToString TraceRule Until While");
 
-  // patterns
-  var pFloatForm  = "(?:(?:\\.\\d+|\\d+\\.\\d*|\\d+)(?:[eE][+-]?\\d+)?)";
-  var pIdentifier = "(?:[a-zA-Z\\$'][a-zA-Z0-9\\$']*)";
+    // patterns
+    const pFloatForm = "(?:(?:\\.\\d+|\\d+\\.\\d*|\\d+)(?:[eE][+-]?\\d+)?)";
+    const pIdentifier = "(?:[a-zA-Z\\$'][a-zA-Z0-9\\$']*)";
 
-  // regular expressions
-  var reFloatForm    = new RegExp(pFloatForm);
-  var reIdentifier   = new RegExp(pIdentifier);
-  var rePattern      = new RegExp(pIdentifier + "?_" + pIdentifier);
-  var reFunctionLike = new RegExp(pIdentifier + "\\s*\\(");
+    // regular expressions
+    const reFloatForm = new RegExp(pFloatForm);
+    const reIdentifier = new RegExp(pIdentifier);
+    const rePattern = new RegExp(pIdentifier + "?_" + pIdentifier);
+    const reFunctionLike = new RegExp(pIdentifier + "\\s*\\(");
 
-  function tokenBase(stream, state) {
-    var ch;
+    function tokenBase(stream, state) {
+      let ch;
 
-    // get next character
+      // get next character
     ch = stream.next();
 
     // string
@@ -67,13 +67,13 @@ CodeMirror.defineMode('yacas', function(_config, _parserConfig) {
     stream.backUp(1);
 
     // update scope info
-    var m = stream.match(/^(\w+)\s*\(/, false);
-    if (m !== null && bodiedOps.hasOwnProperty(m[1]))
+      const m = stream.match(/^(\w+)\s*\(/, false);
+      if (m !== null && bodiedOps.hasOwnProperty(m[1]))
       state.scopes.push('bodied');
 
-    var scope = currentScope(state);
+      let scope = currentScope(state);
 
-    if (scope === 'bodied' && ch === '[')
+      if (scope === 'bodied' && ch === '[')
       state.scopes.pop();
 
     if (ch === '[' || ch === '{' || ch === '(')
@@ -134,8 +134,8 @@ CodeMirror.defineMode('yacas', function(_config, _parserConfig) {
   }
 
   function tokenString(stream, state) {
-    var next, end = false, escaped = false;
-    while ((next = stream.next()) != null) {
+      let next, end = false, escaped = false;
+      while ((next = stream.next()) != null) {
       if (next === '"' && !escaped) {
         end = true;
         break;
@@ -146,11 +146,11 @@ CodeMirror.defineMode('yacas', function(_config, _parserConfig) {
       state.tokenize = tokenBase;
     }
     return 'string';
-  };
+  }
 
   function tokenComment(stream, state) {
-    var prev, next;
-    while((next = stream.next()) != null) {
+      let prev, next;
+      while((next = stream.next()) != null) {
       if (prev === '*' && next === '/') {
         state.tokenize = tokenBase;
         break;
@@ -161,8 +161,8 @@ CodeMirror.defineMode('yacas', function(_config, _parserConfig) {
   }
 
   function currentScope(state) {
-    var scope = null;
-    if (state.scopes.length > 0)
+      let scope = null;
+      if (state.scopes.length > 0)
       scope = state.scopes[state.scopes.length - 1];
     return scope;
   }
@@ -182,8 +182,8 @@ CodeMirror.defineMode('yacas', function(_config, _parserConfig) {
       if (state.tokenize !== tokenBase && state.tokenize !== null)
         return CodeMirror.Pass;
 
-      var delta = 0;
-      if (textAfter === ']' || textAfter === '];' ||
+        let delta = 0;
+        if (textAfter === ']' || textAfter === '];' ||
           textAfter === '}' || textAfter === '};' ||
           textAfter === ');')
         delta = -1;

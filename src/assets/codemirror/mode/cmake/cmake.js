@@ -12,11 +12,11 @@
 "use strict";
 
 CodeMirror.defineMode("cmake", function () {
-  var variable_regex = /({)?[a-zA-Z0-9_]+(})?/;
+    const variable_regex = /({)?[a-zA-Z0-9_]+(})?/;
 
-  function tokenString(stream, state) {
-    var current, prev, found_var = false;
-    while (!stream.eol() && (current = stream.next()) != state.pending) {
+    function tokenString(stream, state) {
+      let current, prev, found_var = false;
+      while (!stream.eol() && (current = stream.next()) != state.pending) {
       if (current === '$' && prev != '\\' && state.pending == '"') {
         found_var = true;
         break;
@@ -35,9 +35,9 @@ CodeMirror.defineMode("cmake", function () {
   }
 
   function tokenize(stream, state) {
-    var ch = stream.next();
+      const ch = stream.next();
 
-    // Have we found a variable?
+      // Have we found a variable?
     if (ch === '$') {
       if (stream.match(variable_regex)) {
         return 'variable-2';
@@ -78,8 +78,8 @@ CodeMirror.defineMode("cmake", function () {
   }
   return {
     startState: function () {
-      var state = {};
-      state.inDefinition = false;
+        const state = {};
+        state.inDefinition = false;
       state.inInclude = false;
       state.continueString = false;
       state.pending = false;

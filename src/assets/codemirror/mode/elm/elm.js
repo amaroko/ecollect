@@ -19,15 +19,15 @@
     }
 
     // These should all be Unicode extended, as per the Haskell 2010 report
-    var smallRE = /[a-z_]/;
-    var largeRE = /[A-Z]/;
-    var digitRE = /[0-9]/;
-    var hexitRE = /[0-9A-Fa-f]/;
-    var octitRE = /[0-7]/;
-    var idRE = /[a-z_A-Z0-9\']/;
-    var symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:\u03BB\u2192]/;
-    var specialRE = /[(),;[\]`{}]/;
-    var whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
+      const smallRE = /[a-z_]/;
+      const largeRE = /[A-Z]/;
+      const digitRE = /[0-9]/;
+      const hexitRE = /[0-9A-Fa-f]/;
+      const octitRE = /[0-7]/;
+      const idRE = /[a-z_A-Z0-9\']/;
+      const symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:\u03BB\u2192]/;
+      const specialRE = /[(),;[\]`{}]/;
+      const whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
 
     function normal() {
       return function (source, setState) {
@@ -35,8 +35,8 @@
           return null;
         }
 
-        var ch = source.next();
-        if (specialRE.test(ch)) {
+          const ch = source.next();
+          if (specialRE.test(ch)) {
           if (ch == '{' && source.eat('-')) {
             var t = "comment";
             if (source.eat('#')) t = "meta";
@@ -68,8 +68,8 @@
         }
 
         if (smallRE.test(ch)) {
-          var isDef = source.pos === 1;
-          source.eatWhile(idRE);
+            const isDef = source.pos === 1;
+            source.eatWhile(idRE);
           return isDef ? "variable-3" : "variable";
         }
 
@@ -119,10 +119,10 @@
         return normal();
       }
       return function(source, setState) {
-        var currNest = nest;
-        while (!source.eol()) {
-          var ch = source.next();
-          if (ch == '{' && source.eat('-')) {
+          let currNest = nest;
+          while (!source.eol()) {
+            const ch = source.next();
+            if (ch == '{' && source.eat('-')) {
             ++currNest;
           } else if (ch == '-' && source.eat('}')) {
             --currNest;
@@ -139,8 +139,8 @@
 
     function stringLiteral(source, setState) {
       while (!source.eol()) {
-        var ch = source.next();
-        if (ch == '"') {
+          const ch = source.next();
+          if (ch == '"') {
           setState(normal());
           return "string";
         }
@@ -166,36 +166,37 @@
     }
 
 
-    var wellKnownWords = (function() {
-      var wkw = {};
+      const wellKnownWords = (function () {
+          const wkw = {};
 
-      var keywords = [
-        "case", "of", "as",
-        "if", "then", "else",
-        "let", "in",
-        "infix", "infixl", "infixr",
-        "type", "alias",
-        "input", "output", "foreign", "loopback",
-        "module", "where", "import", "exposing",
-        "_", "..", "|", ":", "=", "\\", "\"", "->", "<-"
-      ];
+          const keywords = [
+              "case", "of", "as",
+              "if", "then", "else",
+              "let", "in",
+              "infix", "infixl", "infixr",
+              "type", "alias",
+              "input", "output", "foreign", "loopback",
+              "module", "where", "import", "exposing",
+              "_", "..", "|", ":", "=", "\\", "\"", "->", "<-"
+          ];
 
-      for (var i = keywords.length; i--;)
-        wkw[keywords[i]] = "keyword";
+          for (let i = keywords.length; i--;)
+              wkw[keywords[i]] = "keyword";
 
-      return wkw;
-    })();
+          return wkw;
+      })();
 
 
-
-    return {
+      return {
       startState: function ()  { return { f: normal() }; },
       copyState:  function (s) { return { f: s.f }; },
 
       token: function(stream, state) {
-        var t = state.f(stream, function(s) { state.f = s; });
-        var w = stream.current();
-        return (wellKnownWords.hasOwnProperty(w)) ? wellKnownWords[w] : t;
+          const t = state.f(stream, function (s) {
+              state.f = s;
+          });
+          const w = stream.current();
+          return (wellKnownWords.hasOwnProperty(w)) ? wellKnownWords[w] : t;
       }
     };
 

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SweetalertComponent } from './sweetalert.component';
+import {SweetalertComponent} from './sweetalert.component';
 
 describe('SweetalertComponent', () => {
   let component: SweetalertComponent;
@@ -8,9 +8,9 @@ describe('SweetalertComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SweetalertComponent ]
+      declarations: [SweetalertComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

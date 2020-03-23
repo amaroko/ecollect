@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as _ from 'lodash';
 
 
 @Component({
-    selector: 'app-newcase',
-    templateUrl: './newcase.component.html',
-    styleUrls: ['./newcase.component.scss']
+  selector: 'app-newcase',
+  templateUrl: './newcase.component.html',
+  styleUrls: ['./newcase.component.scss']
 })
 export class NewcaseComponent implements OnInit {
-    constructor() {
-    }
+  constructor() {
+  }
 
 
-    public ngOnInit(): void {
-    }
+  public ngOnInit(): void {
+  }
 
-    onNavigate(reportname) {
-        window.open('activitydash?report=' + reportname, '_blank');
-    }
+  onNavigate(reportname) {
+    window.open('activitydash?report=' + reportname, '_blank');
+  }
 
 }

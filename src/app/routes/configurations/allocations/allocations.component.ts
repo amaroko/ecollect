@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { GridOptions } from 'ag-grid-community';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {environment} from '../../../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {GridOptions} from '@ag-grid-community/all-modules';
+import {NgxSpinnerService} from 'ngx-spinner';
 import * as _ from 'lodash';
+
 declare var $: any;
 
 
@@ -113,7 +114,9 @@ export class AllocationsComponent implements OnInit {
   gridReady(params) {
     params.api.sizeColumnsToFit();
     this.$win.on(this.resizeEvent, () => {
-      setTimeout(() => { params.api.sizeColumnsToFit(); });
+      setTimeout(() => {
+        params.api.sizeColumnsToFit();
+      });
     });
   }
 
@@ -143,8 +146,8 @@ export class AllocationsComponent implements OnInit {
 
   getMemos() {
     this.ecolService.getmemo().subscribe(res => {
-      for (let i = 0; i < res.data.length; i ++) {
-        this.items.push(res.data[i].MEMO) ;
+      for (let i = 0; i < res.data.length; i++) {
+        this.items.push(res.data[i].MEMO);
       }
       console.log('Array==>', this.items);
     });

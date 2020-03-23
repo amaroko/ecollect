@@ -13,14 +13,14 @@
 
 CodeMirror.defineMode("yaml", function() {
 
-  var cons = ['true', 'false', 'on', 'off', 'yes', 'no'];
-  var keywordRegex = new RegExp("\\b(("+cons.join(")|(")+"))$", 'i');
+    const cons = ['true', 'false', 'on', 'off', 'yes', 'no'];
+    const keywordRegex = new RegExp("\\b((" + cons.join(")|(") + "))$", 'i');
 
-  return {
+    return {
     token: function(stream, state) {
-      var ch = stream.peek();
-      var esc = state.escaped;
-      state.escaped = false;
+        const ch = stream.peek();
+        const esc = state.escaped;
+        state.escaped = false;
       /* comments */
       if (ch == "#" && (stream.pos == 0 || /\s/.test(stream.string.charAt(stream.pos - 1)))) {
         stream.skipToEnd();
@@ -74,7 +74,7 @@ CodeMirror.defineMode("yaml", function() {
       /* start of value of a pair */
       if (state.pairStart) {
         /* block literals */
-        if (stream.match(/^\s*(\||\>)\s*/)) { state.literal = true; return 'meta'; };
+        if (stream.match(/^\s*(\||\>)\s*/)) { state.literal = true; return 'meta'; }
         /* references */
         if (stream.match(/^\s*(\&|\*)[a-z0-9\._-]+\b/i)) { return 'variable-2'; }
         /* numbers */

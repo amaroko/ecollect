@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs} from 'file-saver';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-demandhis',
@@ -12,7 +12,9 @@ export class DemandhisComponent implements OnInit {
 
   model: any = {};
   demands: any;
-  constructor(private ecolService: EcolService) { }
+
+  constructor(private ecolService: EcolService) {
+  }
 
   ngOnInit() {
   }
@@ -35,7 +37,7 @@ export class DemandhisComponent implements OnInit {
 
   downloadFile(filepath) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-     saveAs(data, 'filename');
+      saveAs(data, 'filename');
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');

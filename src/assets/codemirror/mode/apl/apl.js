@@ -12,7 +12,7 @@
 "use strict";
 
 CodeMirror.defineMode("apl", function() {
-  var builtInOps = {
+  const builtInOps = {
     ".": "innerProduct",
     "\\": "scan",
     "/": "reduce",
@@ -21,7 +21,7 @@ CodeMirror.defineMode("apl", function() {
     "¨": "each",
     "⍣": "power"
   };
-  var builtInFuncs = {
+  const builtInFuncs = {
     "+": ["conjugate", "add"],
     "−": ["negate", "subtract"],
     "×": ["signOf", "multiply"],
@@ -74,16 +74,16 @@ CodeMirror.defineMode("apl", function() {
     "⊢": ["pass", "right"]
   };
 
-  var isOperator = /[\.\/⌿⍀¨⍣]/;
-  var isNiladic = /⍬/;
-  var isFunction = /[\+−×÷⌈⌊∣⍳\?⋆⍟○!⌹<≤=>≥≠≡≢∈⍷∪∩∼∨∧⍱⍲⍴,⍪⌽⊖⍉↑↓⊂⊃⌷⍋⍒⊤⊥⍕⍎⊣⊢]/;
-  var isArrow = /←/;
-  var isComment = /[⍝#].*$/;
+  const isOperator = /[\.\/⌿⍀¨⍣]/;
+  const isNiladic = /⍬/;
+  const isFunction = /[\+−×÷⌈⌊∣⍳\?⋆⍟○!⌹<≤=>≥≠≡≢∈⍷∪∩∼∨∧⍱⍲⍴,⍪⌽⊖⍉↑↓⊂⊃⌷⍋⍒⊤⊥⍕⍎⊣⊢]/;
+  const isArrow = /←/;
+  const isComment = /[⍝#].*$/;
 
-  var stringEater = function(type) {
-    var prev;
+  const stringEater = function (type) {
+    let prev;
     prev = false;
-    return function(c) {
+    return function (c) {
       prev = c;
       if (c === type) {
         return prev === "\\";
@@ -102,7 +102,7 @@ CodeMirror.defineMode("apl", function() {
       };
     },
     token: function(stream, state) {
-      var ch, funcName;
+      let ch, funcName;
       if (stream.eatSpace()) {
         return null;
       }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -9,14 +9,15 @@ import swal from 'sweetalert2';
 })
 export class PlanactionsComponent implements OnInit {
 
-    model: any = {};
-    username: string;
-    planactions: any = [];
-    edit = false;
+  model: any = {};
+  username: string;
+  planactions: any = [];
+  edit = false;
 
   constructor(
     private ecolService: EcolService,
-    ) { }
+  ) {
+  }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -37,12 +38,12 @@ export class PlanactionsComponent implements OnInit {
     for (let i = 0; i < lengthOfCode; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-      return text;
+    return text;
   }
 
   getplanactions() {
     this.ecolService.s_actions().subscribe(response => {
-     this.planactions = response;
+      this.planactions = response;
     }, error => {
       console.log(error);
     });

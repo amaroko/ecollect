@@ -13,13 +13,14 @@
 
 CodeMirror.defineMode('shell', function() {
 
-  var words = {};
-  function define(style, string) {
-    var split = string.split(' ');
-    for(var i = 0; i < split.length; i++) {
+    const words = {};
+
+    function define(style, string) {
+      const split = string.split(' ');
+      for(let i = 0; i < split.length; i++) {
       words[split[i]] = style;
     }
-  };
+  }
 
   // Atoms
   define('atom', 'true false');
@@ -38,10 +39,10 @@ CodeMirror.defineMode('shell', function() {
   function tokenBase(stream, state) {
     if (stream.eatSpace()) return null;
 
-    var sol = stream.sol();
-    var ch = stream.next();
+      const sol = stream.sol();
+      const ch = stream.next();
 
-    if (ch === '\\') {
+      if (ch === '\\') {
       stream.next();
       return null;
     }
@@ -76,15 +77,15 @@ CodeMirror.defineMode('shell', function() {
       }
     }
     stream.eatWhile(/[\w-]/);
-    var cur = stream.current();
-    if (stream.peek() === '=' && /\w+/.test(cur)) return 'def';
+      const cur = stream.current();
+      if (stream.peek() === '=' && /\w+/.test(cur)) return 'def';
     return words.hasOwnProperty(cur) ? words[cur] : null;
   }
 
   function tokenString(quote) {
     return function(stream, state) {
-      var next, end = false, escaped = false;
-      while ((next = stream.next()) != null) {
+        let next, end = false, escaped = false;
+        while ((next = stream.next()) != null) {
         if (next === quote && !escaped) {
           end = true;
           break;
@@ -102,12 +103,13 @@ CodeMirror.defineMode('shell', function() {
       }
       return (quote === '`' || quote === ')' ? 'quote' : 'string');
     };
-  };
+  }
 
   var tokenDollar = function(stream, state) {
     if (state.tokens.length > 1) stream.eat('$');
-    var ch = stream.next(), hungry = /\w/;
-    if (ch === '{') hungry = /[^}]/;
+      const ch = stream.next();
+      let hungry = /\w/;
+      if (ch === '{') hungry = /[^}]/;
     if (ch === '(') {
       state.tokens[0] = tokenString(')');
       return tokenize(stream, state);
@@ -122,7 +124,7 @@ CodeMirror.defineMode('shell', function() {
 
   function tokenize(stream, state) {
     return (state.tokens[0] || tokenBase) (stream, state);
-  };
+  }
 
   return {
     startState: function() {return {tokens:[]};},

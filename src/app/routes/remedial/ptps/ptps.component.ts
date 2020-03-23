@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-ptps',
@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class PtpsComponent implements OnInit {
 
   model: any = {};
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

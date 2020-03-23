@@ -13,21 +13,21 @@
 
   function wordRegexp(words) {
     return new RegExp("^((" + words.join(")|(") + "))\\b", "i");
-  };
+  }
 
-  var keywordArray = [
-    "package", "message", "import", "syntax",
-    "required", "optional", "repeated", "reserved", "default", "extensions", "packed",
-    "bool", "bytes", "double", "enum", "float", "string",
-    "int32", "int64", "uint32", "uint64", "sint32", "sint64", "fixed32", "fixed64", "sfixed32", "sfixed64"
-  ];
-  var keywords = wordRegexp(keywordArray);
+    const keywordArray = [
+        "package", "message", "import", "syntax",
+        "required", "optional", "repeated", "reserved", "default", "extensions", "packed",
+        "bool", "bytes", "double", "enum", "float", "string",
+        "int32", "int64", "uint32", "uint64", "sint32", "sint64", "fixed32", "fixed64", "sfixed32", "sfixed64"
+    ];
+    const keywords = wordRegexp(keywordArray);
 
-  CodeMirror.registerHelper("hintWords", "protobuf", keywordArray);
+    CodeMirror.registerHelper("hintWords", "protobuf", keywordArray);
 
-  var identifiers = new RegExp("^[_A-Za-z\xa1-\uffff][_A-Za-z0-9\xa1-\uffff]*");
+    const identifiers = new RegExp("^[_A-Za-z\xa1-\uffff][_A-Za-z0-9\xa1-\uffff]*");
 
-  function tokenBase(stream) {
+    function tokenBase(stream) {
     // whitespaces
     if (stream.eatSpace()) return null;
 
@@ -53,12 +53,12 @@
 
     // Handle words
     if (stream.match(keywords)) { return "keyword"; }
-    if (stream.match(identifiers)) { return "variable"; } ;
+    if (stream.match(identifiers)) { return "variable"; }
 
     // Handle non-detected items
     stream.next();
     return null;
-  };
+  }
 
   CodeMirror.defineMode("protobuf", function() {
     return {token: tokenBase};

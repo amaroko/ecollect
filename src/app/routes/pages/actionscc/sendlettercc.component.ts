@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
-import { environment } from '../../../../environments/environment';
-import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {saveAs} from 'file-saver';
+import {environment} from '../../../../environments/environment';
+import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {ToasterService, ToasterConfig} from 'angular2-toaster/angular2-toaster';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -19,10 +19,10 @@ const URL = environment.valor;
 export class SendLetterccComponent implements OnInit {
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    public toasterService: ToasterService,
-    private spinner: NgxSpinnerService,
-    private ecolService: EcolService) {
+              private route: ActivatedRoute,
+              public toasterService: ToasterService,
+              private spinner: NgxSpinnerService,
+              private ecolService: EcolService) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
       form.append('demand', this.model.demand);
@@ -326,13 +326,15 @@ export class SendLetterccComponent implements OnInit {
           // update demandscc status
           const status = {
             id: this.demandid,
-            from : 'cc',
-            datesent : this.currentDate(),
+            from: 'cc',
+            datesent: this.currentDate(),
             sentby: this.username
           };
           this.ecolService.demandstatus(status).subscribe(data => {
             //
-          }, error => {console.log(error); });
+          }, error => {
+            console.log(error);
+          });
           // send sms
           this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
             const sms = respo.smstemplate;
@@ -384,11 +386,13 @@ export class SendLetterccComponent implements OnInit {
   }
 
   guarantorletter(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => { });
+    this.ecolService.guarantorletters(body).subscribe(data => {
+    });
   }
 
   sms(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => { });
+    this.ecolService.guarantorletters(body).subscribe(data => {
+    });
   }
 
   downloadFile(filepath, filename) {
@@ -408,7 +412,8 @@ export class SendLetterccComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Send Email',
       showLoaderOnConfirm: true,
-      preConfirm: (email) => { },
+      preConfirm: (email) => {
+      },
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {

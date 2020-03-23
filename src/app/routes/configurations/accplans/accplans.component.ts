@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { NgOption } from '@ng-select/ng-select';
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import {ActivatedRoute} from '@angular/router';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {NgOption} from '@ng-select/ng-select';
+import {listLazyRoutes} from '@angular/compiler/src/aot/lazy_routes';
 
 @Component({
   selector: 'app-accplans',
@@ -26,7 +26,8 @@ export class AccplansComponent implements OnInit {
   constructor(
     private ecolService: EcolService,
     private spinner: NgxSpinnerService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));

@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../../environments/environment';
-import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import {environment} from '../../../../../environments/environment';
+import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-accplan',
   templateUrl: './accplan.component.html',
   styleUrls: ['./accplan.component.scss'],
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
+  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class AccPlanComponent implements OnInit {
 
@@ -24,8 +24,8 @@ export class AccPlanComponent implements OnInit {
   update = false;
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService) {
     //
   }
 

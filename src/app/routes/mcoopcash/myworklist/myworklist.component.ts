@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../../../environments/environment';
 import * as $ from 'jquery';
-import { EcolService } from '../../../services/ecol.service';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
+import {EcolService} from '../../../services/ecol.service';
+import {GridOptions, IDatasource, IGetRowsParams, GridApi} from '@ag-grid-community/all-modules';
 
 @Component({
   selector: 'app-myworklist',
@@ -58,9 +58,9 @@ export class MyworklistComponent implements OnInit {
       field: 'arrears_category',
       cellStyle: function (params) {
         if (params.value === '90+') {
-          return { color: 'red'};
+          return {color: 'red'};
         } else if (params.value === '180+') {
-          return { color: 'red'};
+          return {color: 'red'};
         } else {
           return null;
         }
@@ -120,7 +120,7 @@ export class MyworklistComponent implements OnInit {
     this.clear();
     this.http.get<any>(environment.api + '/api/mcoopcash_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
+      this.gridApi.updateRowData({add: resp, addIndex: 0});
     });
   }
 

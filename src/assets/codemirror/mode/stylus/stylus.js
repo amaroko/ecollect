@@ -14,31 +14,31 @@
   "use strict";
 
   CodeMirror.defineMode("stylus", function(config) {
-    var indentUnit = config.indentUnit,
-        tagKeywords = keySet(tagKeywords_),
-        tagVariablesRegexp = /^(a|b|i|s|col|em)$/i,
-        propertyKeywords = keySet(propertyKeywords_),
-        nonStandardPropertyKeywords = keySet(nonStandardPropertyKeywords_),
-        valueKeywords = keySet(valueKeywords_),
-        colorKeywords = keySet(colorKeywords_),
-        documentTypes = keySet(documentTypes_),
-        documentTypesRegexp = wordRegexp(documentTypes_),
-        mediaFeatures = keySet(mediaFeatures_),
-        mediaTypes = keySet(mediaTypes_),
-        fontProperties = keySet(fontProperties_),
-        operatorsRegexp = /^\s*([.]{2,3}|&&|\|\||\*\*|[?!=:]?=|[-+*\/%<>]=?|\?:|\~)/,
-        wordOperatorKeywordsRegexp = wordRegexp(wordOperatorKeywords_),
-        blockKeywords = keySet(blockKeywords_),
-        vendorPrefixesRegexp = new RegExp(/^\-(moz|ms|o|webkit)-/i),
-        commonAtoms = keySet(commonAtoms_),
-        firstWordMatch = "",
-        states = {},
-        ch,
-        style,
-        type,
-        override;
+      const indentUnit = config.indentUnit,
+          tagKeywords = keySet(tagKeywords_),
+          tagVariablesRegexp = /^(a|b|i|s|col|em)$/i,
+          propertyKeywords = keySet(propertyKeywords_),
+          nonStandardPropertyKeywords = keySet(nonStandardPropertyKeywords_),
+          valueKeywords = keySet(valueKeywords_),
+          colorKeywords = keySet(colorKeywords_),
+          documentTypes = keySet(documentTypes_),
+          documentTypesRegexp = wordRegexp(documentTypes_),
+          mediaFeatures = keySet(mediaFeatures_),
+          mediaTypes = keySet(mediaTypes_),
+          fontProperties = keySet(fontProperties_),
+          operatorsRegexp = /^\s*([.]{2,3}|&&|\|\||\*\*|[?!=:]?=|[-+*\/%<>]=?|\?:|\~)/,
+          wordOperatorKeywordsRegexp = wordRegexp(wordOperatorKeywords_),
+          blockKeywords = keySet(blockKeywords_),
+          vendorPrefixesRegexp = new RegExp(/^\-(moz|ms|o|webkit)-/i),
+          commonAtoms = keySet(commonAtoms_);
+      let firstWordMatch = "";
+      const states = {};
+      let ch,
+          style,
+          type,
+          override;
 
-    /**
+      /**
      * Tokenizers
      */
     function tokenBase(stream, state) {
@@ -159,8 +159,8 @@
      * Token comment
      */
     function tokenCComment(stream, state) {
-      var maybeEnd = false, ch;
-      while ((ch = stream.next()) != null) {
+        let maybeEnd = false, ch;
+        while ((ch = stream.next()) != null) {
         if (maybeEnd && ch == "/") {
           state.tokenize = null;
           break;
@@ -175,8 +175,8 @@
      */
     function tokenString(quote) {
       return function(stream, state) {
-        var escaped = false, ch;
-        while ((ch = stream.next()) != null) {
+          let escaped = false, ch;
+          while ((ch = stream.next()) != null) {
           if (ch == quote && !escaped) {
             if (quote == ")") stream.backUp(1);
             break;
@@ -217,8 +217,8 @@
     }
 
     function popContext(state, currentIndent) {
-      var contextIndent = state.context.indent - indentUnit;
-      currentIndent = currentIndent || false;
+        const contextIndent = state.context.indent - indentUnit;
+        currentIndent = currentIndent || false;
       state.context = state.context.prev;
       if (currentIndent) state.context.indent = contextIndent;
       return state.context.type;
@@ -229,7 +229,7 @@
     }
 
     function popAndPass(type, stream, state, n) {
-      for (var i = n || 1; i > 0; i--)
+      for (let i = n || 1; i > 0; i--)
         state.context = state.context.prev;
       return pass(type, stream, state);
     }
@@ -256,9 +256,9 @@
     }
 
     function wordAsValue(word) {
-      var wordLC = word.toLowerCase();
-      var override = "variable-2";
-      if (wordIsTag(word)) override = "tag";
+        const wordLC = word.toLowerCase();
+        let override = "variable-2";
+        if (wordIsTag(word)) override = "tag";
       else if (wordIsBlock(word)) override = "block-keyword";
       else if (wordIsProperty(word)) override = "property";
       else if (wordLC in valueKeywords || wordLC in commonAtoms) override = "atom";
@@ -290,9 +290,9 @@
     }
 
     function firstWordOfLine(line) {
-      var re = /^\s*[-_]*[a-z0-9]+[\w-]*/i;
-      var result = typeof line == "string" ? line.match(re) : line.string.match(re);
-      return result ? result[0].replace(/^\s*/, "") : "";
+        const re = /^\s*[-_]*[a-z0-9]+[\w-]*/i;
+        const result = typeof line == "string" ? line.match(re) : line.string.match(re);
+        return result ? result[0].replace(/^\s*/, "") : "";
     }
 
 
@@ -374,8 +374,8 @@
         return pushContext(state, stream, "vendorPrefixes");
       }
       if (type == "word") {
-        var word = stream.current();
-        override = wordAsValue(word);
+          const word = stream.current();
+          override = wordAsValue(word);
 
         if (override == "property") {
           if (startOfLine(stream)) {
@@ -465,8 +465,8 @@
         override = "variable-2";
       }
       if (type == "word") {
-        var word = stream.current();
-        override = wordAsValue(word);
+          const word = stream.current();
+          override = wordAsValue(word);
         if (override == "tag" && tagVariablesRegexp.test(word)) {
           override = "variable-2";
         }
@@ -520,8 +520,8 @@
         return pushContext(state, stream, "interpolation");
       }
       if (type == "word") {
-        var word = stream.current().toLowerCase();
-        if (/^(only|not|and|or)$/.test(word))
+          const word = stream.current().toLowerCase();
+          if (/^(only|not|and|or)$/.test(word))
           override = "keyword";
         else if (documentTypes.hasOwnProperty(word))
           override = "tag";
@@ -549,8 +549,8 @@
         else return pushContext(state, stream, "atBlock");
       }
       if (type == "word") {
-        var word = stream.current().toLowerCase();
-        override = wordAsValue(word);
+          const word = stream.current().toLowerCase();
+          override = wordAsValue(word);
         if (/^(max|min)/.test(word)) override = "property";
         if (override == "tag") {
           tagVariablesRegexp.test(word) ? override = "variable-2" : override = "atom";
@@ -668,15 +668,15 @@
       },
       indent: function(state, textAfter, line) {
 
-        var cx = state.context,
-            ch = textAfter && textAfter.charAt(0),
-            indent = cx.indent,
-            lineFirstWord = firstWordOfLine(textAfter),
-            lineIndent = line.length - line.replace(/^\s*/, "").length,
-            prevLineFirstWord = state.context.prev ? state.context.prev.line.firstWord : "",
-            prevLineIndent = state.context.prev ? state.context.prev.line.indent : lineIndent;
+          let cx = state.context;
+          const ch = textAfter && textAfter.charAt(0);
+          let indent = cx.indent;
+          const lineFirstWord = firstWordOfLine(textAfter),
+              lineIndent = line.length - line.replace(/^\s*/, "").length,
+              prevLineFirstWord = state.context.prev ? state.context.prev.line.firstWord : "",
+              prevLineIndent = state.context.prev ? state.context.prev.line.indent : lineIndent;
 
-        if (cx.prev &&
+          if (cx.prev &&
             (ch == "}" && (cx.type == "block" || cx.type == "atBlock" || cx.type == "keyframes") ||
              ch == ")" && (cx.type == "parens" || cx.type == "atBlock_parens") ||
              ch == "{" && (cx.type == "at"))) {
@@ -743,20 +743,20 @@
       commonAtoms_ = ["null","true","false","href","title","type","not-allowed","readonly","disabled"],
       commonDef_ = ["@font-face", "@keyframes", "@media", "@viewport", "@page", "@host", "@supports", "@block", "@css"];
 
-  var hintWords = tagKeywords_.concat(documentTypes_,mediaTypes_,mediaFeatures_,
-                                      propertyKeywords_,nonStandardPropertyKeywords_,
-                                      colorKeywords_,valueKeywords_,fontProperties_,
-                                      wordOperatorKeywords_,blockKeywords_,
-                                      commonAtoms_,commonDef_);
+    const hintWords = tagKeywords_.concat(documentTypes_, mediaTypes_, mediaFeatures_,
+        propertyKeywords_, nonStandardPropertyKeywords_,
+        colorKeywords_, valueKeywords_, fontProperties_,
+        wordOperatorKeywords_, blockKeywords_,
+        commonAtoms_, commonDef_);
 
-  function wordRegexp(words) {
+    function wordRegexp(words) {
     words = words.sort(function(a,b){return b > a;});
     return new RegExp("^((" + words.join(")|(") + "))\\b");
   }
 
   function keySet(array) {
-    var keys = {};
-    for (var i = 0; i < array.length; ++i) keys[array[i]] = true;
+      const keys = {};
+      for (let i = 0; i < array.length; ++i) keys[array[i]] = true;
     return keys;
   }
 

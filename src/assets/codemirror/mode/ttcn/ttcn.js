@@ -12,32 +12,32 @@
   "use strict";
 
   CodeMirror.defineMode("ttcn", function(config, parserConfig) {
-    var indentUnit = config.indentUnit,
-        keywords = parserConfig.keywords || {},
-        builtin = parserConfig.builtin || {},
-        timerOps = parserConfig.timerOps || {},
-        portOps  = parserConfig.portOps || {},
-        configOps = parserConfig.configOps || {},
-        verdictOps = parserConfig.verdictOps || {},
-        sutOps = parserConfig.sutOps || {},
-        functionOps = parserConfig.functionOps || {},
+      const indentUnit = config.indentUnit,
+          keywords = parserConfig.keywords || {},
+          builtin = parserConfig.builtin || {},
+          timerOps = parserConfig.timerOps || {},
+          portOps = parserConfig.portOps || {},
+          configOps = parserConfig.configOps || {},
+          verdictOps = parserConfig.verdictOps || {},
+          sutOps = parserConfig.sutOps || {},
+          functionOps = parserConfig.functionOps || {},
 
-        verdictConsts = parserConfig.verdictConsts || {},
-        booleanConsts = parserConfig.booleanConsts || {},
-        otherConsts   = parserConfig.otherConsts || {},
+          verdictConsts = parserConfig.verdictConsts || {},
+          booleanConsts = parserConfig.booleanConsts || {},
+          otherConsts = parserConfig.otherConsts || {},
 
-        types = parserConfig.types || {},
-        visibilityModifiers = parserConfig.visibilityModifiers || {},
-        templateMatch = parserConfig.templateMatch || {},
-        multiLineStrings = parserConfig.multiLineStrings,
-        indentStatements = parserConfig.indentStatements !== false;
-    var isOperatorChar = /[+\-*&@=<>!\/]/;
-    var curPunc;
+          types = parserConfig.types || {},
+          visibilityModifiers = parserConfig.visibilityModifiers || {},
+          templateMatch = parserConfig.templateMatch || {},
+          multiLineStrings = parserConfig.multiLineStrings,
+          indentStatements = parserConfig.indentStatements !== false;
+      const isOperatorChar = /[+\-*&@=<>!\/]/;
+      let curPunc;
 
-    function tokenBase(stream, state) {
-      var ch = stream.next();
+      function tokenBase(stream, state) {
+        const ch = stream.next();
 
-      if (ch == '"' || ch == "'") {
+        if (ch == '"' || ch == "'") {
         state.tokenize = tokenString(ch);
         return state.tokenize(stream, state);
       }
@@ -78,9 +78,9 @@
         return "operator";
       }
       stream.eatWhile(/[\w\$_\xa1-\uffff]/);
-      var cur = stream.current();
+        const cur = stream.current();
 
-      if (keywords.propertyIsEnumerable(cur)) return "keyword";
+        if (keywords.propertyIsEnumerable(cur)) return "keyword";
       if (builtin.propertyIsEnumerable(cur)) return "builtin";
 
       if (timerOps.propertyIsEnumerable(cur)) return "def timerOps";
@@ -104,11 +104,11 @@
 
     function tokenString(quote) {
       return function(stream, state) {
-        var escaped = false, next, end = false;
-        while ((next = stream.next()) != null) {
+          let escaped = false, next, end = false;
+          while ((next = stream.next()) != null) {
           if (next == quote && !escaped){
-            var afterQuote = stream.peek();
-            //look if the character after the quote is like the B in '10100010'B
+              let afterQuote = stream.peek();
+              //look if the character after the quote is like the B in '10100010'B
             if (afterQuote){
               afterQuote = afterQuote.toLowerCase();
               if(afterQuote == "b" || afterQuote == "h" || afterQuote == "o")
@@ -125,8 +125,8 @@
     }
 
     function tokenComment(stream, state) {
-      var maybeEnd = false, ch;
-      while (ch = stream.next()) {
+        let maybeEnd = false, ch;
+        while (ch = stream.next()) {
         if (ch == "/" && maybeEnd) {
           state.tokenize = null;
           break;
@@ -145,15 +145,15 @@
     }
 
     function pushContext(state, col, type) {
-      var indent = state.indented;
-      if (state.context && state.context.type == "statement")
+        let indent = state.indented;
+        if (state.context && state.context.type == "statement")
         indent = state.context.indented;
       return state.context = new Context(indent, col, type, null, state.context);
     }
 
     function popContext(state) {
-      var t = state.context.type;
-      if (t == ")" || t == "]" || t == "}")
+        const t = state.context.type;
+        if (t == ")" || t == "]" || t == "}")
         state.indented = state.context.indented;
       return state.context = state.context.prev;
     }
@@ -170,16 +170,16 @@
       },
 
       token: function(stream, state) {
-        var ctx = state.context;
-        if (stream.sol()) {
+          let ctx = state.context;
+          if (stream.sol()) {
           if (ctx.align == null) ctx.align = false;
           state.indented = stream.indentation();
           state.startOfLine = true;
         }
         if (stream.eatSpace()) return null;
         curPunc = null;
-        var style = (state.tokenize || tokenBase)(stream, state);
-        if (style == "comment") return style;
+          const style = (state.tokenize || tokenBase)(stream, state);
+          if (style == "comment") return style;
         if (ctx.align == null) ctx.align = true;
 
         if ((curPunc == ";" || curPunc == ":" || curPunc == ",")
@@ -214,16 +214,17 @@
   });
 
   function words(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+      const obj = {}, words = str.split(" ");
+      for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
     return obj;
   }
 
   function def(mimes, mode) {
     if (typeof mimes == "string") mimes = [mimes];
-    var words = [];
-    function add(obj) {
-      if (obj) for (var prop in obj) if (obj.hasOwnProperty(prop))
+      const words = [];
+
+      function add(obj) {
+      if (obj) for (let prop in obj) if (obj.hasOwnProperty(prop))
         words.push(prop);
     }
 
@@ -237,7 +238,7 @@
       CodeMirror.registerHelper("hintWords", mimes[0], words);
     }
 
-    for (var i = 0; i < mimes.length; ++i)
+    for (let i = 0; i < mimes.length; ++i)
       CodeMirror.defineMIME(mimes[i], mode);
   }
 

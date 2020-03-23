@@ -14,31 +14,31 @@
   "use strict";
 
   CodeMirror.defineMode("django:inner", function() {
-    var keywords = ["block", "endblock", "for", "endfor", "true", "false", "filter", "endfilter",
-                    "loop", "none", "self", "super", "if", "elif", "endif", "as", "else", "import",
-                    "with", "endwith", "without", "context", "ifequal", "endifequal", "ifnotequal",
-                    "endifnotequal", "extends", "include", "load", "comment", "endcomment",
-                    "empty", "url", "static", "trans", "blocktrans", "endblocktrans", "now",
-                    "regroup", "lorem", "ifchanged", "endifchanged", "firstof", "debug", "cycle",
-                    "csrf_token", "autoescape", "endautoescape", "spaceless", "endspaceless",
-                    "ssi", "templatetag", "verbatim", "endverbatim", "widthratio"],
-        filters = ["add", "addslashes", "capfirst", "center", "cut", "date",
-                   "default", "default_if_none", "dictsort",
-                   "dictsortreversed", "divisibleby", "escape", "escapejs",
-                   "filesizeformat", "first", "floatformat", "force_escape",
-                   "get_digit", "iriencode", "join", "last", "length",
-                   "length_is", "linebreaks", "linebreaksbr", "linenumbers",
-                   "ljust", "lower", "make_list", "phone2numeric", "pluralize",
-                   "pprint", "random", "removetags", "rjust", "safe",
-                   "safeseq", "slice", "slugify", "stringformat", "striptags",
-                   "time", "timesince", "timeuntil", "title", "truncatechars",
-                   "truncatechars_html", "truncatewords", "truncatewords_html",
-                   "unordered_list", "upper", "urlencode", "urlize",
-                   "urlizetrunc", "wordcount", "wordwrap", "yesno"],
-        operators = ["==", "!=", "<", ">", "<=", ">="],
-        wordOperators = ["in", "not", "or", "and"];
+      let keywords = ["block", "endblock", "for", "endfor", "true", "false", "filter", "endfilter",
+              "loop", "none", "self", "super", "if", "elif", "endif", "as", "else", "import",
+              "with", "endwith", "without", "context", "ifequal", "endifequal", "ifnotequal",
+              "endifnotequal", "extends", "include", "load", "comment", "endcomment",
+              "empty", "url", "static", "trans", "blocktrans", "endblocktrans", "now",
+              "regroup", "lorem", "ifchanged", "endifchanged", "firstof", "debug", "cycle",
+              "csrf_token", "autoescape", "endautoescape", "spaceless", "endspaceless",
+              "ssi", "templatetag", "verbatim", "endverbatim", "widthratio"],
+          filters = ["add", "addslashes", "capfirst", "center", "cut", "date",
+              "default", "default_if_none", "dictsort",
+              "dictsortreversed", "divisibleby", "escape", "escapejs",
+              "filesizeformat", "first", "floatformat", "force_escape",
+              "get_digit", "iriencode", "join", "last", "length",
+              "length_is", "linebreaks", "linebreaksbr", "linenumbers",
+              "ljust", "lower", "make_list", "phone2numeric", "pluralize",
+              "pprint", "random", "removetags", "rjust", "safe",
+              "safeseq", "slice", "slugify", "stringformat", "striptags",
+              "time", "timesince", "timeuntil", "title", "truncatechars",
+              "truncatechars_html", "truncatewords", "truncatewords_html",
+              "unordered_list", "upper", "urlencode", "urlize",
+              "urlizetrunc", "wordcount", "wordwrap", "yesno"],
+          operators = ["==", "!=", "<", ">", "<=", ">="],
+          wordOperators = ["in", "not", "or", "and"];
 
-    keywords = new RegExp("^\\b(" + keywords.join("|") + ")\\b");
+      keywords = new RegExp("^\\b(" + keywords.join("|") + ")\\b");
     filters = new RegExp("^\\b(" + filters.join("|") + ")\\b");
     operators = new RegExp("^\\b(" + operators.join("|") + ")\\b");
     wordOperators = new RegExp("^\\b(" + wordOperators.join("|") + ")\\b");
@@ -77,9 +77,9 @@
             state.escapeNext = false;
           }
 
-          var ch = stream.next();
+            const ch = stream.next();
 
-          // Take into account the backslash for escaping characters, such as
+            // Take into account the backslash for escaping characters, such as
           // the string delimiter.
           if (ch == "\\") {
             state.escapeNext = true;
@@ -278,8 +278,8 @@
       }
 
       // Attempt to match a keyword
-      var keywordMatch = stream.match(keywords);
-      if (keywordMatch) {
+        const keywordMatch = stream.match(keywords);
+        if (keywordMatch) {
         if (keywordMatch[0] == "comment") {
           state.blockCommentTag = true;
         }
@@ -317,8 +317,8 @@
 
     // Mark everything as comment inside the tag and the tag itself.
     function inComment (stream, state) {
-      if (stream.match(/^.*?#\}/)) state.tokenize = tokenBase
-      else stream.skipToEnd()
+      if (stream.match(/^.*?#\}/)) state.tokenize = tokenBase;
+      else stream.skipToEnd();
       return "comment";
     }
 
@@ -347,9 +347,9 @@
   });
 
   CodeMirror.defineMode("django", function(config) {
-    var htmlBase = CodeMirror.getMode(config, "text/html");
-    var djangoInner = CodeMirror.getMode(config, "django:inner");
-    return CodeMirror.overlayMode(htmlBase, djangoInner);
+      const htmlBase = CodeMirror.getMode(config, "text/html");
+      const djangoInner = CodeMirror.getMode(config, "django:inner");
+      return CodeMirror.overlayMode(htmlBase, djangoInner);
   });
 
   CodeMirror.defineMIME("text/x-django", "django");

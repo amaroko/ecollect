@@ -1,9 +1,216 @@
-<div class="content-heading">
-    <div>Debt Collectors
-        <small>New cases</small></div>
-</div>
-<div class="container-fluid">
-    <div class="col-4 col-xl-12">
-        
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+  <p style="font-size: 20px; color: white">Processing ...</p>
+</ngx-spinner>
+<div>
+  <div class="card">
+    <div class="card-header">
+      <strong>New Valuer activity </strong> capture
     </div>
+    <!--    (ngSubmit)="onSubmitted($event)"-->
+    <form [formGroup]="newcase" (ngSubmit)="onSubmit(newcase)"  autocomplete="off" novalidate>
+      <div  class="card-body" >
+        <div class="row">
+          <div class="col-xl-2 col-md-3">
+            Search
+          </div>
+          <div class="col-md-9">
+            <div class="col-md-12">
+              <label for="typeahead-http"></label>
+              <input  [(ngModel)]="model" [class.is-invalid]="searchFailed" [inputFormatter]="inputFormatBandListValue"
+                      [ngbTypeahead]="search" [resultFormatter]="resultFormatBandListValue" class="form-control"
+                      id="typeahead-http"
+                      formControlName="Search" placeholder="Search" type="text" value="search"/>
+              <!--              <small *ngIf="searching" class="form-text text-muted">searching...</small>-->
+              <img *ngIf="searching" alt="Loading Icon" src="assets/img/user/loading.gif">
+              <div>
+                <!--                <p>{{model | json}}</p>-->
+              </div>
+              <div *ngIf="searchFailed" class="invalid-feedback">Sorry, suggestions could not be loaded.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Customer Number
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input  [ngModel]="model.CUSTNUMBER"  class="form-control"
+                      formControlName="custnumber"
+                      required="" type="text">
+            </div>
+            <!--            <span *ngIf="!newcase.get('custnumber').valid" class="validation-error">Customer Number Required</span>-->
+          </div>
+          <div class="col-md-3">
+            Account Number
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input  [ngModel]="model.ACCNUMBER"
+                      class="form-control" id="accountnumber" formControlName="accountnumber" type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Customer Name
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input [ngModel]="model.CLIENT_NAME" class="form-control" id="customername"  formControlName="customername" type="text">
+            </div>
+          </div>
+          <div class="col-md-3">
+            Account Balance
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input  class="form-control" [ngModel]="model.ORIGBALANCE"
+                      id="accountbalance" formControlName="accountbalance" type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Vehicle Make
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input  class="form-control" id="vehiclemake" formControlName="vehiclemake" type="text">
+            </div>
+          </div>
+          <div class="col-md-3">
+            ARO CODE
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input [ngModel]="model.AROCODE" class="form-control" id="arocode" formControlName="arocode" type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Cancel Comment
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input class="form-control" id="cancelcomment" formControlName="cancelcomment"  type="text" >
+            </div>
+          </div>
+          <div class="col-md-3">
+            Yard
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input  class="form-control" id="yard" formControlName="yard" type="text" >
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Stage Date
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <div class="input-group">
+                <input bsDatepicker class="form-control" placement="top" formControlName="stagedate" placeholder="Dateinput"
+                       type="text"  >
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary"  type="button"><span><i
+                    class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            Date Input
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <div class="input-group">
+                <input #dp="bsDatepicker" bsDatepicker placement="top" class="form-control" formControlName="dateinput" ngModel
+                       placeholder="Dateinput" type="text"  >
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary"  type="button"><span><i
+                    class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Owner
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input [ngModel]="model.COLOFFICER" class="form-control" id="owner" formControlName="owner" type="text" >
+            </div>
+          </div>
+          <div class="col-md-3">
+            Ownership
+          </div>
+          <div  class="col-md-3">
+            <div class="col-md-12">
+              <input class="form-control" id="ownership" formControlName="ownership" ngModel type="text" >
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Registered Owner
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input class="form-control" id="regowner" formControlName="regowner" type="text" >
+            </div>
+          </div>
+          <div class="col-md-3">
+            NewStatus
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input class="form-control" id="newstatus" formControlName="newstatus" ngModel type="text" >
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            File Number
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input [ngModel]="model.FILENO" class="form-control" id="filenumber" formControlName="filenumber" type="text">
+            </div>
+          </div>
+          <div class="col-md-3">
+            Property Number
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input  class="form-control" id="propertyno" formControlName="propertyno" type="text" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button [disabled]="!newcase.valid" class="btn btn-sm btn-primary"  type="submit"><i
+          class="fa fa-dot-circle-o"></i> Submit</button>
+        <a [routerLink]="['/valuers/allcases']" class="btn btn-sm btn-danger" type="reset" ><i class="fa fa-ban"></i> Reset</a>
+      </div>
+    </form>
+    <!--<pre>{{actionForm.valid | json}}</pre>
+    <pre>{{actionForm.value | json}}</pre>-->
+  </div>
 </div>
+

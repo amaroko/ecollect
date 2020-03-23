@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { environment } from '../../../../../environments/environment';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {environment} from '../../../../../environments/environment';
 import * as $ from 'jquery';
-import { EcolService } from '../../../../services/ecol.service';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs} from 'file-saver';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-demandshistory',
@@ -14,7 +14,9 @@ export class DemandshistoryComponent implements OnInit {
 
   model: any = {};
   demands: any;
-  constructor(private ecolService: EcolService) {}
+
+  constructor(private ecolService: EcolService) {
+  }
 
   ngOnInit() {
   }
@@ -37,7 +39,7 @@ export class DemandshistoryComponent implements OnInit {
 
   downloadFile(filepath) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-     saveAs(data, 'filename');
+      saveAs(data, 'filename');
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');

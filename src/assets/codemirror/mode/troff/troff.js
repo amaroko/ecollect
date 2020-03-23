@@ -13,15 +13,15 @@
 
 CodeMirror.defineMode('troff', function() {
 
-  var words = {};
+    const words = {};
 
-  function tokenBase(stream) {
+    function tokenBase(stream) {
     if (stream.eatSpace()) return null;
 
-    var sol = stream.sol();
-    var ch = stream.next();
+      const sol = stream.sol();
+      const ch = stream.next();
 
-    if (ch === '\\') {
+      if (ch === '\\') {
       if (stream.match('fB') || stream.match('fR') || stream.match('fI') ||
           stream.match('u')  || stream.match('d')  ||
           stream.match('%')  || stream.match('&')) {
@@ -61,13 +61,13 @@ CodeMirror.defineMode('troff', function() {
       }
     }
     stream.eatWhile(/[\w-]/);
-    var cur = stream.current();
-    return words.hasOwnProperty(cur) ? words[cur] : null;
+      const cur = stream.current();
+      return words.hasOwnProperty(cur) ? words[cur] : null;
   }
 
   function tokenize(stream, state) {
     return (state.tokens[0] || tokenBase) (stream, state);
-  };
+  }
 
   return {
     startState: function() {return {tokens:[]};},

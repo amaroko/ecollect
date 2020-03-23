@@ -31,12 +31,12 @@ CodeMirror.defineMode("http", function() {
   }
 
   function responseStatusCode(stream, state) {
-    var code = stream.match(/^\d+/);
-    if (!code) return failFirstLine(stream, state);
+      const code = stream.match(/^\d+/);
+      if (!code) return failFirstLine(stream, state);
 
     state.cur = responseStatusText;
-    var status = Number(code[0]);
-    if (status >= 100 && status < 200) {
+      const status = Number(code[0]);
+      if (status >= 100 && status < 200) {
       return "positive informational";
     } else if (status >= 200 && status < 300) {
       return "positive success";
@@ -93,8 +93,8 @@ CodeMirror.defineMode("http", function() {
 
   return {
     token: function(stream, state) {
-      var cur = state.cur;
-      if (cur != header && cur != body && stream.eatSpace()) return null;
+        const cur = state.cur;
+        if (cur != header && cur != body && stream.eatSpace()) return null;
       return cur(stream, state);
     },
 

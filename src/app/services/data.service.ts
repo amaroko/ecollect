@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable()
 export class DataService {
 
-  constructor() { }
+  constructor() {
+  }
 
   public dataSubject = new BehaviorSubject<number>(0);
   public notesSubject = new BehaviorSubject<number>(0);
@@ -15,9 +16,14 @@ export class DataService {
   public filesSubject = new BehaviorSubject<number>(0);
   public telesSubject = new BehaviorSubject<number>(0);
   public ptpsSubject = new BehaviorSubject<number>(0);
+  public timeSubject = new BehaviorSubject<number>(0);
 
   getTestData(): Observable<any> {
     return this.dataSubject.asObservable();
+  }
+
+  getTimeData(): Observable<any> {
+    return this.timeSubject.asObservable();
   }
 
   getNotesData(): Observable<any> {

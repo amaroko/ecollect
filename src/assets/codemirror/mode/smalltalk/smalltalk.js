@@ -13,36 +13,36 @@
 
 CodeMirror.defineMode('smalltalk', function(config) {
 
-  var specialChars = /[+\-\/\\*~<>=@%|&?!.,:;^]/;
-  var keywords = /true|false|nil|self|super|thisContext/;
+    const specialChars = /[+\-\/\\*~<>=@%|&?!.,:;^]/;
+    const keywords = /true|false|nil|self|super|thisContext/;
 
-  var Context = function(tokenizer, parent) {
-    this.next = tokenizer;
-    this.parent = parent;
-  };
+    const Context = function (tokenizer, parent) {
+        this.next = tokenizer;
+        this.parent = parent;
+    };
 
-  var Token = function(name, context, eos) {
-    this.name = name;
-    this.context = context;
-    this.eos = eos;
-  };
+    const Token = function (name, context, eos) {
+        this.name = name;
+        this.context = context;
+        this.eos = eos;
+    };
 
-  var State = function() {
-    this.context = new Context(next, null);
-    this.expectVariable = true;
-    this.indentation = 0;
-    this.userIndentationDelta = 0;
-  };
+    const State = function () {
+        this.context = new Context(next, null);
+        this.expectVariable = true;
+        this.indentation = 0;
+        this.userIndentationDelta = 0;
+    };
 
-  State.prototype.userIndent = function(indentation) {
+    State.prototype.userIndent = function(indentation) {
     this.userIndentationDelta = indentation > 0 ? (indentation / config.indentUnit - this.indentation) : 0;
   };
 
   var next = function(stream, context, state) {
-    var token = new Token(null, context, false);
-    var aChar = stream.next();
+      let token = new Token(null, context, false);
+      const aChar = stream.next();
 
-    if (aChar === '"') {
+      if (aChar === '"') {
       token = nextComment(stream, new Context(nextComment, context));
 
     } else if (aChar === '\'') {
@@ -115,10 +115,10 @@ CodeMirror.defineMode('smalltalk', function(config) {
   };
 
   var nextTemporaries = function(stream, context) {
-    var token = new Token(null, context, false);
-    var aChar = stream.next();
+      const token = new Token(null, context, false);
+      const aChar = stream.next();
 
-    if (aChar === '|') {
+      if (aChar === '|') {
       token.context = context.parent;
       token.eos = true;
 
@@ -142,8 +142,8 @@ CodeMirror.defineMode('smalltalk', function(config) {
         return null;
       }
 
-      var token = state.context.next(stream, state.context, state);
-      state.context = token.context;
+        const token = state.context.next(stream, state.context, state);
+        state.context = token.context;
       state.expectVariable = token.eos;
 
       return token.name;
@@ -154,8 +154,8 @@ CodeMirror.defineMode('smalltalk', function(config) {
     },
 
     indent: function(state, textAfter) {
-      var i = state.context.next === next && textAfter && textAfter.charAt(0) === ']' ? -1 : state.userIndentationDelta;
-      return (state.indentation + i) * config.indentUnit;
+        const i = state.context.next === next && textAfter && textAfter.charAt(0) === ']' ? -1 : state.userIndentationDelta;
+        return (state.indentation + i) * config.indentUnit;
     },
 
     electricChars: ']'

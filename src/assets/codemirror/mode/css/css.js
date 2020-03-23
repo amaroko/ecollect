@@ -12,34 +12,35 @@
 "use strict";
 
 CodeMirror.defineMode("css", function(config, parserConfig) {
-  var inline = parserConfig.inline
-  if (!parserConfig.propertyKeywords) parserConfig = CodeMirror.resolveMode("text/css");
+    const inline = parserConfig.inline;
+    if (!parserConfig.propertyKeywords) parserConfig = CodeMirror.resolveMode("text/css");
 
-  var indentUnit = config.indentUnit,
-      tokenHooks = parserConfig.tokenHooks,
-      documentTypes = parserConfig.documentTypes || {},
-      mediaTypes = parserConfig.mediaTypes || {},
-      mediaFeatures = parserConfig.mediaFeatures || {},
-      mediaValueKeywords = parserConfig.mediaValueKeywords || {},
-      propertyKeywords = parserConfig.propertyKeywords || {},
-      nonStandardPropertyKeywords = parserConfig.nonStandardPropertyKeywords || {},
-      fontProperties = parserConfig.fontProperties || {},
-      counterDescriptors = parserConfig.counterDescriptors || {},
-      colorKeywords = parserConfig.colorKeywords || {},
-      valueKeywords = parserConfig.valueKeywords || {},
-      allowNested = parserConfig.allowNested,
-      supportsAtComponent = parserConfig.supportsAtComponent === true;
+    const indentUnit = config.indentUnit,
+        tokenHooks = parserConfig.tokenHooks,
+        documentTypes = parserConfig.documentTypes || {},
+        mediaTypes = parserConfig.mediaTypes || {},
+        mediaFeatures = parserConfig.mediaFeatures || {},
+        mediaValueKeywords = parserConfig.mediaValueKeywords || {},
+        propertyKeywords = parserConfig.propertyKeywords || {},
+        nonStandardPropertyKeywords = parserConfig.nonStandardPropertyKeywords || {},
+        fontProperties = parserConfig.fontProperties || {},
+        counterDescriptors = parserConfig.counterDescriptors || {},
+        colorKeywords = parserConfig.colorKeywords || {},
+        valueKeywords = parserConfig.valueKeywords || {},
+        allowNested = parserConfig.allowNested,
+        supportsAtComponent = parserConfig.supportsAtComponent === true;
 
-  var type, override;
-  function ret(style, tp) { type = tp; return style; }
+    let type, override;
+
+    function ret(style, tp) { type = tp; return style; }
 
   // Tokenizers
 
   function tokenBase(stream, state) {
-    var ch = stream.next();
-    if (tokenHooks[ch]) {
-      var result = tokenHooks[ch](stream, state);
-      if (result !== false) return result;
+      const ch = stream.next();
+      if (tokenHooks[ch]) {
+        const result = tokenHooks[ch](stream, state);
+        if (result !== false) return result;
     }
     if (ch == "@") {
       stream.eatWhile(/[\w\\\-]/);
@@ -92,8 +93,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 
   function tokenString(quote) {
     return function(stream, state) {
-      var escaped = false, ch;
-      while ((ch = stream.next()) != null) {
+        let escaped = false, ch;
+        while ((ch = stream.next()) != null) {
         if (ch == quote && !escaped) {
           if (quote == ")") stream.backUp(1);
           break;
@@ -137,7 +138,7 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
     return states[state.context.type](type, stream, state);
   }
   function popAndPass(type, stream, state, n) {
-    for (var i = n || 1; i > 0; i--)
+    for (let i = n || 1; i > 0; i--)
       state.context = state.context.prev;
     return pass(type, stream, state);
   }
@@ -145,8 +146,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
   // Parser
 
   function wordAsValue(stream) {
-    var word = stream.current().toLowerCase();
-    if (valueKeywords.hasOwnProperty(word))
+      const word = stream.current().toLowerCase();
+      if (valueKeywords.hasOwnProperty(word))
       override = "atom";
     else if (colorKeywords.hasOwnProperty(word))
       override = "keyword";
@@ -192,8 +193,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 
   states.block = function(type, stream, state) {
     if (type == "word") {
-      var word = stream.current().toLowerCase();
-      if (propertyKeywords.hasOwnProperty(word)) {
+        const word = stream.current().toLowerCase();
+        if (propertyKeywords.hasOwnProperty(word)) {
         override = "property";
         return "maybeprop";
       } else if (nonStandardPropertyKeywords.hasOwnProperty(word)) {
@@ -277,8 +278,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
     if (type == "interpolation") return pushContext(state, stream, "interpolation");
 
     if (type == "word") {
-      var word = stream.current().toLowerCase();
-      if (word == "only" || word == "not" || word == "and" || word == "or")
+        const word = stream.current().toLowerCase();
+        if (word == "only" || word == "not" || word == "and" || word == "or")
         override = "keyword";
       else if (mediaTypes.hasOwnProperty(word))
         override = "attribute";
@@ -374,8 +375,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 
     token: function(stream, state) {
       if (!state.tokenize && stream.eatSpace()) return null;
-      var style = (state.tokenize || tokenBase)(stream, state);
-      if (style && typeof style == "object") {
+        let style = (state.tokenize || tokenBase)(stream, state);
+        if (style && typeof style == "object") {
         type = style[1];
         style = style[0];
       }
@@ -385,9 +386,10 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
     },
 
     indent: function(state, textAfter) {
-      var cx = state.context, ch = textAfter && textAfter.charAt(0);
-      var indent = cx.indent;
-      if (cx.type == "prop" && (ch == "}" || ch == ")")) cx = cx.prev;
+        let cx = state.context;
+        const ch = textAfter && textAfter.charAt(0);
+        let indent = cx.indent;
+        if (cx.type == "prop" && (ch == "}" || ch == ")")) cx = cx.prev;
       if (cx.prev) {
         if (ch == "}" && (cx.type == "block" || cx.type == "top" ||
                           cx.type == "interpolation" || cx.type == "restricted_atBlock")) {
@@ -412,8 +414,8 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 });
 
   function keySet(array) {
-    var keys = {};
-    for (var i = 0; i < array.length; ++i) {
+      const keys = {};
+      for (let i = 0; i < array.length; ++i) {
       keys[array[i].toLowerCase()] = true;
     }
     return keys;
@@ -682,14 +684,14 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
     "xx-large", "xx-small"
   ], valueKeywords = keySet(valueKeywords_);
 
-  var allWords = documentTypes_.concat(mediaTypes_).concat(mediaFeatures_).concat(mediaValueKeywords_)
-    .concat(propertyKeywords_).concat(nonStandardPropertyKeywords_).concat(colorKeywords_)
-    .concat(valueKeywords_);
-  CodeMirror.registerHelper("hintWords", "css", allWords);
+    const allWords = documentTypes_.concat(mediaTypes_).concat(mediaFeatures_).concat(mediaValueKeywords_)
+        .concat(propertyKeywords_).concat(nonStandardPropertyKeywords_).concat(colorKeywords_)
+        .concat(valueKeywords_);
+    CodeMirror.registerHelper("hintWords", "css", allWords);
 
   function tokenCComment(stream, state) {
-    var maybeEnd = false, ch;
-    while ((ch = stream.next()) != null) {
+      let maybeEnd = false, ch;
+      while ((ch = stream.next()) != null) {
       if (maybeEnd && ch == "/") {
         state.tokenize = null;
         break;

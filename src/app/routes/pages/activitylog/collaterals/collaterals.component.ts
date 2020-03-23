@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../../environments/environment';
+import {environment} from '../../../../../environments/environment';
 
 const URL = environment.valor;
 
@@ -20,10 +20,11 @@ export class CollateralsComponent implements OnInit {
   model: any = {};
   collaterals: any = [];
   edit = false;
+
   //
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService) {
     //
   }
 
@@ -53,7 +54,7 @@ export class CollateralsComponent implements OnInit {
     // Loading indictor
     this.ecolService.loader();
     //
-   const body = {
+    const body = {
       regowner: form.value.regowner,
       collateralname: form.value.collateralname,
       accnumber: this.model.accnumber,

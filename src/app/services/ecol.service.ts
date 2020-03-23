@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpEventType} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 import swal from 'sweetalert2';
-import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import {Router} from '@angular/router';
+import {forkJoin} from 'rxjs';
+import * as XLSX from "xlsx";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class EcolService {
   constructor(
     private httpClient: HttpClient,
     private router: Router
-  ) { }
+  ) {
+  }
 
   loader() {
 
@@ -25,6 +27,16 @@ export class EcolService {
         swal.showLoading();
       }*/
     });
+  }
+
+  bulktotblcardsstatic(body) {
+    const url = environment.api + '/api/tblcard_static/actiondate';
+    return this.httpClient.post(url, body);
+  }
+
+  bulktotblportfolio(body) {
+    const url = environment.api + '/api/tbl_portfolio_static/actiondate';
+    return this.httpClient.post(url, body);
   }
 
   submitGuarantor(body) {
@@ -44,20 +56,17 @@ export class EcolService {
   }
 
   newvaluer(body) {
-    return this.httpClient.post(environment.api + '/api/valuers', body);
+    return this.httpClient.post(environment.api + '/api/tblvaluers', body);
   }
 
   newrepo(body) {
     return this.httpClient.post(environment.api + '/api/repossessions', body);
   }
 
-  newinvestigators(body) {
-    return this.httpClient.post(environment.api + '/api/investigators', body);
-  }
 
   getallnotes(filter, cust) {
     //
-    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust ;
+    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust;
 
     if (filter !== '') {
       url = url + '&offset=' + filter.skip + '&next= ' + filter.limit;
@@ -96,16 +105,24 @@ export class EcolService {
     const url = environment.api + '/api/tbl_s_planmemos';
     return this.httpClient.get(url);
   }
+
   getexcuse() {
     const url = environment.api + '/api/excuse?filter[order]=excuse ASC';
     return this.httpClient.get(url);
   }
+
   getcure() {
     const url = environment.api + '/api/cure';
     return this.httpClient.get(url);
   }
+
   getparty() {
     const url = environment.api + '/api/party';
+    return this.httpClient.get(url);
+  }
+
+  getparty1() {
+    const url = environment.api + '/api/sptypes';
     return this.httpClient.get(url);
   }
 
@@ -124,6 +141,21 @@ export class EcolService {
     return this.httpClient.put(url, body);
   }
 
+  newdc(body) {
+    return this.httpClient.post<any>(environment.api + '/api/tbldebtcollectors', body);
+  }
+  newyard(body) {
+    return this.httpClient.post<any>(environment.api + '/api/tblyards', body);
+  }
+
+  newmarketor(body) {
+    return this.httpClient.post<any>(environment.api + '/api/tblmarketors', body);
+  }
+
+  newinvestigators(body) {
+    return this.httpClient.post<any>(environment.api + '/api/tblinvestigators', body);
+  }
+
   postnotes(body) {
     const url = environment.api + '/api/notehis';
     return this.httpClient.post<any>(url, body);
@@ -133,9 +165,24 @@ export class EcolService {
     const url = environment.nodeapi + '/xlsuploads/uploadbulk-test';
     return this.httpClient.post<any>(url, body, {
       reportProgress: true,
-      observe: 'events' 
+      observe: 'events'
     });
   }
+
+  public importFromFile(bstr: string): XLSX.AOA2SheetOpts {
+    /* read workbook */
+    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+    /* grab first sheet */
+    const wsname: string = wb.SheetNames[0];
+    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+    /* save data */
+    const data = (XLSX.utils.sheet_to_json(ws, { header: 1 })) as XLSX.AOA2SheetOpts;
+
+    return data;
+  }
+
 
   insertbulknotes(body) {
     const url = environment.nodeapi + '/notes/bulknotes';
@@ -611,7 +658,7 @@ export class EcolService {
   guarantorletters(data) {
     return this.httpClient.post<any>(environment.api + '/api/guarantorletters', data);
   }
-  
+
   woffstory(data) {
     return this.httpClient.put<any>(environment.api + '/api/writeoffstory', data);
   }
@@ -642,7 +689,7 @@ export class EcolService {
   }
 
   downloadFile(file: string) {
-    const body = { filename: file };
+    const body = {filename: file};
     return this.httpClient.post(environment.uploadurl + '/download', body, {
       responseType: 'blob',
       headers: new HttpHeaders().append('Content-Type', 'application/json')
@@ -650,7 +697,7 @@ export class EcolService {
   }
 
   demanddownload(file: string) {
-    const body = { filename: file };
+    const body = {filename: file};
 
     return this.httpClient.post(environment.demanddownload + '/filesapi/download', body, {
       responseType: 'blob',
@@ -659,7 +706,7 @@ export class EcolService {
   }
 
   demanddownload2(file: string) {
-    const body = { filename: environment.letters_path + file };
+    const body = {filename: environment.letters_path + file};
 
     return this.httpClient.post(environment.demanddownload + '/filesapi/download', body, {
       responseType: 'blob',
@@ -773,16 +820,46 @@ export class EcolService {
     // return this.httpClient.get<any>(environment.nodeapi + '/loans/demandlettersccdue/');
   }
 
+  postinsurance(data) {
+    return this.httpClient.post<any>(environment.nodeapi + '/insurance/insert', data);
+  }
+
+  updateinsurance(data) {
+    return this.httpClient.post<any>(environment.nodeapi + '/insurance/update', data);
+  }
+
+
+  assigndebtcollector(body) {
+    const url = environment.api + '/api/tbldebtcollectors/assigndebtcoll';
+    return this.httpClient.post(url, body);
+  }
+
+  updateaccdebtcollector(body) {
+    const url = environment.api + '/api/tbldebtcollectors/updateaccdebtcoll';
+    return this.httpClient.post(url, body);
+  }
+
+  editassigndebtcollector(body) {
+    const url = environment.api + '/api/tbldebtcollectors/editassigndebtcoll';
+    return this.httpClient.post(url, body);
+  }
+
+
+  deleteinsurance(id) {
+    return this.httpClient.post<any>(environment.nodeapi + '/insurance/delete', id);
+  }
+
+
   ifLogged() {
     if (!localStorage.getItem('currentUser')) {
-      swal({
+      /*swal({
         title: 'You\'re Not Logged In',
         imageUrl: 'assets/img/user/notlogg.png',
         text: 'Kindly, log in to continue!',
 
         confirmButtonColor: '#7ac142',
         confirmButtonText: 'Okay'
-      });
+      });*/
       this.router.navigate(['/login']);
       return false;
     }
@@ -790,50 +867,50 @@ export class EcolService {
 
   ifclosed() {
     if (!sessionStorage.getItem('currentUser')) {
-      swal({
+      /*swal({
         title: 'You\'re Not Logged In',
         imageUrl: 'assets/img/user/notlogg.png',
         text: 'Kindly, log in to continue!',
 
         confirmButtonColor: '#7ac142',
         confirmButtonText: 'Okay'
-      });
+      });*/
       this.router.navigate(['/login']);
       return false;
     }
   }
 
   downloadXlsFile(data, filename = 'data') {
-    let csvData = this.ConvertToCSV(data, ['id', 'accnumber', 'custnumber', 'notemade', 'owner', 'noteimp', 'notesrc', 'notedate']);
-    console.log(csvData)
-    let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
-    let dwldLink = document.createElement("a");
-    let url = URL.createObjectURL(blob);
-    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-    if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
-      dwldLink.setAttribute("target", "_blank");
+    const csvData = this.ConvertToCSV(data, ['id', 'accnumber', 'custnumber', 'notemade', 'owner', 'noteimp', 'notesrc', 'notedate']);
+    console.log(csvData);
+    const blob = new Blob(['\ufeff' + csvData], {type: 'text/csv;charset=utf-8;'});
+    const dwldLink = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+    if (isSafariBrowser) {  // if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute('target', '_blank');
     }
-    dwldLink.setAttribute("href", url);
-    dwldLink.setAttribute("download", filename + ".csv");
-    dwldLink.style.visibility = "hidden";
+    dwldLink.setAttribute('href', url);
+    dwldLink.setAttribute('download', filename + '.csv');
+    dwldLink.style.visibility = 'hidden';
     document.body.appendChild(dwldLink);
     dwldLink.click();
     document.body.removeChild(dwldLink);
   }
 
   ConvertToCSV(objArray, headerList) {
-    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     let row = 'S.No,';
-    for (let index in headerList) {
+    for (const index in headerList) {
       row += headerList[index] + ',';
     }
     row = row.slice(0, -1);
     str += row + '\r\n';
     for (let i = 0; i < array.length; i++) {
       let line = (i + 1) + '';
-      for (let index in headerList) {
-        let head = headerList[index];
+      for (const index in headerList) {
+        const head = headerList[index];
         line += ',' + array[i][head];
       }
       str += line + '\r\n';

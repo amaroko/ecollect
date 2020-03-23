@@ -13,71 +13,71 @@
 
 CodeMirror.defineMode("dylan", function(_config) {
   // Words
-  var words = {
-    // Words that introduce unnamed definitions like "define interface"
-    unnamedDefinition: ["interface"],
+    const words = {
+        // Words that introduce unnamed definitions like "define interface"
+        unnamedDefinition: ["interface"],
 
-    // Words that introduce simple named definitions like "define library"
-    namedDefinition: ["module", "library", "macro",
-                      "C-struct", "C-union",
-                      "C-function", "C-callable-wrapper"
-                     ],
+        // Words that introduce simple named definitions like "define library"
+        namedDefinition: ["module", "library", "macro",
+            "C-struct", "C-union",
+            "C-function", "C-callable-wrapper"
+        ],
 
-    // Words that introduce type definitions like "define class".
-    // These are also parameterized like "define method" and are
-    // appended to otherParameterizedDefinitionWords
-    typeParameterizedDefinition: ["class", "C-subtype", "C-mapped-subtype"],
+        // Words that introduce type definitions like "define class".
+        // These are also parameterized like "define method" and are
+        // appended to otherParameterizedDefinitionWords
+        typeParameterizedDefinition: ["class", "C-subtype", "C-mapped-subtype"],
 
-    // Words that introduce trickier definitions like "define method".
-    // These require special definitions to be added to startExpressions
-    otherParameterizedDefinition: ["method", "function",
-                                   "C-variable", "C-address"
-                                  ],
+        // Words that introduce trickier definitions like "define method".
+        // These require special definitions to be added to startExpressions
+        otherParameterizedDefinition: ["method", "function",
+            "C-variable", "C-address"
+        ],
 
-    // Words that introduce module constant definitions.
-    // These must also be simple definitions and are
-    // appended to otherSimpleDefinitionWords
-    constantSimpleDefinition: ["constant"],
+        // Words that introduce module constant definitions.
+        // These must also be simple definitions and are
+        // appended to otherSimpleDefinitionWords
+        constantSimpleDefinition: ["constant"],
 
-    // Words that introduce module variable definitions.
-    // These must also be simple definitions and are
-    // appended to otherSimpleDefinitionWords
-    variableSimpleDefinition: ["variable"],
+        // Words that introduce module variable definitions.
+        // These must also be simple definitions and are
+        // appended to otherSimpleDefinitionWords
+        variableSimpleDefinition: ["variable"],
 
-    // Other words that introduce simple definitions
-    // (without implicit bodies).
-    otherSimpleDefinition: ["generic", "domain",
-                            "C-pointer-type",
-                            "table"
-                           ],
+        // Other words that introduce simple definitions
+        // (without implicit bodies).
+        otherSimpleDefinition: ["generic", "domain",
+            "C-pointer-type",
+            "table"
+        ],
 
-    // Words that begin statements with implicit bodies.
-    statement: ["if", "block", "begin", "method", "case",
-                "for", "select", "when", "unless", "until",
-                "while", "iterate", "profiling", "dynamic-bind"
-               ],
+        // Words that begin statements with implicit bodies.
+        statement: ["if", "block", "begin", "method", "case",
+            "for", "select", "when", "unless", "until",
+            "while", "iterate", "profiling", "dynamic-bind"
+        ],
 
-    // Patterns that act as separators in compound statements.
-    // This may include any general pattern that must be indented
-    // specially.
-    separator: ["finally", "exception", "cleanup", "else",
-                "elseif", "afterwards"
-               ],
+        // Patterns that act as separators in compound statements.
+        // This may include any general pattern that must be indented
+        // specially.
+        separator: ["finally", "exception", "cleanup", "else",
+            "elseif", "afterwards"
+        ],
 
-    // Keywords that do not require special indentation handling,
-    // but which should be highlighted
-    other: ["above", "below", "by", "from", "handler", "in",
+        // Keywords that do not require special indentation handling,
+        // but which should be highlighted
+        other: ["above", "below", "by", "from", "handler", "in",
             "instance", "let", "local", "otherwise", "slot",
             "subclass", "then", "to", "keyed-by", "virtual"
-           ],
+        ],
 
-    // Condition signaling function calls
-    signalingCalls: ["signal", "error", "cerror",
-                     "break", "check-type", "abort"
-                    ]
-  };
+        // Condition signaling function calls
+        signalingCalls: ["signal", "error", "cerror",
+            "break", "check-type", "abort"
+        ]
+    };
 
-  words["otherDefinition"] =
+    words["otherDefinition"] =
     words["unnamedDefinition"]
     .concat(words["namedDefinition"])
     .concat(words["otherParameterizedDefinition"]);
@@ -101,24 +101,24 @@ CodeMirror.defineMode("dylan", function(_config) {
     .concat(words["other"]);
 
   // Patterns
-  var symbolPattern = "[-_a-zA-Z?!*@<>$%]+";
-  var symbol = new RegExp("^" + symbolPattern);
-  var patterns = {
-    // Symbols with special syntax
-    symbolKeyword: symbolPattern + ":",
-    symbolClass: "<" + symbolPattern + ">",
-    symbolGlobal: "\\*" + symbolPattern + "\\*",
-    symbolConstant: "\\$" + symbolPattern
-  };
-  var patternStyles = {
-    symbolKeyword: "atom",
-    symbolClass: "tag",
-    symbolGlobal: "variable-2",
-    symbolConstant: "variable-3"
-  };
+    const symbolPattern = "[-_a-zA-Z?!*@<>$%]+";
+    const symbol = new RegExp("^" + symbolPattern);
+    const patterns = {
+        // Symbols with special syntax
+        symbolKeyword: symbolPattern + ":",
+        symbolClass: "<" + symbolPattern + ">",
+        symbolGlobal: "\\*" + symbolPattern + "\\*",
+        symbolConstant: "\\$" + symbolPattern
+    };
+    const patternStyles = {
+        symbolKeyword: "atom",
+        symbolClass: "tag",
+        symbolGlobal: "variable-2",
+        symbolConstant: "variable-3"
+    };
 
-  // Compile all patterns to regular expressions
-  for (var patternName in patterns)
+    // Compile all patterns to regular expressions
+  for (let patternName in patterns)
     if (patterns.hasOwnProperty(patternName))
       patterns[patternName] = new RegExp("^" + patterns[patternName]);
 
@@ -126,17 +126,17 @@ CodeMirror.defineMode("dylan", function(_config) {
   // used as statement macro
   patterns["keyword"] = [/^with(?:out)?-[-_a-zA-Z?!*@<>$%]+/];
 
-  var styles = {};
-  styles["keyword"] = "keyword";
+    const styles = {};
+    styles["keyword"] = "keyword";
   styles["definition"] = "def";
   styles["simpleDefinition"] = "def";
   styles["signalingCalls"] = "builtin";
 
   // protected words lookup table
-  var wordLookup = {};
-  var styleLookup = {};
+    const wordLookup = {};
+    const styleLookup = {};
 
-  [
+    [
     "keyword",
     "definition",
     "simpleDefinition",
@@ -156,8 +156,8 @@ CodeMirror.defineMode("dylan", function(_config) {
 
   function tokenBase(stream, state) {
     // String
-    var ch = stream.peek();
-    if (ch == "'" || ch == '"') {
+      let ch = stream.peek();
+      if (ch == "'" || ch == '"') {
       stream.next();
       return chain(stream, state, tokenString(ch, "string"));
     }
@@ -255,10 +255,10 @@ CodeMirror.defineMode("dylan", function(_config) {
     } else if (stream.match("end")) {
       return "keyword";
     }
-    for (var name in patterns) {
+    for (let name in patterns) {
       if (patterns.hasOwnProperty(name)) {
-        var pattern = patterns[name];
-        if ((pattern instanceof Array && pattern.some(function(p) {
+          const pattern = patterns[name];
+          if ((pattern instanceof Array && pattern.some(function(p) {
           return stream.match(p);
         })) || stream.match(pattern))
           return patternStyles[name];
@@ -285,8 +285,8 @@ CodeMirror.defineMode("dylan", function(_config) {
   }
 
   function tokenComment(stream, state) {
-    var maybeEnd = false, maybeNested = false, nestedCount = 0, ch;
-    while ((ch = stream.next())) {
+      let maybeEnd = false, maybeNested = false, nestedCount = 0, ch;
+      while ((ch = stream.next())) {
       if (ch == "/" && maybeEnd) {
         if (nestedCount > 0) {
           nestedCount--;
@@ -305,8 +305,8 @@ CodeMirror.defineMode("dylan", function(_config) {
 
   function tokenString(quote, style) {
     return function(stream, state) {
-      var escaped = false, next, end = false;
-      while ((next = stream.next()) != null) {
+        let escaped = false, next, end = false;
+        while ((next = stream.next()) != null) {
         if (next == quote && !escaped) {
           end = true;
           break;
@@ -331,8 +331,8 @@ CodeMirror.defineMode("dylan", function(_config) {
     token: function(stream, state) {
       if (stream.eatSpace())
         return null;
-      var style = state.tokenize(stream, state);
-      return style;
+        const style = state.tokenize(stream, state);
+        return style;
     },
     blockCommentStart: "/*",
     blockCommentEnd: "*/"

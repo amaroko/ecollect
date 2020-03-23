@@ -12,45 +12,45 @@
 "use strict";
 
 CodeMirror.defineMode('mllike', function(_config, parserConfig) {
-  var words = {
-    'let': 'keyword',
-    'rec': 'keyword',
-    'in': 'keyword',
-    'of': 'keyword',
-    'and': 'keyword',
-    'if': 'keyword',
-    'then': 'keyword',
-    'else': 'keyword',
-    'for': 'keyword',
-    'to': 'keyword',
-    'while': 'keyword',
-    'do': 'keyword',
-    'done': 'keyword',
-    'fun': 'keyword',
-    'function': 'keyword',
-    'val': 'keyword',
-    'type': 'keyword',
-    'mutable': 'keyword',
-    'match': 'keyword',
-    'with': 'keyword',
-    'try': 'keyword',
-    'open': 'builtin',
-    'ignore': 'builtin',
-    'begin': 'keyword',
-    'end': 'keyword'
-  };
+    const words = {
+        'let': 'keyword',
+        'rec': 'keyword',
+        'in': 'keyword',
+        'of': 'keyword',
+        'and': 'keyword',
+        'if': 'keyword',
+        'then': 'keyword',
+        'else': 'keyword',
+        'for': 'keyword',
+        'to': 'keyword',
+        'while': 'keyword',
+        'do': 'keyword',
+        'done': 'keyword',
+        'fun': 'keyword',
+        'function': 'keyword',
+        'val': 'keyword',
+        'type': 'keyword',
+        'mutable': 'keyword',
+        'match': 'keyword',
+        'with': 'keyword',
+        'try': 'keyword',
+        'open': 'builtin',
+        'ignore': 'builtin',
+        'begin': 'keyword',
+        'end': 'keyword'
+    };
 
-  var extraWords = parserConfig.extraWords || {};
-  for (var prop in extraWords) {
+    const extraWords = parserConfig.extraWords || {};
+    for (let prop in extraWords) {
     if (extraWords.hasOwnProperty(prop)) {
       words[prop] = parserConfig.extraWords[prop];
     }
   }
 
   function tokenBase(stream, state) {
-    var ch = stream.next();
+      const ch = stream.next();
 
-    if (ch === '"') {
+      if (ch === '"') {
       state.tokenize = tokenString;
       return state.tokenize(stream, state);
     }
@@ -84,13 +84,13 @@ CodeMirror.defineMode('mllike', function(_config, parserConfig) {
       return 'operator';
     }
     stream.eatWhile(/\w/);
-    var cur = stream.current();
-    return words.hasOwnProperty(cur) ? words[cur] : 'variable';
+      const cur = stream.current();
+      return words.hasOwnProperty(cur) ? words[cur] : 'variable';
   }
 
   function tokenString(stream, state) {
-    var next, end = false, escaped = false;
-    while ((next = stream.next()) != null) {
+      let next, end = false, escaped = false;
+      while ((next = stream.next()) != null) {
       if (next === '"' && !escaped) {
         end = true;
         break;
@@ -101,11 +101,11 @@ CodeMirror.defineMode('mllike', function(_config, parserConfig) {
       state.tokenize = tokenBase;
     }
     return 'string';
-  };
+  }
 
   function tokenComment(stream, state) {
-    var prev, next;
-    while(state.commentLevel > 0 && (next = stream.next()) != null) {
+      let prev, next;
+      while(state.commentLevel > 0 && (next = stream.next()) != null) {
       if (prev === '(' && next === '*') state.commentLevel++;
       if (prev === '*' && next === ')') state.commentLevel--;
       prev = next;

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
-import { DataService } from '../../../../services/data.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
+import {DataService} from '../../../../services/data.service';
 import swal from 'sweetalert2';
 import * as moment from 'moment';
 
@@ -29,9 +29,9 @@ export class SmsComponent implements OnInit {
   p = 1;
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService,
-    private dataService: DataService) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService,
+              private dataService: DataService) {
     //
   }
 
@@ -47,7 +47,7 @@ export class SmsComponent implements OnInit {
     // check if logged!
     this.ecolService.ifLogged();
     this.ecolService.ifclosed();
-    
+
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 

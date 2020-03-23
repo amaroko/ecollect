@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
+import {Observable} from 'rxjs';
 import swal from 'sweetalert2';
 
 @Injectable({
@@ -8,7 +8,8 @@ import swal from 'sweetalert2';
 })
 export class AuthGuard implements CanActivate {
   // Inject Router so we can hand off the user to the Login Page
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -18,7 +19,7 @@ export class AuthGuard implements CanActivate {
     if (localStorage.getItem('currentUser')) {
       // Token from the LogIn is avaiable, so the user can pass to the route
       return true;
-    } else  {
+    } else {
       // Token from the LogIn is not avaible because something went wrong or the user wants to go over the url to the site
       // Hands the user to the LogIn page
       /* alert('You are currently not logged in, please provide Login!');
@@ -27,13 +28,13 @@ export class AuthGuard implements CanActivate {
       this.router.navigate( ['/login'] );
       return false; */
 
-      swal({title: 'You\'re Not Logged In',
+      /*swal({title: 'You\'re Not Logged In',
       imageUrl: 'assets/img/user/notlogg.png',
       text: 'Kindly, log in to continue!',
 
       confirmButtonColor: '#7ac142',
       confirmButtonText: 'Okay'});
-      this.router.navigate( ['/login'] );
+      this.router.navigate( ['/login'] );*/
       return false;
 
     }

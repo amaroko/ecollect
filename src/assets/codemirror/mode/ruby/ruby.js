@@ -13,25 +13,28 @@
 
 CodeMirror.defineMode("ruby", function(config) {
   function wordObj(words) {
-    var o = {};
-    for (var i = 0, e = words.length; i < e; ++i) o[words[i]] = true;
+      const o = {};
+      let i = 0;
+      const e = words.length;
+      for (; i < e; ++i) o[words[i]] = true;
     return o;
   }
-  var keywords = wordObj([
-    "alias", "and", "BEGIN", "begin", "break", "case", "class", "def", "defined?", "do", "else",
-    "elsif", "END", "end", "ensure", "false", "for", "if", "in", "module", "next", "not", "or",
-    "redo", "rescue", "retry", "return", "self", "super", "then", "true", "undef", "unless",
-    "until", "when", "while", "yield", "nil", "raise", "throw", "catch", "fail", "loop", "callcc",
-    "caller", "lambda", "proc", "public", "protected", "private", "require", "load",
-    "require_relative", "extend", "autoload", "__END__", "__FILE__", "__LINE__", "__dir__"
-  ]);
-  var indentWords = wordObj(["def", "class", "case", "for", "while", "until", "module", "then",
-                             "catch", "loop", "proc", "begin"]);
-  var dedentWords = wordObj(["end", "until"]);
-  var matching = {"[": "]", "{": "}", "(": ")"};
-  var curPunc;
 
-  function chain(newtok, stream, state) {
+    const keywords = wordObj([
+        "alias", "and", "BEGIN", "begin", "break", "case", "class", "def", "defined?", "do", "else",
+        "elsif", "END", "end", "ensure", "false", "for", "if", "in", "module", "next", "not", "or",
+        "redo", "rescue", "retry", "return", "self", "super", "then", "true", "undef", "unless",
+        "until", "when", "while", "yield", "nil", "raise", "throw", "catch", "fail", "loop", "callcc",
+        "caller", "lambda", "proc", "public", "protected", "private", "require", "load",
+        "require_relative", "extend", "autoload", "__END__", "__FILE__", "__LINE__", "__dir__"
+    ]);
+    const indentWords = wordObj(["def", "class", "case", "for", "while", "until", "module", "then",
+        "catch", "loop", "proc", "begin"]);
+    const dedentWords = wordObj(["end", "until"]);
+    const matching = {"[": "]", "{": "}", "(": ")"};
+    let curPunc;
+
+    function chain(newtok, stream, state) {
     state.tokenize.push(newtok);
     return newtok(stream, state);
   }
@@ -42,18 +45,19 @@ CodeMirror.defineMode("ruby", function(config) {
       return "comment";
     }
     if (stream.eatSpace()) return null;
-    var ch = stream.next(), m;
-    if (ch == "`" || ch == "'" || ch == '"') {
+      const ch = stream.next();
+      let m;
+      if (ch == "`" || ch == "'" || ch == '"') {
       return chain(readQuoted(ch, "string", ch == '"' || ch == "`"), stream, state);
     } else if (ch == "/") {
-      var currentIndex = stream.current().length;
-      if (stream.skipTo("/")) {
-        var search_till = stream.current().length;
-        stream.backUp(stream.current().length - currentIndex);
-        var balance = 0;  // balance brackets
+        const currentIndex = stream.current().length;
+        if (stream.skipTo("/")) {
+          const search_till = stream.current().length;
+          stream.backUp(stream.current().length - currentIndex);
+          let balance = 0;  // balance brackets
         while (stream.current().length < search_till) {
-          var chchr = stream.next();
-          if (chchr == "(") balance += 1;
+            const chchr = stream.next();
+            if (chchr == "(") balance += 1;
           else if (chchr == ")") balance -= 1;
           if (balance < 0) break;
         }
@@ -63,13 +67,13 @@ CodeMirror.defineMode("ruby", function(config) {
       }
       return "operator";
     } else if (ch == "%") {
-      var style = "string", embed = true;
-      if (stream.eat("s")) style = "atom";
+        let style = "string", embed = true;
+        if (stream.eat("s")) style = "atom";
       else if (stream.eat(/[WQ]/)) style = "string";
       else if (stream.eat(/[r]/)) style = "string-2";
       else if (stream.eat(/[wxq]/)) { style = "string"; embed = false; }
-      var delim = stream.eat(/[^\w\s=]/);
-      if (!delim) return "operator";
+        let delim = stream.eat(/[^\w\s=]/);
+        if (!delim) return "operator";
       if (matching.propertyIsEnumerable(delim)) delim = matching[delim];
       return chain(readQuoted(delim, style, embed, true), stream, state);
     } else if (ch == "#") {
@@ -140,8 +144,8 @@ CodeMirror.defineMode("ruby", function(config) {
     } else if (ch == "-" && stream.eat(">")) {
       return "arrow";
     } else if (/[=+\-\/*:\.^%<>~|]/.test(ch)) {
-      var more = stream.eatWhile(/[=+\-\/*:\.^%<>~|]/);
-      if (ch == "." && !more) curPunc = ".";
+        const more = stream.eatWhile(/[=+\-\/*:\.^%<>~|]/);
+        if (ch == "." && !more) curPunc = ".";
       return "operator";
     } else {
       return null;
@@ -165,8 +169,8 @@ CodeMirror.defineMode("ruby", function(config) {
     };
   }
   function tokenBaseOnce() {
-    var alreadyCalled = false;
-    return function(stream, state) {
+      let alreadyCalled = false;
+      return function(stream, state) {
       if (alreadyCalled) {
         state.tokenize.pop();
         return state.tokenize[state.tokenize.length-1](stream, state);
@@ -177,9 +181,9 @@ CodeMirror.defineMode("ruby", function(config) {
   }
   function readQuoted(quote, style, embed, unescaped) {
     return function(stream, state) {
-      var escaped = false, ch;
+        let escaped = false, ch;
 
-      if (state.context.type === 'read-quoted-paused') {
+        if (state.context.type === 'read-quoted-paused') {
         state.context = state.context.prev;
         stream.eat("}");
       }
@@ -233,11 +237,11 @@ CodeMirror.defineMode("ruby", function(config) {
     token: function(stream, state) {
       curPunc = null;
       if (stream.sol()) state.indented = stream.indentation();
-      var style = state.tokenize[state.tokenize.length-1](stream, state), kwtype;
-      var thisTok = curPunc;
-      if (style == "ident") {
-        var word = stream.current();
-        style = state.lastTok == "." ? "property"
+        let style = state.tokenize[state.tokenize.length - 1](stream, state), kwtype;
+        let thisTok = curPunc;
+        if (style == "ident") {
+          const word = stream.current();
+          style = state.lastTok == "." ? "property"
           : keywords.propertyIsEnumerable(stream.current()) ? "keyword"
           : /^[A-Z]/.test(word) ? "tag"
           : (state.lastTok == "def" || state.lastTok == "class" || state.varList) ? "def"
@@ -267,11 +271,11 @@ CodeMirror.defineMode("ruby", function(config) {
 
     indent: function(state, textAfter) {
       if (state.tokenize[state.tokenize.length-1] != tokenBase) return 0;
-      var firstChar = textAfter && textAfter.charAt(0);
-      var ct = state.context;
-      var closing = ct.type == matching[firstChar] ||
-        ct.type == "keyword" && /^(?:end|until|else|elsif|when|rescue)\b/.test(textAfter);
-      return ct.indented + (closing ? 0 : config.indentUnit) +
+        const firstChar = textAfter && textAfter.charAt(0);
+        const ct = state.context;
+        const closing = ct.type == matching[firstChar] ||
+            ct.type == "keyword" && /^(?:end|until|else|elsif|when|rescue)\b/.test(textAfter);
+        return ct.indented + (closing ? 0 : config.indentUnit) +
         (state.continuedLine ? config.indentUnit : 0);
     },
 

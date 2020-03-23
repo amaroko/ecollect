@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../core/settings/settings.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-error404',
@@ -8,7 +8,8 @@ import { SettingsService } from '../../../core/settings/settings.service';
 })
 export class Error404Component implements OnInit {
 
-  constructor(public settings: SettingsService) { }
+  constructor(public settings: SettingsService) {
+  }
 
   ngOnInit() {
   }

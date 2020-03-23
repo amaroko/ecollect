@@ -19,13 +19,15 @@
 "use strict";
 
 CodeMirror.defineMode("dtd", function(config) {
-  var indentUnit = config.indentUnit, type;
-  function ret(style, tp) {type = tp; return style;}
+    const indentUnit = config.indentUnit;
+    let type;
+
+    function ret(style, tp) {type = tp; return style;}
 
   function tokenBase(stream, state) {
-    var ch = stream.next();
+      const ch = stream.next();
 
-    if (ch == "<" && stream.eat("!") ) {
+      if (ch == "<" && stream.eat("!") ) {
       if (stream.eatWhile(/[\-]/)) {
         state.tokenize = tokenSGMLComment;
         return tokenSGMLComment(stream, state);
@@ -41,8 +43,8 @@ CodeMirror.defineMode("dtd", function(config) {
       state.tokenize = tokenString(ch);
       return state.tokenize(stream, state);
     } else if (stream.eatWhile(/[a-zA-Z\?\+\d]/)) {
-      var sc = stream.current();
-      if( sc.substr(sc.length-1,sc.length).match(/\?|\+/) !== null )stream.backUp(1);
+        const sc = stream.current();
+        if( sc.substr(sc.length-1,sc.length).match(/\?|\+/) !== null )stream.backUp(1);
       return ret("tag", "tag");
     } else if (ch == "%" || ch == "*" ) return ret("number", "number");
     else {
@@ -52,8 +54,8 @@ CodeMirror.defineMode("dtd", function(config) {
   }
 
   function tokenSGMLComment(stream, state) {
-    var dashes = 0, ch;
-    while ((ch = stream.next()) != null) {
+      let dashes = 0, ch;
+      while ((ch = stream.next()) != null) {
       if (dashes >= 2 && ch == ">") {
         state.tokenize = tokenBase;
         break;
@@ -65,8 +67,8 @@ CodeMirror.defineMode("dtd", function(config) {
 
   function tokenString(quote) {
     return function(stream, state) {
-      var escaped = false, ch;
-      while ((ch = stream.next()) != null) {
+        let escaped = false, ch;
+        while ((ch = stream.next()) != null) {
         if (ch == quote && !escaped) {
           state.tokenize = tokenBase;
           break;
@@ -99,10 +101,10 @@ CodeMirror.defineMode("dtd", function(config) {
 
     token: function(stream, state) {
       if (stream.eatSpace()) return null;
-      var style = state.tokenize(stream, state);
+        const style = state.tokenize(stream, state);
 
-      var context = state.stack[state.stack.length-1];
-      if (stream.current() == "[" || type === "doindent" || type == "[") state.stack.push("rule");
+        const context = state.stack[state.stack.length - 1];
+        if (stream.current() == "[" || type === "doindent" || type == "[") state.stack.push("rule");
       else if (type === "endtag") state.stack[state.stack.length-1] = "endtag";
       else if (stream.current() == "]" || type == "]" || (type == ">" && context == "rule")) state.stack.pop();
       else if (type == "[") state.stack.push("[");
@@ -110,9 +112,9 @@ CodeMirror.defineMode("dtd", function(config) {
     },
 
     indent: function(state, textAfter) {
-      var n = state.stack.length;
+        let n = state.stack.length;
 
-      if( textAfter.match(/\]\s+|\]/) )n=n-1;
+        if( textAfter.match(/\]\s+|\]/) )n=n-1;
       else if(textAfter.substr(textAfter.length-1, textAfter.length) === ">"){
         if(textAfter.substr(0,1) === "<") {}
         else if( type == "doindent" && textAfter.length > 1 ) {}

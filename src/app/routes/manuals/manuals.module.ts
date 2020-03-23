@@ -1,25 +1,26 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
 
-import { SharedModule } from '../../shared/shared.module';
-import { AllManualsComponent } from './manuals/allmanuals.component';
+import {SharedModule} from '../../shared/shared.module';
+import {AllManualsComponent} from './manuals/allmanuals.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'all' },
-    { path: 'all', component: AllManualsComponent }
+  {path: '', redirectTo: 'all'},
+  {path: 'all', component: AllManualsComponent}
 ];
 
 @NgModule({
-    imports: [
-        SharedModule,
-        RouterModule.forChild(routes)
-    ],
-    declarations: [
-        AllManualsComponent
-    ],
-    exports: [
-        RouterModule
-    ]
+  imports: [
+    SharedModule,
+    RouterModule.forChild(routes)
+  ],
+  declarations: [
+    AllManualsComponent
+  ],
+  exports: [
+    RouterModule
+  ]
 })
-export class ManualsModule { }
+export class ManualsModule {
+}

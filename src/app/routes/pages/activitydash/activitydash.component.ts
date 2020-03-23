@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-activitydash',
@@ -15,7 +15,8 @@ export class ActivitydashComponent implements OnInit {
   systemdash = false;
 
   //
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.reportname = this.route.snapshot.queryParamMap.get('report');
@@ -37,7 +38,7 @@ export class ActivitydashComponent implements OnInit {
         this.systemdash = true;
         break;
       default:
-      this.activitydash = true;
+        this.activitydash = true;
     }
   }
 

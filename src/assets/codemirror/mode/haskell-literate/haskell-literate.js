@@ -3,18 +3,18 @@
 
 (function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"), require("../haskell/haskell"))
+    mod(require("../../lib/codemirror"), require("../haskell/haskell"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror", "../haskell/haskell"], mod)
+    define(["../../lib/codemirror", "../haskell/haskell"], mod);
   else // Plain browser env
     mod(CodeMirror)
 })(function (CodeMirror) {
-  "use strict"
+  "use strict";
 
   CodeMirror.defineMode("haskell-literate", function (config, parserConfig) {
-    var baseMode = CodeMirror.getMode(config, (parserConfig && parserConfig.base) || "haskell")
+      const baseMode = CodeMirror.getMode(config, (parserConfig && parserConfig.base) || "haskell");
 
-    return {
+      return {
       startState: function () {
         return {
           inCode: false,
@@ -29,7 +29,7 @@
         if (state.inCode) {
           return baseMode.token(stream, state.baseState)
         } else {
-          stream.skipToEnd()
+          stream.skipToEnd();
           return "comment"
         }
       },
@@ -37,7 +37,7 @@
         return state.inCode ? {state: state.baseState, mode: baseMode} : null
       }
     }
-  }, "haskell")
+  }, "haskell");
 
   CodeMirror.defineMIME("text/x-literate-haskell", "haskell-literate")
 });

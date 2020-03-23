@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
+import {GridOptions, IDatasource, IGetRowsParams, GridApi} from '@ag-grid-community/all-modules';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../../environments/environment';
 import * as $ from 'jquery';
 
 @Component({
@@ -16,6 +16,7 @@ export class DemandsdueComponent implements OnInit {
   public radioModel: string;
   total: any = {};
   searchTotal: number;
+
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
       headerHeight: 40,
@@ -195,7 +196,7 @@ export class DemandsdueComponent implements OnInit {
   apiService(perPage, currentPos) {
     // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.nodeapi + '/demandsdue/all?offset=' + currentPos + '&rows=' + perPage );
+    return this.http.get<any>(environment.nodeapi + '/demandsdue/all?offset=' + currentPos + '&rows=' + perPage);
   }
 
   apiServiceSearch(perPage, currentPos) {

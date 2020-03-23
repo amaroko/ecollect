@@ -14,18 +14,18 @@
 CodeMirror.defineMode("solr", function() {
   "use strict";
 
-  var isStringChar = /[^\s\|\!\+\-\*\?\~\^\&\:\(\)\[\]\{\}\^\"\\]/;
-  var isOperatorChar = /[\|\!\+\-\*\?\~\^\&]/;
-  var isOperatorString = /^(OR|AND|NOT|TO)$/i;
+    const isStringChar = /[^\s\|\!\+\-\*\?\~\^\&\:\(\)\[\]\{\}\^\"\\]/;
+    const isOperatorChar = /[\|\!\+\-\*\?\~\^\&]/;
+    const isOperatorString = /^(OR|AND|NOT|TO)$/i;
 
-  function isNumber(word) {
+    function isNumber(word) {
     return parseFloat(word, 10).toString() === word;
   }
 
   function tokenString(quote) {
     return function(stream, state) {
-      var escaped = false, next;
-      while ((next = stream.next()) != null) {
+        let escaped = false, next;
+        while ((next = stream.next()) != null) {
         if (next == quote && !escaped) break;
         escaped = !escaped && next == "\\";
       }
@@ -37,8 +37,8 @@ CodeMirror.defineMode("solr", function() {
 
   function tokenOperator(operator) {
     return function(stream, state) {
-      var style = "operator";
-      if (operator == "+")
+        let style = "operator";
+        if (operator == "+")
         style += " positive";
       else if (operator == "-")
         style += " negative";
@@ -56,8 +56,8 @@ CodeMirror.defineMode("solr", function() {
 
   function tokenWord(ch) {
     return function(stream, state) {
-      var word = ch;
-      while ((ch = stream.peek()) && ch.match(isStringChar) != null) {
+        let word = ch;
+        while ((ch = stream.peek()) && ch.match(isStringChar) != null) {
         word += stream.next();
       }
 
@@ -74,8 +74,8 @@ CodeMirror.defineMode("solr", function() {
   }
 
   function tokenBase(stream, state) {
-    var ch = stream.next();
-    if (ch == '"')
+      const ch = stream.next();
+      if (ch == '"')
       state.tokenize = tokenString(ch);
     else if (isOperatorChar.test(ch))
       state.tokenize = tokenOperator(ch);

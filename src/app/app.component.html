@@ -1,14 +1,14 @@
 <ng2-slim-loading-bar [color]="'red'" [height]="'10px'"></ng2-slim-loading-bar>
 
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="0" width="0">
-    <defs>
-      <filter id="blur" x="0" y="0">
-        <feGaussianBlur stdDeviation="3"/>
-  
-      </filter>
-    </defs>
+  <defs>
+    <filter id="blur" x="0" y="0">
+      <feGaussianBlur stdDeviation="3"/>
+
+    </filter>
+  </defs>
 </svg>
-<ngx-smart-modal escapable="false" #myModal identifier="lockModal">
+<ngx-smart-modal [escapable]="false" [closable]="false" [dismissable]="false" #myModal identifier="lockModal">
   <div class="card b0">
     <div class="card-body">
       <div style="text-align: center!important;">
@@ -20,8 +20,9 @@
             (submit)="submitFormm($event, vallForm.value)">
         <div class="form-group">
           <div class="input-group with-focus">
-            <input class="form-control border-right-0" id="username" type="text" placeholder="username" name="username"
-                   formControlName="username"/>
+            <label for="username"></label><input class="form-control border-right-0" id="username" type="text"
+                                                 placeholder="username" name="username"
+                                                 formControlName="username"/>
             <div class="input-group-append">
                                 <span class="input-group-text text-muted bg-transparent border-left-0">
                                     <em class="fa fa-user"></em>
@@ -35,8 +36,9 @@
         </div>
         <div class="form-group">
           <div class="input-group with-focus">
-            <input class="form-control border-right-0" id="password" type="password" placeholder="password"
-                   name="password" formControlName="password"/>
+            <label for="password"></label><input class="form-control border-right-0" id="password" type="password"
+                                                 placeholder="password"
+                                                 name="password" formControlName="password"/>
             <div class="input-group-append">
                                 <span class="input-group-text text-muted bg-transparent border-left-0">
                                     <em class="fa fa-lock"></em>
@@ -68,8 +70,8 @@
     </div>
   </div>
 </ngx-smart-modal>
-  <!--<ngx-smart-modal [escapable]="false" [closable]="false" [dismissable]="false" #myModal identifier="lockModal">
-    
-  </ngx-smart-modal>-->
+<!--<ngx-smart-modal [escapable]="false" [closable]="false" [dismissable]="false" #myModal identifier="lockModal">
+
+</ngx-smart-modal>-->
 
 <router-outlet></router-outlet>

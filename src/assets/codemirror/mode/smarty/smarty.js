@@ -16,20 +16,21 @@
   "use strict";
 
   CodeMirror.defineMode("smarty", function(config, parserConf) {
-    var rightDelimiter = parserConf.rightDelimiter || "}";
-    var leftDelimiter = parserConf.leftDelimiter || "{";
-    var version = parserConf.version || 2;
-    var baseMode = CodeMirror.getMode(config, parserConf.baseMode || "null");
+      const rightDelimiter = parserConf.rightDelimiter || "}";
+      const leftDelimiter = parserConf.leftDelimiter || "{";
+      const version = parserConf.version || 2;
+      const baseMode = CodeMirror.getMode(config, parserConf.baseMode || "null");
 
-    var keyFunctions = ["debug", "extends", "function", "include", "literal"];
-    var regs = {
-      operatorChars: /[+\-*&%=<>!?]/,
-      validIdentifier: /[a-zA-Z0-9_]/,
-      stringChar: /['"]/
-    };
+      const keyFunctions = ["debug", "extends", "function", "include", "literal"];
+      const regs = {
+          operatorChars: /[+\-*&%=<>!?]/,
+          validIdentifier: /[a-zA-Z0-9_]/,
+          stringChar: /['"]/
+      };
 
-    var last;
-    function cont(style, lastType) {
+      let last;
+
+      function cont(style, lastType) {
       last = lastType;
       return style;
     }
@@ -47,8 +48,8 @@
     }
 
     function tokenTop(stream, state) {
-      var string = stream.string;
-      for (var scan = stream.pos;;) {
+        const string = stream.string;
+        for (let scan = stream.pos;;) {
         var nextMatch = string.indexOf(leftDelimiter, scan);
         scan = nextMatch + leftDelimiter.length;
         if (nextMatch == -1 || !doesNotCount(stream, nextMatch + leftDelimiter.length)) break;
@@ -66,8 +67,8 @@
       }
 
       if (nextMatch > -1) stream.string = string.slice(0, nextMatch);
-      var token = baseMode.token(stream, state.base);
-      if (nextMatch > -1) stream.string = string;
+        const token = baseMode.token(stream, state.base);
+        if (nextMatch > -1) stream.string = string;
       return token;
     }
 
@@ -90,8 +91,8 @@
         return cont("tag", "startTag");
       }
 
-      var ch = stream.next();
-      if (ch == "$") {
+        const ch = stream.next();
+        if (ch == "$") {
         stream.eatWhile(regs.validIdentifier);
         return cont("variable-2", "variable");
       } else if (ch == "|") {
@@ -135,15 +136,17 @@
           return null;
         }
 
-        var str = "";
-        if (ch != "/") {
+          let str = "";
+          if (ch != "/") {
           str += ch;
         }
-        var c = null;
-        while (c = stream.eat(regs.validIdentifier)) {
+          let c = null;
+          while (c = stream.eat(regs.validIdentifier)) {
           str += c;
         }
-        for (var i=0, j=keyFunctions.length; i<j; i++) {
+          let i = 0;
+          const j = keyFunctions.length;
+          for (; i<j; i++) {
           if (keyFunctions[i] == str) {
             return cont("keyword", "keyword");
           }
@@ -157,9 +160,9 @@
 
     function tokenAttribute(quote) {
       return function(stream, state) {
-        var prevChar = null;
-        var currChar = null;
-        while (!stream.eol()) {
+          let prevChar = null;
+          let currChar = null;
+          while (!stream.eol()) {
           currChar = stream.peek();
           if (stream.next() == quote && prevChar !== '\\') {
             state.tokenize = tokenSmarty;
@@ -206,8 +209,8 @@
           return {mode: baseMode, state: state.base};
       },
       token: function(stream, state) {
-        var style = state.tokenize(stream, state);
-        state.last = last;
+          const style = state.tokenize(stream, state);
+          state.last = last;
         return style;
       },
       indent: function(state, text) {

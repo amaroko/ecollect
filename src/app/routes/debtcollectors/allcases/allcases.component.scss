@@ -1,0 +1,14 @@
+/* Border Color */
+
+
+::ng-deep div.ng-select-container {
+  border: 1px solid red!important;
+}
+
+::ng-deep div.ng-select-container.ng-has-value {
+  border: 1px solid #ccc!important;
+}
+
+//::ng-deep .nsm-dialog {
+//  max-width: 900px!important;
+//}

@@ -33,69 +33,69 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
 /////////////////////////////////////////////////////////////////////////////
 // constants
 
-  var typeWords = [
-    "-type", "-spec", "-export_type", "-opaque"];
+    const typeWords = [
+        "-type", "-spec", "-export_type", "-opaque"];
 
-  var keywordWords = [
-    "after","begin","catch","case","cond","end","fun","if",
-    "let","of","query","receive","try","when"];
+    const keywordWords = [
+        "after", "begin", "catch", "case", "cond", "end", "fun", "if",
+        "let", "of", "query", "receive", "try", "when"];
 
-  var separatorRE    = /[\->,;]/;
-  var separatorWords = [
-    "->",";",","];
+    const separatorRE = /[\->,;]/;
+    const separatorWords = [
+        "->", ";", ","];
 
-  var operatorAtomWords = [
-    "and","andalso","band","bnot","bor","bsl","bsr","bxor",
-    "div","not","or","orelse","rem","xor"];
+    const operatorAtomWords = [
+        "and", "andalso", "band", "bnot", "bor", "bsl", "bsr", "bxor",
+        "div", "not", "or", "orelse", "rem", "xor"];
 
-  var operatorSymbolRE    = /[\+\-\*\/<>=\|:!]/;
-  var operatorSymbolWords = [
-    "=","+","-","*","/",">",">=","<","=<","=:=","==","=/=","/=","||","<-","!"];
+    const operatorSymbolRE = /[\+\-\*\/<>=\|:!]/;
+    const operatorSymbolWords = [
+        "=", "+", "-", "*", "/", ">", ">=", "<", "=<", "=:=", "==", "=/=", "/=", "||", "<-", "!"];
 
-  var openParenRE    = /[<\(\[\{]/;
-  var openParenWords = [
-    "<<","(","[","{"];
+    const openParenRE = /[<\(\[\{]/;
+    const openParenWords = [
+        "<<", "(", "[", "{"];
 
-  var closeParenRE    = /[>\)\]\}]/;
-  var closeParenWords = [
-    "}","]",")",">>"];
+    const closeParenRE = /[>\)\]\}]/;
+    const closeParenWords = [
+        "}", "]", ")", ">>"];
 
-  var guardWords = [
-    "is_atom","is_binary","is_bitstring","is_boolean","is_float",
-    "is_function","is_integer","is_list","is_number","is_pid",
-    "is_port","is_record","is_reference","is_tuple",
-    "atom","binary","bitstring","boolean","function","integer","list",
-    "number","pid","port","record","reference","tuple"];
+    const guardWords = [
+        "is_atom", "is_binary", "is_bitstring", "is_boolean", "is_float",
+        "is_function", "is_integer", "is_list", "is_number", "is_pid",
+        "is_port", "is_record", "is_reference", "is_tuple",
+        "atom", "binary", "bitstring", "boolean", "function", "integer", "list",
+        "number", "pid", "port", "record", "reference", "tuple"];
 
-  var bifWords = [
-    "abs","adler32","adler32_combine","alive","apply","atom_to_binary",
-    "atom_to_list","binary_to_atom","binary_to_existing_atom",
-    "binary_to_list","binary_to_term","bit_size","bitstring_to_list",
-    "byte_size","check_process_code","contact_binary","crc32",
-    "crc32_combine","date","decode_packet","delete_module",
-    "disconnect_node","element","erase","exit","float","float_to_list",
-    "garbage_collect","get","get_keys","group_leader","halt","hd",
-    "integer_to_list","internal_bif","iolist_size","iolist_to_binary",
-    "is_alive","is_atom","is_binary","is_bitstring","is_boolean",
-    "is_float","is_function","is_integer","is_list","is_number","is_pid",
-    "is_port","is_process_alive","is_record","is_reference","is_tuple",
-    "length","link","list_to_atom","list_to_binary","list_to_bitstring",
-    "list_to_existing_atom","list_to_float","list_to_integer",
-    "list_to_pid","list_to_tuple","load_module","make_ref","module_loaded",
-    "monitor_node","node","node_link","node_unlink","nodes","notalive",
-    "now","open_port","pid_to_list","port_close","port_command",
-    "port_connect","port_control","pre_loaded","process_flag",
-    "process_info","processes","purge_module","put","register",
-    "registered","round","self","setelement","size","spawn","spawn_link",
-    "spawn_monitor","spawn_opt","split_binary","statistics",
-    "term_to_binary","time","throw","tl","trunc","tuple_size",
-    "tuple_to_list","unlink","unregister","whereis"];
+    const bifWords = [
+        "abs", "adler32", "adler32_combine", "alive", "apply", "atom_to_binary",
+        "atom_to_list", "binary_to_atom", "binary_to_existing_atom",
+        "binary_to_list", "binary_to_term", "bit_size", "bitstring_to_list",
+        "byte_size", "check_process_code", "contact_binary", "crc32",
+        "crc32_combine", "date", "decode_packet", "delete_module",
+        "disconnect_node", "element", "erase", "exit", "float", "float_to_list",
+        "garbage_collect", "get", "get_keys", "group_leader", "halt", "hd",
+        "integer_to_list", "internal_bif", "iolist_size", "iolist_to_binary",
+        "is_alive", "is_atom", "is_binary", "is_bitstring", "is_boolean",
+        "is_float", "is_function", "is_integer", "is_list", "is_number", "is_pid",
+        "is_port", "is_process_alive", "is_record", "is_reference", "is_tuple",
+        "length", "link", "list_to_atom", "list_to_binary", "list_to_bitstring",
+        "list_to_existing_atom", "list_to_float", "list_to_integer",
+        "list_to_pid", "list_to_tuple", "load_module", "make_ref", "module_loaded",
+        "monitor_node", "node", "node_link", "node_unlink", "nodes", "notalive",
+        "now", "open_port", "pid_to_list", "port_close", "port_command",
+        "port_connect", "port_control", "pre_loaded", "process_flag",
+        "process_info", "processes", "purge_module", "put", "register",
+        "registered", "round", "self", "setelement", "size", "spawn", "spawn_link",
+        "spawn_monitor", "spawn_opt", "split_binary", "statistics",
+        "term_to_binary", "time", "throw", "tl", "trunc", "tuple_size",
+        "tuple_to_list", "unlink", "unregister", "whereis"];
 
 // upper case: [A-Z] [Ø-Þ] [À-Ö]
 // lower case: [a-z] [ß-ö] [ø-ÿ]
-  var anumRE       = /[\w@Ø-ÞÀ-Öß-öø-ÿ]/;
-  var escapesRE    =
-    /[0-7]{1,3}|[bdefnrstv\\"']|\^[a-zA-Z]|x[0-9a-zA-Z]{2}|x{[0-9a-zA-Z]+}/;
+    const anumRE = /[\w@Ø-ÞÀ-Öß-öø-ÿ]/;
+    const escapesRE =
+        /[0-7]{1,3}|[bdefnrstv\\"']|\^[a-zA-Z]|x[0-9a-zA-Z]{2}|x{[0-9a-zA-Z]+}/;
 
 /////////////////////////////////////////////////////////////////////////////
 // tokenizer
@@ -128,9 +128,9 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
       }
     }
 
-    var ch = stream.next();
+      const ch = stream.next();
 
-    // comment
+      // comment
     if (ch == '%') {
       stream.skipToEnd();
       return rval(state,stream,"comment");
@@ -203,9 +203,9 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
         return rval(state,stream,"fun");      // f/0 style fun
       }
 
-      var w = stream.current();
+        const w = stream.current();
 
-      if (is_member(w,keywordWords)) {
+        if (is_member(w,keywordWords)) {
         return rval(state,stream,"keyword");
       }else if (is_member(w,operatorAtomWords)) {
         return rval(state,stream,"operator");
@@ -234,8 +234,8 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
     }
 
     // number
-    var digitRE      = /[0-9]/;
-    var radixRE      = /[0-9a-zA-Z]/;         // 36#zZ style int
+      const digitRE = /[0-9]/;
+      const radixRE = /[0-9a-zA-Z]/;         // 36#zZ style int
     if (digitRE.test(ch)) {
       stream.eatWhile(digitRE);
       if (stream.eat('#')) {                // 36#aZ  style integer
@@ -328,8 +328,8 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
 
   function quote(stream,quoteChar,escapeChar) {
     while (!stream.eol()) {
-      var ch = stream.next();
-      if (ch == quoteChar) {
+        const ch = stream.next();
+        if (ch == quoteChar) {
         return true;
       }else if (ch == escapeChar) {
         stream.next();
@@ -339,8 +339,8 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
   }
 
   function lookahead(stream) {
-    var m = stream.match(/([\n\s]+|%[^\n]*\n)*(.)/,false);
-    return m ? m.pop() : "";
+      const m = stream.match(/([\n\s]+|%[^\n]*\n)*(.)/, false);
+      return m ? m.pop() : "";
   }
 
   function is_member(element,list) {
@@ -400,10 +400,10 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
   }
 
   function peekToken(state,depth) {
-    var len = state.tokenStack.length;
-    var dep = (depth ? depth : 1);
+      const len = state.tokenStack.length;
+      const dep = (depth ? depth : 1);
 
-    if (len < dep) {
+      if (len < dep) {
       return false;
     }else{
       return state.tokenStack[len-dep];
@@ -419,9 +419,9 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
   }
 
   function maybe_drop_pre(s,token) {
-    var last = s.length-1;
+      const last = s.length - 1;
 
-    if (0 < last && s[last].type === "record" && token.type === "dot") {
+      if (0 < last && s[last].type === "record" && token.type === "dot") {
       s.pop();
     }else if (0 < last && s[last].type === "group") {
       s.pop();
@@ -433,10 +433,10 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
   }
 
   function maybe_drop_post(s) {
-    if (!s.length) return s
-    var last = s.length-1;
+    if (!s.length) return s;
+      const last = s.length - 1;
 
-    if (s[last].type === "dot") {
+      if (s[last].type === "dot") {
       return [];
     }
     if (last > 1 && s[last].type === "fun" && s[last-1].token === "fun") {
@@ -478,12 +478,12 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
     //  in which case it will return an empty stack.
 
     for (var type in tt) {
-      var len = stack.length-1;
-      var tokens = tt[type];
-      for (var i = len-1; -1 < i ; i--) {
+        const len = stack.length - 1;
+        const tokens = tt[type];
+        for (let i = len-1; -1 < i ; i--) {
         if (is_member(stack[i].token,tokens)) {
-          var ss = stack.slice(0,i);
-          switch (type) {
+            const ss = stack.slice(0, i);
+            switch (type) {
               case "m": return ss.concat(stack[i]).concat(stack[len]);
               case "r": return ss.concat(stack[len]);
               case "i": return ss;
@@ -501,13 +501,13 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
 // indenter
 
   function indenter(state,textAfter) {
-    var t;
-    var unit = cmCfg.indentUnit;
-    var wordAfter = wordafter(textAfter);
-    var currT = peekToken(state,1);
-    var prevT = peekToken(state,2);
+      let t;
+      const unit = cmCfg.indentUnit;
+      const wordAfter = wordafter(textAfter);
+      const currT = peekToken(state, 1);
+      const prevT = peekToken(state, 2);
 
-    if (state.in_string || state.in_atom) {
+      if (state.in_string || state.in_atom) {
       return CodeMirror.Pass;
     }else if (!prevT) {
       return 0;
@@ -544,24 +544,24 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
   }
 
   function wordafter(str) {
-    var m = str.match(/,|[a-z]+|\}|\]|\)|>>|\|+|\(/);
+      const m = str.match(/,|[a-z]+|\}|\]|\)|>>|\|+|\(/);
 
-    return truthy(m) && (m.index === 0) ? m[0] : "";
+      return truthy(m) && (m.index === 0) ? m[0] : "";
   }
 
   function postcommaToken(state) {
-    var objs = state.tokenStack.slice(0,-1);
-    var i = getTokenIndex(objs,"type",["open_paren"]);
+      const objs = state.tokenStack.slice(0, -1);
+      const i = getTokenIndex(objs, "type", ["open_paren"]);
 
-    return truthy(objs[i]) ? objs[i] : false;
+      return truthy(objs[i]) ? objs[i] : false;
   }
 
   function defaultToken(state) {
-    var objs = state.tokenStack;
-    var stop = getTokenIndex(objs,"type",["open_paren","separator","keyword"]);
-    var oper = getTokenIndex(objs,"type",["operator"]);
+      const objs = state.tokenStack;
+      const stop = getTokenIndex(objs, "type", ["open_paren", "separator", "keyword"]);
+      const oper = getTokenIndex(objs, "type", ["operator"]);
 
-    if (truthy(stop) && truthy(oper) && stop < oper) {
+      if (truthy(stop) && truthy(oper) && stop < oper) {
       return objs[stop+1];
     } else if (truthy(stop)) {
       return objs[stop];
@@ -571,15 +571,15 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
   }
 
   function getToken(state,tokens) {
-    var objs = state.tokenStack;
-    var i = getTokenIndex(objs,"token",tokens);
+      const objs = state.tokenStack;
+      const i = getTokenIndex(objs, "token", tokens);
 
-    return truthy(objs[i]) ? objs[i] : false;
+      return truthy(objs[i]) ? objs[i] : false;
   }
 
   function getTokenIndex(objs,propname,propvals) {
 
-    for (var i = objs.length-1; -1 < i ; i--) {
+    for (let i = objs.length-1; -1 < i ; i--) {
       if (is_member(objs[i][propname],propvals)) {
         return i;
       }

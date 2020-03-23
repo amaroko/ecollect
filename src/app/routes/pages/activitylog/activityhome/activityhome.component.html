@@ -1,229 +1,229 @@
 <div class="content-heading">Account information</div>
 <div class="card">
-<ngb-tabset (tabChange)="beforeChange($event)">
+  <ngb-tabset (tabChange)="beforeChange($event)">
     <ngb-tab title="Account info">
-        <ng-template ngbTabContent>
-            <div>
-                <div class="loader" *ngIf="loader"></div>
-                <fieldset>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">account number:</label>
-                        <div class="col-lg-10">
-                            <strong>{{account?.accnumber || account?.cardacct || account?.loanaccnumber}}</strong>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Outstanding balance:</label>
-                        <div class="col-lg-10">
-                            <strong>{{account?.oustbalance || account?.outbalance || account?.loanamount}}</strong>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Total arrears/EXPPMNT:</label>
-                        <div class="col-lg-10">
-                            <strong>{{account?.instamount || account?.EXPPMNT}}</strong>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Bucket/cycle:</label>
-                        <div class="col-lg-10">
-                            <strong>{{account?.bucket || account?.cycle || account?.grade}}</strong>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">arocode :</label>
-                        <div class="col-lg-10">
-                            <strong>{{account?.arocode}}</strong>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">rrocode :</label>
-                        <div class="col-lg-10">
-                            <strong>{{account?.rrocode}}</strong>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Branchname :</label>
-                        <div class="col-lg-10">
-                            <strong>{{account?.branchcode}}</strong>
-                        </div>
-                    </div>
-                </fieldset>
+      <ng-template ngbTabContent>
+        <div>
+          <div class="loader" *ngIf="loader"></div>
+          <fieldset>
+            <div class="form-group row">
+              <label class="col-lg-2 col-form-label">account number:</label>
+              <div class="col-lg-10">
+                <strong>{{account?.accnumber || account?.cardacct || account?.loanaccnumber}}</strong>
+              </div>
             </div>
-        </ng-template>
+          </fieldset>
+          <fieldset>
+            <div class="form-group row">
+              <label class="col-lg-2 col-form-label">Outstanding balance:</label>
+              <div class="col-lg-10">
+                <strong>{{account?.oustbalance || account?.outbalance || account?.loanamount}}</strong>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-group row">
+              <label class="col-lg-2 col-form-label">Total arrears/EXPPMNT:</label>
+              <div class="col-lg-10">
+                <strong>{{account?.instamount || account?.EXPPMNT}}</strong>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-group row">
+              <label class="col-lg-2 col-form-label">Bucket/cycle:</label>
+              <div class="col-lg-10">
+                <strong>{{account?.bucket || account?.cycle || account?.grade}}</strong>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-group row">
+              <label class="col-lg-2 col-form-label">arocode :</label>
+              <div class="col-lg-10">
+                <strong>{{account?.arocode}}</strong>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-group row">
+              <label class="col-lg-2 col-form-label">rrocode :</label>
+              <div class="col-lg-10">
+                <strong>{{account?.rrocode}}</strong>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-group row">
+              <label class="col-lg-2 col-form-label">Branchname :</label>
+              <div class="col-lg-10">
+                <strong>{{account?.branchcode}}</strong>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </ng-template>
     </ngb-tab>
     <ngb-tab title="Other accounts">
-        <ng-template ngbTabContent>
-            <!--<form>
-                <div class="form-group form-inline">
-                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
-                </div> ; index as i  <th scope="row">{{ i + 1 }}</th> <th scope="col">#</th>
-            </form>-->
-            <div class="loader" *ngIf="loader"></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        
-                        <th scope="col">accnumber</th>
-                        <th scope="col">productcode</th>
-                        <th scope="col">oustbalance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let other of otheraccs | paginate: { itemsPerPage: 5, currentPage: p }">
-                       
-                        <td>
-                            {{ other.ACCNUMBER }}
-                        </td>
-                        <td>{{ other.PRODUCTCODE }}</td>
-                        <td>{{ other.OUTSBALANCE | number }}</td>
-                    </tr>
-                </tbody>
-                
-            </table>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        </ng-template>
+      <ng-template ngbTabContent>
+        <!--<form>
+            <div class="form-group form-inline">
+                Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+            </div> ; index as i  <th scope="row">{{ i + 1 }}</th> <th scope="col">#</th>
+        </form>-->
+        <div class="loader" *ngIf="loader"></div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+
+            <th scope="col">accnumber</th>
+            <th scope="col">productcode</th>
+            <th scope="col">oustbalance</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let other of otheraccs | paginate: { itemsPerPage: 5, currentPage: p }">
+
+            <td>
+              {{ other.ACCNUMBER }}
+            </td>
+            <td>{{ other.PRODUCTCODE }}</td>
+            <td>{{ other.OUTSBALANCE | number }}</td>
+          </tr>
+          </tbody>
+
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </ng-template>
     </ngb-tab>
     <ngb-tab title="Collateral info">
-        <ng-template ngbTabContent>
-                <div class="loader" *ngIf="loader"></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">description</th>
-                        <th scope="col">forced sale value</th>
-                        <th scope="col">market value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let c of collaterals; index as i">
-                        <th scope="row">{{ i + 1 }}</th>
-                        <td>
-                            {{ c.description }}
-                        </td>
-                        <td>{{ c.fsv }}</td>
-                        <td>{{ c. msv}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            .
-        </ng-template>
+      <ng-template ngbTabContent>
+        <div class="loader" *ngIf="loader"></div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">description</th>
+            <th scope="col">forced sale value</th>
+            <th scope="col">market value</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let c of collaterals; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              {{ c.description }}
+            </td>
+            <td>{{ c.fsv }}</td>
+            <td>{{ c.msv}}</td>
+          </tr>
+          </tbody>
+        </table>
+        .
+      </ng-template>
     </ngb-tab>
     <ngb-tab title="Directors">
-        <ng-template ngbTabContent>
-                <div class="loader" *ngIf="loader"></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">IDNuber</th>
-                        <th scope="col">Telnumber</th>
-                        <th scope="col">address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let director of directors; index as i">
-                        <th scope="row">{{ i + 1 }}</th>
-                        <td>
-                            {{ director.name }}
-                        </td>
-                        <td>{{ director.idnumber }}</td>
-                        <td>{{ director.telnumber }}</td>
-                        <td>{{ director.address }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            .
-        </ng-template>
+      <ng-template ngbTabContent>
+        <div class="loader" *ngIf="loader"></div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">IDNuber</th>
+            <th scope="col">Telnumber</th>
+            <th scope="col">address</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let director of directors; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              {{ director.name }}
+            </td>
+            <td>{{ director.idnumber }}</td>
+            <td>{{ director.telnumber }}</td>
+            <td>{{ director.address }}</td>
+          </tr>
+          </tbody>
+        </table>
+        .
+      </ng-template>
     </ngb-tab>
     <ngb-tab title="Credit card">
-        <ng-template ngbTabContent>
-            <!--<form>
+      <ng-template ngbTabContent>
+        <!--<form>
+                        <div class="form-group form-inline">
+                            Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                        </div>
+                    </form>-->
+        <div class="loader" *ngIf="loader"></div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">CardNumber</th>
+            <th scope="col">CardAcct</th>
+            <th scope="col">CardName</th>
+            <th scope="col">OustBalance</th>
+            <th scope="col">ExpAmount</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let card of cards; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              {{ card.cardnumber }}
+            </td>
+            <td>
+              {{ card.cardacct }}
+            </td>
+            <td>
+              {{ card.cardname }}
+            </td>
+            <td>{{ card.oustbalance | number }}</td>
+            <td>{{ card.expamount | number }}</td>
+          </tr>
+          </tbody>
+        </table>
+        .
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="with same idNumber">
+      <ng-template ngbTabContent>
+        <!--<form>
                             <div class="form-group form-inline">
                                 Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
                             </div>
                         </form>-->
-            <div class="loader" *ngIf="loader"></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">CardNumber</th>
-                        <th scope="col">CardAcct</th>
-                        <th scope="col">CardName</th>
-                        <th scope="col">OustBalance</th>
-                        <th scope="col">ExpAmount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let card of cards; index as i">
-                        <th scope="row">{{ i + 1 }}</th>
-                        <td>
-                            {{ card.cardnumber }}
-                        </td>
-                        <td>
-                            {{ card.cardacct }}
-                        </td>
-                        <td>
-                            {{ card.cardname }}
-                        </td>
-                        <td>{{ card.oustbalance | number }}</td>
-                        <td>{{ card.expamount | number }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            .
-        </ng-template>
-    </ngb-tab>
-    <ngb-tab title="with same idNumber">
-        <ng-template ngbTabContent>
-            <!--<form>
-                                <div class="form-group form-inline">
-                                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
-                                </div>
-                            </form>-->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">accnumber</th>
-                        <th scope="col">arocode</th>
-                        <th scope="col">oustbalance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let d of accwithid; index as i">
-                        <th scope="row">{{ i + 1 }}</th>
-                        <td>
-                            {{ d.accnumber }}
-                        </td>
-                        <td>{{ d.arocode }}</td>
-                        <td>{{ d.oustbalance | number }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            .
-        </ng-template>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">accnumber</th>
+            <th scope="col">arocode</th>
+            <th scope="col">oustbalance</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let d of accwithid; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              {{ d.accnumber }}
+            </td>
+            <td>{{ d.arocode }}</td>
+            <td>{{ d.oustbalance | number }}</td>
+          </tr>
+          </tbody>
+        </table>
+        .
+      </ng-template>
     </ngb-tab>
     <!--<ngb-tab title="CRB Balances" [disabled]="true">
         <ng-template ngbTabContent>
         </ng-template>
     </ngb-tab>-->
-</ngb-tabset>
+  </ngb-tabset>
 </div>
 <!---<form class="card">
     <tabset [justified]="true" class="ie-fix-flex">

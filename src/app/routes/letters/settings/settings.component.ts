@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {environment} from '../../../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-settings',
@@ -12,23 +12,24 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class SettingsComponent implements OnInit {
 
-    model: any = {};
-    valueCategory;
-    valueTag;
-    valueReview;
-    contents: string;
-    letter: {};
-    demandSettings: any;
-    disable = true;
-    selectedLink: string;
-    username: string;
-    selected_demand: string;
+  model: any = {};
+  valueCategory;
+  valueTag;
+  valueReview;
+  contents: string;
+  letter: {};
+  demandSettings: any;
+  disable = true;
+  selectedLink: string;
+  username: string;
+  selected_demand: string;
 
   constructor(
     private ecolService: EcolService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    ) { }
+  ) {
+  }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -37,10 +38,10 @@ export class SettingsComponent implements OnInit {
   }
 
   setradio(e: string): void {
-        this.spinner.show();
-        this.getLetter(e.toLowerCase());
-        this.model.letterid = e.toLowerCase();
-        this.selected_demand = e.toUpperCase();
+    this.spinner.show();
+    this.getLetter(e.toLowerCase());
+    this.model.letterid = e.toLowerCase();
+    this.selected_demand = e.toUpperCase();
   }
 
   getLetter(letter) {
@@ -75,7 +76,7 @@ export class SettingsComponent implements OnInit {
   getblobal() {
     this.ecolService.getglobal().subscribe(response => {
       console.log(response);
-     // this.model = response[0];
+      // this.model = response[0];
     }, error => {
       console.log(error);
     });
@@ -86,19 +87,19 @@ export class SettingsComponent implements OnInit {
     // Loading indictor
     this.spinner.show();
     //
-   const body = {
-    letterid: this.model.letterid,
-    smstemplate: this.model.smstemplate,
-    suspendletter: this.model.suspendletter,
-    templatepath: this.model.templatepath || '0',
-    autodelivered: this.model.autodelivered,
-    suspendautodelivery: this.model.suspendautodelivery,
-    suspendsms: this.model.suspendsms,
-    datelastupdated: new Date(),
-    updatedby: this.username,
-    byemail: this.model.byemail,
-    bysms: this.model.bysms,
-    byphysical: this.model.byphysical
+    const body = {
+      letterid: this.model.letterid,
+      smstemplate: this.model.smstemplate,
+      suspendletter: this.model.suspendletter,
+      templatepath: this.model.templatepath || '0',
+      autodelivered: this.model.autodelivered,
+      suspendautodelivery: this.model.suspendautodelivery,
+      suspendsms: this.model.suspendsms,
+      datelastupdated: new Date(),
+      updatedby: this.username,
+      byemail: this.model.byemail,
+      bysms: this.model.bysms,
+      byphysical: this.model.byphysical
     };
 
     // check letter duplicate

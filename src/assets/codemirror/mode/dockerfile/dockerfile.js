@@ -12,14 +12,14 @@
   "use strict";
 
   // Collect all Dockerfile directives
-  var instructions = ["from", "maintainer", "run", "cmd", "expose", "env",
-                      "add", "copy", "entrypoint", "volume", "user",
-                      "workdir", "onbuild"],
-      instructionRegex = "(" + instructions.join('|') + ")",
-      instructionOnlyLine = new RegExp(instructionRegex + "\\s*$", "i"),
-      instructionWithArguments = new RegExp(instructionRegex + "(\\s+)", "i");
+    const instructions = ["from", "maintainer", "run", "cmd", "expose", "env",
+            "add", "copy", "entrypoint", "volume", "user",
+            "workdir", "onbuild"],
+        instructionRegex = "(" + instructions.join('|') + ")",
+        instructionOnlyLine = new RegExp(instructionRegex + "\\s*$", "i"),
+        instructionWithArguments = new RegExp(instructionRegex + "(\\s+)", "i");
 
-  CodeMirror.defineSimpleMode("dockerfile", {
+    CodeMirror.defineSimpleMode("dockerfile", {
     start: [
       // Block comment: This is a line starting with a comment
       {

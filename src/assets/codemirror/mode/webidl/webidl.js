@@ -13,85 +13,85 @@
 
 function wordRegexp(words) {
   return new RegExp("^((" + words.join(")|(") + "))\\b");
-};
+}
 
-var builtinArray = [
-  "Clamp",
-  "Constructor",
-  "EnforceRange",
-  "Exposed",
-  "ImplicitThis",
-  "Global", "PrimaryGlobal",
-  "LegacyArrayClass",
-  "LegacyUnenumerableNamedProperties",
-  "LenientThis",
-  "NamedConstructor",
-  "NewObject",
-  "NoInterfaceObject",
-  "OverrideBuiltins",
-  "PutForwards",
-  "Replaceable",
-  "SameObject",
-  "TreatNonObjectAsNull",
-  "TreatNullAs",
-    "EmptyString",
-  "Unforgeable",
-  "Unscopeable"
-];
-var builtins = wordRegexp(builtinArray);
+    const builtinArray = [
+        "Clamp",
+        "Constructor",
+        "EnforceRange",
+        "Exposed",
+        "ImplicitThis",
+        "Global", "PrimaryGlobal",
+        "LegacyArrayClass",
+        "LegacyUnenumerableNamedProperties",
+        "LenientThis",
+        "NamedConstructor",
+        "NewObject",
+        "NoInterfaceObject",
+        "OverrideBuiltins",
+        "PutForwards",
+        "Replaceable",
+        "SameObject",
+        "TreatNonObjectAsNull",
+        "TreatNullAs",
+        "EmptyString",
+        "Unforgeable",
+        "Unscopeable"
+    ];
+    const builtins = wordRegexp(builtinArray);
 
-var typeArray = [
-  "unsigned", "short", "long",                  // UnsignedIntegerType
-  "unrestricted", "float", "double",            // UnrestrictedFloatType
-  "boolean", "byte", "octet",                   // Rest of PrimitiveType
-  "Promise",                                    // PromiseType
-  "ArrayBuffer", "DataView", "Int8Array", "Int16Array", "Int32Array",
-  "Uint8Array", "Uint16Array", "Uint32Array", "Uint8ClampedArray",
-  "Float32Array", "Float64Array",               // BufferRelatedType
-  "ByteString", "DOMString", "USVString", "sequence", "object", "RegExp",
-  "Error", "DOMException", "FrozenArray",       // Rest of NonAnyType
-  "any",                                        // Rest of SingleType
-  "void"                                        // Rest of ReturnType
-];
-var types = wordRegexp(typeArray);
+    const typeArray = [
+        "unsigned", "short", "long",                  // UnsignedIntegerType
+        "unrestricted", "float", "double",            // UnrestrictedFloatType
+        "boolean", "byte", "octet",                   // Rest of PrimitiveType
+        "Promise",                                    // PromiseType
+        "ArrayBuffer", "DataView", "Int8Array", "Int16Array", "Int32Array",
+        "Uint8Array", "Uint16Array", "Uint32Array", "Uint8ClampedArray",
+        "Float32Array", "Float64Array",               // BufferRelatedType
+        "ByteString", "DOMString", "USVString", "sequence", "object", "RegExp",
+        "Error", "DOMException", "FrozenArray",       // Rest of NonAnyType
+        "any",                                        // Rest of SingleType
+        "void"                                        // Rest of ReturnType
+    ];
+    const types = wordRegexp(typeArray);
 
-var keywordArray = [
-  "attribute", "callback", "const", "deleter", "dictionary", "enum", "getter",
-  "implements", "inherit", "interface", "iterable", "legacycaller", "maplike",
-  "partial", "required", "serializer", "setlike", "setter", "static",
-  "stringifier", "typedef",                     // ArgumentNameKeyword except
-                                                // "unrestricted"
-  "optional", "readonly", "or"
-];
-var keywords = wordRegexp(keywordArray);
+    const keywordArray = [
+        "attribute", "callback", "const", "deleter", "dictionary", "enum", "getter",
+        "implements", "inherit", "interface", "iterable", "legacycaller", "maplike",
+        "partial", "required", "serializer", "setlike", "setter", "static",
+        "stringifier", "typedef",                     // ArgumentNameKeyword except
+                                                      // "unrestricted"
+        "optional", "readonly", "or"
+    ];
+    const keywords = wordRegexp(keywordArray);
 
-var atomArray = [
-  "true", "false",                              // BooleanLiteral
-  "Infinity", "NaN",                            // FloatLiteral
-  "null"                                        // Rest of ConstValue
-];
-var atoms = wordRegexp(atomArray);
+    const atomArray = [
+        "true", "false",                              // BooleanLiteral
+        "Infinity", "NaN",                            // FloatLiteral
+        "null"                                        // Rest of ConstValue
+    ];
+    const atoms = wordRegexp(atomArray);
 
-CodeMirror.registerHelper("hintWords", "webidl",
+    CodeMirror.registerHelper("hintWords", "webidl",
     builtinArray.concat(typeArray).concat(keywordArray).concat(atomArray));
 
-var startDefArray = ["callback", "dictionary", "enum", "interface"];
-var startDefs = wordRegexp(startDefArray);
+    const startDefArray = ["callback", "dictionary", "enum", "interface"];
+    const startDefs = wordRegexp(startDefArray);
 
-var endDefArray = ["typedef"];
-var endDefs = wordRegexp(endDefArray);
+    const endDefArray = ["typedef"];
+    const endDefs = wordRegexp(endDefArray);
 
-var singleOperators = /^[:<=>?]/;
-var integers = /^-?([1-9][0-9]*|0[Xx][0-9A-Fa-f]+|0[0-7]*)/;
-var floats = /^-?(([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([Ee][+-]?[0-9]+)?|[0-9]+[Ee][+-]?[0-9]+)/;
-var identifiers = /^_?[A-Za-z][0-9A-Z_a-z-]*/;
-var identifiersEnd = /^_?[A-Za-z][0-9A-Z_a-z-]*(?=\s*;)/;
-var strings = /^"[^"]*"/;
-var multilineComments = /^\/\*.*?\*\//;
-var multilineCommentsStart = /^\/\*.*/;
-var multilineCommentsEnd = /^.*?\*\//;
+    const singleOperators = /^[:<=>?]/;
+    const integers = /^-?([1-9][0-9]*|0[Xx][0-9A-Fa-f]+|0[0-7]*)/;
+    const floats = /^-?(([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([Ee][+-]?[0-9]+)?|[0-9]+[Ee][+-]?[0-9]+)/;
+    const identifiers = /^_?[A-Za-z][0-9A-Z_a-z-]*/;
+    const identifiersEnd = /^_?[A-Za-z][0-9A-Z_a-z-]*(?=\s*;)/;
+    const strings = /^"[^"]*"/;
+    const multilineComments = /^\/\*.*?\*\//;
+    const multilineCommentsStart = /^\/\*.*/;
+    const multilineCommentsEnd = /^.*?\*\//;
 
-function readToken(stream, state) {
+    function readToken(stream, state) {
   // whitespace
   if (stream.eatSpace()) return null;
 
@@ -133,10 +133,10 @@ function readToken(stream, state) {
   if (stream.match(keywords)) return "keyword";
 
   if (stream.match(types)) {
-    var lastToken = state.lastToken;
-    var nextToken = (stream.match(/^\s*(.+?)\b/, false) || [])[1];
+      const lastToken = state.lastToken;
+      const nextToken = (stream.match(/^\s*(.+?)\b/, false) || [])[1];
 
-    if (lastToken === ":" || lastToken === "implements" ||
+      if (lastToken === ":" || lastToken === "implements" ||
         nextToken === "implements" || nextToken === "=") {
       // Used as identifier
       return "builtin";
@@ -156,7 +156,7 @@ function readToken(stream, state) {
   // unrecognized
   stream.next();
   return null;
-};
+}
 
 CodeMirror.defineMode("webidl", function() {
   return {
@@ -173,11 +173,11 @@ CodeMirror.defineMode("webidl", function() {
       };
     },
     token: function(stream, state) {
-      var style = readToken(stream, state);
+        const style = readToken(stream, state);
 
-      if (style) {
-        var cur = stream.current();
-        state.lastToken = cur;
+        if (style) {
+          const cur = stream.current();
+          state.lastToken = cur;
         if (style === "keyword") {
           state.startDef = startDefs.test(cur);
           state.endDef = state.endDef || endDefs.test(cur);

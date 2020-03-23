@@ -1,6 +1,5 @@
-
-import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../../environments/environment';
 // import { HttpClient} from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
@@ -33,7 +32,7 @@ export class NocreditComponent implements OnInit {
       {
         headerName: 'ACCNUMBER',
         field: 'ACCNUMBER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
@@ -46,42 +45,42 @@ export class NocreditComponent implements OnInit {
       {
         headerName: 'CUSTNUMBER',
         field: 'CUSTNUMBER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CUSTNAME',
         field: 'CUSTNAME',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'OUSTBALANCE',
         field: 'OUSTBALANCE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'PRODUCTCODE',
         field: 'PRODUCTCODE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'BRANCHCODE',
         field: 'BRANCHCODE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'AROCODE',
         field: 'AROCODE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'REPAYMENTAMOUNT',
         field: 'REPAYMENTAMOUNT',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'SETTLEACCBAL',
         field: 'SETTLEACCBAL',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       }
     ];
     this.defaultColDef = {
@@ -112,7 +111,7 @@ export class NocreditComponent implements OnInit {
         fetch(environment.nodeapi + '/gridnocreditbuild/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
-          headers: { 'Content-Type': 'application/json; charset=utf-8' }
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
         })
           .then(httpResponse => httpResponse.json())
           .then(response => {
@@ -127,6 +126,7 @@ export class NocreditComponent implements OnInit {
 
     params.api.setServerSideDatasource(datasource);
   }
+
   currencyFormatter(params) {
     if (params.value !== undefined) {
       return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');

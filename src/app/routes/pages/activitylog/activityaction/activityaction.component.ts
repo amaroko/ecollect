@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
-import { DataService } from '../../../../services/data.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
+import {DataService} from '../../../../services/data.service';
 import swal from 'sweetalert2';
-import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { environment } from '../../../../../environments/environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { NgOption } from '@ng-select/ng-select';
+import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import {environment} from '../../../../../environments/environment';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {NgOption} from '@ng-select/ng-select';
 import * as moment from 'moment';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+import {NgxSmartModalService} from 'ngx-smart-modal';
 
 const URL = environment.valor;
 
@@ -18,7 +18,7 @@ const URL = environment.valor;
   selector: 'app-sendletter',
   templateUrl: './activityaction.component.html',
   styleUrls: ['./activityaction.component.scss'],
-  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
+  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class ActivityActionComponent implements OnInit {
 
@@ -60,18 +60,18 @@ export class ActivityActionComponent implements OnInit {
   ptpid: any = 0;
 
   collectoraction: any = [
-    { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
-    { collectoractionid: 'IC', collectoraction: 'INCOMING CALL' },
-    { collectoractionid: 'MET', collectoraction: 'DEBTOR VISITED' },
-    { collectoractionid: 'REVW', collectoraction: 'ACCOUNT REVIEW' },
-    { collectoractionid: 'EMPVISIT', collectoraction: 'EMPLOYER VISIT' },
-    { collectoractionid: 'SC', collectoraction: 'SENT CORRESPONDENCE' },
-    { collectoractionid: 'RC', collectoraction: 'RECEIVED CORRESPONDENCE' },
-    { collectoractionid: 'RR', collectoraction: 'ROUTE FOR REVIEW' },
-    { collectoractionid: 'OA', collectoraction: 'ASSIGN OUTSIDE AGENCY' },
-    { collectoractionid: 'RF', collectoraction: 'RECEIVED FILE' },
-    { collectoractionid: 'FT', collectoraction: 'FUND TRANSFER' },
-    { collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION' }
+    {collectoractionid: 'OC', collectoraction: 'OUTGOING CALL'},
+    {collectoractionid: 'IC', collectoraction: 'INCOMING CALL'},
+    {collectoractionid: 'MET', collectoraction: 'DEBTOR VISITED'},
+    {collectoractionid: 'REVW', collectoraction: 'ACCOUNT REVIEW'},
+    {collectoractionid: 'EMPVISIT', collectoraction: 'EMPLOYER VISIT'},
+    {collectoractionid: 'SC', collectoraction: 'SENT CORRESPONDENCE'},
+    {collectoractionid: 'RC', collectoraction: 'RECEIVED CORRESPONDENCE'},
+    {collectoractionid: 'RR', collectoraction: 'ROUTE FOR REVIEW'},
+    {collectoractionid: 'OA', collectoraction: 'ASSIGN OUTSIDE AGENCY'},
+    {collectoractionid: 'RF', collectoraction: 'RECEIVED FILE'},
+    {collectoractionid: 'FT', collectoraction: 'FUND TRANSFER'},
+    {collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION'}
   ];
 
   message: string;
@@ -81,17 +81,9 @@ export class ActivityActionComponent implements OnInit {
   sys = 'collections';
 
   ptp: NgOption[] = [
-    { id: 'No', name: 'No' },
-    { id: 'Yes', name: 'Yes' },
+    {id: 'No', name: 'No'},
+    {id: 'Yes', name: 'Yes'},
   ];
-
-  currentDate() {
-    const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    return day + '-' + month + '-' + year;
-  }
 
   constructor(
     public settings: SettingsService,
@@ -102,16 +94,29 @@ export class ActivityActionComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public ngxSmartModalService: NgxSmartModalService,
   ) {
-    this.minDate = { year: this.year, month: this.month, day: this.day };
+    this.minDate = {year: this.year, month: this.month, day: this.day};
     this.minxDate = new Date();
     this.minxDate.setDate(this.minxDate.getDate() - 1);
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.actionForm.controls;
+  }
+
+  currentDate() {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    return day + '-' + month + '-' + year;
   }
 
   ngOnInit() {
     // check if logged!
     this.ecolService.ifLogged();
     this.ecolService.ifclosed();
-    
+
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
@@ -158,7 +163,7 @@ export class ActivityActionComponent implements OnInit {
       this.getwatch(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
-      
+
     }
 
   }
@@ -166,16 +171,17 @@ export class ActivityActionComponent implements OnInit {
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
       this.account = data[0];
+      // tslint:disable-next-line:max-line-length
       this.autodial_telnumber = this.account.cellnumber || this.account.mobile || this.account.phonenumber || this.account.telnumber || this.account.celnumber;
       this.model.emailaddress = data[0].emailaddress;
       this.getstatic(this.accnumber);
-      
+
     });
   }
 
   getstatic(accnumber) {
     this.ecolService.getStaticLoans(accnumber).subscribe(data => {
-    
+
       if (data && data.length > 0) {
         this.account.reviewdate = data[0].reviewdate;
         this.account.excuse = data[0].excuse;
@@ -185,11 +191,12 @@ export class ActivityActionComponent implements OnInit {
       }
       // build form
       this.buildForm();
-      if (swal.isVisible) { swal.close(); }
+      if (swal.isVisible) {
+        swal.close();
+      }
       this.spinner.hide();
     });
   }
-
 
   getwatch(accnumber) {
     this.ecolService.getwatch(accnumber).subscribe(data => {
@@ -204,7 +211,9 @@ export class ActivityActionComponent implements OnInit {
 
       // build form
       this.buildForm();
-      if (swal.isVisible) { swal.close(); }
+      if (swal.isVisible) {
+        swal.close();
+      }
       this.spinner.hide();
     });
   }
@@ -218,7 +227,7 @@ export class ActivityActionComponent implements OnInit {
 
   getwatchcardstatic(cardacct) {
     this.ecolService.getWatchcardStatic(cardacct).subscribe(data => {
-      
+
       if (data && data.length > 0) {
         this.account.reviewdate = data[0].reviewdate;
         this.account.excuse = data[0].excuse;
@@ -229,7 +238,9 @@ export class ActivityActionComponent implements OnInit {
 
       // build form
       this.buildForm();
-      if (swal.isVisible) { swal.close(); }
+      if (swal.isVisible) {
+        swal.close();
+      }
       this.spinner.hide();
     });
   }
@@ -239,7 +250,9 @@ export class ActivityActionComponent implements OnInit {
       this.account = data[0];
       // build form
       this.buildForm();
-      if (swal.isVisible) { swal.close(); }
+      if (swal.isVisible) {
+        swal.close();
+      }
       this.spinner.hide();
     });
   }
@@ -287,22 +300,19 @@ export class ActivityActionComponent implements OnInit {
     });
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.actionForm.controls; }
-
   buildForm() {
     // get static data
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
-      party: [{ value: '', disabled: true }],
-      ptpamount: [{ value: 0, disabled: true }],
-      ptpemail: [{ value: '', disabled: true }],
-      toemail: [{ value: this.model.emailaddress, disabled: true }],
-      ptpsms: [{ value: '', disabled: true }],
-      ptpsmsnumber: [{ value: this.autodial_telnumber, disabled: true }],
-      ptp: [{ value: 'No', disabled: true }],
-      ptptype: [{ value: '', disabled: true }],
-      ptpdate: [{ value: this.currentDate, disabled: true }],
+      party: [{value: '', disabled: true}],
+      ptpamount: [{value: 0, disabled: true}],
+      ptpemail: [{value: '', disabled: true}],
+      toemail: [{value: this.model.emailaddress, disabled: true}],
+      ptpsms: [{value: '', disabled: true}],
+      ptpsmsnumber: [{value: this.autodial_telnumber, disabled: true}],
+      ptp: [{value: 'No', disabled: true}],
+      ptptype: [{value: '', disabled: true}],
+      ptpdate: [{value: this.currentDate, disabled: true}],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
       reason: [this.account.excuse, Validators.required],
@@ -310,7 +320,7 @@ export class ActivityActionComponent implements OnInit {
       flag: [false],
       route: [this.account.routetostate],
       paymode: [''],
-      rfdother: [{ value: this.account.excuse_other, disabled: true }]
+      rfdother: [{value: this.account.excuse_other, disabled: true}]
     });
   }
 
@@ -327,6 +337,7 @@ export class ActivityActionComponent implements OnInit {
       return;
     }*/
 
+    // tslint:disable-next-line:triple-equals
     if (this.f.ptpsms.value && this.f.ptpsmsnumber.value == '') {
       alert('Please fill Customer Mobile number');
       return;
@@ -335,7 +346,7 @@ export class ActivityActionComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    
+
     this.username = currentUser.USERNAME;
 
     // post data
@@ -350,8 +361,9 @@ export class ActivityActionComponent implements OnInit {
       toemail: this.f.toemail.value,
       ptpsms: this.f.ptpsms.value,
       ptpsmsnumber: this.f.ptpsmsnumber.value,
+      // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:max-line-length + '   Reason details: ' + this.f.rfdother.value + '   Reason for default: ' + this.f.reason.value
-      collectornote: this.f.collectornote.value ,
+      collectornote: this.f.collectornote.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,
@@ -378,10 +390,10 @@ export class ActivityActionComponent implements OnInit {
         ccemail: this.username,
         ptpamount: 0,
         ptpdate: 0
-      }
+      };
     }
 
-    
+
     // add action
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
       this.sendNotesData(this.custnumber);
@@ -400,7 +412,9 @@ export class ActivityActionComponent implements OnInit {
 
         this.ecolService.putcardwatch(watchccbody).subscribe(resp => {
           //
-        }, error => { console.log(error); });
+        }, error => {
+          console.log(error);
+        });
       }
       //
       if (this.sys === 'watch') {
@@ -415,7 +429,9 @@ export class ActivityActionComponent implements OnInit {
         };
 
         this.ecolService.putwatch(watchbody).subscribe(resp => {
-        }, error => { console.log(error); });
+        }, error => {
+          console.log(error);
+        });
       }
 
       if (this.sys === 'ptp') {
@@ -427,7 +443,9 @@ export class ActivityActionComponent implements OnInit {
         };
 
         this.ecolService.reviewptp(ptpbody).subscribe(resp => {
-        }, error => { console.log(error); });
+        }, error => {
+          console.log(error);
+        });
       }
 
       // close windows
@@ -512,13 +530,13 @@ export class ActivityActionComponent implements OnInit {
     if (value === 'Yes') {
       // check if ptp exists
       this.ecolService.activeptps(this.accnumber).subscribe(activedata => {
-        if(activedata && activedata.data.length > 0){
+        if (activedata && activedata.data.length > 0) {
           swal({
             type: 'error',
             title: 'Oops...',
             text: 'a/c already has a running promise to pay. Check under Promises to pay menu'
           }).then((result) => {
-              this.actionForm.controls.ptp.setValue('No');
+            this.actionForm.controls.ptp.setValue('No');
           });
         }
       });
@@ -569,16 +587,16 @@ export class ActivityActionComponent implements OnInit {
 
   openptpModal() {
     // open modal
-    this.ngxSmartModalService.getModal('myModal').open()
+    this.ngxSmartModalService.getModal('myModal').open();
   }
 
   deleteptp(form) {
     const index: number = this.ptps.indexOf(form);
     if (index !== -1) {
-        this.ptps.splice(index, 1);
-        if (this.ptps.length === 0) {
-          this.isptptosave = false;
-        }
+      this.ptps.splice(index, 1);
+      if (this.ptps.length === 0) {
+        this.isptptosave = false;
+      }
     }
   }
 
@@ -595,7 +613,7 @@ export class ActivityActionComponent implements OnInit {
 
   saveallptps() {
     this.ecolService.postptps(this.ptps).subscribe(resp => {
-      swal('Successful!', 'Mupltiple ptp saved!', 'success').then(function() {
+      swal('Successful!', 'Mupltiple ptp saved!', 'success').then(function () {
         // this.ngxSmartModalService.getModal('myModal').close()
       });
     }, error => {

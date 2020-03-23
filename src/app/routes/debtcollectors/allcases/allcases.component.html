@@ -1,9 +1,381 @@
+
 <div class="content-heading">
-    <div>Debt Collectors
-        <small>ALL cases</small></div>
+  <div>DEBT COLLECTORS
+    <small>all cases</small></div>
 </div>
-<div class="container-fluid">
-    <div class="col-4 col-xl-12">
-        
+<button [routerLink]="['/debtcollectors/newcase']" class="mb-1 btn btn-success btn-sm" type="button">+New</button>
+
+
+<ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham"  style="width: 100%; height: 550px;" [columnDefs]="columnDefs"
+                 [defaultColDef]="defaultColDef"
+                 [gridOptions]="gridOptions"   [pagination]="true" [floatingFilter]="true" [rowData]="rowData"
+                 [modules]="modules" [pivotPanelShow]="pivotPanelShow" [sideBar]="true"
+                 [animateRows]="true" (rowClicked)='onRowDoubleClicked($event)' >
+
+</ag-grid-angular>
+
+<!--<ngx-smart-modal #editInsurance [closable]="false" [dismissable]="false" [escapable]="true" identifier="debtcollectmodal">-->
+<!--  &lt;!&ndash; START card&ndash;&gt;-->
+<!--  <div class="card card-default">-->
+<!--    &lt;!&ndash;    <div class="card-header">Enter Insurance details</div>&ndash;&gt;-->
+<!--    <div class="card-body">-->
+<!--      <form [formGroup]="assignDebtCollForm" autocomplete="off"-->
+<!--            class="form-horizontal">-->
+<!--        <div class="form-group row">-->
+<!--          <label class="col-xl-3 col-form-label">Debt Collector Id</label>-->
+<!--          <div class="col-xl-6">-->
+<!--            <label>-->
+<!--              <input [(ngModel)]="model.ID" class="form-control" formControlName="debtcollid" name="debtcollid" type="text"/>-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="form-group row">-->
+<!--          <label class="col-xl-3 col-form-label">Customer Number</label>-->
+<!--          <div class="col-xl-6">-->
+<!--            <label>-->
+<!--              <input [(ngModel)]="model.CUSTNUMBER" class="form-control" formControlName="custnumber"-->
+<!--                     name="editinsurancename" type="text"/>-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="form-group row">-->
+<!--          <label class="col-xl-3 col-form-label">Account Number</label>-->
+<!--          <div class="col-xl-6">-->
+<!--            <label>-->
+<!--              <input [(ngModel)]="model.ACCNUMBER" class="form-control" formControlName="accountnumber"-->
+<!--                     name="accountnumber" type="text"/>-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="form-group row">-->
+<!--          <label class="col-xl-3 col-form-label">Customer Name</label>-->
+<!--          <div class="col-xl-6">-->
+<!--            <label>-->
+<!--              <input [(ngModel)]="model.CUSTNAME" class="form-control" formControlName="customername"-->
+<!--                     name="customername"/>-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="form-group row">-->
+<!--          <label class="col-xl-3 col-form-label">Assigned By</label>-->
+<!--          <div class="col-xl-6">-->
+<!--            <label>-->
+<!--              <input disabled value="{{user.username}}"  class="form-control" formControlName="assignedby"-->
+<!--                     name="assignedby"-->
+<!--                     type="text"/>-->
+<!--            </label>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="form-group row">-->
+<!--          <label class="col-xl-3 col-form-label">Debt Collector</label>-->
+<!--          <div class="col-xl-6">-->
+<!--            <ng-select [searchable]="true" [clearable]="true" id="debtcollector" formControlName="debtcollector" placeholder="Select Debtcollector">-->
+<!--              <ng-option *ngFor="let p of party" [value]="p.SPCODE">{{p.SPTITLE}}</ng-option>-->
+<!--            </ng-select>-->
+<!--          </div>-->
+<!--        </div>-->
+
+
+<!--        <div class="form-group row">-->
+<!--          <label class="col-xl-3 col-form-label"></label>-->
+<!--          <div class="col-xl-6">-->
+<!--            <button (click)="closedebtcollassignModal()" tooltip="Back to grid" class="btn btn-sm btn-outline-danger"-->
+<!--                    type="button">Back-->
+<!--            </button>-->
+<!--            <button [disabled]="!assignDebtCollForm.valid" [hidden]="assigned!=='PENDING'" class="btn btn-sm btn-outline-primary" tooltip="Submit Assignment" type="submit">Submit-->
+<!--            </button>-->
+
+<!--            <button  [disabled]="!assignDebtCollForm.valid" [hidden]="assigned==='PENDING'" class="btn btn-sm btn-danger" style="text-align: center "-->
+<!--                    tooltip="Edit Debt Collector" type="button">Submit Edited-->
+<!--            </button>-->
+
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+
+
+
+  <ngx-smart-modal customClass="nsm"   #editInsurance [closable]="false" [dismissable]="false" [escapable]="true" identifier="debtcollectmodal">
+    <div *ngIf="user.role!=='teamleader'" class="alert alert-danger fade show">
+<!--      <span class="close" data-dismiss="alert">×</span>-->
+      <strong>Hello {{user.firstname}}, Sorry</strong>
+      you don't have rights to assign accounts. <button (click)="openupdatedebtcollectmodal()" class="btn btn-secondary">Click here</button>
     </div>
-</div>
+  <div class="card-body" >
+
+    <form (ngSubmit)="onAssign()" [formGroup]="assignDebtCollForm" autocomplete="off"
+          class="form-horizontal">
+
+    <div [hidden]="true" class="row" style="padding-top: 20px">
+      <div class="col-md-4">
+        DebtCollector id
+      </div>
+      <div class="col-md-8">
+        <div class="col-md-12">
+          <input [(ngModel)]="model.ID" class="form-control" formControlName="debtcollid"
+                 name="debtcollid" type="text"/>
+        </div>
+        <!--            <span *ngIf="!newcase.get('custnumber').valid" class="validation-error">Customer Number Required</span>-->
+      </div>
+    </div >
+
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          Customer Number
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <input [(ngModel)]="model.CUSTNUMBER" class="form-control" formControlName="custnumber"
+                   name="custnumber" type="text"/>
+          </div>
+          <!--            <span *ngIf="!newcase.get('custnumber').valid" class="validation-error">Customer Number Required</span>-->
+        </div>
+      </div >
+
+
+
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          Debt Collector
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <ng-select [searchable]="true" [clearable]="true" id="debtcollector" formControlName="debtcollector" placeholder="Select Debtcollector">
+              <ng-option *ngFor="let p of party" [value]="p.SPTITLE">{{p.SPTITLE}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+
+
+
+
+<!--      <div *ngIf="status!=='PENDING' && user.role==='teamleader'" class="row" style="padding-top: 20px">-->
+<!--        <div class="col-md-4">-->
+<!--          Reason for Change-->
+<!--        </div>-->
+<!--        <div class="col-md-8">-->
+<!--          <div class="col-md-12">-->
+<!--            <textarea class="form-control" rows="3" id="changedebtcoll"-->
+<!--                      name="changedebtcoll" class="form-control"-->
+<!--                      formControlName="changedebtcoll" class="form-control"-->
+<!--                      [ngClass]="{ 'is-invalid': f.changedebtcoll.errors }"></textarea>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          Date of instruction
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <div class="input-group">
+              <input bsDatepicker class="form-control" placement="left" formControlName="dateofinstr" placeholder="Date of instruction"
+                     type="text"  >
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary"  type="button"><span><i
+                  class="fa fa-calendar"></i>
+                    </span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    <div class="row" style="padding-top: 20px">
+      <div class="col-md-4">
+        Follow up date
+      </div>
+      <div class="col-md-8">
+        <div class="col-md-12">
+          <div class="input-group">
+            <input bsDatepicker class="form-control" placement="left" formControlName="followupdate" placeholder="Follow up date"
+                   type="text"  >
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary"  type="button"><span><i
+                class="fa fa-calendar"></i>
+                    </span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" style="padding-top: 40px">
+      <label class="col-xl-3 col-form-label"></label>
+      <div class="col-xl-12">
+        <button (click)="closedebtcollassignModal()" tooltip="Back to grid" class="btn btn-sm btn-outline-primary"
+                type="button">Back
+        </button>
+<!--        <div class="col-xl-12" [hidden]="user.role!=='teamleader'" >-->
+        <button *ngIf="user.role==='teamleader'" [disabled]="!assignDebtCollForm.valid " [hidden]="status!=='PENDING'"   class="btn btn-sm btn-outline-primary" tooltip="Submit Assignment" type="submit">Submit
+        </button>
+
+        <button (click)="onEdit()" *ngIf="user.role==='teamleader'" [disabled]="!assignDebtCollForm.valid " [hidden]="status==='PENDING'"  class="btn btn-sm btn-success" style="text-align: center "
+                 tooltip="Edit Debt Collector" type="submit">Submit Edited
+        </button>
+<!--        </div>-->
+
+      </div>
+    </div>
+
+
+
+      <div *ngIf="status!=='PENDING' && user.role==='teamleader'" class="alert alert-danger fade show">
+<!--        <span class="close" data-dismiss="alert">×</span>-->
+        <strong>Remember!</strong>
+        You are editing an already assigned account. <strong>If you want to update this account instead.</strong>
+        <button type="button" (click)="clickhere()" class="btn btn-success">Click Here</button>
+      </div>
+
+    </form>
+  </div>
+</ngx-smart-modal>
+
+
+
+
+
+
+
+
+
+
+<ngx-smart-modal [closable]="false" [dismissable]="false" [escapable]="true" identifier="updatedebtcollectmodal">
+  <div *ngIf="status==='PENDING' && user.role !=='teamleader'" class="alert alert-danger fade show">
+    <!--      <span class="close" data-dismiss="alert">×</span>-->
+    <strong>Hi there {{user.firstname}}, Sorry</strong>
+    you don't have rights to assign accounts, and this account has not been assigned to any EDC hence you can't update. Refer to your TeamLeader
+  </div>
+
+  <div class="card-body" >
+
+    <form (ngSubmit)="onUpdateAccount()" [formGroup]="updateDebtCollForm" autocomplete="off"
+          class="form-horizontal">
+
+      <div [hidden]="true" class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          DebtCollector id
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <input [(ngModel)]="model.ID" class="form-control" formControlName="updatedebtcollid"
+                   name="updatedebtcollid" type="text"/>
+          </div>
+          <!--            <span *ngIf="!newcase.get('custnumber').valid" class="validation-error">Customer Number Required</span>-->
+        </div>
+      </div >
+
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          Customer Number
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <input [(ngModel)]="model.CUSTNUMBER" class="form-control" formControlName="updatecustnumber"
+                   name="updatecustnumber" type="text"/>
+          </div>
+          <!--            <span *ngIf="!newcase.get('custnumber').valid" class="validation-error">Customer Number Required</span>-->
+        </div>
+      </div >
+
+
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          Status Update
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <input  class="form-control" formControlName="statusupdate"
+                   name="statusupdate" type="text"/>
+          </div>
+          <!--            <span *ngIf="!newcase.get('custnumber').valid" class="validation-error">Customer Number Required</span>-->
+        </div>
+      </div >
+
+
+
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          Remarks
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <input  class="form-control" formControlName="updateremarks"
+                   name="updateremarks" type="text"/>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          Status
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <ng-select [(ngModel)]="checkrecall" [searchable]="true" [clearable]="true" id="selectstatus" formControlName="selectstatus" placeholder="Select Status">
+              <ng-option *ngFor="let s of statuses" [value]="s.STATUS">{{s.STATUS}}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div *ngIf="checkrecall === 'RECALLED'" class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+          DATE RECALLED
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <div class="input-group">
+              <input bsDatepicker class="form-control" placement="left" formControlName="daterecalled" placeholder="Date recalled"
+                     type="text"  >
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary"  type="button"><span><i
+                  class="fa fa-calendar"></i>
+                    </span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row" style="padding-top: 40px">
+        <label class="col-xl-3 col-form-label"></label>
+        <div class="col-xl-12">
+          <button (click)="closeupdatedebtcollectmodal()" tooltip="Back to grid" class="btn btn-sm btn-outline-primary"
+                  type="button">Back
+          </button>
+          <!--        <div class="col-xl-12" [hidden]="user.role!=='teamleader'" >-->
+<!--          <button *ngIf="user.role==='teamleader'" [disabled]="!assignDebtCollForm.valid " [hidden]="status!=='PENDING'"   class="btn btn-sm btn-outline-primary" tooltip="Submit Assignment" type="submit">Submit-->
+<!--          </button>-->
+
+          <button  [disabled]="!updateDebtCollForm.valid" [hidden]="status==='PENDING'"  class="btn btn-sm btn-outline-primary" tooltip="Submit and Update" type="submit">Update & Submit
+          </button>
+
+<!--          <button (click)="onEdit()" *ngIf="user.role==='teamleader'" [disabled]="!assignDebtCollForm.valid " [hidden]="status==='PENDING'"  class="btn btn-sm btn-success" style="text-align: center "-->
+<!--                  tooltip="Edit Debt Collector" type="submit">Submit Edited-->
+<!--          </button>-->
+          <!--        </div>-->
+
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</ngx-smart-modal>

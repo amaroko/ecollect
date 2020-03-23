@@ -18,21 +18,21 @@
 CodeMirror.defineMode('mathematica', function(_config, _parserConfig) {
 
   // used pattern building blocks
-  var Identifier = '[a-zA-Z\\$][a-zA-Z0-9\\$]*';
-  var pBase      = "(?:\\d+)";
-  var pFloat     = "(?:\\.\\d+|\\d+\\.\\d*|\\d+)";
-  var pFloatBase = "(?:\\.\\w+|\\w+\\.\\w*|\\w+)";
-  var pPrecision = "(?:`(?:`?"+pFloat+")?)";
+    const Identifier = '[a-zA-Z\\$][a-zA-Z0-9\\$]*';
+    const pBase = "(?:\\d+)";
+    const pFloat = "(?:\\.\\d+|\\d+\\.\\d*|\\d+)";
+    const pFloatBase = "(?:\\.\\w+|\\w+\\.\\w*|\\w+)";
+    const pPrecision = "(?:`(?:`?" + pFloat + ")?)";
 
-  // regular expressions
-  var reBaseForm        = new RegExp('(?:'+pBase+'(?:\\^\\^'+pFloatBase+pPrecision+'?(?:\\*\\^[+-]?\\d+)?))');
-  var reFloatForm       = new RegExp('(?:' + pFloat + pPrecision + '?(?:\\*\\^[+-]?\\d+)?)');
-  var reIdInContext     = new RegExp('(?:`?)(?:' + Identifier + ')(?:`(?:' + Identifier + '))*(?:`?)');
+    // regular expressions
+    const reBaseForm = new RegExp('(?:' + pBase + '(?:\\^\\^' + pFloatBase + pPrecision + '?(?:\\*\\^[+-]?\\d+)?))');
+    const reFloatForm = new RegExp('(?:' + pFloat + pPrecision + '?(?:\\*\\^[+-]?\\d+)?)');
+    const reIdInContext = new RegExp('(?:`?)(?:' + Identifier + ')(?:`(?:' + Identifier + '))*(?:`?)');
 
-  function tokenBase(stream, state) {
-    var ch;
+    function tokenBase(stream, state) {
+      let ch;
 
-    // get next character
+      // get next character
     ch = stream.next();
 
     // string
@@ -131,8 +131,8 @@ CodeMirror.defineMode('mathematica', function(_config, _parserConfig) {
   }
 
   function tokenString(stream, state) {
-    var next, end = false, escaped = false;
-    while ((next = stream.next()) != null) {
+      let next, end = false, escaped = false;
+      while ((next = stream.next()) != null) {
       if (next === '"' && !escaped) {
         end = true;
         break;
@@ -143,11 +143,11 @@ CodeMirror.defineMode('mathematica', function(_config, _parserConfig) {
       state.tokenize = tokenBase;
     }
     return 'string';
-  };
+  }
 
   function tokenComment(stream, state) {
-    var prev, next;
-    while(state.commentLevel > 0 && (next = stream.next()) != null) {
+      let prev, next;
+      while(state.commentLevel > 0 && (next = stream.next()) != null) {
       if (prev === '(' && next === '*') state.commentLevel++;
       if (prev === '*' && next === ')') state.commentLevel--;
       prev = next;

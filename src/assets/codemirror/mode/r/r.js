@@ -15,21 +15,22 @@ CodeMirror.registerHelper("wordChars", "r", /[\w.]/);
 
 CodeMirror.defineMode("r", function(config) {
   function wordObj(str) {
-    var words = str.split(" "), res = {};
-    for (var i = 0; i < words.length; ++i) res[words[i]] = true;
+      const words = str.split(" "), res = {};
+      for (let i = 0; i < words.length; ++i) res[words[i]] = true;
     return res;
   }
-  var atoms = wordObj("NULL NA Inf NaN NA_integer_ NA_real_ NA_complex_ NA_character_");
-  var builtins = wordObj("list quote bquote eval return call parse deparse");
-  var keywords = wordObj("if else repeat while function for in next break");
-  var blockkeywords = wordObj("if else repeat while function for");
-  var opChars = /[+\-*\/^<>=!&|~$:]/;
-  var curPunc;
 
-  function tokenBase(stream, state) {
+    const atoms = wordObj("NULL NA Inf NaN NA_integer_ NA_real_ NA_complex_ NA_character_");
+    const builtins = wordObj("list quote bquote eval return call parse deparse");
+    const keywords = wordObj("if else repeat while function for in next break");
+    const blockkeywords = wordObj("if else repeat while function for");
+    const opChars = /[+\-*\/^<>=!&|~$:]/;
+    let curPunc;
+
+    function tokenBase(stream, state) {
     curPunc = null;
-    var ch = stream.next();
-    if (ch == "#") {
+      const ch = stream.next();
+      if (ch == "#") {
       stream.skipToEnd();
       return "comment";
     } else if (ch == "0" && stream.eat("x")) {
@@ -51,8 +52,8 @@ CodeMirror.defineMode("r", function(config) {
       return "keyword";
     } else if (/[\w\.]/.test(ch) && ch != "_") {
       stream.eatWhile(/[\w\.]/);
-      var word = stream.current();
-      if (atoms.propertyIsEnumerable(word)) return "atom";
+        const word = stream.current();
+        if (atoms.propertyIsEnumerable(word)) return "atom";
       if (keywords.propertyIsEnumerable(word)) {
         // Block keywords start new blocks, except 'else if', which only starts
         // one new block for the 'if', no block for the 'else'.
@@ -90,16 +91,16 @@ CodeMirror.defineMode("r", function(config) {
   function tokenString(quote) {
     return function(stream, state) {
       if (stream.eat("\\")) {
-        var ch = stream.next();
-        if (ch == "x") stream.match(/^[a-f0-9]{2}/i);
+          const ch = stream.next();
+          if (ch == "x") stream.match(/^[a-f0-9]{2}/i);
         else if ((ch == "u" || ch == "U") && stream.eat("{") && stream.skipTo("}")) stream.next();
         else if (ch == "u") stream.match(/^[a-f0-9]{4}/i);
         else if (ch == "U") stream.match(/^[a-f0-9]{8}/i);
         else if (/[0-7]/.test(ch)) stream.match(/^[0-7]{1,2}/);
         return "string-2";
       } else {
-        var next;
-        while ((next = stream.next()) != null) {
+          let next;
+          while ((next = stream.next()) != null) {
           if (next == quote) { state.tokenize = tokenBase; break; }
           if (next == "\\") { stream.backUp(1); break; }
         }
@@ -136,11 +137,11 @@ CodeMirror.defineMode("r", function(config) {
         state.indent = stream.indentation();
       }
       if (stream.eatSpace()) return null;
-      var style = state.tokenize(stream, state);
-      if (style != "comment" && state.ctx.align == null) state.ctx.align = true;
+        const style = state.tokenize(stream, state);
+        if (style != "comment" && state.ctx.align == null) state.ctx.align = true;
 
-      var ctype = state.ctx.type;
-      if ((curPunc == ";" || curPunc == "{" || curPunc == "}") && ctype == "block") pop(state);
+        const ctype = state.ctx.type;
+        if ((curPunc == ";" || curPunc == "{" || curPunc == "}") && ctype == "block") pop(state);
       if (curPunc == "{") push(state, "}", stream);
       else if (curPunc == "(") {
         push(state, ")", stream);
@@ -155,9 +156,9 @@ CodeMirror.defineMode("r", function(config) {
 
     indent: function(state, textAfter) {
       if (state.tokenize != tokenBase) return 0;
-      var firstChar = textAfter && textAfter.charAt(0), ctx = state.ctx,
-          closing = firstChar == ctx.type;
-      if (ctx.type == "block") return ctx.indent + (firstChar == "{" ? 0 : config.indentUnit);
+        const firstChar = textAfter && textAfter.charAt(0), ctx = state.ctx,
+            closing = firstChar == ctx.type;
+        if (ctx.type == "block") return ctx.indent + (firstChar == "{" ? 0 : config.indentUnit);
       else if (ctx.align) return ctx.column + (closing ? 0 : 1);
       else return ctx.indent + (closing ? 0 : config.indentUnit);
     },

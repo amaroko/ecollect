@@ -11,37 +11,41 @@
 })(function(CodeMirror) {
   "use strict";
 
-  var indentingTags = ["template", "literal", "msg", "fallbackmsg", "let", "if", "elseif",
-                       "else", "switch", "case", "default", "foreach", "ifempty", "for",
-                       "call", "param", "deltemplate", "delcall", "log"];
+    const indentingTags = ["template", "literal", "msg", "fallbackmsg", "let", "if", "elseif",
+        "else", "switch", "case", "default", "foreach", "ifempty", "for",
+        "call", "param", "deltemplate", "delcall", "log"];
 
-  CodeMirror.defineMode("soy", function(config) {
-    var textMode = CodeMirror.getMode(config, "text/plain");
-    var modes = {
-      html: CodeMirror.getMode(config, {name: "text/html", multilineTagIndentFactor: 2, multilineTagIndentPastTag: false}),
-      attributes: textMode,
-      text: textMode,
-      uri: textMode,
-      css: CodeMirror.getMode(config, "text/css"),
-      js: CodeMirror.getMode(config, {name: "text/javascript", statementIndent: 2 * config.indentUnit})
-    };
+    CodeMirror.defineMode("soy", function(config) {
+      const textMode = CodeMirror.getMode(config, "text/plain");
+      const modes = {
+          html: CodeMirror.getMode(config, {
+              name: "text/html",
+              multilineTagIndentFactor: 2,
+              multilineTagIndentPastTag: false
+          }),
+          attributes: textMode,
+          text: textMode,
+          uri: textMode,
+          css: CodeMirror.getMode(config, "text/css"),
+          js: CodeMirror.getMode(config, {name: "text/javascript", statementIndent: 2 * config.indentUnit})
+      };
 
-    function last(array) {
+      function last(array) {
       return array[array.length - 1];
     }
 
     function tokenUntil(stream, state, untilRegExp) {
-      var oldString = stream.string;
-      var match = untilRegExp.exec(oldString.substr(stream.pos));
-      if (match) {
+        const oldString = stream.string;
+        const match = untilRegExp.exec(oldString.substr(stream.pos));
+        if (match) {
         // We don't use backUp because it backs up just the position, not the state.
         // This uses an undocumented API.
         stream.string = oldString.substr(0, stream.pos + match.index);
       }
-      var result = stream.hideFirstChars(state.indent, function() {
-        return state.localMode.token(stream, state.localState);
-      });
-      stream.string = oldString;
+        const result = stream.hideFirstChars(state.indent, function () {
+            return state.localMode.token(stream, state.localState);
+        });
+        stream.string = oldString;
       return result;
     }
 
@@ -98,8 +102,8 @@
               return "keyword";
             } else if (stream.match(/^([\w?]+)(?==)/)) {
               if (stream.current() == "kind" && (match = stream.match(/^="([^"]+)/, false))) {
-                var kind = match[1];
-                state.kind.push(kind);
+                  const kind = match[1];
+                  state.kind.push(kind);
                 state.kindTag.push(state.tag);
                 state.localMode = modes[kind] || modes.html;
                 state.localState = CodeMirror.startState(state.localMode);
@@ -162,8 +166,9 @@
       },
 
       indent: function(state, textAfter) {
-        var indent = state.indent, top = last(state.soyState);
-        if (top == "comment") return CodeMirror.Pass;
+          let indent = state.indent;
+          const top = last(state.soyState);
+          if (top == "comment") return CodeMirror.Pass;
 
         if (top == "literal") {
           if (/^\{\/literal}/.test(textAfter)) indent -= config.indentUnit;

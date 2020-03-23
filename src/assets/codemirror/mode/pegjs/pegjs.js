@@ -12,9 +12,9 @@
 "use strict";
 
 CodeMirror.defineMode("pegjs", function (config) {
-  var jsMode = CodeMirror.getMode(config, "javascript");
+    const jsMode = CodeMirror.getMode(config, "javascript");
 
-  function identifier(stream) {
+    function identifier(stream) {
     return stream.match(/^[a-zA-Z_][a-zA-Z0-9_]*/);
   }
 
@@ -83,16 +83,16 @@ CodeMirror.defineMode("pegjs", function (config) {
         if (state.localState === null) {
           state.localState = CodeMirror.startState(jsMode);
         }
-        var token = jsMode.token(stream, state.localState);
-        var text = stream.current();
-        if (!token) {
-          for (var i = 0; i < text.length; i++) {
+          const token = jsMode.token(stream, state.localState);
+          const text = stream.current();
+          if (!token) {
+          for (let i = 0; i < text.length; i++) {
             if (text[i] === '{') {
               state.braced++;
             } else if (text[i] === '}') {
               state.braced--;
             }
-          };
+          }
         }
         return token;
       } else if (identifier(stream)) {

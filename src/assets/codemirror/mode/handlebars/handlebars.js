@@ -50,8 +50,8 @@
   });
 
   CodeMirror.defineMode("handlebars", function(config, parserConfig) {
-    var handlebars = CodeMirror.getMode(config, "handlebars-tags");
-    if (!parserConfig || !parserConfig.base) return handlebars;
+      const handlebars = CodeMirror.getMode(config, "handlebars-tags");
+      if (!parserConfig || !parserConfig.base) return handlebars;
     return CodeMirror.multiplexingMode(
       CodeMirror.getMode(config, parserConfig.base),
       {open: "{{", close: "}}", mode: handlebars, parseDelimiters: true}

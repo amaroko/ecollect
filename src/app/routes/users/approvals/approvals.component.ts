@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
-import { constants } from 'http2';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormControl, ValidatorFn} from '@angular/forms';
+import {constants} from 'http2';
 
 @Component({
   selector: 'app-approvals',
@@ -10,6 +10,7 @@ import { constants } from 'http2';
 export class ApprovalsComponent implements OnInit {
 
   valForm: FormGroup;
+
   constructor(fb: FormBuilder) {
     // Model Driven validation
     this.valForm = fb.group({
@@ -26,12 +27,12 @@ export class ApprovalsComponent implements OnInit {
     $ev.preventDefault();
     // tslint:disable-next-line:forin
     for (const c in this.valForm.controls) {
-        this.valForm.controls[c].markAsTouched();
+      this.valForm.controls[c].markAsTouched();
     }
     if (this.valForm.valid) {
-        console.log('Valid!');
+      console.log('Valid!');
     }
     console.log(value);
-}
+  }
 
 }

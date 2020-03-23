@@ -7,7 +7,7 @@ CodeMirror template by Jan T. Sott (https://github.com/idleberg), adapted by Bra
 
 .cm-s-duotone-dark.CodeMirror { background: #2a2734; color: #6c6783; }
 .cm-s-duotone-dark div.CodeMirror-selected { background: #545167!important; }
-.cm-s-duotone-dark .CodeMirror-gutters { background: #2a2734; border-right: 0px; }
+.cm-s-duotone-dark .CodeMirror-gutters { background: #2a2734; border-right: 0; }
 .cm-s-duotone-dark .CodeMirror-linenumber { color: #545167; }
 
 /* begin cursor */
@@ -32,4 +32,4 @@ CodeMirror template by Jan T. Sott (https://github.com/idleberg), adapted by Bra
 .cm-s-duotone-dark span.cm-error, .cm-s-duotone-dark span.cm-invalidchar { color: #f00; }
 
 .cm-s-duotone-dark span.cm-header { font-weight: normal; }
-.cm-s-duotone-dark .CodeMirror-matchingbracket { text-decoration: underline; color: #eeebff !important; } 
+.cm-s-duotone-dark .CodeMirror-matchingbracket { text-decoration: underline; color: #eeebff !important; }

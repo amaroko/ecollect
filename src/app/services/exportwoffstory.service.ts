@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Workbook } from 'exceljs';
+import {Injectable} from '@angular/core';
+import {Workbook} from 'exceljs';
 import * as fs from 'file-saver';
 import * as logoFile from '../../assets/img/cooplogo.js';
-import { DatePipe } from '@angular/common';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {DatePipe} from '@angular/common';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 const URL = environment.api;
 
@@ -27,11 +27,10 @@ export class ExportWoffStoryService {
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet('Write-off Story');
 
-    
 
     // Add Row and formatting
     const titleRow = worksheet.addRow([title]);
-    titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
+    titleRow.font = {name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true};
     worksheet.addRow([]);
     const subTitleRow = worksheet.addRow(['Date : ' + this.datePipe.transform(new Date(), 'medium')]);
 
@@ -57,26 +56,26 @@ export class ExportWoffStoryService {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'AED6F1' }, // FFFFFF00 00543D
-        bgColor: { argb: 'AED6F1' }
+        fgColor: {argb: 'AED6F1'}, // FFFFFF00 00543D
+        bgColor: {argb: 'AED6F1'}
       };
-      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+      cell.border = {top: {style: 'thin'}, left: {style: 'thin'}, bottom: {style: 'thin'}, right: {style: 'thin'}};
     });
     // worksheet.addRows(data);
 
     this.http.get<any>(URL + '/api/writeoffstory/export').subscribe(resp => {
       // Add Data and Conditional Formatting
       let data = [];
-      let datax = [];
-      for (let x=0; x < resp.length; x++) {
-        data.push(resp[x].ACCNUMBER,resp[x].CUSTNUMBER, resp[x].OWNER,resp[x].WOFFSTORY,resp[x].LASTUPDATE,resp[x].CLIENT_NAME,resp[x].RROCODE,resp[x].AROCODE,resp[x].BRANCHNAME)
-        datax.push(data)
+      const datax = [];
+      for (let x = 0; x < resp.length; x++) {
+        data.push(resp[x].ACCNUMBER, resp[x].CUSTNUMBER, resp[x].OWNER, resp[x].WOFFSTORY, resp[x].LASTUPDATE, resp[x].CLIENT_NAME, resp[x].RROCODE, resp[x].AROCODE, resp[x].BRANCHNAME);
+        datax.push(data);
         data = [];
       }
-      
+
       datax.forEach(d => {
         worksheet.addRow(d);
-        
+
       });
 
       worksheet.getColumn(4).width = 100;
@@ -88,21 +87,27 @@ export class ExportWoffStoryService {
       footerRow.getCell(1).fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'AED6F1' } //FFCCFFE5
+        fgColor: {argb: 'AED6F1'} // FFCCFFE5
       };
-      footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+      // tslint:disable-next-line:max-line-length
+      footerRow.getCell(1).border = {
+        top: {style: 'thin'},
+        left: {style: 'thin'},
+        bottom: {style: 'thin'},
+        right: {style: 'thin'}
+      };
 
       // Merge Cells
       worksheet.mergeCells(`A${footerRow.number}:I${footerRow.number}`);
 
       // Generate Excel File with given name
       workbook.xlsx.writeBuffer().then((data: any) => {
-        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
         fs.saveAs(blob, 'Write-off Story.xlsx');
       });
     }, error => {
       //
-    })
+    });
 
   }
 }

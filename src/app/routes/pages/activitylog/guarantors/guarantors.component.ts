@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../../environments/environment';
+import {environment} from '../../../../../environments/environment';
 
 const URL = environment.valor;
 
@@ -19,9 +19,10 @@ export class GuarantorsComponent implements OnInit {
   username: string;
   model: any = {};
   guarantors: any = [];
+
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService) {
     //
   }
 
@@ -53,15 +54,15 @@ export class GuarantorsComponent implements OnInit {
   }
 
   onSubmit(form) {
-   // check if logged in
-   this.ecolService.ifLogged();
-   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-   this.username = currentUser.username;
+    // check if logged in
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     // Loading indictor
     this.ecolService.loader();
     //
-   const body = {
+    const body = {
       nationid: form.value.nationid,
       guarantorname: form.value.guarantorname,
       accnumber: this.model.accnumber,

@@ -12,14 +12,16 @@
 "use strict";
 
 CodeMirror.defineMode("q",function(config){
-  var indentUnit=config.indentUnit,
-      curPunc,
-      keywords=buildRE(["abs","acos","aj","aj0","all","and","any","asc","asin","asof","atan","attr","avg","avgs","bin","by","ceiling","cols","cor","cos","count","cov","cross","csv","cut","delete","deltas","desc","dev","differ","distinct","div","do","each","ej","enlist","eval","except","exec","exit","exp","fby","fills","first","fkeys","flip","floor","from","get","getenv","group","gtime","hclose","hcount","hdel","hopen","hsym","iasc","idesc","if","ij","in","insert","inter","inv","key","keys","last","like","list","lj","load","log","lower","lsq","ltime","ltrim","mavg","max","maxs","mcount","md5","mdev","med","meta","min","mins","mmax","mmin","mmu","mod","msum","neg","next","not","null","or","over","parse","peach","pj","plist","prd","prds","prev","prior","rand","rank","ratios","raze","read0","read1","reciprocal","reverse","rload","rotate","rsave","rtrim","save","scan","select","set","setenv","show","signum","sin","sqrt","ss","ssr","string","sublist","sum","sums","sv","system","tables","tan","til","trim","txf","type","uj","ungroup","union","update","upper","upsert","value","var","view","views","vs","wavg","where","where","while","within","wj","wj1","wsum","xasc","xbar","xcol","xcols","xdesc","xexp","xgroup","xkey","xlog","xprev","xrank"]),
-      E=/[|/&^!+:\\\-*%$=~#;@><,?_\'\"\[\(\]\)\s{}]/;
-  function buildRE(w){return new RegExp("^("+w.join("|")+")$");}
+    const indentUnit = config.indentUnit;
+    let curPunc;
+    const keywords = buildRE(["abs", "acos", "aj", "aj0", "all", "and", "any", "asc", "asin", "asof", "atan", "attr", "avg", "avgs", "bin", "by", "ceiling", "cols", "cor", "cos", "count", "cov", "cross", "csv", "cut", "delete", "deltas", "desc", "dev", "differ", "distinct", "div", "do", "each", "ej", "enlist", "eval", "except", "exec", "exit", "exp", "fby", "fills", "first", "fkeys", "flip", "floor", "from", "get", "getenv", "group", "gtime", "hclose", "hcount", "hdel", "hopen", "hsym", "iasc", "idesc", "if", "ij", "in", "insert", "inter", "inv", "key", "keys", "last", "like", "list", "lj", "load", "log", "lower", "lsq", "ltime", "ltrim", "mavg", "max", "maxs", "mcount", "md5", "mdev", "med", "meta", "min", "mins", "mmax", "mmin", "mmu", "mod", "msum", "neg", "next", "not", "null", "or", "over", "parse", "peach", "pj", "plist", "prd", "prds", "prev", "prior", "rand", "rank", "ratios", "raze", "read0", "read1", "reciprocal", "reverse", "rload", "rotate", "rsave", "rtrim", "save", "scan", "select", "set", "setenv", "show", "signum", "sin", "sqrt", "ss", "ssr", "string", "sublist", "sum", "sums", "sv", "system", "tables", "tan", "til", "trim", "txf", "type", "uj", "ungroup", "union", "update", "upper", "upsert", "value", "var", "view", "views", "vs", "wavg", "where", "where", "while", "within", "wj", "wj1", "wsum", "xasc", "xbar", "xcol", "xcols", "xdesc", "xexp", "xgroup", "xkey", "xlog", "xprev", "xrank"]),
+        E = /[|/&^!+:\\\-*%$=~#;@><,?_\'\"\[\(\]\)\s{}]/;
+
+    function buildRE(w){return new RegExp("^("+w.join("|")+")$");}
   function tokenBase(stream,state){
-    var sol=stream.sol(),c=stream.next();
-    curPunc=null;
+      const sol = stream.sol();
+      let c = stream.next();
+      curPunc=null;
     if(sol)
       if(c=="/")
         return(state.tokenize=tokenLineComment)(stream,state);
@@ -36,8 +38,8 @@ CodeMirror.defineMode("q",function(config){
     if(c=='`')
       return stream.eatWhile(/[A-Z|a-z|\d|_|:|\/|\.]/),"symbol";
     if(("."==c&&/\d/.test(stream.peek()))||/\d/.test(c)){
-      var t=null;
-      stream.backUp(1);
+        let t = null;
+        stream.backUp(1);
       if(stream.match(/^\d{4}\.\d{2}(m|\.\d{2}([D|T](\d{2}(:\d{2}(:\d{2}(\.\d{1,9})?)?)?)?)?)/)
       || stream.match(/^\d+D(\d{2}(:\d{2}(:\d{2}(\.\d{1,9})?)?)?)/)
       || stream.match(/^\d{2}:\d{2}(:\d{2}(\.\d{1,9})?)?/)
@@ -63,16 +65,16 @@ CodeMirror.defineMode("q",function(config){
     return stream.skipToEnd(),/\/\s*$/.test(stream.current())?(state.tokenize=tokenBlockComment)(stream,state):(state.tokenize=tokenBase),"comment";
   }
   function tokenBlockComment(stream,state){
-    var f=stream.sol()&&stream.peek()=="\\";
-    stream.skipToEnd();
+      const f = stream.sol() && stream.peek() == "\\";
+      stream.skipToEnd();
     if(f&&/^\\\s*$/.test(stream.current()))
       state.tokenize=tokenBase;
     return"comment";
   }
   function tokenCommentToEOF(stream){return stream.skipToEnd(),"comment";}
   function tokenString(stream,state){
-    var escaped=false,next,end=false;
-    while((next=stream.next())){
+      let escaped = false, next, end = false;
+      while((next=stream.next())){
       if(next=="\""&&!escaped){end=true;break;}
       escaped=!escaped&&next=="\\";
     }
@@ -95,8 +97,8 @@ CodeMirror.defineMode("q",function(config){
         state.indent=stream.indentation();
       }
       //if (stream.eatSpace()) return null;
-      var style=state.tokenize(stream,state);
-      if(style!="comment"&&state.context&&state.context.align==null&&state.context.type!="pattern"){
+        const style = state.tokenize(stream, state);
+        if(style!="comment"&&state.context&&state.context.align==null&&state.context.type!="pattern"){
         state.context.align=true;
       }
       if(curPunc=="(")pushContext(state,")",stream.column());
@@ -118,12 +120,12 @@ CodeMirror.defineMode("q",function(config){
       return style;
     },
     indent:function(state,textAfter){
-      var firstChar=textAfter&&textAfter.charAt(0);
-      var context=state.context;
-      if(/[\]\}]/.test(firstChar))
+        const firstChar = textAfter && textAfter.charAt(0);
+        let context = state.context;
+        if(/[\]\}]/.test(firstChar))
         while (context&&context.type=="pattern")context=context.prev;
-      var closing=context&&firstChar==context.type;
-      if(!context)
+        const closing = context && firstChar == context.type;
+        if(!context)
         return 0;
       else if(context.type=="pattern")
         return context.col;

@@ -12,34 +12,34 @@
 "use strict";
 
 CodeMirror.defineMode("go", function(config) {
-  var indentUnit = config.indentUnit;
+    const indentUnit = config.indentUnit;
 
-  var keywords = {
-    "break":true, "case":true, "chan":true, "const":true, "continue":true,
-    "default":true, "defer":true, "else":true, "fallthrough":true, "for":true,
-    "func":true, "go":true, "goto":true, "if":true, "import":true,
-    "interface":true, "map":true, "package":true, "range":true, "return":true,
-    "select":true, "struct":true, "switch":true, "type":true, "var":true,
-    "bool":true, "byte":true, "complex64":true, "complex128":true,
-    "float32":true, "float64":true, "int8":true, "int16":true, "int32":true,
-    "int64":true, "string":true, "uint8":true, "uint16":true, "uint32":true,
-    "uint64":true, "int":true, "uint":true, "uintptr":true, "error": true
-  };
+    const keywords = {
+        "break": true, "case": true, "chan": true, "const": true, "continue": true,
+        "default": true, "defer": true, "else": true, "fallthrough": true, "for": true,
+        "func": true, "go": true, "goto": true, "if": true, "import": true,
+        "interface": true, "map": true, "package": true, "range": true, "return": true,
+        "select": true, "struct": true, "switch": true, "type": true, "var": true,
+        "bool": true, "byte": true, "complex64": true, "complex128": true,
+        "float32": true, "float64": true, "int8": true, "int16": true, "int32": true,
+        "int64": true, "string": true, "uint8": true, "uint16": true, "uint32": true,
+        "uint64": true, "int": true, "uint": true, "uintptr": true, "error": true
+    };
 
-  var atoms = {
-    "true":true, "false":true, "iota":true, "nil":true, "append":true,
-    "cap":true, "close":true, "complex":true, "copy":true, "imag":true,
-    "len":true, "make":true, "new":true, "panic":true, "print":true,
-    "println":true, "real":true, "recover":true
-  };
+    const atoms = {
+        "true": true, "false": true, "iota": true, "nil": true, "append": true,
+        "cap": true, "close": true, "complex": true, "copy": true, "imag": true,
+        "len": true, "make": true, "new": true, "panic": true, "print": true,
+        "println": true, "real": true, "recover": true
+    };
 
-  var isOperatorChar = /[+\-*&^%:=<>!|\/]/;
+    const isOperatorChar = /[+\-*&^%:=<>!|\/]/;
 
-  var curPunc;
+    let curPunc;
 
-  function tokenBase(stream, state) {
-    var ch = stream.next();
-    if (ch == '"' || ch == "'" || ch == "`") {
+    function tokenBase(stream, state) {
+      const ch = stream.next();
+      if (ch == '"' || ch == "'" || ch == "`") {
       state.tokenize = tokenString(ch);
       return state.tokenize(stream, state);
     }
@@ -72,8 +72,8 @@ CodeMirror.defineMode("go", function(config) {
       return "operator";
     }
     stream.eatWhile(/[\w\$_\xa1-\uffff]/);
-    var cur = stream.current();
-    if (keywords.propertyIsEnumerable(cur)) {
+      const cur = stream.current();
+      if (keywords.propertyIsEnumerable(cur)) {
       if (cur == "case" || cur == "default") curPunc = "case";
       return "keyword";
     }
@@ -83,8 +83,8 @@ CodeMirror.defineMode("go", function(config) {
 
   function tokenString(quote) {
     return function(stream, state) {
-      var escaped = false, next, end = false;
-      while ((next = stream.next()) != null) {
+        let escaped = false, next, end = false;
+        while ((next = stream.next()) != null) {
         if (next == quote && !escaped) {end = true; break;}
         escaped = !escaped && quote != "`" && next == "\\";
       }
@@ -95,8 +95,8 @@ CodeMirror.defineMode("go", function(config) {
   }
 
   function tokenComment(stream, state) {
-    var maybeEnd = false, ch;
-    while (ch = stream.next()) {
+      let maybeEnd = false, ch;
+      while (ch = stream.next()) {
       if (ch == "/" && maybeEnd) {
         state.tokenize = tokenBase;
         break;
@@ -118,8 +118,8 @@ CodeMirror.defineMode("go", function(config) {
   }
   function popContext(state) {
     if (!state.context.prev) return;
-    var t = state.context.type;
-    if (t == ")" || t == "]" || t == "}")
+      const t = state.context.type;
+      if (t == ")" || t == "]" || t == "}")
       state.indented = state.context.indented;
     return state.context = state.context.prev;
   }
@@ -137,8 +137,8 @@ CodeMirror.defineMode("go", function(config) {
     },
 
     token: function(stream, state) {
-      var ctx = state.context;
-      if (stream.sol()) {
+        let ctx = state.context;
+        if (stream.sol()) {
         if (ctx.align == null) ctx.align = false;
         state.indented = stream.indentation();
         state.startOfLine = true;
@@ -146,8 +146,8 @@ CodeMirror.defineMode("go", function(config) {
       }
       if (stream.eatSpace()) return null;
       curPunc = null;
-      var style = (state.tokenize || tokenBase)(stream, state);
-      if (style == "comment") return style;
+        const style = (state.tokenize || tokenBase)(stream, state);
+        if (style == "comment") return style;
       if (ctx.align == null) ctx.align = true;
 
       if (curPunc == "{") pushContext(state, stream.column(), "}");
@@ -162,13 +162,13 @@ CodeMirror.defineMode("go", function(config) {
 
     indent: function(state, textAfter) {
       if (state.tokenize != tokenBase && state.tokenize != null) return 0;
-      var ctx = state.context, firstChar = textAfter && textAfter.charAt(0);
-      if (ctx.type == "case" && /^(?:case|default)\b/.test(textAfter)) {
+        const ctx = state.context, firstChar = textAfter && textAfter.charAt(0);
+        if (ctx.type == "case" && /^(?:case|default)\b/.test(textAfter)) {
         state.context.type = "}";
         return ctx.indented;
       }
-      var closing = firstChar == ctx.type;
-      if (ctx.align) return ctx.column + (closing ? 0 : 1);
+        const closing = firstChar == ctx.type;
+        if (ctx.align) return ctx.column + (closing ? 0 : 1);
       else return ctx.indented + (closing ? 0 : indentUnit);
     },
 

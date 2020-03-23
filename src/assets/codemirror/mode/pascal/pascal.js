@@ -13,20 +13,21 @@
 
 CodeMirror.defineMode("pascal", function() {
   function words(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+      const obj = {}, words = str.split(" ");
+      for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
     return obj;
   }
-  var keywords = words("and array begin case const div do downto else end file for forward integer " +
-                       "boolean char function goto if in label mod nil not of or packed procedure " +
-                       "program record repeat set string then to type until var while with");
-  var atoms = {"null": true};
 
-  var isOperatorChar = /[+\-*&%=<>!?|\/]/;
+    const keywords = words("and array begin case const div do downto else end file for forward integer " +
+        "boolean char function goto if in label mod nil not of or packed procedure " +
+        "program record repeat set string then to type until var while with");
+    const atoms = {"null": true};
 
-  function tokenBase(stream, state) {
-    var ch = stream.next();
-    if (ch == "#" && state.startOfLine) {
+    const isOperatorChar = /[+\-*&%=<>!?|\/]/;
+
+    function tokenBase(stream, state) {
+      const ch = stream.next();
+      if (ch == "#" && state.startOfLine) {
       stream.skipToEnd();
       return "meta";
     }
@@ -56,16 +57,16 @@ CodeMirror.defineMode("pascal", function() {
       return "operator";
     }
     stream.eatWhile(/[\w\$_]/);
-    var cur = stream.current();
-    if (keywords.propertyIsEnumerable(cur)) return "keyword";
+      const cur = stream.current();
+      if (keywords.propertyIsEnumerable(cur)) return "keyword";
     if (atoms.propertyIsEnumerable(cur)) return "atom";
     return "variable";
   }
 
   function tokenString(quote) {
     return function(stream, state) {
-      var escaped = false, next, end = false;
-      while ((next = stream.next()) != null) {
+        let escaped = false, next, end = false;
+        while ((next = stream.next()) != null) {
         if (next == quote && !escaped) {end = true; break;}
         escaped = !escaped && next == "\\";
       }
@@ -75,8 +76,8 @@ CodeMirror.defineMode("pascal", function() {
   }
 
   function tokenComment(stream, state) {
-    var maybeEnd = false, ch;
-    while (ch = stream.next()) {
+      let maybeEnd = false, ch;
+      while (ch = stream.next()) {
       if (ch == ")" && maybeEnd) {
         state.tokenize = null;
         break;
@@ -95,8 +96,8 @@ CodeMirror.defineMode("pascal", function() {
 
     token: function(stream, state) {
       if (stream.eatSpace()) return null;
-      var style = (state.tokenize || tokenBase)(stream, state);
-      if (style == "comment" || style == "meta") return style;
+        const style = (state.tokenize || tokenBase)(stream, state);
+        if (style == "comment" || style == "meta") return style;
       return style;
     },
 

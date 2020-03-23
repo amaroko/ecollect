@@ -14,10 +14,10 @@
 CodeMirror.defineMode("properties", function() {
   return {
     token: function(stream, state) {
-      var sol = stream.sol() || state.afterSection;
-      var eol = stream.eol();
+        const sol = stream.sol() || state.afterSection;
+        const eol = stream.eol();
 
-      state.afterSection = false;
+        state.afterSection = false;
 
       if (sol) {
         if (state.nextMultiline) {
@@ -37,9 +37,9 @@ CodeMirror.defineMode("properties", function() {
         while(stream.eatSpace()) {}
       }
 
-      var ch = stream.next();
+        const ch = stream.next();
 
-      if (sol && (ch === "#" || ch === "!" || ch === ";")) {
+        if (sol && (ch === "#" || ch === "!" || ch === ";")) {
         state.position = "comment";
         stream.skipToEnd();
         return "comment";

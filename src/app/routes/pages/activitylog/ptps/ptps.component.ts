@@ -1,19 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
-import { environment } from '../../../../../environments/environment';
-import { NgbActiveModal, NgbModal, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+import {Component, Input, OnInit} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
+import {environment} from '../../../../../environments/environment';
+import {NgbActiveModal, NgbModal, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgxSmartModalService} from 'ngx-smart-modal';
 import * as moment from 'moment';
 import swal from 'sweetalert2';
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-ptps',
   templateUrl: './ptps.component.html',
   styleUrls: ['./ptps.component.scss'],
-  providers: [{ provide: NgbModal, useClass: NgbActiveModal }, DatePipe]
+  providers: [{provide: NgbModal, useClass: NgbActiveModal}, DatePipe]
 })
 export class PtpsComponent implements OnInit {
 
@@ -39,13 +39,14 @@ export class PtpsComponent implements OnInit {
   day = parseInt(moment().format('DD'));
   maxday = parseInt(moment().add(5, 'days').format('DD'));
   minday = parseInt(moment().subtract(5, 'days').format('DD'));
+
   //
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService,
-    public ngxSmartModalService: NgxSmartModalService,
-    private datePipe: DatePipe) {
+              private route: ActivatedRoute,
+              private ecolService: EcolService,
+              public ngxSmartModalService: NgxSmartModalService,
+              private datePipe: DatePipe) {
     // console.log('this.ammendptp.ptpdate', this.ammendptp.ptpdate)
     // this.minDate = { year: this.year, month: this.month, day: this.day };
     // this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
@@ -106,7 +107,7 @@ export class PtpsComponent implements OnInit {
       this.ammendptp.owner = data.owner;
 
       // open modal
-      this.ngxSmartModalService.getModal('myModal').open()
+      this.ngxSmartModalService.getModal('myModal').open();
 
       // console.log('diff', moment().diff(this.ammendptp.ptpdate, 'days') + 5)
 
@@ -120,7 +121,7 @@ export class PtpsComponent implements OnInit {
       this.maxday = parseInt(moment(this.ammendptp.ptpdate).add(5, 'days').format('DD'));
       this.minday = parseInt(moment(this.ammendptp.ptpdate).subtract(5, 'days').format('DD'));
 
-      this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
+      this.maxDate = {year: this.maxyear, month: this.maxmonth, day: this.maxday};
 
       // min should not be less than today
       if (moment().diff(this.ammendptp.ptpdate, 'days') + 5 >= 0) {
@@ -128,9 +129,9 @@ export class PtpsComponent implements OnInit {
         this.year = parseInt(moment().format('YYYY'));
         this.month = parseInt(moment().format('MM'));
         this.day = parseInt(moment().format('DD'));
-        this.minDate = { year: this.year, month: this.month, day: this.day };
+        this.minDate = {year: this.year, month: this.month, day: this.day};
       } else {
-        this.minDate = { year: this.minyear, month: this.minmonth, day: this.minday };
+        this.minDate = {year: this.minyear, month: this.minmonth, day: this.minday};
       }
 
     }, error => {
@@ -156,9 +157,9 @@ export class PtpsComponent implements OnInit {
         const mn: string = (form.value.ptpdate.month).toString();
         const day: string = (form.value.ptpdate.day).toString();
 
-        const ptpdate = ((moment(yr + mn + day, "YYYYMMDD").format('DD-MMM-YYYY'))).toUpperCase();
-        const ptpdate2 = ((moment(yr + mn + day, "YYYYMMDD").format('YYYY-MM-DD')));
-        form.value.ptpdate = ptpdate
+        const ptpdate = ((moment(yr + mn + day, 'YYYYMMDD').format('DD-MMM-YYYY'))).toUpperCase();
+        const ptpdate2 = ((moment(yr + mn + day, 'YYYYMMDD').format('YYYY-MM-DD')));
+        form.value.ptpdate = ptpdate;
         const body: any = {
           id: this.ammendptp.id,
           ptpamount: form.value.ptpamount,
@@ -166,7 +167,7 @@ export class PtpsComponent implements OnInit {
           ptpdate2: ptpdate2,
           ammendby: this.username,
           ammendcomment: form.value.comment
-        }
+        };
 
         this.ecolService.ammendptp(body).subscribe(resp => {
           //

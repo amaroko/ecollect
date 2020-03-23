@@ -16,67 +16,68 @@
 "use strict";
 
 CodeMirror.defineMode("lua", function(config, parserConfig) {
-  var indentUnit = config.indentUnit;
+    const indentUnit = config.indentUnit;
 
-  function prefixRE(words) {
+    function prefixRE(words) {
     return new RegExp("^(?:" + words.join("|") + ")", "i");
   }
   function wordRE(words) {
     return new RegExp("^(?:" + words.join("|") + ")$", "i");
   }
-  var specials = wordRE(parserConfig.specials || []);
 
-  // long list of standard functions from lua manual
-  var builtins = wordRE([
-    "_G","_VERSION","assert","collectgarbage","dofile","error","getfenv","getmetatable","ipairs","load",
-    "loadfile","loadstring","module","next","pairs","pcall","print","rawequal","rawget","rawset","require",
-    "select","setfenv","setmetatable","tonumber","tostring","type","unpack","xpcall",
+    const specials = wordRE(parserConfig.specials || []);
 
-    "coroutine.create","coroutine.resume","coroutine.running","coroutine.status","coroutine.wrap","coroutine.yield",
+    // long list of standard functions from lua manual
+    const builtins = wordRE([
+        "_G", "_VERSION", "assert", "collectgarbage", "dofile", "error", "getfenv", "getmetatable", "ipairs", "load",
+        "loadfile", "loadstring", "module", "next", "pairs", "pcall", "print", "rawequal", "rawget", "rawset", "require",
+        "select", "setfenv", "setmetatable", "tonumber", "tostring", "type", "unpack", "xpcall",
 
-    "debug.debug","debug.getfenv","debug.gethook","debug.getinfo","debug.getlocal","debug.getmetatable",
-    "debug.getregistry","debug.getupvalue","debug.setfenv","debug.sethook","debug.setlocal","debug.setmetatable",
-    "debug.setupvalue","debug.traceback",
+        "coroutine.create", "coroutine.resume", "coroutine.running", "coroutine.status", "coroutine.wrap", "coroutine.yield",
 
-    "close","flush","lines","read","seek","setvbuf","write",
+        "debug.debug", "debug.getfenv", "debug.gethook", "debug.getinfo", "debug.getlocal", "debug.getmetatable",
+        "debug.getregistry", "debug.getupvalue", "debug.setfenv", "debug.sethook", "debug.setlocal", "debug.setmetatable",
+        "debug.setupvalue", "debug.traceback",
 
-    "io.close","io.flush","io.input","io.lines","io.open","io.output","io.popen","io.read","io.stderr","io.stdin",
-    "io.stdout","io.tmpfile","io.type","io.write",
+        "close", "flush", "lines", "read", "seek", "setvbuf", "write",
 
-    "math.abs","math.acos","math.asin","math.atan","math.atan2","math.ceil","math.cos","math.cosh","math.deg",
-    "math.exp","math.floor","math.fmod","math.frexp","math.huge","math.ldexp","math.log","math.log10","math.max",
-    "math.min","math.modf","math.pi","math.pow","math.rad","math.random","math.randomseed","math.sin","math.sinh",
-    "math.sqrt","math.tan","math.tanh",
+        "io.close", "io.flush", "io.input", "io.lines", "io.open", "io.output", "io.popen", "io.read", "io.stderr", "io.stdin",
+        "io.stdout", "io.tmpfile", "io.type", "io.write",
 
-    "os.clock","os.date","os.difftime","os.execute","os.exit","os.getenv","os.remove","os.rename","os.setlocale",
-    "os.time","os.tmpname",
+        "math.abs", "math.acos", "math.asin", "math.atan", "math.atan2", "math.ceil", "math.cos", "math.cosh", "math.deg",
+        "math.exp", "math.floor", "math.fmod", "math.frexp", "math.huge", "math.ldexp", "math.log", "math.log10", "math.max",
+        "math.min", "math.modf", "math.pi", "math.pow", "math.rad", "math.random", "math.randomseed", "math.sin", "math.sinh",
+        "math.sqrt", "math.tan", "math.tanh",
 
-    "package.cpath","package.loaded","package.loaders","package.loadlib","package.path","package.preload",
-    "package.seeall",
+        "os.clock", "os.date", "os.difftime", "os.execute", "os.exit", "os.getenv", "os.remove", "os.rename", "os.setlocale",
+        "os.time", "os.tmpname",
 
-    "string.byte","string.char","string.dump","string.find","string.format","string.gmatch","string.gsub",
-    "string.len","string.lower","string.match","string.rep","string.reverse","string.sub","string.upper",
+        "package.cpath", "package.loaded", "package.loaders", "package.loadlib", "package.path", "package.preload",
+        "package.seeall",
 
-    "table.concat","table.insert","table.maxn","table.remove","table.sort"
-  ]);
-  var keywords = wordRE(["and","break","elseif","false","nil","not","or","return",
-                         "true","function", "end", "if", "then", "else", "do",
-                         "while", "repeat", "until", "for", "in", "local" ]);
+        "string.byte", "string.char", "string.dump", "string.find", "string.format", "string.gmatch", "string.gsub",
+        "string.len", "string.lower", "string.match", "string.rep", "string.reverse", "string.sub", "string.upper",
 
-  var indentTokens = wordRE(["function", "if","repeat","do", "\\(", "{"]);
-  var dedentTokens = wordRE(["end", "until", "\\)", "}"]);
-  var dedentPartial = prefixRE(["end", "until", "\\)", "}", "else", "elseif"]);
+        "table.concat", "table.insert", "table.maxn", "table.remove", "table.sort"
+    ]);
+    const keywords = wordRE(["and", "break", "elseif", "false", "nil", "not", "or", "return",
+        "true", "function", "end", "if", "then", "else", "do",
+        "while", "repeat", "until", "for", "in", "local"]);
 
-  function readBracket(stream) {
-    var level = 0;
-    while (stream.eat("=")) ++level;
+    const indentTokens = wordRE(["function", "if", "repeat", "do", "\\(", "{"]);
+    const dedentTokens = wordRE(["end", "until", "\\)", "}"]);
+    const dedentPartial = prefixRE(["end", "until", "\\)", "}", "else", "elseif"]);
+
+    function readBracket(stream) {
+      let level = 0;
+      while (stream.eat("=")) ++level;
     stream.eat("[");
     return level;
   }
 
   function normal(stream, state) {
-    var ch = stream.next();
-    if (ch == "-" && stream.eat("-")) {
+      const ch = stream.next();
+      if (ch == "-" && stream.eat("-")) {
       if (stream.eat("[") && stream.eat("["))
         return (state.cur = bracketed(readBracket(stream), "comment"))(stream, state);
       stream.skipToEnd();
@@ -99,8 +100,8 @@ CodeMirror.defineMode("lua", function(config, parserConfig) {
 
   function bracketed(level, style) {
     return function(stream, state) {
-      var curlev = null, ch;
-      while ((ch = stream.next()) != null) {
+        let curlev = null, ch;
+        while ((ch = stream.next()) != null) {
         if (curlev == null) {if (ch == "]") curlev = 0;}
         else if (ch == "=") ++curlev;
         else if (ch == "]" && curlev == level) { state.cur = normal; break; }
@@ -112,8 +113,8 @@ CodeMirror.defineMode("lua", function(config, parserConfig) {
 
   function string(quote) {
     return function(stream, state) {
-      var escaped = false, ch;
-      while ((ch = stream.next()) != null) {
+        let escaped = false, ch;
+        while ((ch = stream.next()) != null) {
         if (ch == quote && !escaped) break;
         escaped = !escaped && ch == "\\";
       }
@@ -129,9 +130,9 @@ CodeMirror.defineMode("lua", function(config, parserConfig) {
 
     token: function(stream, state) {
       if (stream.eatSpace()) return null;
-      var style = state.cur(stream, state);
-      var word = stream.current();
-      if (style == "variable") {
+        let style = state.cur(stream, state);
+        const word = stream.current();
+        if (style == "variable") {
         if (keywords.test(word)) style = "keyword";
         else if (builtins.test(word)) style = "builtin";
         else if (specials.test(word)) style = "variable-2";
@@ -144,8 +145,8 @@ CodeMirror.defineMode("lua", function(config, parserConfig) {
     },
 
     indent: function(state, textAfter) {
-      var closing = dedentPartial.test(textAfter);
-      return state.basecol + indentUnit * (state.indentDepth - (closing ? 1 : 0));
+        const closing = dedentPartial.test(textAfter);
+        return state.basecol + indentUnit * (state.indentDepth - (closing ? 1 : 0));
     },
 
     lineComment: "--",

@@ -1,38 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'app-buttons',
-    templateUrl: './buttons.component.html',
-    styleUrls: ['./buttons.component.scss']
+  selector: 'app-buttons',
+  templateUrl: './buttons.component.html',
+  styleUrls: ['./buttons.component.scss']
 })
 export class ButtonsComponent implements OnInit {
-    // buttons
-    public singleModel: boolean = true;
-    public radioModel: string = 'Middle';
-    public checkModel: any = { left: false, middle: true, right: false };
 
-    // pagination/pager
-    public totalItems: number = 64;
-    public currentPage: number = 4;
 
-    public maxSize: number = 5;
-    public bigTotalItems: number = 175;
-    public bigCurrentPage: number = 1;
+  constructor() {
+  }
 
-    public setPage(pageNo: number): void {
-        this.currentPage = pageNo;
-    };
-    smallnumPages;
-    numPages;
+  // buttons
+  public singleModel = true;
+  public radioModel = 'Middle';
+  public checkModel: any = {left: false, middle: true, right: false};
 
-    public pageChanged(event: any): void {
-        console.log('Page changed to: ' + event.page);
-        console.log('Number items per page: ' + event.itemsPerPage);
-    };
+  // pagination/pager
+  public totalItems = 64;
+  public currentPage = 4;
 
-    constructor() { }
+  public maxSize = 5;
+  public bigTotalItems = 175;
+  public bigCurrentPage = 1;
+  smallnumPages;
+  numPages;
 
-    ngOnInit() {
-    }
+  public setPage(pageNo: number): void {
+    this.currentPage = pageNo;
+  }
+
+  public pageChanged(event: any): void {
+    console.log('Page changed to: ' + event.page);
+    console.log('Number items per page: ' + event.itemsPerPage);
+  }
+
+  ngOnInit() {
+  }
 
 }

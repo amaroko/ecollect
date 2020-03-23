@@ -17,23 +17,23 @@ CodeMirror.defineMode("oz", function (conf) {
     return new RegExp("^((" + words.join(")|(") + "))\\b");
   }
 
-  var singleOperators = /[\^@!\|<>#~\.\*\-\+\\/,=]/;
-  var doubleOperators = /(<-)|(:=)|(=<)|(>=)|(<=)|(<:)|(>:)|(=:)|(\\=)|(\\=:)|(!!)|(==)|(::)/;
-  var tripleOperators = /(:::)|(\.\.\.)|(=<:)|(>=:)/;
+    const singleOperators = /[\^@!\|<>#~\.\*\-\+\\/,=]/;
+    const doubleOperators = /(<-)|(:=)|(=<)|(>=)|(<=)|(<:)|(>:)|(=:)|(\\=)|(\\=:)|(!!)|(==)|(::)/;
+    const tripleOperators = /(:::)|(\.\.\.)|(=<:)|(>=:)/;
 
-  var middle = ["in", "then", "else", "of", "elseof", "elsecase", "elseif", "catch",
-    "finally", "with", "require", "prepare", "import", "export", "define", "do"];
-  var end = ["end"];
+    const middle = ["in", "then", "else", "of", "elseof", "elsecase", "elseif", "catch",
+        "finally", "with", "require", "prepare", "import", "export", "define", "do"];
+    let end = ["end"];
 
-  var atoms = wordRegexp(["true", "false", "nil", "unit"]);
-  var commonKeywords = wordRegexp(["andthen", "at", "attr", "declare", "feat", "from", "lex",
-    "mod", "mode", "orelse", "parser", "prod", "prop", "scanner", "self", "syn", "token"]);
-  var openingKeywords = wordRegexp(["local", "proc", "fun", "case", "class", "if", "cond", "or", "dis",
-    "choice", "not", "thread", "try", "raise", "lock", "for", "suchthat", "meth", "functor"]);
-  var middleKeywords = wordRegexp(middle);
-  var endKeywords = wordRegexp(end);
+    const atoms = wordRegexp(["true", "false", "nil", "unit"]);
+    const commonKeywords = wordRegexp(["andthen", "at", "attr", "declare", "feat", "from", "lex",
+        "mod", "mode", "orelse", "parser", "prod", "prop", "scanner", "self", "syn", "token"]);
+    const openingKeywords = wordRegexp(["local", "proc", "fun", "case", "class", "if", "cond", "or", "dis",
+        "choice", "not", "thread", "try", "raise", "lock", "for", "suchthat", "meth", "functor"]);
+    const middleKeywords = wordRegexp(middle);
+    const endKeywords = wordRegexp(end);
 
-  // Tokenizers
+    // Tokenizers
   function tokenBase(stream, state) {
     if (stream.eatSpace()) {
       return null;
@@ -60,8 +60,8 @@ CodeMirror.defineMode("oz", function (conf) {
     }
 
     // Opening keywords
-    var matched = stream.match(openingKeywords);
-    if (matched) {
+      const matched = stream.match(openingKeywords);
+      if (matched) {
       if (!state.doInCurrentLine)
         state.currentIndent++;
       else
@@ -90,9 +90,9 @@ CodeMirror.defineMode("oz", function (conf) {
     }
 
     // Eat the next char for next comparisons
-    var ch = stream.next();
+      const ch = stream.next();
 
-    // Strings
+      // Strings
     if (ch == '"' || ch == "'") {
       state.tokenize = tokenString(ch);
       return state.tokenize(stream, state);
@@ -176,8 +176,8 @@ CodeMirror.defineMode("oz", function (conf) {
   }
 
   function tokenComment(stream, state) {
-    var maybeEnd = false, ch;
-    while (ch = stream.next()) {
+      let maybeEnd = false, ch;
+      while (ch = stream.next()) {
       if (ch == "/" && maybeEnd) {
         state.tokenize = tokenBase;
         break;
@@ -189,8 +189,8 @@ CodeMirror.defineMode("oz", function (conf) {
 
   function tokenString(quote) {
     return function (stream, state) {
-      var escaped = false, next, end = false;
-      while ((next = stream.next()) != null) {
+        let escaped = false, next, end = false;
+        while ((next = stream.next()) != null) {
         if (next == quote && !escaped) {
           end = true;
           break;
@@ -206,8 +206,8 @@ CodeMirror.defineMode("oz", function (conf) {
   function buildElectricInputRegEx() {
     // Reindentation should occur on [] or on a match of any of
     // the block closing keywords, at the end of a line.
-    var allClosings = middle.concat(end);
-    return new RegExp("[\\[\\]]|(" + allClosings.join("|") + ")$");
+      const allClosings = middle.concat(end);
+      return new RegExp("[\\[\\]]|(" + allClosings.join("|") + ")$");
   }
 
   return {
@@ -229,9 +229,9 @@ CodeMirror.defineMode("oz", function (conf) {
     },
 
     indent: function (state, textAfter) {
-      var trueText = textAfter.replace(/^\s+|\s+$/g, '');
+        const trueText = textAfter.replace(/^\s+|\s+$/g, '');
 
-      if (trueText.match(endKeywords) || trueText.match(middleKeywords) || trueText.match(/(\[])/))
+        if (trueText.match(endKeywords) || trueText.match(middleKeywords) || trueText.match(/(\[])/))
         return conf.indentUnit * (state.currentIndent - 1);
 
       if (state.currentIndent < 0)

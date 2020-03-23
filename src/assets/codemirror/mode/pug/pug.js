@@ -13,20 +13,20 @@
 
 CodeMirror.defineMode("pug", function (config) {
   // token types
-  var KEYWORD = 'keyword';
-  var DOCTYPE = 'meta';
-  var ID = 'builtin';
-  var CLASS = 'qualifier';
+    const KEYWORD = 'keyword';
+    const DOCTYPE = 'meta';
+    const ID = 'builtin';
+    const CLASS = 'qualifier';
 
-  var ATTRS_NEST = {
-    '{': '}',
-    '(': ')',
-    '[': ']'
-  };
+    const ATTRS_NEST = {
+        '{': '}',
+        '(': ')',
+        '[': ']'
+    };
 
-  var jsMode = CodeMirror.getMode(config, 'javascript');
+    const jsMode = CodeMirror.getMode(config, 'javascript');
 
-  function State() {
+    function State() {
     this.javaScriptLine = false;
     this.javaScriptLineExcludesColon = false;
 
@@ -68,8 +68,8 @@ CodeMirror.defineMode("pug", function (config) {
    * @return {State}
    */
   State.prototype.copy = function () {
-    var res = new State();
-    res.javaScriptLine = this.javaScriptLine;
+      const res = new State();
+      res.javaScriptLine = this.javaScriptLine;
     res.javaScriptLineExcludesColon = this.javaScriptLineExcludesColon;
     res.javaScriptArguments = this.javaScriptArguments;
     res.javaScriptArgumentsDepth = this.javaScriptArgumentsDepth;
@@ -114,8 +114,8 @@ CodeMirror.defineMode("pug", function (config) {
         state.javaScriptLineExcludesColon = false;
         return;
       }
-      var tok = jsMode.token(stream, state.jsState);
-      if (stream.eol()) state.javaScriptLine = false;
+        const tok = jsMode.token(stream, state.jsState);
+        if (stream.eol()) state.javaScriptLine = false;
       return tok || true;
     }
   }
@@ -135,8 +135,8 @@ CodeMirror.defineMode("pug", function (config) {
         return;
       }
 
-      var tok = jsMode.token(stream, state.jsState);
-      return tok || true;
+        const tok = jsMode.token(stream, state.jsState);
+        return tok || true;
     }
   }
 
@@ -239,8 +239,8 @@ CodeMirror.defineMode("pug", function (config) {
 
   function includeFilteredContinued(stream, state) {
     if (state.isIncludeFiltered) {
-      var tok = filter(stream, state);
-      state.isIncludeFiltered = false;
+        const tok = filter(stream, state);
+        state.isIncludeFiltered = false;
       state.restOfLine = 'string';
       return tok;
     }
@@ -314,8 +314,8 @@ CodeMirror.defineMode("pug", function (config) {
   }
 
   function tag(stream, state) {
-    var captures;
-    if (captures = stream.match(/^(\w(?:[-:\w]*\w)?)\/?/)) {
+      let captures;
+      if (captures = stream.match(/^(\w(?:[-:\w]*\w)?)\/?/)) {
       state.lastTag = captures[1].toLowerCase();
       if (state.lastTag === 'script') {
         state.scriptType = 'application/javascript';
@@ -326,8 +326,8 @@ CodeMirror.defineMode("pug", function (config) {
 
   function filter(stream, state) {
     if (stream.match(/^:([\w\-]+)/)) {
-      var innerMode;
-      if (config && config.innerModes) {
+        let innerMode;
+        if (config && config.innerModes) {
         innerMode = config.innerModes(stream.current().substring(1));
       }
       if (!innerMode) {
@@ -396,8 +396,8 @@ CodeMirror.defineMode("pug", function (config) {
         return 'attribute';
       }
 
-      var tok = jsMode.token(stream, state.jsState);
-      if (state.attributeIsType && tok === 'string') {
+        const tok = jsMode.token(stream, state.jsState);
+        if (state.attributeIsType && tok === 'string') {
         state.scriptType = stream.current().toString();
       }
       if (state.attrsNest.length === 0 && (tok === 'string' || tok === 'variable' || tok === 'keyword')) {
@@ -458,8 +458,8 @@ CodeMirror.defineMode("pug", function (config) {
 
   function dot(stream, state) {
     if (stream.eat('.')) {
-      var innerMode = null;
-      if (state.lastTag === 'script' && state.scriptType.toLowerCase().indexOf('javascript') != -1) {
+        let innerMode = null;
+        if (state.lastTag === 'script' && state.scriptType.toLowerCase().indexOf('javascript') != -1) {
         innerMode = state.scriptType.toLowerCase().replace(/"|'/g, '');
       } else if (state.lastTag === 'style') {
         innerMode = 'css';
@@ -515,8 +515,8 @@ CodeMirror.defineMode("pug", function (config) {
     }
     if (state.restOfLine) {
       stream.skipToEnd();
-      var tok = state.restOfLine;
-      state.restOfLine = '';
+        const tok = state.restOfLine;
+        state.restOfLine = '';
       return tok;
     }
   }
@@ -535,48 +535,48 @@ CodeMirror.defineMode("pug", function (config) {
    * @param {State} state
    */
   function nextToken(stream, state) {
-    var tok = innerMode(stream, state)
-      || restOfLine(stream, state)
-      || interpolationContinued(stream, state)
-      || includeFilteredContinued(stream, state)
-      || eachContinued(stream, state)
-      || attrsContinued(stream, state)
-      || javaScript(stream, state)
-      || javaScriptArguments(stream, state)
-      || callArguments(stream, state)
+      const tok = innerMode(stream, state)
+          || restOfLine(stream, state)
+          || interpolationContinued(stream, state)
+          || includeFilteredContinued(stream, state)
+          || eachContinued(stream, state)
+          || attrsContinued(stream, state)
+          || javaScript(stream, state)
+          || javaScriptArguments(stream, state)
+          || callArguments(stream, state)
 
-      || yieldStatement(stream, state)
-      || doctype(stream, state)
-      || interpolation(stream, state)
-      || caseStatement(stream, state)
-      || when(stream, state)
-      || defaultStatement(stream, state)
-      || extendsStatement(stream, state)
-      || append(stream, state)
-      || prepend(stream, state)
-      || block(stream, state)
-      || include(stream, state)
-      || includeFiltered(stream, state)
-      || mixin(stream, state)
-      || call(stream, state)
-      || conditional(stream, state)
-      || each(stream, state)
-      || whileStatement(stream, state)
-      || tag(stream, state)
-      || filter(stream, state)
-      || code(stream, state)
-      || id(stream, state)
-      || className(stream, state)
-      || attrs(stream, state)
-      || attributesBlock(stream, state)
-      || indent(stream, state)
-      || text(stream, state)
-      || comment(stream, state)
-      || colon(stream, state)
-      || dot(stream, state)
-      || fail(stream, state);
+          || yieldStatement(stream, state)
+          || doctype(stream, state)
+          || interpolation(stream, state)
+          || caseStatement(stream, state)
+          || when(stream, state)
+          || defaultStatement(stream, state)
+          || extendsStatement(stream, state)
+          || append(stream, state)
+          || prepend(stream, state)
+          || block(stream, state)
+          || include(stream, state)
+          || includeFiltered(stream, state)
+          || mixin(stream, state)
+          || call(stream, state)
+          || conditional(stream, state)
+          || each(stream, state)
+          || whileStatement(stream, state)
+          || tag(stream, state)
+          || filter(stream, state)
+          || code(stream, state)
+          || id(stream, state)
+          || className(stream, state)
+          || attrs(stream, state)
+          || attributesBlock(stream, state)
+          || indent(stream, state)
+          || text(stream, state)
+          || comment(stream, state)
+          || colon(stream, state)
+          || dot(stream, state)
+          || fail(stream, state);
 
-    return tok === true ? null : tok;
+      return tok === true ? null : tok;
   }
   return {
     startState: startState,

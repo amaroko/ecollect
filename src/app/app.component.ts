@@ -1,9 +1,9 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 
-import { SettingsService } from './core/settings/settings.service';
-import { BnNgIdleService } from 'bn-ng-idle';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+import {SettingsService} from './core/settings/settings.service';
+import {BnNgIdleService} from 'bn-ng-idle';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {NgxSmartModalService} from 'ngx-smart-modal';
 import {
   NavigationCancel,
   Event,
@@ -13,10 +13,11 @@ import {
   Router,
   ActivatedRoute
 } from '@angular/router';
-import { EcolService } from './services/ecol.service';
+import {EcolService} from './services/ecol.service';
 import swal from 'sweetalert2';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { environment } from '../environments/environment';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {environment} from '../environments/environment';
+
 const ADLOGIN = environment.adlogin;
 
 @Component({
@@ -42,30 +43,54 @@ export class AppComponent implements OnInit {
   @HostBinding('class.aside-collapsed') get isCollapsed() {
     return this.settings.getLayoutSetting('isCollapsed');
   }
-  @HostBinding('class.layout-boxed') get isBoxed() { return this.settings.getLayoutSetting('isBoxed'); }
-  @HostBinding('class.layout-fs') get useFullLayout() { return this.settings.getLayoutSetting('useFullLayout'); }
-  @HostBinding('class.hidden-footer') get hiddenFooter() { return this.settings.getLayoutSetting('hiddenFooter'); }
-  @HostBinding('class.layout-h') get horizontal() { return this.settings.getLayoutSetting('horizontal'); }
-  @HostBinding('class.aside-float') get isFloat() { return this.settings.getLayoutSetting('isFloat'); }
-  @HostBinding('class.offsidebar-open') get offsidebarOpen() { return this.settings.getLayoutSetting('offsidebarOpen'); }
-  @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.getLayoutSetting('asideToggled'); }
-  @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.getLayoutSetting('isCollapsedText'); }
+
+  @HostBinding('class.layout-boxed') get isBoxed() {
+    return this.settings.getLayoutSetting('isBoxed');
+  }
+
+  @HostBinding('class.layout-fs') get useFullLayout() {
+    return this.settings.getLayoutSetting('useFullLayout');
+  }
+
+  @HostBinding('class.hidden-footer') get hiddenFooter() {
+    return this.settings.getLayoutSetting('hiddenFooter');
+  }
+
+  @HostBinding('class.layout-h') get horizontal() {
+    return this.settings.getLayoutSetting('horizontal');
+  }
+
+  @HostBinding('class.aside-float') get isFloat() {
+    return this.settings.getLayoutSetting('isFloat');
+  }
+
+  @HostBinding('class.offsidebar-open') get offsidebarOpen() {
+    return this.settings.getLayoutSetting('offsidebarOpen');
+  }
+
+  @HostBinding('class.aside-toggled') get asideToggled() {
+    return this.settings.getLayoutSetting('asideToggled');
+  }
+
+  @HostBinding('class.aside-collapsed-text') get isCollapsedText() {
+    return this.settings.getLayoutSetting('isCollapsedText');
+  }
 
   // constructor(public settings: SettingsService) { }
   // constructor(public settings: SettingsService) { }
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    fb: FormBuilder,
-    public router: Router,
-    public ngxSmartModalService: NgxSmartModalService,
-    private _loadingBar: SlimLoadingBarService,
-    private _router: Router,
-    public ecolService: EcolService,
-    private bnIdle: BnNgIdleService) {
+              private route: ActivatedRoute,
+              fb: FormBuilder,
+              public router: Router,
+              public ngxSmartModalService: NgxSmartModalService,
+              private _loadingBar: SlimLoadingBarService,
+              private _router: Router,
+              public ecolService: EcolService,
+              private bnIdle: BnNgIdleService) {
     this._router.events.subscribe((event: Event) => {
       this.navigationInterceptor(event);
-      
+
 
     });
 
@@ -76,7 +101,7 @@ export class AppComponent implements OnInit {
     });
 
     // idle logout
-    this.bnIdle.startWatching(3600).subscribe((res) => {
+    this.bnIdle.startWatching(7200).subscribe((res) => {
       if (res && !localStorage.getItem('currentUser')) {
         this.newsession();
         this.closetimeoutModal();
@@ -89,6 +114,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
   private navigationInterceptor(event: Event): void {
     if (event instanceof NavigationStart) {
       this._loadingBar.start();
@@ -103,6 +129,7 @@ export class AppComponent implements OnInit {
       this._loadingBar.stop();
     }
   }
+
   submitFormm($ev, value: any) {
     $ev.preventDefault();
     // console.log(value);
@@ -147,7 +174,6 @@ export class AppComponent implements OnInit {
     this.ecolService.ifclosed();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')); // to get username in localstorage..
     this.username = currentUser.USERNAME;
-    console.log(this.username);
 
     document.addEventListener('click', e => {
       const target = e.target as HTMLElement;
@@ -161,6 +187,7 @@ export class AppComponent implements OnInit {
     // open modal
     this.ngxSmartModalService.getModal('lockModal').open();
   }
+
   // openpersistanceModal() {
   //   // open modal
   //   this.ngxSmartModalService.getModal('lockModal').open();
@@ -182,14 +209,14 @@ export class AppComponent implements OnInit {
 
   onreload() {
     if (localStorage.getItem('timeout')) {
-      swal({
+      /*swal({
         title: 'You reloaded the Timeout',
         imageUrl: 'assets/img/user/notlogg.png',
         text: 'Kindly, log in to continue!',
 
         confirmButtonColor: '#7ac142',
         confirmButtonText: 'Okay'
-      });
+      });*/
       this.router.navigate(['/login']);
       localStorage.removeItem('timeout');
     }

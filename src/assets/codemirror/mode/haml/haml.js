@@ -13,13 +13,13 @@
 
   // full haml mode. This handled embedded ruby and html fragments too
   CodeMirror.defineMode("haml", function(config) {
-    var htmlMode = CodeMirror.getMode(config, {name: "htmlmixed"});
-    var rubyMode = CodeMirror.getMode(config, "ruby");
+      const htmlMode = CodeMirror.getMode(config, {name: "htmlmixed"});
+      const rubyMode = CodeMirror.getMode(config, "ruby");
 
-    function rubyInQuote(endQuote) {
+      function rubyInQuote(endQuote) {
       return function(stream, state) {
-        var ch = stream.peek();
-        if (ch == endQuote && state.rubyState.tokenize.length == 1) {
+          const ch = stream.peek();
+          if (ch == endQuote && state.rubyState.tokenize.length == 1) {
           // step out of ruby context as it seems to complete processing all the braces
           stream.next();
           state.tokenize = html;
@@ -39,9 +39,9 @@
     }
 
     function html(stream, state) {
-      var ch = stream.peek();
+        const ch = stream.peek();
 
-      // handle haml declarations. All declarations that cant be handled here
+        // handle haml declarations. All declarations that cant be handled here
       // will be passed to html mode
       if (state.previousToken.style == "comment" ) {
         if (state.indented > state.previousToken.indented) {
@@ -98,9 +98,9 @@
     return {
       // default to html mode
       startState: function() {
-        var htmlState = CodeMirror.startState(htmlMode);
-        var rubyState = CodeMirror.startState(rubyMode);
-        return {
+          const htmlState = CodeMirror.startState(htmlMode);
+          const rubyState = CodeMirror.startState(rubyMode);
+          return {
           htmlState: htmlState,
           rubyState: rubyState,
           indented: 0,
@@ -125,8 +125,8 @@
           state.startOfLine = true;
         }
         if (stream.eatSpace()) return null;
-        var style = state.tokenize(stream, state);
-        state.startOfLine = false;
+          let style = state.tokenize(stream, state);
+          state.startOfLine = false;
         // dont record comment line as we only want to measure comment line with
         // the opening comment block
         if (style && style != "commentLine") {
@@ -136,8 +136,8 @@
         // tokenize to html
         if (stream.eol() && state.tokenize == ruby) {
           stream.backUp(1);
-          var ch = stream.peek();
-          stream.next();
+            const ch = stream.peek();
+            stream.next();
           if (ch && ch != ",") {
             state.tokenize = html;
           }

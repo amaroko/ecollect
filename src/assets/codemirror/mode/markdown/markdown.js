@@ -13,16 +13,16 @@
 
 CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
 
-  var htmlMode = CodeMirror.getMode(cmCfg, "text/html");
-  var htmlModeMissing = htmlMode.name == "null"
+    const htmlMode = CodeMirror.getMode(cmCfg, "text/html");
+    const htmlModeMissing = htmlMode.name == "null";
 
-  function getMode(name) {
+    function getMode(name) {
     if (CodeMirror.findModeByName) {
-      var found = CodeMirror.findModeByName(name);
-      if (found) name = found.mime || found.mimes[0];
+        const found = CodeMirror.findModeByName(name);
+        if (found) name = found.mime || found.mimes[0];
     }
-    var mode = CodeMirror.getMode(cmCfg, name);
-    return mode.name == "null" ? null : mode;
+      const mode = CodeMirror.getMode(cmCfg, name);
+      return mode.name == "null" ? null : mode;
   }
 
   // Should characters that affect highlighting be highlighted separate?
@@ -55,44 +55,45 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
   if (modeCfg.tokenTypeOverrides === undefined)
     modeCfg.tokenTypeOverrides = {};
 
-  var tokenTypes = {
-    header: "header",
-    code: "comment",
-    quote: "quote",
-    list1: "variable-2",
-    list2: "variable-3",
-    list3: "keyword",
-    hr: "hr",
-    image: "image",
-    imageAltText: "image-alt-text",
-    imageMarker: "image-marker",
-    formatting: "formatting",
-    linkInline: "link",
-    linkEmail: "link",
-    linkText: "link",
-    linkHref: "string",
-    em: "em",
-    strong: "strong",
-    strikethrough: "strikethrough"
-  };
+    const tokenTypes = {
+        header: "header",
+        code: "comment",
+        quote: "quote",
+        list1: "variable-2",
+        list2: "variable-3",
+        list3: "keyword",
+        hr: "hr",
+        image: "image",
+        imageAltText: "image-alt-text",
+        imageMarker: "image-marker",
+        formatting: "formatting",
+        linkInline: "link",
+        linkEmail: "link",
+        linkText: "link",
+        linkHref: "string",
+        em: "em",
+        strong: "strong",
+        strikethrough: "strikethrough"
+    };
 
-  for (var tokenType in tokenTypes) {
+    for (let tokenType in tokenTypes) {
     if (tokenTypes.hasOwnProperty(tokenType) && modeCfg.tokenTypeOverrides[tokenType]) {
       tokenTypes[tokenType] = modeCfg.tokenTypeOverrides[tokenType];
     }
   }
 
-  var hrRE = /^([*\-_])(?:\s*\1){2,}\s*$/
-  ,   ulRE = /^[*\-+]\s+/
-  ,   olRE = /^[0-9]+([.)])\s+/
-  ,   taskListRE = /^\[(x| )\](?=\s)/ // Must follow ulRE or olRE
-  ,   atxHeaderRE = modeCfg.allowAtxHeaderWithoutSpace ? /^(#+)/ : /^(#+)(?: |$)/
-  ,   setextHeaderRE = /^ *(?:\={1,}|-{1,})\s*$/
-  ,   textRE = /^[^#!\[\]*_\\<>` "'(~]+/
-  ,   fencedCodeRE = new RegExp("^(" + (modeCfg.fencedCodeBlocks === true ? "~~~+|```+" : modeCfg.fencedCodeBlocks) +
-                                ")[ \\t]*([\\w+#\-]*)");
+    const hrRE = /^([*\-_])(?:\s*\1){2,}\s*$/
+        , ulRE = /^[*\-+]\s+/
+        , olRE = /^[0-9]+([.)])\s+/
+        , taskListRE = /^\[(x| )\](?=\s)/ // Must follow ulRE or olRE
+        , atxHeaderRE = modeCfg.allowAtxHeaderWithoutSpace ? /^(#+)/ : /^(#+)(?: |$)/
+        , setextHeaderRE = /^ *(?:\={1,}|-{1,})\s*$/
+        , textRE = /^[^#!\[\]*_\\<>` "'(~]+/
+        ,
+        fencedCodeRE = new RegExp("^(" + (modeCfg.fencedCodeBlocks === true ? "~~~+|```+" : modeCfg.fencedCodeBlocks) +
+            ")[ \\t]*([\\w+#\-]*)");
 
-  function switchInline(stream, state, f) {
+    function switchInline(stream, state, f) {
     state.f = state.inline = f;
     return f(stream, state);
   }
@@ -129,19 +130,19 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     state.trailingSpace = 0;
     state.trailingSpaceNewLine = false;
     // Mark this line as blank
-    state.prevLine = state.thisLine
-    state.thisLine = null
+    state.prevLine = state.thisLine;
+    state.thisLine = null;
     return null;
   }
 
   function blockNormal(stream, state) {
 
-    var sol = stream.sol();
+      const sol = stream.sol();
 
-    var prevLineIsList = state.list !== false,
-        prevLineIsIndentedCode = state.indentedCode;
+      const prevLineIsList = state.list !== false,
+          prevLineIsIndentedCode = state.indentedCode;
 
-    state.indentedCode = false;
+      state.indentedCode = false;
 
     if (prevLineIsList) {
       if (state.indentationDiff >= 0) { // Continued list
@@ -156,8 +157,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       }
     }
 
-    var match = null;
-    if (state.indentationDiff >= 4) {
+      let match = null;
+      if (state.indentationDiff >= 4) {
       stream.skipToEnd();
       if (prevLineIsIndentedCode || lineIsEmpty(state.prevLine)) {
         state.indentation -= 4;
@@ -190,8 +191,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       state.hr = true;
       return tokenTypes.hr;
     } else if ((lineIsEmpty(state.prevLine) || prevLineIsList) && (stream.match(ulRE, false) || stream.match(olRE, false))) {
-      var listType = null;
-      if (stream.match(ulRE, true)) {
+        let listType = null;
+        if (stream.match(ulRE, true)) {
         listType = 'ul';
       } else {
         stream.match(olRE, true);
@@ -217,13 +218,13 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       if (modeCfg.highlightFormatting) state.formatting = ["list", "list-" + listType];
       return getType(state);
     } else if (modeCfg.fencedCodeBlocks && (match = stream.match(fencedCodeRE, true))) {
-      state.fencedChars = match[1]
+      state.fencedChars = match[1];
       // try switching mode
       state.localMode = getMode(match[2]);
       if (state.localMode) state.localState = CodeMirror.startState(state.localMode);
       state.f = state.block = local;
       if (modeCfg.highlightFormatting) state.formatting = "code-block";
-      state.code = -1
+      state.code = -1;
       return getType(state);
     }
 
@@ -231,10 +232,10 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
   }
 
   function htmlBlock(stream, state) {
-    var style = htmlMode.token(stream, state.htmlState);
-    if (!htmlModeMissing) {
-      var inner = CodeMirror.innerMode(htmlMode, state.htmlState)
-      if ((inner.mode.name == "xml" && inner.state.tagStart === null &&
+      const style = htmlMode.token(stream, state.htmlState);
+      if (!htmlModeMissing) {
+        const inner = CodeMirror.innerMode(htmlMode, state.htmlState);
+        if ((inner.mode.name == "xml" && inner.state.tagStart === null &&
            (!inner.state.context && inner.state.tokenize.isInText)) ||
           (state.md_inside && stream.current().indexOf(">") > -1)) {
         state.f = inlineNormal;
@@ -264,22 +265,22 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     state.f = inlineNormal;
     state.fencedChars = null;
     if (modeCfg.highlightFormatting) state.formatting = "code-block";
-    state.code = 1
-    var returnType = getType(state);
-    state.code = 0
+    state.code = 1;
+      const returnType = getType(state);
+      state.code = 0;
     return returnType;
   }
 
   // Inline
   function getType(state) {
-    var styles = [];
+      const styles = [];
 
-    if (state.formatting) {
+      if (state.formatting) {
       styles.push(tokenTypes.formatting);
 
       if (typeof state.formatting === "string") state.formatting = [state.formatting];
 
-      for (var i = 0; i < state.formatting.length; i++) {
+      for (let i = 0; i < state.formatting.length; i++) {
         styles.push(tokenTypes.formatting + "-" + state.formatting[i]);
 
         if (state.formatting[i] === "header") {
@@ -334,8 +335,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     }
 
     if (state.list !== false) {
-      var listMod = (state.listStack.length - 1) % 3;
-      if (!listMod) {
+        const listMod = (state.listStack.length - 1) % 3;
+        if (!listMod) {
         styles.push(tokenTypes.list1);
       } else if (listMod === 1) {
         styles.push(tokenTypes.list2);
@@ -361,8 +362,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
   }
 
   function inlineNormal(stream, state) {
-    var style = state.text(stream, state);
-    if (typeof style !== 'undefined')
+      const style = state.text(stream, state);
+      if (typeof style !== 'undefined')
       return style;
 
     if (state.list) { // List marker (*, +, -, 1., etc)
@@ -371,8 +372,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     }
 
     if (state.taskList) {
-      var taskOpen = stream.match(taskListRE, true)[1] !== "x";
-      if (taskOpen) state.taskOpen = true;
+        const taskOpen = stream.match(taskListRE, true)[1] !== "x";
+        if (taskOpen) state.taskOpen = true;
       else state.taskClosed = true;
       if (modeCfg.highlightFormatting) state.formatting = "task";
       state.taskList = false;
@@ -388,39 +389,39 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     }
 
     // Get sol() value now, before character is consumed
-    var sol = stream.sol();
+      const sol = stream.sol();
 
-    var ch = stream.next();
+      const ch = stream.next();
 
-    // Matches link titles present on next line
+      // Matches link titles present on next line
     if (state.linkTitle) {
       state.linkTitle = false;
-      var matchCh = ch;
-      if (ch === '(') {
+        let matchCh = ch;
+        if (ch === '(') {
         matchCh = ')';
       }
       matchCh = (matchCh+'').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
-      var regex = '^\\s*(?:[^' + matchCh + '\\\\]+|\\\\\\\\|\\\\.)' + matchCh;
-      if (stream.match(new RegExp(regex), true)) {
+        const regex = '^\\s*(?:[^' + matchCh + '\\\\]+|\\\\\\\\|\\\\.)' + matchCh;
+        if (stream.match(new RegExp(regex), true)) {
         return tokenTypes.linkHref;
       }
     }
 
     // If this block is changed, it may need to be updated in GFM mode
     if (ch === '`') {
-      var previousFormatting = state.formatting;
-      if (modeCfg.highlightFormatting) state.formatting = "code";
+        const previousFormatting = state.formatting;
+        if (modeCfg.highlightFormatting) state.formatting = "code";
       stream.eatWhile('`');
-      var count = stream.current().length
-      if (state.code == 0) {
-        state.code = count
+        const count = stream.current().length;
+        if (state.code == 0) {
+        state.code = count;
         return getType(state)
       } else if (count == state.code) { // Must be exact
-        var t = getType(state)
-        state.code = 0
+        var t = getType(state);
+        state.code = 0;
         return t
       } else {
-        state.formatting = previousFormatting
+        state.formatting = previousFormatting;
         return getType(state)
       }
     } else if (state.code) {
@@ -431,8 +432,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       stream.next();
       if (modeCfg.highlightFormatting) {
         var type = getType(state);
-        var formattingEscape = tokenTypes.formatting + "-escape";
-        return type ? type + " " + formattingEscape : formattingEscape;
+          const formattingEscape = tokenTypes.formatting + "-escape";
+          return type ? type + " " + formattingEscape : formattingEscape;
       }
     }
 
@@ -445,7 +446,7 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
 
     if (ch === '[' && state.imageMarker) {
       state.imageMarker = false;
-      state.imageAltText = true
+      state.imageAltText = true;
       if (modeCfg.highlightFormatting) state.formatting = "image";
       return getType(state);
     }
@@ -498,10 +499,10 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     }
 
     if (ch === '<' && stream.match(/^(!--|\w)/, false)) {
-      var end = stream.string.indexOf(">", stream.pos);
-      if (end != -1) {
-        var atts = stream.string.substring(stream.start, end);
-        if (/markdown\s*=\s*('|"){0,1}1('|"){0,1}/.test(atts)) state.md_inside = true;
+        const end = stream.string.indexOf(">", stream.pos);
+        if (end != -1) {
+          const atts = stream.string.substring(stream.start, end);
+          if (/markdown\s*=\s*('|"){0,1}1('|"){0,1}/.test(atts)) state.md_inside = true;
       }
       stream.backUp(1);
       state.htmlState = CodeMirror.startState(htmlMode);
@@ -513,13 +514,13 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       return "tag";
     }
 
-    var ignoreUnderscore = false;
-    if (!modeCfg.underscoresBreakWords) {
+      let ignoreUnderscore = false;
+      if (!modeCfg.underscoresBreakWords) {
       if (ch === '_' && stream.peek() !== '_' && stream.match(/(\w)/, false)) {
-        var prevPos = stream.pos - 2;
-        if (prevPos >= 0) {
-          var prevCh = stream.string.charAt(prevPos);
-          if (prevCh !== '_' && prevCh.match(/(\w)/, false)) {
+          const prevPos = stream.pos - 2;
+          if (prevPos >= 0) {
+            const prevCh = stream.string.charAt(prevPos);
+            if (prevCh !== '_' && prevCh.match(/(\w)/, false)) {
             ignoreUnderscore = true;
           }
         }
@@ -592,13 +593,13 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
   }
 
   function linkInline(stream, state) {
-    var ch = stream.next();
+      const ch = stream.next();
 
-    if (ch === ">") {
+      if (ch === ">") {
       state.f = state.inline = inlineNormal;
       if (modeCfg.highlightFormatting) state.formatting = "link";
-      var type = getType(state);
-      if (type){
+        let type = getType(state);
+        if (type){
         type += " ";
       } else {
         type = "";
@@ -616,8 +617,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     if(stream.eatSpace()){
       return null;
     }
-    var ch = stream.next();
-    if (ch === '(' || ch === '[') {
+      const ch = stream.next();
+      if (ch === '(' || ch === '[') {
       state.f = state.inline = getLinkHrefInside(ch === "(" ? ")" : "]", 0);
       if (modeCfg.highlightFormatting) state.formatting = "link-string";
       state.linkHref = true;
@@ -626,24 +627,24 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     return 'error';
   }
 
-  var linkRE = {
-    ")": /^(?:[^\\\(\)]|\\.|\((?:[^\\\(\)]|\\.)*\))*?(?=\))/,
-    "]": /^(?:[^\\\[\]]|\\.|\[(?:[^\\\[\\]]|\\.)*\])*?(?=\])/
-  }
+    const linkRE = {
+        ")": /^(?:[^\\\(\)]|\\.|\((?:[^\\\(\)]|\\.)*\))*?(?=\))/,
+        "]": /^(?:[^\\\[\]]|\\.|\[(?:[^\\\[\\]]|\\.)*\])*?(?=\])/
+    };
 
-  function getLinkHrefInside(endChar) {
+    function getLinkHrefInside(endChar) {
     return function(stream, state) {
-      var ch = stream.next();
+        const ch = stream.next();
 
-      if (ch === endChar) {
+        if (ch === endChar) {
         state.f = state.inline = inlineNormal;
         if (modeCfg.highlightFormatting) state.formatting = "link-string";
-        var returnState = getType(state);
-        state.linkHref = false;
+          const returnState = getType(state);
+          state.linkHref = false;
         return returnState;
       }
 
-      stream.match(linkRE[endChar])
+      stream.match(linkRE[endChar]);
       state.linkHref = true;
       return getType(state);
     };
@@ -664,8 +665,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     if (stream.match(/^\]:/, true)) {
       state.f = state.inline = footnoteUrl;
       if (modeCfg.highlightFormatting) state.formatting = "link";
-      var returnType = getType(state);
-      state.linkText = false;
+        const returnType = getType(state);
+        state.linkText = false;
       return returnType;
     }
 
@@ -768,20 +769,20 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       state.formatting = false;
 
       if (stream != state.thisLine) {
-        var forceBlankLine = state.header || state.hr;
+          const forceBlankLine = state.header || state.hr;
 
-        // Reset state.header and state.hr
+          // Reset state.header and state.hr
         state.header = 0;
         state.hr = false;
 
         if (stream.match(/^\s*$/, true) || forceBlankLine) {
           blankLine(state);
-          if (!forceBlankLine) return null
+          if (!forceBlankLine) return null;
           state.prevLine = null
         }
 
-        state.prevLine = state.thisLine
-        state.thisLine = stream
+        state.prevLine = state.thisLine;
+        state.thisLine = stream;
 
         // Reset state.taskList
         state.taskList = false;
@@ -791,8 +792,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
         state.trailingSpaceNewLine = false;
 
         state.f = state.block;
-        var indentation = stream.match(/^\s*/, true)[0].replace(/\t/g, '    ').length;
-        state.indentationDiff = Math.min(indentation - state.indentation, 4);
+          const indentation = stream.match(/^\s*/, true)[0].replace(/\t/g, '    ').length;
+          state.indentationDiff = Math.min(indentation - state.indentation, 4);
         state.indentation = state.indentation + state.indentationDiff;
         if (indentation > 0) return null;
       }

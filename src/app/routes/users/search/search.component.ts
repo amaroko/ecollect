@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormControl, ValidatorFn} from '@angular/forms';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -17,13 +17,13 @@ export class SearchComponent implements OnInit {
   bsRangeValue: Date[];
   maxDate = new Date();
   bsConfig = {
-      containerClass: 'theme-angle'
+    containerClass: 'theme-angle'
   };
 
   branches: Array<any>;
   buttonTitle = 'update user';
 
-  constructor(fb: FormBuilder, private ecolService: EcolService ) {
+  constructor(fb: FormBuilder, private ecolService: EcolService) {
     // Model Driven validation
     this.valForm = fb.group({
       'username': [null, Validators.required],
@@ -62,15 +62,15 @@ export class SearchComponent implements OnInit {
   }
 
   putuser(body) {
-   // console.log(body);
-   this.ecolService.loader();
-   this.ecolService.putuser(body).subscribe(data => {
-     // console.log(data);
+    // console.log(body);
+    this.ecolService.loader();
+    this.ecolService.putuser(body).subscribe(data => {
+      // console.log(data);
       swal('Successful!', 'user updated!', 'success');
 
     }, error => {
-     // console.log(error);
-    // this.buttonTitle = 'update user';
+      // console.log(error);
+      // this.buttonTitle = 'update user';
       swal('Error!', 'Error occurred during processing!', 'error');
     });
   }
@@ -94,8 +94,8 @@ export class SearchComponent implements OnInit {
             role: data[0].ROLE
           });
           // success
-        swal('Successful!', 'user details retrieved!', 'success');
-        this.buttonTitle = 'update user';
+          swal('Successful!', 'user details retrieved!', 'success');
+          this.buttonTitle = 'update user';
         } else {
           swal('Warning!', 'No user found!', 'warning');
           this.buttonTitle = 'create user';

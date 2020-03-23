@@ -17,25 +17,25 @@
 
   CodeMirror.defineMode("modelica", function(config, parserConfig) {
 
-    var indentUnit = config.indentUnit;
-    var keywords = parserConfig.keywords || {};
-    var builtin = parserConfig.builtin || {};
-    var atoms = parserConfig.atoms || {};
+      const indentUnit = config.indentUnit;
+      const keywords = parserConfig.keywords || {};
+      const builtin = parserConfig.builtin || {};
+      const atoms = parserConfig.atoms || {};
 
-    var isSingleOperatorChar = /[;=\(:\),{}.*<>+\-\/^\[\]]/;
-    var isDoubleOperatorChar = /(:=|<=|>=|==|<>|\.\+|\.\-|\.\*|\.\/|\.\^)/;
-    var isDigit = /[0-9]/;
-    var isNonDigit = /[_a-zA-Z]/;
+      const isSingleOperatorChar = /[;=\(:\),{}.*<>+\-\/^\[\]]/;
+      const isDoubleOperatorChar = /(:=|<=|>=|==|<>|\.\+|\.\-|\.\*|\.\/|\.\^)/;
+      const isDigit = /[0-9]/;
+      const isNonDigit = /[_a-zA-Z]/;
 
-    function tokenLineComment(stream, state) {
+      function tokenLineComment(stream, state) {
       stream.skipToEnd();
       state.tokenize = null;
       return "comment";
     }
 
     function tokenBlockComment(stream, state) {
-      var maybeEnd = false, ch;
-      while (ch = stream.next()) {
+        let maybeEnd = false, ch;
+        while (ch = stream.next()) {
         if (maybeEnd && ch == "/") {
           state.tokenize = null;
           break;
@@ -46,8 +46,8 @@
     }
 
     function tokenString(stream, state) {
-      var escaped = false, ch;
-      while ((ch = stream.next()) != null) {
+        let escaped = false, ch;
+        while ((ch = stream.next()) != null) {
         if (ch == '"' && !escaped) {
           state.tokenize = null;
           state.sol = false;
@@ -64,9 +64,9 @@
       while (stream.eat(isDigit) || stream.eat(isNonDigit)) { }
 
 
-      var cur = stream.current();
+        const cur = stream.current();
 
-      if(state.sol && (cur == "package" || cur == "model" || cur == "when" || cur == "connector")) state.level++;
+        if(state.sol && (cur == "package" || cur == "model" || cur == "when" || cur == "connector")) state.level++;
       else if(state.sol && cur == "end" && state.level > 0) state.level--;
 
       state.tokenize = null;
@@ -131,9 +131,9 @@
           return null;
         }
 
-        var ch = stream.next();
+          const ch = stream.next();
 
-        // LINECOMMENT
+          // LINECOMMENT
         if(ch == '/' && stream.eat('/')) {
           state.tokenize = tokenLineComment;
         }
@@ -180,8 +180,8 @@
       indent: function(state, textAfter) {
         if (state.tokenize != null) return CodeMirror.Pass;
 
-        var level = state.level;
-        if(/(algorithm)/.test(textAfter)) level--;
+          let level = state.level;
+          if(/(algorithm)/.test(textAfter)) level--;
         if(/(equation)/.test(textAfter)) level--;
         if(/(initial algorithm)/.test(textAfter)) level--;
         if(/(initial equation)/.test(textAfter)) level--;
@@ -200,25 +200,25 @@
   });
 
   function words(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i=0; i<words.length; ++i)
+      const obj = {}, words = str.split(" ");
+      for (let i=0; i<words.length; ++i)
       obj[words[i]] = true;
     return obj;
   }
 
-  var modelicaKeywords = "algorithm and annotation assert block break class connect connector constant constrainedby der discrete each else elseif elsewhen encapsulated end enumeration equation expandable extends external false final flow for function if import impure in initial inner input loop model not operator or outer output package parameter partial protected public pure record redeclare replaceable return stream then true type when while within";
-  var modelicaBuiltin = "abs acos actualStream asin atan atan2 cardinality ceil cos cosh delay div edge exp floor getInstanceName homotopy inStream integer log log10 mod pre reinit rem semiLinear sign sin sinh spatialDistribution sqrt tan tanh";
-  var modelicaAtoms = "Real Boolean Integer String";
+    const modelicaKeywords = "algorithm and annotation assert block break class connect connector constant constrainedby der discrete each else elseif elsewhen encapsulated end enumeration equation expandable extends external false final flow for function if import impure in initial inner input loop model not operator or outer output package parameter partial protected public pure record redeclare replaceable return stream then true type when while within";
+    const modelicaBuiltin = "abs acos actualStream asin atan atan2 cardinality ceil cos cosh delay div edge exp floor getInstanceName homotopy inStream integer log log10 mod pre reinit rem semiLinear sign sin sinh spatialDistribution sqrt tan tanh";
+    const modelicaAtoms = "Real Boolean Integer String";
 
-  function def(mimes, mode) {
+    function def(mimes, mode) {
     if (typeof mimes == "string")
       mimes = [mimes];
 
-    var words = [];
+      const words = [];
 
-    function add(obj) {
+      function add(obj) {
       if (obj)
-        for (var prop in obj)
+        for (let prop in obj)
           if (obj.hasOwnProperty(prop))
             words.push(prop);
     }
@@ -232,7 +232,7 @@
       CodeMirror.registerHelper("hintWords", mimes[0], words);
     }
 
-    for (var i=0; i<mimes.length; ++i)
+    for (let i=0; i<mimes.length; ++i)
       CodeMirror.defineMIME(mimes[i], mode);
   }
 

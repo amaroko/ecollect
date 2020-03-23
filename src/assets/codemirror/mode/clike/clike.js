@@ -20,13 +20,13 @@ function Context(indented, column, type, info, align, prev) {
   this.prev = prev;
 }
 function pushContext(state, col, type, info) {
-  var indent = state.indented;
+  let indent = state.indented;
   if (state.context && state.context.type == "statement" && type != "statement")
     indent = state.context.indented;
   return state.context = new Context(indent, col, type, info, null, state.context);
 }
 function popContext(state) {
-  var t = state.context.type;
+  const t = state.context.type;
   if (t == ")" || t == "]" || t == "}")
     state.indented = state.context.indented;
   return state.context = state.context.prev;
@@ -47,31 +47,31 @@ function isTopScope(context) {
 }
 
 CodeMirror.defineMode("clike", function(config, parserConfig) {
-  var indentUnit = config.indentUnit,
-      statementIndentUnit = parserConfig.statementIndentUnit || indentUnit,
-      dontAlignCalls = parserConfig.dontAlignCalls,
-      keywords = parserConfig.keywords || {},
-      types = parserConfig.types || {},
-      builtin = parserConfig.builtin || {},
-      blockKeywords = parserConfig.blockKeywords || {},
-      defKeywords = parserConfig.defKeywords || {},
-      atoms = parserConfig.atoms || {},
-      hooks = parserConfig.hooks || {},
-      multiLineStrings = parserConfig.multiLineStrings,
-      indentStatements = parserConfig.indentStatements !== false,
-      indentSwitch = parserConfig.indentSwitch !== false,
-      namespaceSeparator = parserConfig.namespaceSeparator,
-      isPunctuationChar = parserConfig.isPunctuationChar || /[\[\]{}\(\),;\:\.]/,
-      numberStart = parserConfig.numberStart || /[\d\.]/,
-      number = parserConfig.number || /^(?:0x[a-f\d]+|0b[01]+|(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?)(u|ll?|l|f)?/i,
-      isOperatorChar = parserConfig.isOperatorChar || /[+\-*&%=<>!?|\/]/;
+  const indentUnit = config.indentUnit,
+    statementIndentUnit = parserConfig.statementIndentUnit || indentUnit,
+    dontAlignCalls = parserConfig.dontAlignCalls,
+    keywords = parserConfig.keywords || {},
+    types = parserConfig.types || {},
+    builtin = parserConfig.builtin || {},
+    blockKeywords = parserConfig.blockKeywords || {},
+    defKeywords = parserConfig.defKeywords || {},
+    atoms = parserConfig.atoms || {},
+    hooks = parserConfig.hooks || {},
+    multiLineStrings = parserConfig.multiLineStrings,
+    indentStatements = parserConfig.indentStatements !== false,
+    indentSwitch = parserConfig.indentSwitch !== false,
+    namespaceSeparator = parserConfig.namespaceSeparator,
+    isPunctuationChar = parserConfig.isPunctuationChar || /[\[\]{}\(\),;\:\.]/,
+    numberStart = parserConfig.numberStart || /[\d\.]/,
+    number = parserConfig.number || /^(?:0x[a-f\d]+|0b[01]+|(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?)(u|ll?|l|f)?/i,
+    isOperatorChar = parserConfig.isOperatorChar || /[+\-*&%=<>!?|\/]/;
 
-  var curPunc, isDefKeyword;
+  let curPunc, isDefKeyword;
 
   function tokenBase(stream, state) {
-    var ch = stream.next();
+    const ch = stream.next();
     if (hooks[ch]) {
-      var result = hooks[ch](stream, state);
+      const result = hooks[ch](stream, state);
       if (result !== false) return result;
     }
     if (ch == '"' || ch == "'") {
@@ -83,8 +83,8 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       return null;
     }
     if (numberStart.test(ch)) {
-      stream.backUp(1)
-      if (stream.match(number)) return "number"
+      stream.backUp(1);
+      if (stream.match(number)) return "number";
       stream.next()
     }
     if (ch == "/") {
@@ -105,7 +105,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     if (namespaceSeparator) while (stream.match(namespaceSeparator))
       stream.eatWhile(/[\w\$_\xa1-\uffff]/);
 
-    var cur = stream.current();
+    const cur = stream.current();
     if (contains(keywords, cur)) {
       if (contains(blockKeywords, cur)) curPunc = "newstatement";
       if (contains(defKeywords, cur)) isDefKeyword = true;
@@ -122,7 +122,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
 
   function tokenString(quote) {
     return function(stream, state) {
-      var escaped = false, next, end = false;
+      let escaped = false, next, end = false;
       while ((next = stream.next()) != null) {
         if (next == quote && !escaped) {end = true; break;}
         escaped = !escaped && next == "\\";
@@ -134,7 +134,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
   }
 
   function tokenComment(stream, state) {
-    var maybeEnd = false, ch;
+    let maybeEnd = false, ch;
     while (ch = stream.next()) {
       if (ch == "/" && maybeEnd) {
         state.tokenize = null;
@@ -164,7 +164,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     },
 
     token: function(stream, state) {
-      var ctx = state.context;
+      let ctx = state.context;
       if (stream.sol()) {
         if (ctx.align == null) ctx.align = false;
         state.indented = stream.indentation();
@@ -172,7 +172,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       }
       if (stream.eatSpace()) { maybeEOL(stream, state); return null; }
       curPunc = isDefKeyword = null;
-      var style = (state.tokenize || tokenBase)(stream, state);
+      let style = (state.tokenize || tokenBase)(stream, state);
       if (style == "comment" || style == "meta") return style;
       if (ctx.align == null) ctx.align = true;
 
@@ -200,7 +200,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
         style = "def";
 
       if (hooks.token) {
-        var result = hooks.token(stream, state, style);
+        const result = hooks.token(stream, state, style);
         if (result !== undefined) style = result;
       }
 
@@ -214,19 +214,20 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
 
     indent: function(state, textAfter) {
       if (state.tokenize != tokenBase && state.tokenize != null || state.typeAtEndOfLine) return CodeMirror.Pass;
-      var ctx = state.context, firstChar = textAfter && textAfter.charAt(0);
+      let ctx = state.context;
+      const firstChar = textAfter && textAfter.charAt(0);
       if (ctx.type == "statement" && firstChar == "}") ctx = ctx.prev;
       if (parserConfig.dontIndentStatements)
         while (ctx.type == "statement" && parserConfig.dontIndentStatements.test(ctx.info))
-          ctx = ctx.prev
+          ctx = ctx.prev;
       if (hooks.indent) {
-        var hook = hooks.indent(state, ctx, textAfter);
+        const hook = hooks.indent(state, ctx, textAfter);
         if (typeof hook == "number") return hook
       }
-      var closing = firstChar == ctx.type;
-      var switchBlock = ctx.prev && ctx.prev.info == "switch";
+      const closing = firstChar == ctx.type;
+      const switchBlock = ctx.prev && ctx.prev.info == "switch";
       if (parserConfig.allmanIndentation && /[{(]/.test(firstChar)) {
-        while (ctx.type != "top" && ctx.type != "}") ctx = ctx.prev
+        while (ctx.type != "top" && ctx.type != "}") ctx = ctx.prev;
         return ctx.indented
       }
       if (ctx.type == "statement")
@@ -249,8 +250,8 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
 });
 
   function words(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+    const obj = {}, words = str.split(" ");
+    for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
     return obj;
   }
   function contains(words, word) {
@@ -260,22 +261,23 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       return words.propertyIsEnumerable(word);
     }
   }
-  var cKeywords = "auto if break case register continue return default do sizeof " +
+
+  const cKeywords = "auto if break case register continue return default do sizeof " +
     "static else struct switch extern typedef union for goto while enum const volatile";
-  var cTypes = "int long char short double float unsigned signed void size_t ptrdiff_t";
+  const cTypes = "int long char short double float unsigned signed void size_t ptrdiff_t";
 
   function cppHook(stream, state) {
-    if (!state.startOfLine) return false
+    if (!state.startOfLine) return false;
     for (var ch, next = null; ch = stream.peek();) {
       if (ch == "\\" && stream.match(/^.$/)) {
-        next = cppHook
+        next = cppHook;
         break
       } else if (ch == "/" && stream.match(/^\/[\/\*]/, false)) {
         break
       }
       stream.next()
     }
-    state.tokenize = next
+    state.tokenize = next;
     return "meta"
   }
 
@@ -293,7 +295,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     stream.backUp(1);
     // Raw strings.
     if (stream.match(/(R|u8R|uR|UR|LR)/)) {
-      var match = stream.match(/"([^\s\\()]{0,16})\(/);
+      const match = stream.match(/"([^\s\\()]{0,16})\(/);
       if (!match) {
         return false;
       }
@@ -314,13 +316,13 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
   }
 
   function cppLooksLikeConstructor(word) {
-    var lastTwo = /(\w+)::(\w+)$/.exec(word);
+    const lastTwo = /(\w+)::(\w+)$/.exec(word);
     return lastTwo && lastTwo[1] == lastTwo[2];
   }
 
   // C#-style strings where "" escapes a quote.
   function tokenAtString(stream, state) {
-    var next;
+    let next;
     while ((next = stream.next()) != null) {
       if (next == '"' && !stream.eat('"')) {
         state.tokenize = null;
@@ -334,8 +336,8 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
   // <delim> can be a string up to 16 characters long.
   function tokenRawString(stream, state) {
     // Escape characters that have special regex meanings.
-    var delim = state.cpp11RawStringDelim.replace(/[^\w\s]/g, '\\$&');
-    var match = stream.match(new RegExp(".*?\\)" + delim + '"'));
+    const delim = state.cpp11RawStringDelim.replace(/[^\w\s]/g, '\\$&');
+    const match = stream.match(new RegExp(".*?\\)" + delim + '"'));
     if (match)
       state.tokenize = null;
     else
@@ -345,9 +347,10 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
 
   function def(mimes, mode) {
     if (typeof mimes == "string") mimes = [mimes];
-    var words = [];
+    const words = [];
+
     function add(obj) {
-      if (obj) for (var prop in obj) if (obj.hasOwnProperty(prop))
+      if (obj) for (let prop in obj) if (obj.hasOwnProperty(prop))
         words.push(prop);
     }
     add(mode.keywords);
@@ -359,7 +362,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       CodeMirror.registerHelper("hintWords", mimes[0], words);
     }
 
-    for (var i = 0; i < mimes.length; ++i)
+    for (let i = 0; i < mimes.length; ++i)
       CodeMirror.defineMIME(mimes[i], mode);
   }
 
@@ -472,7 +475,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
   });
 
   function tokenTripleString(stream, state) {
-    var escaped = false;
+    let escaped = false;
     while (!stream.eol()) {
       if (!escaped && stream.match('"""')) {
         state.tokenize = null;
@@ -533,9 +536,9 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
         return "atom";
       },
       "=": function(stream, state) {
-        var cx = state.context
+        const cx = state.context;
         if (cx.type == "}" && cx.align && stream.eat(">")) {
-          state.context = new Context(cx.indented, cx.column, cx.type, cx.info, null, cx.prev)
+          state.context = new Context(cx.indented, cx.column, cx.type, cx.info, null, cx.prev);
           return "operator"
         } else {
           return false
@@ -547,7 +550,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
 
   function tokenKotlinString(tripleString){
     return function (stream, state) {
-      var escaped = false, next, end = false;
+      let escaped = false, next, end = false;
       while (!stream.eol()) {
         if (!tripleString && !escaped && stream.match('"') ) {end = true; break;}
         if (tripleString && stream.match('"""')) {end = true; break;}
@@ -702,10 +705,11 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
   });
 
   // Ceylon Strings need to deal with interpolation
-  var stringTokenizer = null;
+  let stringTokenizer = null;
+
   function tokenCeylonString(type) {
     return function(stream, state) {
-      var escaped = false, next, end = false;
+      let escaped = false, next, end = false;
       while (!stream.eol()) {
         if (!escaped && stream.match('"') &&
               (type == "single" || stream.match('""'))) {
@@ -734,8 +738,8 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
                     " try value void while"),
     types: function(word) {
         // In Ceylon all identifiers that start with an uppercase are types
-        var first = word.charAt(0);
-        return (first === first.toUpperCase() && first !== first.toLowerCase());
+      const first = word.charAt(0);
+      return (first === first.toUpperCase() && first !== first.toLowerCase());
     },
     blockKeywords: words("case catch class dynamic else finally for function if interface module new object switch try while"),
     defKeywords: words("class dynamic function interface module object package value"),

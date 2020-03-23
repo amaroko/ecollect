@@ -1,31 +1,33 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
 
-import { SharedModule } from '../../shared/shared.module';
-import { CreditbuildupComponent } from './creditbuildup/creditbuildup.component';
-import { NocreditComponent } from './nocredit/nocredit.component';
+import {SharedModule} from '../../shared/shared.module';
+import {CreditbuildupComponent} from './creditbuildup/creditbuildup.component';
+import {NocreditComponent} from './nocredit/nocredit.component';
 
-import { AgGridModule } from 'ag-grid-angular';
+import {AgGridModule} from '@ag-grid-community/angular';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'nocredit' },
-    { path: 'nocredit', component: NocreditComponent },
-    { path: 'creditbuildup', component: CreditbuildupComponent }
+  {path: '', redirectTo: 'nocredit'},
+  {path: 'nocredit', component: NocreditComponent},
+  {path: 'creditbuildup', component: CreditbuildupComponent}
 ];
 
 @NgModule({
-    imports: [
-        SharedModule,
-        AgGridModule.withComponents([]),
-        RouterModule.forChild(routes)
-    ],
-    declarations: [
-        NocreditComponent,
-        CreditbuildupComponent
-    ],
-    exports: [
-        RouterModule
-    ]
+  imports: [
+    SharedModule,
+    AgGridModule.withComponents([]),
+    RouterModule.forChild(routes),
+    AgGridModule
+  ],
+  declarations: [
+    NocreditComponent,
+    CreditbuildupComponent
+  ],
+  exports: [
+    RouterModule
+  ]
 })
-export class WatchModule { }
+export class WatchModule {
+}

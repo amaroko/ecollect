@@ -12,18 +12,18 @@
   "use strict";
 
   CodeMirror.defineMode("ttcn-cfg", function(config, parserConfig) {
-    var indentUnit = config.indentUnit,
-        keywords = parserConfig.keywords || {},
-        fileNCtrlMaskOptions = parserConfig.fileNCtrlMaskOptions || {},
-        externalCommands = parserConfig.externalCommands || {},
-        multiLineStrings = parserConfig.multiLineStrings,
-        indentStatements = parserConfig.indentStatements !== false;
-    var isOperatorChar = /[\|]/;
-    var curPunc;
+      const indentUnit = config.indentUnit,
+          keywords = parserConfig.keywords || {},
+          fileNCtrlMaskOptions = parserConfig.fileNCtrlMaskOptions || {},
+          externalCommands = parserConfig.externalCommands || {},
+          multiLineStrings = parserConfig.multiLineStrings,
+          indentStatements = parserConfig.indentStatements !== false;
+      const isOperatorChar = /[\|]/;
+      let curPunc;
 
-    function tokenBase(stream, state) {
-      var ch = stream.next();
-      if (ch == '"' || ch == "'") {
+      function tokenBase(stream, state) {
+        const ch = stream.next();
+        if (ch == '"' || ch == "'") {
         state.tokenize = tokenString(ch);
         return state.tokenize(stream, state);
       }
@@ -49,8 +49,8 @@
       }
 
       stream.eatWhile(/[\w\$_]/);
-      var cur = stream.current();
-      if (keywords.propertyIsEnumerable(cur)) return "keyword";
+        const cur = stream.current();
+        if (keywords.propertyIsEnumerable(cur)) return "keyword";
       if (fileNCtrlMaskOptions.propertyIsEnumerable(cur))
         return "negative fileNCtrlMaskOptions";
       if (externalCommands.propertyIsEnumerable(cur)) return "negative externalCommands";
@@ -60,11 +60,11 @@
 
     function tokenString(quote) {
       return function(stream, state) {
-        var escaped = false, next, end = false;
-        while ((next = stream.next()) != null) {
+          let escaped = false, next, end = false;
+          while ((next = stream.next()) != null) {
           if (next == quote && !escaped){
-            var afterNext = stream.peek();
-            //look if the character if the quote is like the B in '10100010'B
+              let afterNext = stream.peek();
+              //look if the character if the quote is like the B in '10100010'B
             if (afterNext){
               afterNext = afterNext.toLowerCase();
               if(afterNext == "b" || afterNext == "h" || afterNext == "o")
@@ -88,14 +88,14 @@
       this.prev = prev;
     }
     function pushContext(state, col, type) {
-      var indent = state.indented;
-      if (state.context && state.context.type == "statement")
+        let indent = state.indented;
+        if (state.context && state.context.type == "statement")
         indent = state.context.indented;
       return state.context = new Context(indent, col, type, null, state.context);
     }
     function popContext(state) {
-      var t = state.context.type;
-      if (t == ")" || t == "]" || t == "}")
+        const t = state.context.type;
+        if (t == ")" || t == "]" || t == "}")
         state.indented = state.context.indented;
       return state.context = state.context.prev;
     }
@@ -112,16 +112,16 @@
       },
 
       token: function(stream, state) {
-        var ctx = state.context;
-        if (stream.sol()) {
+          let ctx = state.context;
+          if (stream.sol()) {
           if (ctx.align == null) ctx.align = false;
           state.indented = stream.indentation();
           state.startOfLine = true;
         }
         if (stream.eatSpace()) return null;
         curPunc = null;
-        var style = (state.tokenize || tokenBase)(stream, state);
-        if (style == "comment") return style;
+          const style = (state.tokenize || tokenBase)(stream, state);
+          if (style == "comment") return style;
         if (ctx.align == null) ctx.align = true;
 
         if ((curPunc == ";" || curPunc == ":" || curPunc == ",")
@@ -152,8 +152,8 @@
   });
 
   function words(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i = 0; i < words.length; ++i)
+      const obj = {}, words = str.split(" ");
+      for (let i = 0; i < words.length; ++i)
       obj[words[i]] = true;
     return obj;
   }

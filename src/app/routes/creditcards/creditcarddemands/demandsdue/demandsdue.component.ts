@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../../../environments/environment';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../../../../environments/environment';
 import * as $ from 'jquery';
-import { EcolService } from '../../../../services/ecol.service';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from '@ag-grid-community/all-modules';
+import {EcolService} from '../../../../services/ecol.service';
+import {GridOptions, IDatasource, IGetRowsParams, GridApi} from '@ag-grid-community/all-modules';
 
 @Component({
   selector: 'app-demandsdue',
@@ -99,15 +99,15 @@ export class DemandsdueComponent implements OnInit {
     }
   };
 
-currencyFormatter(params) {
+  currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  }
 
-formatNumber(number) {
+  formatNumber(number) {
     // this puts commas into the number eg 1000 goes to 1,000,
     // i pulled this from stack overflow, i have no idea how it works
     return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  }
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
@@ -127,7 +127,7 @@ formatNumber(number) {
     this.clear();
     this.http.get<any>(environment.api + '/api/demandsduecc/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
+      this.gridApi.updateRowData({add: resp, addIndex: 0});
     });
   }
 

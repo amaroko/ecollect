@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ZerobalanceComponent } from './zerobalance.component';
+import {ZerobalanceComponent} from './zerobalance.component';
 
 describe('PrelistingComponent', () => {
   let component: ZerobalanceComponent;
@@ -8,9 +8,9 @@ describe('PrelistingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ZerobalanceComponent ]
+      declarations: [ZerobalanceComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

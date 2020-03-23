@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
@@ -39,55 +39,55 @@ export class ViewallComponent implements OnInit {
           return '<a  href="#" target="_blank">' + params.value + '</a>';
         },
         width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'CARDNUMBER',
         field: 'CARDNUMBER',
         width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'CARDNAME',
         field: 'CARDNAME',
         width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'DAYSINARREARS',
         field: 'DAYSINARREARS',
         width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agNumberColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'EXPPMNT',
         field: 'EXPPMNT',
         width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agNumberColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'OUTSTANDING BALANCE',
         field: 'OUTBALANCE',
         width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agNumberColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'LIMIT',
         field: 'LIMIT',
         width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agNumberColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'CYCLE',
         field: 'CYCLE',
         width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agNumberColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
       {
         headerName: 'COLOFFICER',
         field: 'COLOFFICER',
         width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}
       },
 
     ];
@@ -97,10 +97,10 @@ export class ViewallComponent implements OnInit {
       sortable: true,
       floatingFilter: true
     };
-    this.rowModelType = "serverSide";
+    this.rowModelType = 'serverSide';
     this.cacheBlockSize = 50;
     this.maxBlocksInCache = 0;
-   // 
+    //
 
     this.overlayLoadingTemplate =
       // tslint:disable-next-line:max-line-length
@@ -121,7 +121,7 @@ export class ViewallComponent implements OnInit {
         fetch(environment.nodeapi + '/gridcardsviewall/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
-          headers: { "Content-Type": "application/json; charset=utf-8" }
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
         })
           .then(httpResponse => httpResponse.json())
           .then(response => {
@@ -130,7 +130,7 @@ export class ViewallComponent implements OnInit {
           .catch(error => {
             console.error(error);
             params.failCallback();
-          })
+          });
       }
     };
 
@@ -141,7 +141,7 @@ export class ViewallComponent implements OnInit {
     return {
       getRows(params) {
         setTimeout(function () {
-          var response = server.getResponse(params.request);
+          const response = server.getResponse(params.request);
           if (response.success) {
             params.successCallback(response.rows, response.lastRow);
           } else {
@@ -156,7 +156,7 @@ export class ViewallComponent implements OnInit {
     if (params.value !== undefined) {
       return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     } else {
-      return ''
+      return '';
     }
   }
 

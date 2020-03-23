@@ -14,22 +14,22 @@
 CodeMirror.defineMode("sql", function(config, parserConfig) {
   "use strict";
 
-  var client         = parserConfig.client || {},
-      atoms          = parserConfig.atoms || {"false": true, "true": true, "null": true},
-      builtin        = parserConfig.builtin || {},
-      keywords       = parserConfig.keywords || {},
-      operatorChars  = parserConfig.operatorChars || /^[*+\-%<>!=&|~^]/,
-      support        = parserConfig.support || {},
-      hooks          = parserConfig.hooks || {},
-      dateSQL        = parserConfig.dateSQL || {"date" : true, "time" : true, "timestamp" : true};
+    const client = parserConfig.client || {},
+        atoms = parserConfig.atoms || {"false": true, "true": true, "null": true},
+        builtin = parserConfig.builtin || {},
+        keywords = parserConfig.keywords || {},
+        operatorChars = parserConfig.operatorChars || /^[*+\-%<>!=&|~^]/,
+        support = parserConfig.support || {},
+        hooks = parserConfig.hooks || {},
+        dateSQL = parserConfig.dateSQL || {"date": true, "time": true, "timestamp": true};
 
-  function tokenBase(stream, state) {
-    var ch = stream.next();
+    function tokenBase(stream, state) {
+      const ch = stream.next();
 
-    // call hooks from the mime type
+      // call hooks from the mime type
     if (hooks[ch]) {
-      var result = hooks[ch](stream, state);
-      if (result !== false) return result;
+        const result = hooks[ch](stream, state);
+        if (result !== false) return result;
     }
 
     if (support.hexNumber == true &&
@@ -103,8 +103,8 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
       return "number";
     } else {
       stream.eatWhile(/^[_\w\d]/);
-      var word = stream.current().toLowerCase();
-      // dates (standard SQL syntax)
+        const word = stream.current().toLowerCase();
+        // dates (standard SQL syntax)
       // ref: http://dev.mysql.com/doc/refman/5.5/en/date-and-time-literals.html
       if (dateSQL.hasOwnProperty(word) && (stream.match(/^( )+'[^']*'/) || stream.match(/^( )+"[^"]*"/)))
         return "number";
@@ -119,8 +119,8 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
   // 'string', with char specified in quote escaped by '\'
   function tokenLiteral(quote) {
     return function(stream, state) {
-      var escaped = false, ch;
-      while ((ch = stream.next()) != null) {
+        let escaped = false, ch;
+        while ((ch = stream.next()) != null) {
         if (ch == quote && !escaped) {
           state.tokenize = tokenBase;
           break;
@@ -172,14 +172,14 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
       }
       if (stream.eatSpace()) return null;
 
-      var style = state.tokenize(stream, state);
-      if (style == "comment") return style;
+        const style = state.tokenize(stream, state);
+        if (style == "comment") return style;
 
       if (state.context && state.context.align == null)
         state.context.align = true;
 
-      var tok = stream.current();
-      if (tok == "(")
+        const tok = stream.current();
+        if (tok == "(")
         pushContext(stream, state, ")");
       else if (tok == "[")
         pushContext(stream, state, "]");
@@ -189,10 +189,10 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
     },
 
     indent: function(state, textAfter) {
-      var cx = state.context;
-      if (!cx) return CodeMirror.Pass;
-      var closing = textAfter.charAt(0) == cx.type;
-      if (cx.align) return cx.col + (closing ? 0 : 1);
+        const cx = state.context;
+        if (!cx) return CodeMirror.Pass;
+        const closing = textAfter.charAt(0) == cx.type;
+        if (cx.align) return cx.col + (closing ? 0 : 1);
       else return cx.indent + (closing ? 0 : config.indentUnit);
     },
 
@@ -209,8 +209,8 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
   function hookIdentifier(stream) {
     // MySQL/MariaDB identifiers
     // ref: http://dev.mysql.com/doc/refman/5.6/en/identifier-qualifiers.html
-    var ch;
-    while ((ch = stream.next()) != null) {
+      let ch;
+      while ((ch = stream.next()) != null) {
       if (ch == "`" && !stream.eat("`")) return "variable-2";
     }
     stream.backUp(stream.current().length - 1);
@@ -242,7 +242,7 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
       return "variable-2";
     }
     return null;
-  };
+  }
 
   // short client keyword token
   function hookClient(stream) {
@@ -257,12 +257,12 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
   }
 
   // these keywords are used by all SQL dialects (however, a mode can still overwrite it)
-  var sqlKeywords = "alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";
+    const sqlKeywords = "alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";
 
-  // turn a space-separated list into an array
+    // turn a space-separated list into an array
   function set(str) {
-    var obj = {}, words = str.split(" ");
-    for (var i = 0; i < words.length; ++i) obj[words[i]] = true;
+      const obj = {}, words = str.split(" ");
+      for (let i = 0; i < words.length; ++i) obj[words[i]] = true;
     return obj;
   }
 

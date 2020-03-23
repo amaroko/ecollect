@@ -13,87 +13,90 @@
 
 CodeMirror.defineMode("eiffel", function() {
   function wordObj(words) {
-    var o = {};
-    for (var i = 0, e = words.length; i < e; ++i) o[words[i]] = true;
+      const o = {};
+      let i = 0;
+      const e = words.length;
+      for (; i < e; ++i) o[words[i]] = true;
     return o;
   }
-  var keywords = wordObj([
-    'note',
-    'across',
-    'when',
-    'variant',
-    'until',
-    'unique',
-    'undefine',
-    'then',
-    'strip',
-    'select',
-    'retry',
-    'rescue',
-    'require',
-    'rename',
-    'reference',
-    'redefine',
-    'prefix',
-    'once',
-    'old',
-    'obsolete',
-    'loop',
-    'local',
-    'like',
-    'is',
-    'inspect',
-    'infix',
-    'include',
-    'if',
-    'frozen',
-    'from',
-    'external',
-    'export',
-    'ensure',
-    'end',
-    'elseif',
-    'else',
-    'do',
-    'creation',
-    'create',
-    'check',
-    'alias',
-    'agent',
-    'separate',
-    'invariant',
-    'inherit',
-    'indexing',
-    'feature',
-    'expanded',
-    'deferred',
-    'class',
-    'Void',
-    'True',
-    'Result',
-    'Precursor',
-    'False',
-    'Current',
-    'create',
-    'attached',
-    'detachable',
-    'as',
-    'and',
-    'implies',
-    'not',
-    'or'
-  ]);
-  var operators = wordObj([":=", "and then","and", "or","<<",">>"]);
 
-  function chain(newtok, stream, state) {
+    const keywords = wordObj([
+        'note',
+        'across',
+        'when',
+        'variant',
+        'until',
+        'unique',
+        'undefine',
+        'then',
+        'strip',
+        'select',
+        'retry',
+        'rescue',
+        'require',
+        'rename',
+        'reference',
+        'redefine',
+        'prefix',
+        'once',
+        'old',
+        'obsolete',
+        'loop',
+        'local',
+        'like',
+        'is',
+        'inspect',
+        'infix',
+        'include',
+        'if',
+        'frozen',
+        'from',
+        'external',
+        'export',
+        'ensure',
+        'end',
+        'elseif',
+        'else',
+        'do',
+        'creation',
+        'create',
+        'check',
+        'alias',
+        'agent',
+        'separate',
+        'invariant',
+        'inherit',
+        'indexing',
+        'feature',
+        'expanded',
+        'deferred',
+        'class',
+        'Void',
+        'True',
+        'Result',
+        'Precursor',
+        'False',
+        'Current',
+        'create',
+        'attached',
+        'detachable',
+        'as',
+        'and',
+        'implies',
+        'not',
+        'or'
+    ]);
+    const operators = wordObj([":=", "and then", "and", "or", "<<", ">>"]);
+
+    function chain(newtok, stream, state) {
     state.tokenize.push(newtok);
     return newtok(stream, state);
   }
 
   function tokenBase(stream, state) {
     if (stream.eatSpace()) return null;
-    var ch = stream.next();
-    if (ch == '"'||ch == "'") {
+      const ch = stream.next();
+      if (ch == '"'||ch == "'") {
       return chain(readQuoted(ch, "string"), stream, state);
     } else if (ch == "-"&&stream.eat("-")) {
       stream.skipToEnd();
@@ -118,8 +121,8 @@ CodeMirror.defineMode("eiffel", function() {
 
   function readQuoted(quote, style,  unescaped) {
     return function(stream, state) {
-      var escaped = false, ch;
-      while ((ch = stream.next()) != null) {
+        let escaped = false, ch;
+        while ((ch = stream.next()) != null) {
         if (ch == quote && (unescaped || !escaped)) {
           state.tokenize.pop();
           break;
@@ -136,10 +139,10 @@ CodeMirror.defineMode("eiffel", function() {
     },
 
     token: function(stream, state) {
-      var style = state.tokenize[state.tokenize.length-1](stream, state);
-      if (style == "ident") {
-        var word = stream.current();
-        style = keywords.propertyIsEnumerable(stream.current()) ? "keyword"
+        let style = state.tokenize[state.tokenize.length - 1](stream, state);
+        if (style == "ident") {
+          const word = stream.current();
+          style = keywords.propertyIsEnumerable(stream.current()) ? "keyword"
           : operators.propertyIsEnumerable(stream.current()) ? "operator"
           : /^[A-Z][A-Z_0-9]*$/g.test(word) ? "tag"
           : /^0[bB][0-1]+$/g.test(word) ? "number"

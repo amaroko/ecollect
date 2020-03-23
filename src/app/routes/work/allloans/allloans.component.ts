@@ -1,8 +1,7 @@
-
-import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../../environments/environment';
 // import { HttpClient} from '@angular/common/http';
-import { AllModules } from '@ag-grid-enterprise/all-modules';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-allloans',
@@ -40,53 +39,53 @@ export class AllloansComponent implements OnInit {
             return ''; // <img src="assets/img/user/loading.gif">
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CUSTNUMBER',
         field: 'CUSTNUMBER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CUSTNAME',
         field: 'CUSTNAME',
         width: 300,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'BRANCHNAME',
         field: 'BRANCHNAME',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'BRANCHCODE',
         field: 'BRANCHCODE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'OUSTBALANCE',
         field: 'OUSTBALANCE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'PRODUCTCODE',
         field: 'PRODUCTCODE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'AROCODE',
         field: 'AROCODE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'NATIONID',
         field: 'NATIONID',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'EMPLOYER',
         field: 'EMPLOYER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       }
     ];
     this.defaultColDef = {
@@ -117,7 +116,7 @@ export class AllloansComponent implements OnInit {
         fetch(environment.nodeapi + '/gridviewallloans/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
-          headers: { 'Content-Type': 'application/json; charset=utf-8' }
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
         }).then(httpResponse => httpResponse.json())
           .then(response => {
             params.successCallback(response.rows, response.lastRow);
@@ -131,6 +130,7 @@ export class AllloansComponent implements OnInit {
 
     params.api.setServerSideDatasource(datasource);
   }
+
   currencyFormatter(params) {
     if (params.value !== undefined) {
       return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');

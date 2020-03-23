@@ -1,6 +1,6 @@
 import {Router, ActivatedRoute} from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -13,7 +13,9 @@ export class EditguarantorComponent implements OnInit {
   model: any = {
     custnumber: null
   };
-  constructor(private ecolService: EcolService, private router: Router, private activeRoute: ActivatedRoute) { }
+
+  constructor(private ecolService: EcolService, private router: Router, private activeRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     // do something with the parameters
@@ -25,7 +27,7 @@ export class EditguarantorComponent implements OnInit {
     // Loading indictor
     this.ecolService.loader();
     //
-   const body = {
+    const body = {
       nationid: form.value.nationid,
       guarantorname: form.value.guarantorname,
       accnumber: form.value.accnumber,
@@ -53,7 +55,7 @@ export class EditguarantorComponent implements OnInit {
     });
   }
 
-  cancel () {
+  cancel() {
     // redirect to ListComponent
     this.router.navigate(['/guarantors/list']);
   }

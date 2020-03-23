@@ -12,16 +12,16 @@
   "use strict";
 
   function errorIfNotEmpty(stream) {
-    var nonWS = stream.match(/^\s*\S/);
-    stream.skipToEnd();
+      const nonWS = stream.match(/^\s*\S/);
+      stream.skipToEnd();
     return nonWS ? "error" : null;
   }
 
   CodeMirror.defineMode("asciiarmor", function() {
     return {
       token: function(stream, state) {
-        var m;
-        if (state.state == "top") {
+          let m;
+          if (state.state == "top") {
           if (stream.sol() && (m = stream.match(/^-----BEGIN (.*)?-----\s*$/))) {
             state.state = "headers";
             state.type = m[1];
@@ -33,8 +33,8 @@
             state.state = "header";
             return "atom";
           } else {
-            var result = errorIfNotEmpty(stream);
-            if (result) state.state = "body";
+              const result = errorIfNotEmpty(stream);
+              if (result) state.state = "body";
             return result;
           }
         } else if (state.state == "header") {

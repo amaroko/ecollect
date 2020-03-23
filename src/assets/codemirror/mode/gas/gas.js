@@ -17,131 +17,131 @@ CodeMirror.defineMode("gas", function(_config, parserConfig) {
   // If an architecture is specified, its initialization function may
   // populate this array with custom parsing functions which will be
   // tried in the event that the standard functions do not find a match.
-  var custom = [];
+    const custom = [];
 
-  // The symbol used to start a line comment changes based on the target
+    // The symbol used to start a line comment changes based on the target
   // architecture.
   // If no architecture is pased in "parserConfig" then only multiline
   // comments will have syntax support.
-  var lineCommentStartSymbol = "";
+    let lineCommentStartSymbol = "";
 
-  // These directives are architecture independent.
+    // These directives are architecture independent.
   // Machine specific directives should go in their respective
   // architecture initialization function.
   // Reference:
   // http://sourceware.org/binutils/docs/as/Pseudo-Ops.html#Pseudo-Ops
-  var directives = {
-    ".abort" : "builtin",
-    ".align" : "builtin",
-    ".altmacro" : "builtin",
-    ".ascii" : "builtin",
-    ".asciz" : "builtin",
-    ".balign" : "builtin",
-    ".balignw" : "builtin",
-    ".balignl" : "builtin",
-    ".bundle_align_mode" : "builtin",
-    ".bundle_lock" : "builtin",
-    ".bundle_unlock" : "builtin",
-    ".byte" : "builtin",
-    ".cfi_startproc" : "builtin",
-    ".comm" : "builtin",
-    ".data" : "builtin",
-    ".def" : "builtin",
-    ".desc" : "builtin",
-    ".dim" : "builtin",
-    ".double" : "builtin",
-    ".eject" : "builtin",
-    ".else" : "builtin",
-    ".elseif" : "builtin",
-    ".end" : "builtin",
-    ".endef" : "builtin",
-    ".endfunc" : "builtin",
-    ".endif" : "builtin",
-    ".equ" : "builtin",
-    ".equiv" : "builtin",
-    ".eqv" : "builtin",
-    ".err" : "builtin",
-    ".error" : "builtin",
-    ".exitm" : "builtin",
-    ".extern" : "builtin",
-    ".fail" : "builtin",
-    ".file" : "builtin",
-    ".fill" : "builtin",
-    ".float" : "builtin",
-    ".func" : "builtin",
-    ".global" : "builtin",
-    ".gnu_attribute" : "builtin",
-    ".hidden" : "builtin",
-    ".hword" : "builtin",
-    ".ident" : "builtin",
-    ".if" : "builtin",
-    ".incbin" : "builtin",
-    ".include" : "builtin",
-    ".int" : "builtin",
-    ".internal" : "builtin",
-    ".irp" : "builtin",
-    ".irpc" : "builtin",
-    ".lcomm" : "builtin",
-    ".lflags" : "builtin",
-    ".line" : "builtin",
-    ".linkonce" : "builtin",
-    ".list" : "builtin",
-    ".ln" : "builtin",
-    ".loc" : "builtin",
-    ".loc_mark_labels" : "builtin",
-    ".local" : "builtin",
-    ".long" : "builtin",
-    ".macro" : "builtin",
-    ".mri" : "builtin",
-    ".noaltmacro" : "builtin",
-    ".nolist" : "builtin",
-    ".octa" : "builtin",
-    ".offset" : "builtin",
-    ".org" : "builtin",
-    ".p2align" : "builtin",
-    ".popsection" : "builtin",
-    ".previous" : "builtin",
-    ".print" : "builtin",
-    ".protected" : "builtin",
-    ".psize" : "builtin",
-    ".purgem" : "builtin",
-    ".pushsection" : "builtin",
-    ".quad" : "builtin",
-    ".reloc" : "builtin",
-    ".rept" : "builtin",
-    ".sbttl" : "builtin",
-    ".scl" : "builtin",
-    ".section" : "builtin",
-    ".set" : "builtin",
-    ".short" : "builtin",
-    ".single" : "builtin",
-    ".size" : "builtin",
-    ".skip" : "builtin",
-    ".sleb128" : "builtin",
-    ".space" : "builtin",
-    ".stab" : "builtin",
-    ".string" : "builtin",
-    ".struct" : "builtin",
-    ".subsection" : "builtin",
-    ".symver" : "builtin",
-    ".tag" : "builtin",
-    ".text" : "builtin",
-    ".title" : "builtin",
-    ".type" : "builtin",
-    ".uleb128" : "builtin",
-    ".val" : "builtin",
-    ".version" : "builtin",
-    ".vtable_entry" : "builtin",
-    ".vtable_inherit" : "builtin",
-    ".warning" : "builtin",
-    ".weak" : "builtin",
-    ".weakref" : "builtin",
-    ".word" : "builtin"
-  };
+    const directives = {
+        ".abort": "builtin",
+        ".align": "builtin",
+        ".altmacro": "builtin",
+        ".ascii": "builtin",
+        ".asciz": "builtin",
+        ".balign": "builtin",
+        ".balignw": "builtin",
+        ".balignl": "builtin",
+        ".bundle_align_mode": "builtin",
+        ".bundle_lock": "builtin",
+        ".bundle_unlock": "builtin",
+        ".byte": "builtin",
+        ".cfi_startproc": "builtin",
+        ".comm": "builtin",
+        ".data": "builtin",
+        ".def": "builtin",
+        ".desc": "builtin",
+        ".dim": "builtin",
+        ".double": "builtin",
+        ".eject": "builtin",
+        ".else": "builtin",
+        ".elseif": "builtin",
+        ".end": "builtin",
+        ".endef": "builtin",
+        ".endfunc": "builtin",
+        ".endif": "builtin",
+        ".equ": "builtin",
+        ".equiv": "builtin",
+        ".eqv": "builtin",
+        ".err": "builtin",
+        ".error": "builtin",
+        ".exitm": "builtin",
+        ".extern": "builtin",
+        ".fail": "builtin",
+        ".file": "builtin",
+        ".fill": "builtin",
+        ".float": "builtin",
+        ".func": "builtin",
+        ".global": "builtin",
+        ".gnu_attribute": "builtin",
+        ".hidden": "builtin",
+        ".hword": "builtin",
+        ".ident": "builtin",
+        ".if": "builtin",
+        ".incbin": "builtin",
+        ".include": "builtin",
+        ".int": "builtin",
+        ".internal": "builtin",
+        ".irp": "builtin",
+        ".irpc": "builtin",
+        ".lcomm": "builtin",
+        ".lflags": "builtin",
+        ".line": "builtin",
+        ".linkonce": "builtin",
+        ".list": "builtin",
+        ".ln": "builtin",
+        ".loc": "builtin",
+        ".loc_mark_labels": "builtin",
+        ".local": "builtin",
+        ".long": "builtin",
+        ".macro": "builtin",
+        ".mri": "builtin",
+        ".noaltmacro": "builtin",
+        ".nolist": "builtin",
+        ".octa": "builtin",
+        ".offset": "builtin",
+        ".org": "builtin",
+        ".p2align": "builtin",
+        ".popsection": "builtin",
+        ".previous": "builtin",
+        ".print": "builtin",
+        ".protected": "builtin",
+        ".psize": "builtin",
+        ".purgem": "builtin",
+        ".pushsection": "builtin",
+        ".quad": "builtin",
+        ".reloc": "builtin",
+        ".rept": "builtin",
+        ".sbttl": "builtin",
+        ".scl": "builtin",
+        ".section": "builtin",
+        ".set": "builtin",
+        ".short": "builtin",
+        ".single": "builtin",
+        ".size": "builtin",
+        ".skip": "builtin",
+        ".sleb128": "builtin",
+        ".space": "builtin",
+        ".stab": "builtin",
+        ".string": "builtin",
+        ".struct": "builtin",
+        ".subsection": "builtin",
+        ".symver": "builtin",
+        ".tag": "builtin",
+        ".text": "builtin",
+        ".title": "builtin",
+        ".type": "builtin",
+        ".uleb128": "builtin",
+        ".val": "builtin",
+        ".version": "builtin",
+        ".vtable_entry": "builtin",
+        ".vtable_inherit": "builtin",
+        ".warning": "builtin",
+        ".weak": "builtin",
+        ".weakref": "builtin",
+        ".word": "builtin"
+    };
 
-  var registers = {};
+    const registers = {};
 
-  function x86(_parserConfig) {
+    function x86(_parserConfig) {
     lineCommentStartSymbol = "#";
 
     registers.ax  = "variable";
@@ -224,16 +224,16 @@ CodeMirror.defineMode("gas", function(_config, parserConfig) {
     });
   }
 
-  var arch = (parserConfig.architecture || "x86").toLowerCase();
-  if (arch === "x86") {
+    const arch = (parserConfig.architecture || "x86").toLowerCase();
+    if (arch === "x86") {
     x86(parserConfig);
   } else if (arch === "arm" || arch === "armv6") {
     armv6(parserConfig);
   }
 
   function nextUntilUnescaped(stream, end) {
-    var escaped = false, next;
-    while ((next = stream.next()) != null) {
+      let escaped = false, next;
+      while ((next = stream.next()) != null) {
       if (next === end && !escaped) {
         return false;
       }
@@ -243,8 +243,8 @@ CodeMirror.defineMode("gas", function(_config, parserConfig) {
   }
 
   function clikeComment(stream, state) {
-    var maybeEnd = false, ch;
-    while ((ch = stream.next()) != null) {
+      let maybeEnd = false, ch;
+      while ((ch = stream.next()) != null) {
       if (ch === "/" && maybeEnd) {
         state.tokenize = null;
         break;
@@ -270,9 +270,10 @@ CodeMirror.defineMode("gas", function(_config, parserConfig) {
         return null;
       }
 
-      var style, cur, ch = stream.next();
+        let style, cur;
+        const ch = stream.next();
 
-      if (ch === "/") {
+        if (ch === "/") {
         if (stream.eat("*")) {
           state.tokenize = clikeComment;
           return clikeComment(stream, state);
@@ -328,7 +329,7 @@ CodeMirror.defineMode("gas", function(_config, parserConfig) {
         return style || null;
       }
 
-      for (var i = 0; i < custom.length; i++) {
+      for (let i = 0; i < custom.length; i++) {
         style = custom[i](ch, stream, state);
         if (style) {
           return style;

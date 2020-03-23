@@ -57,9 +57,9 @@
           return "operator";
         }
 
-        var peek = stream.peek();
+          const peek = stream.peek();
 
-        //no stack
+          //no stack
         switch (peek) {
         case "[":
           stream.next();

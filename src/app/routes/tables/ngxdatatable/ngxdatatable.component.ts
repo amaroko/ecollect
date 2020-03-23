@@ -1,121 +1,122 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 
 const _clone = (d) => JSON.parse(JSON.stringify(d));
 
 @Component({
-    selector: 'app-ngxdatatable',
-    templateUrl: './ngxdatatable.component.html',
-    styleUrls: ['./ngxdatatable.component.scss'],
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-ngxdatatable',
+  templateUrl: './ngxdatatable.component.html',
+  styleUrls: ['./ngxdatatable.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxdatatableComponent implements OnInit {
 
-    editing = {};
-    rows = [];
-    rowsFilter = [];
-    rowsExp = [];
-    rowsSort = [];
-    temp = [];
-    expanded: any = {};
-    timeout: any;
+  editing = {};
+  rows = [];
+  rowsFilter = [];
+  rowsExp = [];
+  rowsSort = [];
+  temp = [];
+  expanded: any = {};
+  timeout: any;
 
-    rowsSel = [];
-    selected = [];
+  rowsSel = [];
+  selected = [];
 
-    columns = [
-        { prop: 'name' },
-        { name: 'Company' },
-        { name: 'Gender' }
-    ];
-    columnsSort = [
-        { prop: 'name' },
-        { name: 'Company' },
-        { name: 'Gender' }
-    ];
-    @ViewChild(DatatableComponent) table: DatatableComponent;
-    @ViewChild('myTable') tableExp: any;
+  columns = [
+    {prop: 'name'},
+    {name: 'Company'},
+    {name: 'Gender'}
+  ];
+  columnsSort = [
+    {prop: 'name'},
+    {name: 'Company'},
+    {name: 'Gender'}
+  ];
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+  @ViewChild('myTable') tableExp: any;
 
-    constructor() {
+  constructor() {
 
-        this.fetch((data) => {
-            // cache our list
-            this.temp = _clone(data);
+    this.fetch((data) => {
+      // cache our list
+      this.temp = _clone(data);
 
-            this.rows = _clone(data);
-            this.rowsFilter = _clone(data);
-            this.rowsExp = _clone(data);
-            this.rowsSort = _clone(data);
-            this.rowsSel = _clone(data);
+      this.rows = _clone(data);
+      this.rowsFilter = _clone(data);
+      this.rowsExp = _clone(data);
+      this.rowsSort = _clone(data);
+      this.rowsSel = _clone(data);
 
-        });
+    });
 
-    }
+  }
 
-    onPage(event) {
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-            console.log('paged!', event);
-        }, 100);
-    }
-    toggleExpandRow(row) {
-        console.log('Toggled Expand Row!', row);
-        this.tableExp.rowDetail.toggleExpandRow(row);
-    }
+  onPage(event) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log('paged!', event);
+    }, 100);
+  }
 
-    onDetailToggle(event) {
-        console.log('Detail Toggled', event);
-    }
+  toggleExpandRow(row) {
+    console.log('Toggled Expand Row!', row);
+    this.tableExp.rowDetail.toggleExpandRow(row);
+  }
 
-    fetch(cb) {
-        const req = new XMLHttpRequest();
-        req.open('GET', `assets/company.json`);
+  onDetailToggle(event) {
+    console.log('Detail Toggled', event);
+  }
 
-        req.onload = () => {
-            cb(JSON.parse(req.response));
-        };
+  fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/company.json`);
 
-        req.send();
-    }
+    req.onload = () => {
+      cb(JSON.parse(req.response));
+    };
 
-    updateValue(event, cell, rowIndex) {
-        console.log('inline editing rowIndex', rowIndex)
-        this.editing[rowIndex + '-' + cell] = false;
-        this.rows[rowIndex][cell] = event.target.value;
-        this.rows = [...this.rows];
-        console.log('UPDATED!', this.rows[rowIndex][cell]);
-    }
+    req.send();
+  }
 
-    ngOnInit() {
+  updateValue(event, cell, rowIndex) {
+    console.log('inline editing rowIndex', rowIndex);
+    this.editing[rowIndex + '-' + cell] = false;
+    this.rows[rowIndex][cell] = event.target.value;
+    this.rows = [...this.rows];
+    console.log('UPDATED!', this.rows[rowIndex][cell]);
+  }
 
-    }
+  ngOnInit() {
 
-    updateFilter(event) {
-        const val = event.target.value.toLowerCase();
+  }
 
-        // filter our data
-        const temp = this.temp.filter(function(d) {
-            return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-        });
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
 
-        // update the rows
-        this.rowsFilter = temp;
-        // Whenever the filter changes, always go back to the first page
-        this.table.offset = 0;
-    }
+    // filter our data
+    const temp = this.temp.filter(function (d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
 
-    // Selection
+    // update the rows
+    this.rowsFilter = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
+
+  // Selection
 
 
-    onSelect({ selected }) {
-        console.log('Select Event', selected, this.selected);
+  onSelect({selected}) {
+    console.log('Select Event', selected, this.selected);
 
-        this.selected.splice(0, this.selected.length);
-        this.selected.push(...selected);
-    }
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
 
-    onActivate(event) {
-        console.log('Activate Event', event);
-    }
+  onActivate(event) {
+    console.log('Activate Event', event);
+  }
 
 }

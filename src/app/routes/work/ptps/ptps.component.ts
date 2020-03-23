@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
-import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi, InfiniteRowModelModule, Module } from '@ag-grid-community/all-modules';
-import { AllCommunityModules } from "@ag-grid-community/all-modules";
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {
+  GridOptions,
+  IDatasource,
+  IGetRowsParams,
+  GridApi,
+  InfiniteRowModelModule,
+  Module
+} from '@ag-grid-community/all-modules';
+import {AllCommunityModules} from '@ag-grid-community/all-modules';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
@@ -47,42 +54,42 @@ export class PtpsComponent implements OnInit {
             return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'STATUS',
         field: 'MET',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'CUST_NAME',
         field: 'CLIENT_NAME',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'PTPAMOUNT',
         field: 'PTPAMOUNT',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'PTPDATE',
         field: 'PTPDATE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'ACTIONDATE',
         field: 'ACTIONDATE',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'PAYMETHOD',
         field: 'PAYMETHOD',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'OWNER',
         field: 'OWNER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       }
     ];
     this.defaultColDef = {
@@ -113,7 +120,7 @@ export class PtpsComponent implements OnInit {
         fetch(environment.nodeapi + '/gridbrokenptps/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
-          headers: { 'Content-Type': 'application/json; charset=utf-8' }
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
         })
           .then(httpResponse => httpResponse.json())
           .then(response => {
@@ -128,9 +135,11 @@ export class PtpsComponent implements OnInit {
 
     params.api.setServerSideDatasource(datasource);
   }
+
   currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
+
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // console.log(this.model);

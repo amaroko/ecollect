@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {environment} from '../../../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
+import {NgxSpinnerService} from 'ngx-spinner';
+
 declare var $: any;
-import { GridOptions } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
+import {GridOptions} from '@ag-grid-community/all-modules';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-customersuspensions',
@@ -96,7 +97,7 @@ export class CustomerSuspensionsComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   public itemsDemands: Array<string> = ['demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40', 'Day30',
-  'prelistingremedial', 'overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
+    'prelistingremedial', 'overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
 
   model: any = {};
   dataList: any;
@@ -106,24 +107,24 @@ export class CustomerSuspensionsComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     http: HttpClient
-    ) {
-      this.gridOptions = <GridOptions>{
-        headerHeight: 40,
-        columnDefs: this.columnDefs,
-        rowData: null,
-        enableFilter: true,
-        rowSelection: 'single',
-        // onRowClicked: this.RowSelected,
-      };
+  ) {
+    this.gridOptions = <GridOptions>{
+      headerHeight: 40,
+      columnDefs: this.columnDefs,
+      rowData: null,
+      enableFilter: true,
+      rowSelection: 'single',
+      // onRowClicked: this.RowSelected,
+    };
 
-      http.get<any>(environment.api + '/api/customersuspensions').subscribe(resp => {
-        this.rowData1 = resp;
-      });
-    }
+    http.get<any>(environment.api + '/api/customersuspensions').subscribe(resp => {
+      this.rowData1 = resp;
+    });
+  }
 
-    onQuickFilterChanged($event) {
-      this.gridOptions.api.setQuickFilter($event.target.value);
-    }
+  onQuickFilterChanged($event) {
+    this.gridOptions.api.setQuickFilter($event.target.value);
+  }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -134,7 +135,9 @@ export class CustomerSuspensionsComponent implements OnInit {
   gridReady(params) {
     params.api.sizeColumnsToFit();
     this.$win.on(this.resizeEvent, () => {
-      setTimeout(() => { params.api.sizeColumnsToFit(); });
+      setTimeout(() => {
+        params.api.sizeColumnsToFit();
+      });
     });
   }
 
