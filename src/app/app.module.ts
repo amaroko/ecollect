@@ -19,7 +19,7 @@ import {license} from '../../env';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import '@ag-grid-enterprise/all-modules';
-// License goes here please.
+// License goes here please...
 import {LicenseManager} from '@ag-grid-enterprise/all-modules';
 
 LicenseManager.setLicenseKey(license.value);

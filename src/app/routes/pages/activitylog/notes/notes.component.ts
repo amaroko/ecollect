@@ -35,7 +35,11 @@ export class NotesComponent implements OnInit {
 
 
   noteData: any = [];
+  notesreason: any = {};
+  reason: any;
+  individualnotes: any = {};
   notes: any = [];
+  custnotes: any = {};
   username: string;
   bulknote: any = [];
   flaggedNotes: any = [];
@@ -193,6 +197,7 @@ export class NotesComponent implements OnInit {
     this.getbulknotes(this.cust);
     this.getNotes(this.cust);
     this.getflagged(this.cust);
+    this.getNotesReason(this.cust);
 
     this.model.noteselector = 'collector';
   }
@@ -216,9 +221,21 @@ export class NotesComponent implements OnInit {
       this.noteslength = data[0].TOTAL;
       if (data[0].TOTAL && data[0].TOTAL > 0) {
         this.download_disabled = false;
+        console.log(data);
       }
     });
   }
+
+  getNotesReason(cust) {
+    this.ecolService.getactivitylogreason(cust).subscribe(data => {
+      this.notesreason = data;
+      this.reason = data[0].reason;
+      console.log(this.reason);
+      console.log(this.custnotes);
+
+    });
+  }
+
 
   getAll(cust) {
     this.spinner.show();
@@ -228,6 +245,7 @@ export class NotesComponent implements OnInit {
     //
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
+      console.log(data);
 
       // enable notes download button
       if (data && data.length > 0) {
@@ -236,7 +254,7 @@ export class NotesComponent implements OnInit {
       // this.noteslength = data.length;
       for (let i = 0; i < data.length; i++) {
         // tslint:disable-next-line:max-line-length
-        if (this.notes[i].OWNER === this.username && (this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() === ((this.notes[i].NOTEDATE).substring(0, 9)).toUpperCase()) {
+        if (this.notes[i].OWNER === this.username && (this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() === (this.datePipe.transform(this.notes[i].NOTEDATE, 'dd-MMM-yy')).toUpperCase()) {
           this.notes[i].showedit = true;
         } else {
           this.notes[i].showedit = false;
@@ -251,6 +269,7 @@ export class NotesComponent implements OnInit {
       this.spinner.hide();
     }, err => {
       console.log(err);
+
     });
   }
 

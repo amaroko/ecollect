@@ -85,8 +85,10 @@ export class EditnoteComponent implements OnInit {
       notedate: this.note.notedate,
     };
     this.ecolService.updatenote(body).subscribe(data => {
+      console.log(body);
       swal('Successful!', 'Note updated!', 'success').then(function () {
         window.history.back();
+
       });
       //
     }, error => {

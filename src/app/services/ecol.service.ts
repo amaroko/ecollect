@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import swal from 'sweetalert2';
 import {Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
-import * as XLSX from "xlsx";
+import * as XLSX from 'xlsx';
 
 @Injectable({
   providedIn: 'root'
@@ -74,15 +74,20 @@ export class EcolService {
     return this.httpClient.get<any>(url);
   }
 
+  getcustnotes(cust) {
+    return this.httpClient.get<any>(environment.api + '/api/notehis?filter[where][custnumber]=' + cust);
+
+  }
+
   getbulknotes(cust) {
     // tslint:disable-next-line:max-line-length
-    const response = this.httpClient.get<any>(environment.api + '/api/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' + '&filter[order]=notedate DESC');
+    const response = this.httpClient.get<any>(environment.api + '/api/notehis?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' + '&filter[order]=notedate DESC');
     return forkJoin([response]);
   }
 
   getflaggednotes(cust) {
     // tslint:disable-next-line:max-line-length
-    const response = this.httpClient.get<any>(environment.api + '/api/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][noteimp]=Y' + '&filter[order]=notedate DESC');
+    const response = this.httpClient.get<any>(environment.api + '/api/notehis?filter[where][custnumber]=' + cust + '&filter[where][noteimp]=Y' + '&filter[order]=notedate DESC');
     return forkJoin([response]);
   }
 
@@ -131,6 +136,12 @@ export class EcolService {
     return this.httpClient.post(url, body);
   }
 
+
+  getactivitylogreason(cust) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/activitylogs?filter[where][custnumber]=' + cust);
+  }
+
   sptype(body) {
     const url = environment.api + '/api/sptypes';
     return this.httpClient.post(url, body);
@@ -144,6 +155,7 @@ export class EcolService {
   newdc(body) {
     return this.httpClient.post<any>(environment.api + '/api/tbldebtcollectors', body);
   }
+
   newyard(body) {
     return this.httpClient.post<any>(environment.api + '/api/tblyards', body);
   }
@@ -171,14 +183,14 @@ export class EcolService {
 
   public importFromFile(bstr: string): XLSX.AOA2SheetOpts {
     /* read workbook */
-    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+    const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
 
     /* grab first sheet */
     const wsname: string = wb.SheetNames[0];
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
     /* save data */
-    const data = (XLSX.utils.sheet_to_json(ws, { header: 1 })) as XLSX.AOA2SheetOpts;
+    const data = (XLSX.utils.sheet_to_json(ws, {header: 1})) as XLSX.AOA2SheetOpts;
 
     return data;
   }
@@ -886,7 +898,7 @@ export class EcolService {
     const blob = new Blob(['\ufeff' + csvData], {type: 'text/csv;charset=utf-8;'});
     const dwldLink = document.createElement('a');
     const url = URL.createObjectURL(blob);
-    const isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+    const isSafariBrowser = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
     if (isSafariBrowser) {  // if Safari open in new window to save file with random filename.
       dwldLink.setAttribute('target', '_blank');
     }
@@ -899,7 +911,7 @@ export class EcolService {
   }
 
   ConvertToCSV(objArray, headerList) {
-    const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     let row = 'S.No,';
     for (const index in headerList) {

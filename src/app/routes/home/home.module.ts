@@ -13,7 +13,7 @@ import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
-//
+///
 const routes: Routes = [
   {path: '', component: HomeComponent},
 ];

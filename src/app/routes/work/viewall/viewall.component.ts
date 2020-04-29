@@ -135,6 +135,7 @@ export class ViewallComponent implements OnInit {
           .then(httpResponse => httpResponse.json())
           .then(response => {
             params.successCallback(response.rows, response.lastRow);
+
           })
           .catch(error => {
             console.error(error);

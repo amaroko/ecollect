@@ -11,7 +11,7 @@ export const environment = {
   nodeapi: 'http://localhost:6001/nodeapi',
   grids: 'http://localhost:6002/grids',
   letters_api: 'http://localhost:8004/docx/',
-  letters_path: 'd:\\demands\\',
+  letters_path: 'C:\\Users\\CATE\\Documents\\letters',
   uploadurl: 'http://localhost:4000',
   demanddownload: 'http://localhost:3000',
   valor: 'http://localhost:3000/api/',

@@ -301,7 +301,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   buildForm() {
-    // get static data
+    // get static data..
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
       party: [{value: '', disabled: true}],
@@ -310,17 +310,17 @@ export class ActivityActionComponent implements OnInit {
       toemail: [{value: this.model.emailaddress, disabled: true}],
       ptpsms: [{value: '', disabled: true}],
       ptpsmsnumber: [{value: this.autodial_telnumber, disabled: true}],
-      ptp: [{value: 'No', disabled: true}],
+      ptp: [{value: null, disabled: true}],
       ptptype: [{value: '', disabled: true}],
-      ptpdate: [{value: this.currentDate, disabled: true}],
+      ptpdate: [{value: '', disabled: true}],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
-      reviewdate: [this.account.reviewdate],
-      reason: [this.account.excuse, Validators.required],
-      cmdstatus: [this.account.cmdstatus],
+      reviewdate: [''],
+      reason: [null, Validators.required],
+      cmdstatus: [null],
       flag: [false],
-      route: [this.account.routetostate],
-      paymode: [''],
-      rfdother: [{value: this.account.excuse_other, disabled: true}]
+      route: [null],
+      paymode: [{value: null, disabled: true}],
+      rfdother: [{value: null, disabled: true}, [Validators.required]]
     });
   }
 
@@ -382,6 +382,10 @@ export class ActivityActionComponent implements OnInit {
     if (this.f.flag.value) {
       this.savebody.noteimp = 'Y';
     }
+   // resolves the invalid date issue in db
+    if (moment(this.f.ptpdate.value).format('DD-MMM-YYYY') === 'Invalid date') {
+      this.savebody.ptpdate = '';
+    }
 
     if (this.f.ptpemail.value) {
       // send ptp reminder email
@@ -389,13 +393,14 @@ export class ActivityActionComponent implements OnInit {
         toemail: '',
         ccemail: this.username,
         ptpamount: 0,
-        ptpdate: 0
+        ptpdate: ''
       };
     }
 
 
     // add action
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
+      console.log(this.savebody);
       this.sendNotesData(this.custnumber);
       this.sendPtpsData(this.accnumber);
       // watch stream put watch_static
@@ -502,7 +507,7 @@ export class ActivityActionComponent implements OnInit {
   changeAction(value) {
     if (value === 'OC' || value === 'IC' || value === 'MET') {
       this.actionForm.controls.party.enable();
-      this.actionForm.controls.party.setValue('No Answer');
+      this.actionForm.controls.party.setValue(null);
     } else {
       this.actionForm.controls.party.disable();
       this.actionForm.controls.party.setValue(null);
@@ -512,9 +517,11 @@ export class ActivityActionComponent implements OnInit {
   changeParty(form) {
     if (form.party === 1 || form.party === 4 || form.party === 5) {
       this.actionForm.controls.ptp.enable();
+      // this.actionForm.controls.paymode.enable();
     } else {
       this.actionForm.controls.ptp.disable();
-      this.actionForm.controls.ptp.setValue('No');
+      // this.actionForm.controls.paymode.disable();
+      this.actionForm.controls.ptp.setValue(null);
     }
   }
 
@@ -536,7 +543,7 @@ export class ActivityActionComponent implements OnInit {
             title: 'Oops...',
             text: 'a/c already has a running promise to pay. Check under Promises to pay menu'
           }).then((result) => {
-            this.actionForm.controls.ptp.setValue('No');
+            this.actionForm.controls.ptp.setValue(null);
           });
         }
       });
@@ -546,12 +553,14 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.toemail.enable();
       this.actionForm.controls.ptpsms.enable();
       this.actionForm.controls.ptpsmsnumber.enable();
+      this.actionForm.controls.paymode.enable();
     } else {
       this.actionForm.controls.ptpamount.disable();
+      this.actionForm.controls.paymode.disable();
       this.actionForm.controls.ptpdate.disable();
       this.actionForm.controls.ptptype.disable();
       this.actionForm.controls.ptpamount.setValue(0);
-      this.actionForm.controls.ptpdate.setValue(Date());
+      this.actionForm.controls.ptpdate.setValue( '');
       this.actionForm.controls.ptptype.setValue('');
       this.actionForm.controls.ptpemail.setValue('');
       this.actionForm.controls.ptpemail.disable();
@@ -574,7 +583,7 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptpamount.disable();
       this.actionForm.controls.ptpdate.disable();
       this.actionForm.controls.ptpamount.setValue(0);
-      this.actionForm.controls.ptpdate.setValue(Date());
+      this.actionForm.controls.ptpdate.setValue('');
 
       this.openptpModal();
     }
