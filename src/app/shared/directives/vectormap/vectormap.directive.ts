@@ -1,4 +1,4 @@
-import {OnInit, Directive, Input, ElementRef, OnDestroy} from '@angular/core';
+import {Directive, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 
 declare var $: any;
 

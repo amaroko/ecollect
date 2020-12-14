@@ -9,21 +9,21 @@
 <div class="mb-3 clearfix">
   <div class="pull-let wd-md">
     <label>
-      <input *ngIf="config.filtering" placeholder="Filter all columns" [ngTableFiltering]="config.filtering"
-             class="form-control" (tableChanged)="onChangeTable(config)"/>
+      <input (tableChanged)="onChangeTable(config)" *ngIf="config.filtering" [ngTableFiltering]="config.filtering"
+             class="form-control" placeholder="Filter all columns"/>
     </label>
   </div>
 </div>
 <div class="card card-default">
   <div class="table-responsive">
-    <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows"
-              [columns]="columns"></ng-table>
+    <ng-table (cellClicked)="onCellClick($event)" (tableChanged)="onChangeTable(config)" [columns]="columns" [config]="config"
+              [rows]="rows"></ng-table>
   </div>
 </div>
 <div class="text-right">
-  <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length"
-              [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
-              (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+  <pagination (numPages)="numPages = $event" (pageChanged)="onChangeTable(config, $event)" *ngIf="config.paging" [(ngModel)]="page"
+              [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [rotate]="false"
+              [totalItems]="length" class="pagination-sm">
   </pagination>
 </div>
 <!-- <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre> -->

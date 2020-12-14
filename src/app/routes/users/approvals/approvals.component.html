@@ -5,36 +5,36 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-12">
-      <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)"
+      <form (submit)="submitForm($event, valForm.value)" [formGroup]="valForm" class="form-validate form-horizontal"
             novalidate="">
         <div class="checkbox c-checkbox">
           <label>
-            <input type="checkbox" formControlName="checkbox"/>
+            <input formControlName="checkbox" type="checkbox"/>
             <span class="fa fa-check"></span>Create user</label>
         </div>
         <div class="checkbox c-checkbox">
           <label>
-            <input type="checkbox" formControlName="checkbox"/>
+            <input formControlName="checkbox" type="checkbox"/>
             <span class="fa fa-check"></span>SMS template</label>
         </div>
         <div class="checkbox c-checkbox">
           <label>
-            <input type="checkbox" formControlName="checkbox"/>
+            <input formControlName="checkbox" type="checkbox"/>
             <span class="fa fa-check"></span>Email template</label>
         </div>
         <div class="checkbox c-checkbox">
           <label>
-            <input type="checkbox" formControlName="checkbox"/>
+            <input formControlName="checkbox" type="checkbox"/>
             <span class="fa fa-check"></span>Repossession</label>
         </div>
         <div class="checkbox c-checkbox">
           <label>
-            <input type="checkbox" formControlName="checkbox"/>
+            <input formControlName="checkbox" type="checkbox"/>
             <span class="fa fa-check"></span>Investigations</label>
         </div>
         <div class="checkbox c-checkbox">
           <label>
-            <input type="checkbox" formControlName="checkbox"/>
+            <input formControlName="checkbox" type="checkbox"/>
             <span class="fa fa-check"></span>Invoices</label>
         </div>
         <div class="text-center">

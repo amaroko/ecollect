@@ -1,28 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as _ from 'lodash';
-
 declare var $: any;
-import {environment} from '../../../../environments/environment';
-import {ExportWoffStoryService} from '../../../services/exportwoffstory.service';
-import {TreeNode, TREE_ACTIONS, KEYS, IActionMapping} from 'angular-tree-component';
+import { environment } from '../../../../environments/environment';
+import { ExportWoffStoryService } from '../../../services/exportwoffstory.service';
+// import { ExportProductsService } from '../../../services/exportproductsstory.service';
 
-const actionMapping: IActionMapping = {
-  mouse: {
-    contextMenu: (tree, node, $event) => {
-      $event.preventDefault();
-      alert(`context menu for ${node.data.name}`);
-    },
-    dblClick: TREE_ACTIONS.TOGGLE_EXPANDED,
-    click: (tree, node, $event) => {
-      $event.shiftKey
-        ? TREE_ACTIONS.TOGGLE_ACTIVE_MULTI(tree, node, $event)
-        : TREE_ACTIONS.TOGGLE_ACTIVE(tree, node, $event);
-    }
-  },
-  keys: {
-    [KEYS.ENTER]: (tree, node, $event) => alert(`This is ${node.data.name}`)
-  }
-};
+
 
 @Component({
   selector: 'app-allreports',
@@ -30,128 +13,204 @@ const actionMapping: IActionMapping = {
   styleUrls: ['./allreports.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class AllReportsComponent implements OnInit {
 
   report: string = null;
+  searchText: any;
 
-  nodes: any[] = null;
-
-  asyncChildren = [
+  reports = [
     {
-      name: 'child2.1',
-      subTitle: 'new and improved'
-    }, {
-      name: 'child2.2',
-      subTitle: 'new and improved2'
+      link: '/frameset?__report=collectoractivity_test2.rptdesign&__title=Activity Report',
+      name: ' Collector activity',
+      icon: 'fa fa-file fa-fw'
+    },
+    {
+      link: '/frameset?__report=collector_activity_raw.rptdesign&__title=Activity Report Raw',
+      name: ' Collector activity (Raw)',
+      icon: 'fa fa-file fa-fw'
+    },
+    {
+      link: '/frameset?__report=amountcollectedtest.rptdesign&__title=Amount Collected',
+      name: ' Amount Collected',
+      icon: 'fa fa-file fa-fw'
+    },
+    {
+      link: '/frameset?__report=sms.rptdesign&__title=SMS Sent Report',
+      name: ' SMS Report',
+      icon: 'fa fa-chart-pie fa-fw'
+    },
+    {
+      link: '/frameset?__report=notes.rptdesign&__title=Notes',
+      name: ' Daily Notes report',
+      icon: 'fa fa-chart-line fa-fw'
+    },
+    {
+      link: '/frameset?__report=bulk_notes.rptdesign&__title=Bulk Notes',
+      name: ' Bulk notes report',
+      icon: 'fa fa-chart-line fa-fw'
+    },
+    {
+      link: '/frameset?__report=unactioned.rptdesign&__title=Unactioned report - all Loans',
+      name: ' Unactioned report',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=unactionedcc.rptdesign&__title=Unactioned report - credit cards',
+      name: ' Unactioned report - credit cards',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=unactionedmcoopcash.rptdesign&__title=Unactioned Report Unactioned report - Ecredit',
+      name: ' Unactioned report - Ecredit',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=payingaccounts.rptdesign&__title=Unactioned report CMD',
+      name: ' Paying Accounts with History of Default',
+      icon: 'fa fa-chart-bar fa-fw'
+    }
+    ,
+    {
+      link: '/frameset?__report=portfoliomovt.rptdesign&__title=Portfolio Movement Report',
+      name: ' Portfolio movement',
+      icon: 'fa fa-file fa-fw'
+    },
+    {
+      link: '/frameset?__report=portfoliomovt_cc_test.rptdesign&__title=Portfolio Movement Report',
+      name: ' Portfolio movement Credit cards',
+      icon: 'far fa-newspaper'
+    },
+    {
+      link: '/frameset?__report=file_analysis_test.rptdesign&__title=Relegation Analysis',
+      name: ' Relegation Analysis',
+      icon: 'fa fa-chart-pie fa-fw'
+    },
+    {
+      link: '/frameset?__report=expiredindemnity.rptdesign&__title=Expired indemnity',
+      name: ' Service providers Expired Indemnity report',
+      icon: 'fa fa-chart-line fa-fw'
+    },
+    {
+      link: '/frameset?__report=summary_allocation_report.rptdesign&__title=Allocation Summary',
+      name: ' Allocation summary',
+      icon: 'fa fa-chart-bar fa-fw'
+    }
+
+    ,
+    {
+      link: '/frameset?__report=accountswithplan_details.rptdesign&__title=Allocation Summary',
+      name: ' Account plan report (Remedial)',
+      icon: 'far fa-sticky-note'
+    },
+    {
+      link: '/frameset?__report=demands.rptdesign&__title=Demand Letters Status Report - Loans',
+      name: ' Demand Letters Status Report - Loans',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=demandscc.rptdesign&__title=Demand Letters Status Report - Credit Cards',
+      name: ' Demand Letters Status Report - Cards',
+      icon: 'fa fa-box'
+    },
+    {
+      link: '/frameset?__report=utilization.rptdesign&__title=Daily Utilization Report',
+      name: ' E-Collect utilization Report',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=accplan_simple.rptdesign&__title=Account Plan Report - Simple',
+      name: ' Account plan Report - Simple',
+      icon: 'fa fa-box'
+    }
+    ,
+    {
+      link: '/frameset?__report=ptps.rptdesign&__title=Promises to Pay',
+      name: ' Promises to Pay',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=notes_for_customer.rptdesign&__title=Customer Notes Report',
+      name: ' Customer Notes Report',
+      icon: 'fa fa-box'
+    },
+    {
+      link: '/frameset?__report=remedial_offerings.rptdesign&__title=Remedial Report',
+      name: ' Remedial Offering Report',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=relegation_overdue.rptdesign&__title=Relegation Overdue Accounts Report',
+      name: ' Relegation Overdue Accounts Report',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=relegated.rptdesign&__title=Relegated accounts',
+      name: ' Relegated Accounts Report',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=repossessions.rptdesign&__title=Asset Finance Repossessions',
+      name: ' Asset Finance Repossessions',
+      icon: 'fa fa-chart-bar fa-fw'
+    },
+    {
+      link: '/frameset?__report=ipfcancellation.rptdesign&__title=IPF Cancellations',
+      name: ' IPF Cancellations',
+      icon: 'fa fa-chart-bar fa-fw'
     }
   ];
 
-  customTemplateStringOptions = {
-    // displayField: 'subTitle',
-    isExpandedField: 'expanded',
-    idField: 'uuid',
-    getChildren: this.getChildren.bind(this),
-    actionMapping,
-    allowDrag: true
-  };
+  filteredArray = [...this.reports];
+
 
   onEvent(msg) {
     console.log(msg);
   }
 
+  // public transform(value, keys: string, term: string) {
+  //
+  //     if (!term) return value;
+  //     return (value || []).filter(item => keys.split(',').some(key => item.hasOwnProperty(key) && new RegExp(term, 'gi').test(item[key])));
+  //
+  // }
+
   constructor(
-    private exportWoffstoryservice: ExportWoffStoryService
+    private exportWoffstoryservice: ExportWoffStoryService,
+    // private exportProductsService: ExportProductsService
   ) {
-    setTimeout(() => {
-      this.nodes = [
-        {
 
-          expanded: true,
-          name: 'Activity Reports',
-          subTitle: 'activity',
-          children: [
-            {
-              name: 'Collector activity',
-              subTitle: 'collector-activity',
-              hasChildren: false
-            }, {
 
-              name: 'Amount Collectes',
-              subTitle: 'a bad child',
-              hasChildren: false
-            }
-          ]
-        },
-        {
-          name: 'Portfolio Reports',
-          subTitle: 'the second root',
-          children: [
-            {
-              name: 'child2.1',
-              subTitle: 'new and improved',
-              hasChildren: false
-            }, {
-
-              name: 'child2.2',
-              subTitle: 'new and improved2',
-              children: [
-                {
-                  uuid: 1001,
-                  name: 'subsub',
-                  subTitle: 'subsub',
-                  hasChildren: false
-                }
-              ]
-            }
-          ]
-        },
-        {
-
-          name: 'asyncroot',
-          hasChildren: true
-        }
-      ];
-    }, 1);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  getChildren(node: any) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(this.asyncChildren.map((c) => {
-        return Object.assign({}, c, {
-          hasChildren: node.level < 5
-        });
-      })), 1000);
+  private filterArray() {
+    // Ensures  empty list.
+    if (!this.reports.length) {
+      this.filteredArray = [];
+      return;
+    }
+
+    // if no search is detected, the list remains in view.
+    if (!this.searchText) {
+      this.filteredArray = [...this.reports]; // keep your reports immutable
+      return;
+    }
+
+    const list = [...this.reports]; // keep list immutable
+    const properties = Object.keys(list[0]); // get list properties
+
+    // check all properties for each list and return data if matching to searchText
+    this.filteredArray =  list.filter((listdata) => {
+      return properties.find((property) => {
+        const valueString = listdata[property].toString().toLowerCase();
+        return valueString.includes(this.searchText.toLowerCase());
+      })
+        ? listdata
+        : null;
     });
-  }
 
-  addNode(tree) {
-    this.nodes[0].children.push({
-
-      name: 'a new child'
-    });
-    tree.treeModel.update();
-  }
-
-  childrenCount(node: TreeNode): string {
-    return node && node.children ? `(${node.children.length})` : '';
-  }
-
-  filterNodes(text, tree) {
-    tree.treeModel.filterNodes(text, true);
-  }
-
-  activateSubSub(tree) {
-    // tree.treeModel.getNodeBy((node) => node.data.name === 'subsub')
-    tree.treeModel.getNodeById(1001)
-      .setActiveAndVisible();
-  }
-
-  go($event) {
-    $event.stopPropagation();
-    alert('this method is on the app component');
   }
 
   onNavigate(reportname) {
@@ -179,5 +238,9 @@ export class AllReportsComponent implements OnInit {
   exportwoffstory() {
     this.exportWoffstoryservice.generateWoffstory();
   }
+
+  // exportproducts() {
+  //   this.exportProductsService.generateWoffstory();
+  // }
 
 }

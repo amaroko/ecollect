@@ -1,8 +1,8 @@
-<div class="item user-block" *ngIf="userBlockIsVisible()">
+<div *ngIf="userBlockIsVisible()" class="item user-block">
   <!-- User picture-->
   <div class="user-block-picture">
     <div class="user-block-status">
-      <img class="img-thumbnail rounded-circle" [src]="user.picture" alt="Avatar"/>
+      <img [src]="user.picture" alt="Avatar" class="img-thumbnail rounded-circle"/>
       <div class="circle bg-success circle-lg"></div>
     </div>
   </div>

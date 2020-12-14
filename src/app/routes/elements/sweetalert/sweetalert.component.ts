@@ -24,7 +24,7 @@ export class SweetalertComponent implements OnInit {
   }
 
   sweetalertDemo3() {
-    swal("Good job!", "You clicked the button!", "success");
+    swal('Good job!', 'You clicked the button!', 'success');
   }
 
   sweetalertDemo4() {
@@ -38,7 +38,7 @@ export class SweetalertComponent implements OnInit {
           text: 'Yes, delete it!',
           value: true,
           visible: true,
-          className: "bg-danger",
+          className: 'bg-danger',
           closeModal: true
         }
       }
@@ -57,14 +57,14 @@ export class SweetalertComponent implements OnInit {
           text: 'No, cancel plx!',
           value: null,
           visible: true,
-          className: "",
+          className: '',
           closeModal: false
         },
         confirm: {
           text: 'Yes, delete it!',
           value: true,
           visible: true,
-          className: "bg-danger",
+          className: 'bg-danger',
           closeModal: false
         }
       }

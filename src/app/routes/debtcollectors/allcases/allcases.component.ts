@@ -11,9 +11,9 @@ import swal from 'sweetalert2';
 import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
-    selector: 'app-allcases',
-    templateUrl: './allcases.component.html',
-    styleUrls: ['./allcases.component.scss']
+  selector: 'app-allcases',
+  templateUrl: './allcases.component.html',
+  styleUrls: ['./allcases.component.scss']
 })
 export class AllCasesComponent implements OnInit {
 
@@ -28,7 +28,6 @@ export class AllCasesComponent implements OnInit {
     {'STATUS': 'CLEARED'}
   ];
   public gridColumnApi;
-  private statusBar;
   public gridOptions: GridOptions;
   public columnDefs;
   public defaultColDef;
@@ -39,7 +38,6 @@ export class AllCasesComponent implements OnInit {
   public sortingOrder;
   assignDebtCollForm: FormGroup;
   updateDebtCollForm: FormGroup;
-  private str: string;
   customernumber: string;
   accountnumber: string;
   customername: string;
@@ -49,18 +47,18 @@ export class AllCasesComponent implements OnInit {
   userdata: any;
   user: any;
   checkrecall: any;
-
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
   searchText: string;
   model: any = {};
   pivotPanelShow = true;
-
   modules = AllModules;
+  private statusBar;
+  private str: string;
 
   constructor(public ngxSmartModalService: NgxSmartModalService,
-               public http: HttpClient, private formBuilder: FormBuilder, private ecolService: EcolService,
-              private spinner: NgxSpinnerService ) {
+              public http: HttpClient, private formBuilder: FormBuilder, private ecolService: EcolService,
+              private spinner: NgxSpinnerService) {
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.user = {
       picture: 'assets/img/user/coop.jpg',
@@ -114,7 +112,7 @@ export class AllCasesComponent implements OnInit {
 
 
     this.columnDefs = [
-      { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
       {
         field: 'ACCNUMBER',
         cellRenderer: function (params) {
@@ -124,92 +122,118 @@ export class AllCasesComponent implements OnInit {
             return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
-      { field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ASSIGNEDBY',
-        cellStyle: function(params) {
+      {field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {
+        field: 'ASSIGNEDBY',
+        cellStyle: function (params) {
           if (params.value === 'PENDING') {
             // if pending return red otherwise continue....
             return {color: 'white', backgroundColor: '#f05050'};
           } else {
             return null;
           }
-        }, filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'SERVICEPROVIDER',
-        cellStyle: function(params) {
+        }, filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
+      },
+      {
+        field: 'SERVICEPROVIDER',
+        cellStyle: function (params) {
           if (params.value === 'PENDING') {
             // if pending return red otherwise continue....
             return {color: 'white', backgroundColor: '#f05050'};
           } else {
             return null;
           }
-        }, filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+        }, filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
+      },
 
       // tslint:disable-next-line:max-line-length
-      { field: 'DATEOFINSTR',
-        cellStyle: function(params) {
+      {
+        field: 'DATEOFINSTR',
+        cellStyle: function (params) {
           if (params.value === 'PENDING') {
             // if pending return red otherwise continue....
             return {color: 'white', backgroundColor: '#f05050'};
           } else {
             return null;
           }
-        },  valueFormatter: this.dateFormatter, filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+        }, valueFormatter: this.dateFormatter, filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
+      },
       // tslint:disable-next-line:max-line-length
-      { field: 'FOLLOWUPDATE',
-        cellStyle: function(params) {
+      {
+        field: 'FOLLOWUPDATE',
+        cellStyle: function (params) {
           if (params.value === 'PENDING') {
             // if pending return red otherwise continue....
             return {color: 'white', backgroundColor: '#f05050'};
           } else {
             return null;
           }
-        }, valueFormatter: this.dateFormatter, filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'REMARKS',
-        cellStyle: function(params) {
+        }, valueFormatter: this.dateFormatter, filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
+      },
+      {
+        field: 'REMARKS',
+        cellStyle: function (params) {
           if (params.value === 'PENDING') {
             // if pending return red otherwise continue....
             return {color: 'white', backgroundColor: '#ff902b'};
           } else {
             return null;
           }
-        }, filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'STATUS',
-        cellStyle: function(params) {
+        }, filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
+      },
+      {
+        field: 'STATUS',
+        cellStyle: function (params) {
           if (params.value === 'PENDING') {
             // if pending return red otherwise continue....
             return {color: 'white', backgroundColor: '#ff902b'};
           } else {
             return null;
           }
-        }, filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+        }, filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
+      },
       // tslint:disable-next-line:max-line-length
-      { field: 'DATERECALLED', valueFormatter: this.dateFormatter,
-        cellStyle: function(params) {
+      {
+        field: 'DATERECALLED', valueFormatter: this.dateFormatter,
+        cellStyle: function (params) {
           if (params.value === 'PENDING') {
             // if pending return red otherwise continue....
             return {color: 'white', backgroundColor: '#ff902b'};
           } else {
             return null;
           }
-        },  filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+        }, filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
+      },
+      {field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
       // tslint:disable-next-line:max-line-length
       // { field: 'DATERECALLED', valueFormatter: this.dateFormatter, filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'LOANSETTLEMENTACC', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'FILENO', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ACCBALANCE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'CANCELCOMMENT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'REGION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'LOANSETTLEMENTACC', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'FILENO', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'ACCBALANCE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'CANCELCOMMENT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'REGION', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
       // tslint:disable-next-line:max-line-length
-      { field: 'STAGEDATE', filter: 'agTextColumnFilter', valueFormatter: this.dateFormatter, filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {
+        field: 'STAGEDATE',
+        filter: 'agTextColumnFilter',
+        valueFormatter: this.dateFormatter,
+        filterParams: {newRowsAction: 'keep'},
+        resizable: true
+      },
       // tslint:disable-next-line:max-line-length
-      { field: 'DATEINPUT', filter: 'agTextColumnFilter', valueFormatter: this.dateFormatter, filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'OWNER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'TOWN', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ADDRESS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {
+        field: 'DATEINPUT',
+        filter: 'agTextColumnFilter',
+        valueFormatter: this.dateFormatter,
+        filterParams: {newRowsAction: 'keep'},
+        resizable: true
+      },
+      {field: 'OWNER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'TOWN', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'ADDRESS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
 
     ];
     this.defaultColDef = {
@@ -223,7 +247,7 @@ export class AllCasesComponent implements OnInit {
       enablePivot: true,
       pivot: true
     };
-    this.sortingOrder = ['desc', 'asc', null ];
+    this.sortingOrder = ['desc', 'asc', null];
     this.defaultColDef = {
       width: 120,
       resizable: true,
@@ -252,7 +276,13 @@ export class AllCasesComponent implements OnInit {
     };
   }
 
+  get f() {
+    return this.assignDebtCollForm.controls;
+  }
 
+  get u() {
+    return this.updateDebtCollForm.controls;
+  }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -268,6 +298,7 @@ export class AllCasesComponent implements OnInit {
       console.log(party);
     });
   }
+
   // formats the dates
   dateFormatter(params) {
     if (moment(params.value).format('MM/DD/YYYY') === 'Invalid date') {
@@ -303,16 +334,8 @@ export class AllCasesComponent implements OnInit {
   }
 
   clickhere() {
-this.closedebtcollassignModal();
-this.openupdatedebtcollectmodal();
-  }
-
-  get f() {
-    return this.assignDebtCollForm.controls;
-  }
-
-  get u() {
-    return this.updateDebtCollForm.controls;
+    this.closedebtcollassignModal();
+    this.openupdatedebtcollectmodal();
   }
 
   onRowDoubleClicked(event: any) {
@@ -365,24 +388,22 @@ this.openupdatedebtcollectmodal();
     // this.editemailaddress = this.emailaddress;
     // this.editcontactperson = this.contactperson;
     //
-      this.ecolService.assigndebtcollector(body).subscribe(data => {
-        console.log(data);
-        this.closedebtcollassignModal();
-        this.refresh();
-        swal('Successful!', 'DebtCollector assigned!', 'success');
-        this.spinner.hide();
-        //
-      }, error => {
-        console.log(error);
-        console.log(body);
-        swal('Error!', 'Error occurred during processing!', 'error');
-        this.spinner.hide();
-      });
-
+    this.ecolService.assigndebtcollector(body).subscribe(data => {
+      console.log(data);
+      this.closedebtcollassignModal();
+      this.refresh();
+      swal('Successful!', 'DebtCollector assigned!', 'success');
+      this.spinner.hide();
+      //
+    }, error => {
+      console.log(error);
+      console.log(body);
+      swal('Error!', 'Error occurred during processing!', 'error');
+      this.spinner.hide();
+    });
 
 
   }
-
 
 
   onUpdateAccount() {
@@ -421,12 +442,7 @@ this.openupdatedebtcollectmodal();
     });
 
 
-
   }
-
-
-
-
 
 
   onEdit() {
@@ -473,7 +489,6 @@ this.openupdatedebtcollectmodal();
     });
 
 
-
   }
 
 
@@ -495,7 +510,6 @@ this.openupdatedebtcollectmodal();
     });
 
   }
-
 
 
   buildupdateForm() {

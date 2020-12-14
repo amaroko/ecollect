@@ -1,7 +1,7 @@
 <!-- START Mails-->
 <div class="card card-default">
   <div class="card-body">
-    <form role="form-horizontal" method="post">
+    <form method="post" role="form-horizontal">
       <div class="input-group mb-2">
         <div class="input-group-prepend text-sm">
           <span class="input-group-text">To:</span>
@@ -10,7 +10,7 @@
           <input class="form-control" type="text"/>
         </label>
       </div>
-      <div class="input-group mb-2" *ngIf="showCC">
+      <div *ngIf="showCC" class="input-group mb-2">
         <div class="input-group-prepend text-sm">
           <span class="input-group-text">CC:</span>
         </div>
@@ -18,7 +18,7 @@
           <input class="form-control" type="text"/>
         </label>
       </div>
-      <div class="input-group mb-2" *ngIf="showBCC">
+      <div *ngIf="showBCC" class="input-group mb-2">
         <div class="input-group-prepend text-sm">
           <span class="input-group-text">BCC:</span>
         </div>
@@ -39,16 +39,16 @@
         <div class="btn-group btn-group-sm mb-3">
           <div></div>
           <div class="ml-auto">
-            <button class="btn btn-secondary btn-xs" type="button" [ngClass]="{'active':showCC}"
-                    (click)="showCC = !showCC" href="#">CC
+            <button (click)="showCC = !showCC" [ngClass]="{'active':showCC}" class="btn btn-secondary btn-xs"
+                    href="#" type="button">CC
             </button>
-            <button class="btn btn-secondary btn-xs" type="button" [ngClass]="{'active':showBCC}"
-                    (click)="showBCC = !showBCC" href="#">BCC
+            <button (click)="showBCC = !showBCC" [ngClass]="{'active':showBCC}" class="btn btn-secondary btn-xs"
+                    href="#" type="button">BCC
             </button>
           </div>
         </div>
         <!-- END action buttons  -->
-        <div id="summernote" class="summernote">
+        <div class="summernote" id="summernote">
           <span>Rich text mail here..</span>
         </div>
         <br/>

@@ -64,12 +64,12 @@
       <tr>
         <td>
           <div class="d-flex">
-            <img class="mb-mail-avatar" [src]="mail.from?.avatar||''" alt="Mail Avatar"/>
+            <img [src]="mail.from?.avatar||''" alt="Mail Avatar" class="mb-mail-avatar"/>
             <div>
               <span>From:</span>
               <span class="mb-mail-from">{{mail.from?.name}} &lt;{{mail.from?.email}}&gt;</span>
               <p class="mb-mail-to-list">To:
-                <a href="#" title="mailto: {{to.email}}" *ngFor="let to of mail.to">{{to.name}}</a>
+                <a *ngFor="let to of mail.to" href="#" title="mailto: {{to.email}}">{{to.name}}</a>
               </p>
             </div>
             <div class="mb-mail-date ml-auto">{{mail.date}}</div>
@@ -78,7 +78,7 @@
             <h4>{{mail.subject}}</h4>
             <div [innerHTML]="mail.content"></div>
           </div>
-          <div class="mb-attachment" *ngIf="mail.attach?.length">
+          <div *ngIf="mail.attach?.length" class="mb-attachment">
             <p>
                                 <span>
                                     <em class="fa fa-paperclip fa-fw"></em>{{mail.attach?.length}} attachments —</span>
@@ -86,9 +86,9 @@
               <a href="#">View all images</a>
             </p>
             <ul class="list-inline">
-              <li class="list-inline-item" *ngFor="let att of mail.attach">
+              <li *ngFor="let att of mail.attach" class="list-inline-item">
                 <a href="{{att.url}}">
-                  <img class="thumb64 img-fluid img-thumbnail" [src]="att.url||''"/>
+                  <img [src]="att.url||''" class="thumb64 img-fluid img-thumbnail"/>
                 </a>
                 <p>{{att.name}}</p>
               </li>
@@ -96,7 +96,7 @@
           </div>
           <div class="d-flex mt-4">
             <a class="mr-2" href="#">
-              <img class="media-box-object rounded thumb32" alt="" [src]="settings.getUserSetting('picture')||''"/>
+              <img [src]="settings.getUserSetting('picture')||''" alt="" class="media-box-object rounded thumb32"/>
             </a>
             <label>
               <textarea class="form-control" placeholder="Reply here..."></textarea>

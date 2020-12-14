@@ -1,5 +1,6 @@
 <div>
-  <div class="table-responsive">
+  <button (click)="PtpsSteps()" class="btn btn-primary">SHOW ME STEPS</button>
+  <div id="ptptable" class="table-responsive">
     <table class="table table-hover table-bordered table-striped">
       <thead>
       <tr>
@@ -24,8 +25,8 @@
           <span class="badge badge-danger">{{p.met}}</span>
         </td>
         <td>{{p.amountreceived}}</td>
-        <td><span><button class="btn btn-link" *ngIf="p.showedit"
-                          (click)="openModal(p.id)">edit</button></span></td>
+        <td><span><button (click)="openModal(p.id)" *ngIf="p.showedit"
+                          class="btn btn-link">edit</button></span></td>
       </tr>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </tbody>
@@ -34,48 +35,48 @@
   </div>
 </div>
 
-<ngx-smart-modal [dismissable]="false" #myModal identifier="myModal">
+<ngx-smart-modal #myModal [dismissable]="false" identifier="myModal">
   <div class="modal-header">
     <h4 class="modal-title">ammend PTP</h4>
   </div>
   <div class="modal-body">
     <div class="col-md-12">
-      <form #ammendptpForm="ngForm" (ngSubmit)="ammendfunc(ammendptpForm)" novalidate autocomplete="off">
+      <form #ammendptpForm="ngForm" (ngSubmit)="ammendfunc(ammendptpForm)" autocomplete="off" novalidate>
         <div class="form-group">
           <label>id:</label>
           <label>
-            <input class="form-control" #id="ngModel" [(ngModel)]="ammendptp.id" name="id" placeholder="id"
-                   [ngClass]="{ 'is-invalid': id.errors }" disabled/>
+            <input #id="ngModel" [(ngModel)]="ammendptp.id" [ngClass]="{ 'is-invalid': id.errors }" class="form-control" disabled
+                   name="id" placeholder="id"/>
           </label>
         </div>
         <div class="form-group">
           <label>accnumber:</label>
           <label>
-            <input class="form-control" #accnumber="ngModel" [(ngModel)]="ammendptp.accnumber" name="accnumber"
-                   placeholder="accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" disabled/>
+            <input #accnumber="ngModel" [(ngModel)]="ammendptp.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" class="form-control"
+                   disabled name="accnumber" placeholder="accnumber"/>
           </label>
 
         </div>
         <div class="form-group">
           <label>Promise Amount:</label>
           <label>
-            <input class="form-control" #ptpamount="ngModel" [(ngModel)]="ammendptp.ptpamount" name="ptpamount"
-                   placeholder="ptp amount" [ngClass]="{ 'is-invalid': ptpamount.errors }" required/>
+            <input #ptpamount="ngModel" [(ngModel)]="ammendptp.ptpamount" [ngClass]="{ 'is-invalid': ptpamount.errors }" class="form-control"
+                   name="ptpamount" placeholder="ptp amount" required/>
           </label>
 
         </div>
         <div class="form-group">
           <label>Promise Date:</label>
           <div class="input-group">
-            <label for="ptpdate"></label><input class="form-control" placeholder="yyyy-mm-dd" name="ptpdate"
-                                                id="ptpdate"
-                                                [(ngModel)]="ammendptp.ptpdate" ngbDatepicker #d="ngbDatepicker"
-                                                [maxDate]="maxDate"
+            <label for="ptpdate"></label><input #d="ngbDatepicker" [(ngModel)]="ammendptp.ptpdate" [maxDate]="maxDate"
                                                 [minDate]="minDate"
+                                                class="form-control" id="ptpdate" name="ptpdate"
+                                                ngbDatepicker
+                                                placeholder="yyyy-mm-dd"
                                                 required>
             <div class="input-group-append">
               <div class="input-group-append">
-                <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i
+                <button (click)="d.toggle()" class="btn btn-outline-primary" type="button"><span><i
                   class="fa fa-calendar"></i>
                                     </span></button>
               </div>
@@ -85,16 +86,16 @@
         <div class="form-group">
           <label>comment:</label>
           <label>
-<textarea rows="2" class="form-control" #comment="ngModel" [(ngModel)]="ammendptp.comment" name="comment"
-          placeholder="comment" [ngClass]="{ 'is-invalid': comment.errors }" required></textarea>
+<textarea #comment="ngModel" [(ngModel)]="ammendptp.comment" [ngClass]="{ 'is-invalid': comment.errors }" class="form-control" name="comment"
+          placeholder="comment" required rows="2"></textarea>
           </label>
 
         </div>
         <div class="form-group">
           <label>owner:</label>
           <label>
-            <input class="form-control" #owner="ngModel" [(ngModel)]="ammendptp.owner" name="owner"
-                   placeholder="owner" [ngClass]="{ 'is-invalid': owner.errors }" disabled/>
+            <input #owner="ngModel" [(ngModel)]="ammendptp.owner" [ngClass]="{ 'is-invalid': owner.errors }" class="form-control"
+                   disabled name="owner" placeholder="owner"/>
           </label>
 
         </div>
@@ -106,7 +107,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="myModal.close()">Close</button>
+    <button (click)="myModal.close()" class="btn btn-outline-dark" type="button">Close</button>
   </div>
 
 </ngx-smart-modal>

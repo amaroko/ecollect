@@ -1,4 +1,4 @@
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {TranslatorService} from '../core/translator/translator.service';
 import {MenuService} from '../core/menu/menu.service';
@@ -7,6 +7,7 @@ import {PagesModule} from './pages/pages.module';
 
 import {menu} from './menu';
 import {routes} from './routes';
+
 
 @NgModule({
   imports: [

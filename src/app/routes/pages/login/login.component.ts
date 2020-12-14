@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingsService} from '../../../core/settings/settings.service';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
-import {CustomValidators} from 'ng2-validation';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EcolService} from '../../../services/ecol.service';
-import {getDefaultService} from 'selenium-webdriver/chrome';
 import {environment} from '../../../../environments/environment';
 
 const ADLOGIN = environment.adlogin;
@@ -77,7 +75,7 @@ export class LoginComponent implements OnInit {
         this.error = 'Error during login';
         this.loading = false;
       });
-    } else {
+    } else { // local ecollect
       this.getuser((value.username).toLowerCase(), value.password);
     }
   }

@@ -1,7 +1,17 @@
+const remindersno = JSON.parse(localStorage.getItem('remindersno')) || 0;
+
 const Home = {
   text: 'Home',
   link: '/home',
   icon: 'icon-home'
+};
+
+const Schedules = {
+  text: 'Reminders',
+  link: '/reminders/allreminders',
+  icon: 'icon-clock',
+  alert: remindersno,
+  label: 'badge badge-warning'
 };
 
 const Guarantors = {
@@ -16,22 +26,58 @@ const Manuals = {
   icon: 'icon-doc'
 };
 
+/*const Dashboard = {
+    text: 'Dashboard',
+    link: '/dashboard',
+    icon: 'icon-speedometer',
+    submenu: [
+        {
+            text: 'Dashboards',
+            link: '/reports/dashboards'
+        }
+    ]
+};*/
+
 const Dashboard = {
-  text: 'Dashboard',
-  link: '/dashboard',
-  icon: 'icon-speedometer',
-  submenu: [
-    {
-      text: 'Dashboards',
-      link: '/reports/dashboards'
-    }
-  ]
+  text: 'Dashboards',
+  link: '/reports/dashboards',
+  icon: 'icon-speedometer'
 };
 
 const Reports = {
   text: 'Reports',
   link: '/reports/allreports',
   icon: 'icon-graph'
+};
+
+const Relegate = {
+  text: 'Due for Relegation',
+  link: '/teamleader/accounts',
+  icon: 'icon-loop'
+};
+
+const Allocations = {
+  text: 'Account allocations',
+  link: '/allocations',
+  icon: 'icon-people',
+  submenu: [
+    {
+      text: 'Collection',
+      link: '/allocations/collections'
+    },
+    {
+      text: 'Remedial',
+      link: '/allocations/remedial'
+    },
+    {
+      text: 'Credit cards',
+      link: '/allocations/creditcards'
+    },
+    {
+      text: 'Pre Delq',
+      link: '/allocations/predelq'
+    }
+  ]
 };
 
 
@@ -240,7 +286,7 @@ const Work = {
 };
 
 const Work_cc = {
-  text: 'CreditCards Queue',
+  text: 'Credit Cards Queue',
   link: '/creditcards',
   icon: 'icon-credit-card',
   submenu: [
@@ -313,36 +359,32 @@ const serviceproviders = {
   icon: 'icon-drawer',
   submenu: [
     {
-        text: 'Debt Collectors',
-        link: '/debtcollectors/allcases'
+      text: 'Debt Collectors',
+      link: '/debtcollectors/allcases'
     },
     {
-        text: 'Marketers',
-        link: '/marketors/allcases'
+      text: 'Marketers',
+      link: '/marketors/allcases'
     },
     {
-        text: 'Auctioneers',
-        link: '/auctioneers/allcases'
+      text: 'Auctioneers',
+      link: '/auctioneers/allcases'
     },
     {
-        text: 'Repossessors',
-        link: '/repossessors/allcases'
+      text: 'Writeoffs',
+      link: '/writeoffs/allcases'
     },
     {
-        text: 'Investigators',
-        link: '/investigators/allcases'
+      text: 'Investigators',
+      link: '/investigators/allcases'
     },
     {
-        text: 'Valuers',
-        link: '/valuers/allcases'
+      text: 'Invoices',
+      link: '/invoices/allcases'
     },
     {
-      text: 'Yards',
-      link: '/yards/allcases'
-    },
-    {
-      text: 'Service Providers Portal',
-      link: '/spportal/portal'
+      text: 'Valuations',
+      link: '/valuers/allcases'
     }
   ]
 };
@@ -359,6 +401,26 @@ const mcoopcash = {
     {
       text: 'E-Credit All',
       link: '/mcoopcash/allecredit'
+    }
+  ]
+};
+
+const assetfinance = {
+  text: 'Asset Finance & IPF',
+  link: '/assetfinance',
+  icon: 'icon-layers',
+  submenu: [
+    {
+      text: 'Asset Finance',
+      link: '/assetfinance/assetf'
+    },
+    {
+      text: 'IPF',
+      link: '/assetfinance/ipf'
+    },
+    {
+      text: 'Insurance Companies',
+      link: '/configurations/insurance'
     }
   ]
 };
@@ -383,46 +445,6 @@ const Demandletters = {
   ]
 };
 
-const Allocations = {
-  text: 'Account allocations',
-  link: '/allocations',
-  icon: 'icon-people',
-  submenu: [
-    {
-      text: 'Collection',
-      link: '/allocations/collections'
-    },
-    {
-      text: 'Remedial',
-      link: '/allocations/remedial'
-    },
-    {
-      text: 'Credit cards',
-      link: '/allocations/creditcards'
-    },
-    {
-      text: 'Pre Delq',
-      link: '/allocations/predelq'
-    }
-  ]
-};
-
-const Predelq = {
-  text: 'Paying Watch',
-  link: '/payingwatch',
-  icon: 'icon-wallet',
-  submenu: [
-    {
-      text: 'No Credit buildup',
-      link: '/watch/nocredit'
-    },
-    {
-      text: 'Credit buildup',
-      link: '/watch/creditbuildup'
-    }
-  ]
-};
-
 const SMS = {
   text: 'SMS',
   link: '/configurations/sms',
@@ -438,7 +460,7 @@ const SP = {
 const INSURANCE = {
   text: 'Insurance Co',
   link: '/configurations/insurance',
-  icon: 'icon-docs'
+  icon: 'icon-grid'
 };
 
 const AccountPlans = {
@@ -490,6 +512,11 @@ const headingLetters = {
   heading: true
 };
 
+const headingRelegate = {
+  text: 'Team Leader',
+  heading: true
+};
+
 // user permissions
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -506,11 +533,13 @@ const user_mgmt_menu = [
 const collection_menu = [
   headingMain,
   Home,
+  Schedules,
   headingComponents,
   Work,
   Work_cc,
   // Predelq,
   mcoopcash,
+  assetfinance,
   serviceproviders,
   headingLetters,
   Letters,
@@ -524,6 +553,7 @@ const collection_menu = [
 const creditcards_menu = [
   headingMain,
   Home,
+  Schedules,
   headingComponents,
   Work_cc,
   Work,
@@ -542,11 +572,13 @@ const creditcards_menu = [
 const remedial_menu = [
   headingMain,
   Home,
+  Schedules,
   headingComponents,
   Remedial,
   Work_cc,
   // Predelq,
   mcoopcash,
+  assetfinance,
   serviceproviders,
   headingLetters,
   Letters,
@@ -560,24 +592,27 @@ const remedial_menu = [
 const teamleader_menu = [
   headingMain,
   Home,
+  Schedules,
   headingComponents,
   Work,
   Work_cc,
   // Predelq,
   mcoopcash,
+  assetfinance,
   serviceproviders,
   headingLetters,
   Letters,
   headingReports,
   Dashboard,
   Reports,
+  headingRelegate,
+  Relegate,
+  Allocations,
   headingConfigurations,
   Demandletters,
-  Allocations,
   SMS,
   AccountPlans,
   SP,
-  INSURANCE,
   headingDocumentations,
   Manuals
 ];

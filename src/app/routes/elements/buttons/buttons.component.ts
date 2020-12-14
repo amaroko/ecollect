@@ -8,23 +8,21 @@ import {Component, OnInit} from '@angular/core';
 export class ButtonsComponent implements OnInit {
 
 
-  constructor() {
-  }
-
   // buttons
   public singleModel = true;
   public radioModel = 'Middle';
   public checkModel: any = {left: false, middle: true, right: false};
-
   // pagination/pager
   public totalItems = 64;
   public currentPage = 4;
-
   public maxSize = 5;
   public bigTotalItems = 175;
   public bigCurrentPage = 1;
   smallnumPages;
   numPages;
+
+  constructor() {
+  }
 
   public setPage(pageNo: number): void {
     this.currentPage = pageNo;

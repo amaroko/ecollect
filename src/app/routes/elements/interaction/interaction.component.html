@@ -13,27 +13,27 @@
       <h4>Static arrays</h4>
       <pre class="card card-block card-header">Model: {{selected | json}}</pre>
       <label>
-        <input [(ngModel)]="selected" [typeahead]="states" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+        <input (typeaheadOnSelect)="typeaheadOnSelect($event)" [(ngModel)]="selected" [typeahead]="states"
                class="form-control">
       </label>
       <!-- Custom item template -->
-      <ng-template #customItemTemplate let-model="item" let-index="index">
+      <ng-template #customItemTemplate let-index="index" let-model="item">
         <span>This is: {{model | json}} Index: {{ index }}</span>
       </ng-template>
       <h4 class="mt-3">Custom item template</h4>
       <pre class="card card-block card-header">Model: {{customSelected | json}}</pre>
       <label>
-        <input [(ngModel)]="customSelected" [typeahead]="statesComplex" [typeaheadItemTemplate]="customItemTemplate"
-               [typeaheadOptionField]="'name'" (typeaheadOnSelect)="typeaheadOnSelect($event)" class="form-control">
+        <input (typeaheadOnSelect)="typeaheadOnSelect($event)" [(ngModel)]="customSelected" [typeaheadItemTemplate]="customItemTemplate"
+               [typeaheadOptionField]="'name'" [typeahead]="statesComplex" class="form-control">
       </label>
       <!-- Asynchronous results -->
       <h4 class="mt-3">Asynchronous results</h4>
       <pre class="card card-block card-header">Model: {{asyncSelected | json}}</pre>
       <label>
-        <input [(ngModel)]="asyncSelected" [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)"
-               (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
-               [typeaheadOptionsLimit]="7" [typeaheadOptionField]="'name'" placeholder="Locations loaded with timeout"
-               class="form-control">
+        <input (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+               [(ngModel)]="asyncSelected" [typeaheadOptionField]="'name'"
+               [typeaheadOptionsLimit]="7" [typeahead]="dataSource" class="form-control"
+               placeholder="Locations loaded with timeout">
       </label>
       <div *ngIf="typeaheadLoading===true">
         <i class="fas fa-sync" style=""></i>
@@ -46,9 +46,9 @@
       <pre class="card card-block card-header">Model: {{myForm.value.state | json}}</pre>
       <form [formGroup]="myForm">
         <label>
-          <input formControlName="state" [typeahead]="states" (typeaheadOnSelect)="typeaheadOnSelect($event)"
-                 [typeaheadOptionsLimit]="7" [typeaheadOptionField]="'name'" [typeaheadMinLength]="0"
-                 placeholder="Typeahead inside a form" class="form-control">
+          <input (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeaheadMinLength]="0" [typeaheadOptionField]="'name'"
+                 [typeaheadOptionsLimit]="7" [typeahead]="states" class="form-control"
+                 formControlName="state" placeholder="Typeahead inside a form">
         </label>
       </form>
     </div>
@@ -71,12 +71,12 @@
       <div class="col-xl-6">
         <p>Interval, in milliseconds:</p>
         <label>
-          <input class="form-control" type="number" [(ngModel)]="myInterval"/>
+          <input [(ngModel)]="myInterval" class="form-control" type="number"/>
         </label>
       </div>
       <div class="col-xl-6">
         <p>Add a slide with a random image</p>
-        <button class="btn btn-info" type="button" (click)="addSlide()">Add Slide</button>
+        <button (click)="addSlide()" class="btn btn-info" type="button">Add Slide</button>
       </div>
     </div>
   </div>

@@ -37,6 +37,7 @@ html {
   -ms-touch-action: manipulation;
   touch-action: manipulation;
   font-size: 16px; // force same font size acrros all device
+  zoom: 80%; // to make the screen more visible on small screen laptops ..13inch->
 }
 
 html,

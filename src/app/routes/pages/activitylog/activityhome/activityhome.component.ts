@@ -3,6 +3,7 @@ import {SettingsService} from '../../../../core/settings/settings.service';
 import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
 import {environment} from '../../../../../environments/environment';
+import * as introJs from 'intro.js/intro.js';
 
 const URL = environment.valor;
 
@@ -13,7 +14,7 @@ const URL = environment.valor;
   styleUrls: ['./activityhome.component.scss']
 })
 export class ActivityHomeComponent implements OnInit {
-
+  introJS = introJs();
   accnumber: string;
   custnumber: string;
   nationid: any;
@@ -33,6 +34,41 @@ export class ActivityHomeComponent implements OnInit {
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
               private ecolService: EcolService) {
+  }
+
+  activityHomeSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#step1',
+            intro: 'Here you will find all the information about the account; balances, arrears, branchcode, assisned RRO code etc'
+          },
+          {
+            element: '#step2',
+            intro: 'Here you will find  other accounts that the customer has with us'
+          },
+          {
+            element: '#step3',
+            intro: 'Here you will find all the information about the available collaterals held under this account'
+          },
+          {
+            element: '#step4',
+            intro: 'Here you will find info about if the account holder is mentioned as a director of a company with us'
+          },
+          {
+            element: '#step5',
+            intro: 'Here you will find the customers credit card details if available'
+          },
+          {
+            element: '#step6',
+            intro: 'Lastly, here you will find the accounts under same id number of the specified customer'
+          }
+        ],
+        hidePrev: true,
+        hideNext: false
+      })
+      .start();
   }
 
   ngOnInit() {

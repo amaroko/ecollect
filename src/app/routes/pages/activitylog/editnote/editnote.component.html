@@ -7,7 +7,7 @@
     <div class="col-md-12">
       <!-- START card-->
       <div class="card card-default">
-        <form [formGroup]="editnoteForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+        <form (ngSubmit)="onSubmit()" [formGroup]="editnoteForm" autocomplete="off" novalidate>
           <div class="card-body">
 
             <div class="row" style="padding-top: 20px">
@@ -17,8 +17,8 @@
               <div class="col-md-3">
                 <div class="col-md-12">
                   <label>
-                    <input type="number" class="form-control" formControlName="id"
-                           class="form-control">
+                    <input class="form-control" class="form-control" formControlName="id"
+                           type="number">
                   </label>
                 </div>
               </div>
@@ -31,8 +31,8 @@
               <div class="col-md-3">
                 <div class="col-md-12">
                   <label>
-                    <input type="text" class="form-control" formControlName="accnumber"
-                           class="form-control">
+                    <input class="form-control" class="form-control" formControlName="accnumber"
+                           type="text">
                   </label>
                 </div>
               </div>
@@ -42,8 +42,8 @@
               <div class="col-md-3">
                 <div class="col-md-12">
                   <label>
-                    <input type="text" class="form-control" formControlName="custnumber"
-                           class="form-control">
+                    <input class="form-control" class="form-control" formControlName="custnumber"
+                           type="text">
                   </label>
                 </div>
               </div>
@@ -55,9 +55,9 @@
               </div>
               <div class="col-md-3">
                 <div class="col-md-12">
-                  <label for="owner"></label><input type="text" class="form-control" formControlName="owner"
-                                                    name="owner" id="owner"
-                                                    class="form-control">
+                  <label for="owner"></label><input class="form-control" class="form-control" formControlName="owner"
+                                                    id="owner" name="owner"
+                                                    type="text">
                 </div>
               </div>
               <div class="col-md-3">
@@ -65,9 +65,9 @@
               </div>
               <div class="col-md-3">
                 <div class="col-md-12">
-                  <label for="notedate"></label><input type="text" class="form-control" formControlName="notedate"
-                                                       name="notedate" id="notedate"
-                                                       class="form-control">
+                  <label for="notedate"></label><input class="form-control" class="form-control" formControlName="notedate"
+                                                       id="notedate" name="notedate"
+                                                       type="text">
                 </div>
               </div>
             </div>
@@ -75,10 +75,10 @@
             <div class="row" style="padding-top: 20px">
               <div class="col-md-12">
                 <label for="nodemade">Collector note</label>
-                <label for="notemade"></label><textarea class="form-control" rows="5" id="notemade" name="notemade"
-                                                        name="notemade" class="form-control" formControlName="notemade"
-                                                        class="form-control"
-                                                        [ngClass]="{ 'is-invalid': f.notemade.errors }"></textarea>
+                <label for="notemade"></label><textarea [ngClass]="{ 'is-invalid': f.notemade.errors }" class="form-control" class="form-control" class="form-control"
+                                                        formControlName="notemade" id="notemade" name="notemade"
+                                                        name="notemade"
+                                                        rows="5"></textarea>
               </div>
 
             </div>
@@ -92,10 +92,10 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" [disabled]="editnoteForm.invalid" class="btn btn-sm btn-primary"><i
+            <button [disabled]="editnoteForm.invalid" class="btn btn-sm btn-primary" type="submit"><i
               class="fa fa-dot-circle-o"></i> Submit
             </button>
-            <button type="reset" class="btn btn-sm btn-danger" (click)="cancel()"><i class="fa fa-ban"></i>
+            <button (click)="cancel()" class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i>
               Cancel
             </button>
           </div>

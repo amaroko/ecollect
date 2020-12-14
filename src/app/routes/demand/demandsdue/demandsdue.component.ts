@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EcolService} from '../../../services/ecol.service';
-import {GridOptions, IDatasource, IGetRowsParams, GridApi} from '@ag-grid-community/all-modules';
+import {GridApi, GridOptions, IDatasource, IGetRowsParams} from '@ag-grid-community/all-modules';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import * as $ from 'jquery';
@@ -16,30 +16,15 @@ export class DemandsdueComponent implements OnInit {
   public radioModel: string;
   total: any = {};
   searchTotal: number;
-
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      headerHeight: 40,
-      pagination: true,
-      rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
-    };
-  }
-
   user = JSON.parse(localStorage.getItem('currentUser'));
-
   resizeEvent = 'resize.ag-grid';
   $win = $(window);
   new = true;
   username: string;
   searchText: string;
   noTotal: number;
-
   gridOptions: GridOptions;
   gridApi: GridApi;
-
   columnDefs = [
     {
       headerName: 'ACCNUMBER',
@@ -88,7 +73,6 @@ export class DemandsdueComponent implements OnInit {
     }
   ];
   rowData1: any;
-
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
       this.apiService(20, params.startRow).subscribe(response => {
@@ -103,6 +87,17 @@ export class DemandsdueComponent implements OnInit {
       });
     }
   };
+
+  constructor(private ecolService: EcolService, private http: HttpClient) {
+    this.gridOptions = <GridOptions>{
+      headerHeight: 40,
+      pagination: true,
+      rowSelection: 'single',
+      rowModelType: 'infinite',
+      cacheBlockSize: 20,
+      paginationPageSize: 20
+    };
+  }
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;

@@ -4,11 +4,11 @@
       <div class="card b">
         <div class="card-header bg-gray-lighter text-bold">Personal Settings</div>
         <div class="list-group">
-          <a href="#" class="list-group-item" (click)="settingActive=1" [ngClass]="{'active': (settingActive == 1)}">Profile</a>
-          <a href="#" class="list-group-item" (click)="settingActive=2" [ngClass]="{'active': (settingActive == 2)}">Account</a>
-          <a href="#" class="list-group-item" (click)="settingActive=3" [ngClass]="{'active': (settingActive == 3)}">Emails</a>
-          <a href="#" class="list-group-item" (click)="settingActive=4" [ngClass]="{'active': (settingActive == 4)}">Notifications</a>
-          <a href="#" class="list-group-item" (click)="settingActive=5" [ngClass]="{'active': (settingActive == 5)}">Applications</a>
+          <a (click)="settingActive=1" [ngClass]="{'active': (settingActive == 1)}" class="list-group-item" href="#">Profile</a>
+          <a (click)="settingActive=2" [ngClass]="{'active': (settingActive == 2)}" class="list-group-item" href="#">Account</a>
+          <a (click)="settingActive=3" [ngClass]="{'active': (settingActive == 3)}" class="list-group-item" href="#">Emails</a>
+          <a (click)="settingActive=4" [ngClass]="{'active': (settingActive == 4)}" class="list-group-item" href="#">Notifications</a>
+          <a (click)="settingActive=5" [ngClass]="{'active': (settingActive == 5)}" class="list-group-item" href="#">Applications</a>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
             <form action="">
               <div class="form-group">
                 <label>Picture</label>
-                <label for="image-input" class="file-upload">
+                <label class="file-upload" for="image-input">
                   <button class="btn btn-secondary">
                     <em class="fa fa-upload mr"></em> Upload new picture
                   </button>
@@ -134,7 +134,7 @@
                   <div class="form-group">
                     <div class="input-group">
                       <label>
-                        <input class="form-control" type="email" placeholder="email@server.com"/>
+                        <input class="form-control" placeholder="email@server.com" type="email"/>
                       </label>
                       <span class="input-group-btn">
                                                 <button class="btn btn-secondary" type="button">Add</button>
@@ -215,7 +215,7 @@
             </p>
             <div class="list-group">
               <div class="list-group-item d-flex align-items-center">
-                <img class="mr-2 img-fluid thumb48" src="assets/img/dummy.png" alt="App"/>
+                <img alt="App" class="mr-2 img-fluid thumb48" src="assets/img/dummy.png"/>
                 <div>
                   <p class="text-bold mb-0">Application #1</p>
                   <small>Ut turpis urna, tristique sed adipiscing nec, luctus quis leo.</small>
@@ -227,7 +227,7 @@
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
-                <img class="mr-2 img-fluid thumb48" src="assets/img/dummy.png" alt="App"/>
+                <img alt="App" class="mr-2 img-fluid thumb48" src="assets/img/dummy.png"/>
                 <div>
                   <p class="text-bold mb-0">Application #2</p>
                   <small>Ut turpis urna, tristique sed adipiscing nec, luctus quis leo.</small>
@@ -239,7 +239,7 @@
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
-                <img class="mr-2 img-fluid thumb48" src="assets/img/dummy.png" alt="App"/>
+                <img alt="App" class="mr-2 img-fluid thumb48" src="assets/img/dummy.png"/>
                 <div>
                   <p class="text-bold mb-0">Application #3</p>
                   <small>Ut turpis urna, tristique sed adipiscing nec, luctus quis leo.</small>

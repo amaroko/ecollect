@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import {TestBed, async, inject} from '@angular/core/testing';
-import {HeaderComponent} from './header.component';
+import {TestBed} from '@angular/core/testing';
 
 import {UserblockService} from '../sidebar/userblock/userblock.service';
 import {SettingsService} from '../../core/settings/settings.service';

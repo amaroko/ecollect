@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import * as _ from 'lodash';
 
 import {TableData} from './ng2-table-data';
 
@@ -12,12 +11,6 @@ import {TableData} from './ng2-table-data';
 export class DatatableComponent implements OnInit {
 
   public singleData;
-
-  constructor(public http: HttpClient) {
-    // ng2Table
-    this.length = this.ng2TableData.length;
-  }
-
   // ng2Table
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -38,15 +31,18 @@ export class DatatableComponent implements OnInit {
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
-
   public config: any = {
     paging: true,
     sorting: {columns: this.columns},
     filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered', 'mb-0', 'd-table-fixed']
   };
-
   public ng2TableData: Array<any> = TableData;
+
+  constructor(public http: HttpClient) {
+    // ng2Table
+    this.length = this.ng2TableData.length;
+  }
 
   public ngOnInit(): void {
     this.onChangeTable(this.config);

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DatatableComponent} from '@swimlane/ngx-datatable';
 
 const _clone = (d) => JSON.parse(JSON.stringify(d));

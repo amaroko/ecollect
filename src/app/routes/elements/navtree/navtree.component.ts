@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {TreeNode, TREE_ACTIONS, KEYS, IActionMapping} from 'angular-tree-component';
+import {IActionMapping, KEYS, TREE_ACTIONS, TreeNode} from 'angular-tree-component';
 
 const actionMapping: IActionMapping = {
   mouse: {
@@ -47,10 +47,6 @@ export class NavtreeComponent implements OnInit {
     actionMapping,
     allowDrag: true
   };
-
-  onEvent(msg) {
-    console.log(msg);
-  }
 
   constructor() {
     setTimeout(() => {
@@ -103,6 +99,10 @@ export class NavtreeComponent implements OnInit {
         }
       ];
     }, 1);
+  }
+
+  onEvent(msg) {
+    console.log(msg);
   }
 
   ngOnInit() {

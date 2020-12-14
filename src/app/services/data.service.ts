@@ -4,11 +4,9 @@ import {BehaviorSubject, Observable} from 'rxjs';
 @Injectable()
 export class DataService {
 
-  constructor() {
-  }
-
   public dataSubject = new BehaviorSubject<number>(0);
   public notesSubject = new BehaviorSubject<number>(0);
+  public reminderSubject = new BehaviorSubject<number>(0);
   public woffstorySubject = new BehaviorSubject<number>(0);
   public guarantorsSubject = new BehaviorSubject<number>(0);
   public contactsSubject = new BehaviorSubject<number>(0);
@@ -17,9 +15,17 @@ export class DataService {
   public telesSubject = new BehaviorSubject<number>(0);
   public ptpsSubject = new BehaviorSubject<number>(0);
   public timeSubject = new BehaviorSubject<number>(0);
+  public reminderalertsSubject = new BehaviorSubject<any>(0);
+
+  constructor() {
+  }
 
   getTestData(): Observable<any> {
     return this.dataSubject.asObservable();
+  }
+
+  getReminderalert(): Observable<any> {
+    return this.reminderalertsSubject.asObservable();
   }
 
   getTimeData(): Observable<any> {
@@ -28,6 +34,10 @@ export class DataService {
 
   getNotesData(): Observable<any> {
     return this.notesSubject.asObservable();
+  }
+
+  getReminderData(): Observable<any> {
+    return this.reminderSubject.asObservable();
   }
 
   getWoffstoryData(): Observable<any> {
@@ -66,12 +76,24 @@ export class DataService {
     this.notesSubject.next(dataToPush);
   }
 
+  pushReminderData(dataToPush: number): void {
+    this.reminderSubject.next(dataToPush);
+  }
+
+  pushReminderAlertData(dataToPush: any): void {
+    this.reminderalertsSubject.next(dataToPush);
+  }
+
   pushWoffstoryData(dataToPush: number): void {
     this.woffstorySubject.next(dataToPush);
   }
 
   pushContacts(dataToPush: number): void {
     this.contactsSubject.next(dataToPush);
+  }
+
+  pushReminder(dataToPush: number): void {
+    this.reminderSubject.next(dataToPush);
   }
 
   pushGuarantors(dataToPush: number): void {

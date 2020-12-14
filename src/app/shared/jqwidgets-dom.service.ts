@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  Injector,
-  EmbeddedViewRef,
-  ComponentFactoryResolver,
-  ApplicationRef
-} from '@angular/core';
+import {ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, Injector} from '@angular/core';
 
 @Injectable()
 export class JqxDomService {

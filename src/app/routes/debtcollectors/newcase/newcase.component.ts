@@ -17,10 +17,10 @@ const PARAMS = new HttpParams({
 });
 
 
-
 @Injectable()
 export class EcollectService {
   private rows: any;
+
   constructor(private http: HttpClient) {
   }
 
@@ -42,7 +42,7 @@ export class EcollectService {
 
 
 @Component({
-    selector: 'app-newcase',
+  selector: 'app-newcase',
   templateUrl: './newcase.component.html',
   providers: [EcollectService],
   styleUrls: ['./newcase.component.scss']
@@ -50,20 +50,7 @@ export class EcollectService {
 export class NewcaseComponent implements OnInit {
 
 
-  constructor(private _service: EcollectService, private ecolService: EcolService, public router: Router,
-  private spinner: NgxSpinnerService ) {
-    this.userdata = JSON.parse(localStorage.getItem('currentUser'));
-    this.user = {
-      picture: 'assets/img/user/coop.jpg',
-      username: this.userdata.USERNAME,
-      division: this.userdata.TEAM,
-      role: this.userdata.ROLE,
-      firstname: this.userdata.FIRSTNAME,
-      surname: this.userdata.SURNAME
-    };
-
-  }
-town = ['NAIROBI', 'KISUMU'];
+  town = ['NAIROBI', 'KISUMU'];
   searching = false;
   searchFailed = false;
   rows: [];
@@ -93,7 +80,21 @@ town = ['NAIROBI', 'KISUMU'];
   userdata: any = [];
   username: string;
 
-  search = (text$:  Observable<any>) =>
+  constructor(private _service: EcollectService, private ecolService: EcolService, public router: Router,
+              private spinner: NgxSpinnerService) {
+    this.userdata = JSON.parse(localStorage.getItem('currentUser'));
+    this.user = {
+      picture: 'assets/img/user/coop.jpg',
+      username: this.userdata.USERNAME,
+      division: this.userdata.TEAM,
+      role: this.userdata.ROLE,
+      firstname: this.userdata.FIRSTNAME,
+      surname: this.userdata.SURNAME
+    };
+
+  }
+
+  search = (text$: Observable<any>) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -107,7 +108,7 @@ town = ['NAIROBI', 'KISUMU'];
           }))
       ),
       tap(() => this.searching = false)
-    )
+    );
 
   ngOnInit() {
 
@@ -118,10 +119,10 @@ town = ['NAIROBI', 'KISUMU'];
   }
 
 // for the search input
-  inputFormatBandListValue(value: any)   {
+  inputFormatBandListValue(value: any) {
 
-    if (value.CLIENT_NAME ) {
-      return [ 'CUSTNUMBER=>' + value.CUSTNUMBER, 'ACCNUMBER=>' + value.ACCNUMBER, 'CLIENTNAME=>' +  value.CLIENT_NAME ];
+    if (value.CLIENT_NAME) {
+      return ['CUSTNUMBER=>' + value.CUSTNUMBER, 'ACCNUMBER=>' + value.ACCNUMBER, 'CLIENTNAME=>' + value.CLIENT_NAME];
     }
 
     return value;
@@ -130,9 +131,8 @@ town = ['NAIROBI', 'KISUMU'];
 
 // results format
   resultFormatBandListValue(value: any) {
-    return [value.CUSTNUMBER, value.ACCNUMBER, value.CLIENT_NAME ];
+    return [value.CUSTNUMBER, value.ACCNUMBER, value.CLIENT_NAME];
   }
-
 
 
   onSubmit(newcase) {
@@ -173,23 +173,23 @@ town = ['NAIROBI', 'KISUMU'];
 
   formBuilder() {
     this.newcase = new FormGroup({
-      'Search' : new FormControl(null),
-      'custnumber' : new FormControl(null, Validators.required),
-      'accountnumber' : new FormControl(null, Validators.required),
-      'customername' : new FormControl(null, Validators.required),
-      'accountbalance' : new FormControl(null, Validators.required),
-      'loansettlementacc' : new FormControl(null, Validators.required),
-      'filenumber' : new FormControl(null, Validators.required),
-      'arocode' : new FormControl(null, Validators.required),
-      'cancelcomment' : new FormControl(null, Validators.required),
-      'region' : new FormControl(null, Validators.required),
-      'stagedate' : new FormControl(null, Validators.required),
-      'dateinput' : new FormControl(null, Validators.required),
-      'owner' : new FormControl(null, Validators.required),
-      'town' : new FormControl('NAIROBI', Validators.required),
-      'address' : new FormControl(null, Validators.required),
-      'newstatus' : new FormControl(null, Validators.required),
-      'submittedby' : new FormControl({value: this.user.username, disabled: true} ),
+      'Search': new FormControl(null),
+      'custnumber': new FormControl(null, Validators.required),
+      'accountnumber': new FormControl(null, Validators.required),
+      'customername': new FormControl(null, Validators.required),
+      'accountbalance': new FormControl(null, Validators.required),
+      'loansettlementacc': new FormControl(null, Validators.required),
+      'filenumber': new FormControl(null, Validators.required),
+      'arocode': new FormControl(null, Validators.required),
+      'cancelcomment': new FormControl(null, Validators.required),
+      'region': new FormControl(null, Validators.required),
+      'stagedate': new FormControl(null, Validators.required),
+      'dateinput': new FormControl(null, Validators.required),
+      'owner': new FormControl(null, Validators.required),
+      'town': new FormControl('NAIROBI', Validators.required),
+      'address': new FormControl(null, Validators.required),
+      'newstatus': new FormControl(null, Validators.required),
+      'submittedby': new FormControl({value: this.user.username, disabled: true}),
     });
   }
 

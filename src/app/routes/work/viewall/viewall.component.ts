@@ -124,6 +124,7 @@ export class ViewallComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
 
     const datasource = {
+      // tslint:disable-next-line:no-shadowed-variable
       getRows(params) {
         // console.log(JSON.stringify(params.request, null, 1));
 

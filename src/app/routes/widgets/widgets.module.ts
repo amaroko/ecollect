@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AgmCoreModule} from '@agm/core';
 
 import {SharedModule} from '../../shared/shared.module';

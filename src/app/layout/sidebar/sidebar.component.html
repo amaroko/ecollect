@@ -1,6 +1,6 @@
 <!-- START Sidebar (left)-->
 <div class="aside-inner">
-  <nav class="sidebar" [class.show-scrollbar]="settings.getLayoutSetting('asideScrollbar')">
+  <nav [class.show-scrollbar]="settings.getLayoutSetting('asideScrollbar')" class="sidebar">
 
     <!-- START sidebar nav-->
     <ul class="sidebar-nav">
@@ -11,111 +11,113 @@
       </li>
       <!-- END user info-->
 
+
+
       <li *ngFor='let item of menuItems' [ngClass]="{'nav-heading': item.heading}" [routerLinkActive]="['active']">
         <!-- menu heading -->
         <span *ngIf="item.heading">{{(item.translate | translate) || item.text}}</span>
         <!-- external links -->
-        <a href *ngIf="!item.heading && !item.submenu && item.elink" [attr.target]="item.target"
-           [attr.href]="item.elink" title="{{item.text}}">
-          <span class="float-right" *ngIf="item.alert"
-                [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
-          <em class="{{item.icon}}" *ngIf="item.icon"></em>
+        <a *ngIf="!item.heading && !item.submenu && item.elink" [attr.href]="item.elink" [attr.target]="item.target"
+           href title="{{item.text}}">
+          <span *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'"
+                class="float-right">{{item.alert}}</span>
+          <em *ngIf="item.icon" class="{{item.icon}}"></em>
           <span>{{(item.translate | translate) || item.text}}</span>
         </a>
         <!-- single menu item -->
-        <a href *ngIf="!item.heading && !item.submenu && !item.elink" [routerLink]="item.link" [attr.route]="item.link"
-           title="{{item.text}}"
-           (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
-          <span class="float-right" *ngIf="item.alert"
-                [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
-          <em class="{{item.icon}}" *ngIf="item.icon"></em>
+        <a (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)" *ngIf="!item.heading && !item.submenu && !item.elink" [attr.route]="item.link"
+           [routerLink]="item.link"
+           href title="{{item.text}}">
+          <span *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'"
+                class="float-right">{{item.alert}}</span>
+          <em *ngIf="item.icon" class="{{item.icon}}"></em>
           <span>{{(item.translate | translate) || item.text}}</span>
         </a>
         <!-- has submenu -->
-        <a href *ngIf="!item.heading && item.submenu" title="{{item.text}}"
-           (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
-          <span class="float-right" *ngIf="item.alert"
-                [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
-          <em class="{{item.icon}}" *ngIf="item.icon"></em>
+        <a (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)" *ngIf="!item.heading && item.submenu"
+           href title="{{item.text}}">
+          <span *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'"
+                class="float-right">{{item.alert}}</span>
+          <em *ngIf="item.icon" class="{{item.icon}}"></em>
           <span>{{(item.translate | translate) || item.text}} </span> <em class="fa fa-angle-right"></em>
         </a>
         <!-- SUBLEVEL -->
-        <ul *ngIf="item.submenu" class="sidebar-nav sidebar-subnav" [routerLinkActive]="['opening']">
+        <ul *ngIf="item.submenu" [routerLinkActive]="['opening']" class="sidebar-nav sidebar-subnav">
           <li class="sidebar-subnav-header">{{(item.translate | translate) || item.text}}</li>
           <li *ngFor='let subitem of item.submenu' [routerLinkActive]="['active']">
             <!-- sublevel: external links -->
-            <a href *ngIf="!subitem.heading && !subitem.submenu && subitem.elink" [attr.target]="subitem.target"
-               [attr.href]="subitem.elink" title="{{subitem.text}}">
-              <span class="float-right" *ngIf="subitem.alert"
-                    [ngClass]="subitem.label || 'badge badge-success'">{{subitem.alert}}</span>
-              <em class="{{subitem.icon}}" *ngIf="subitem.icon"></em>
+            <a *ngIf="!subitem.heading && !subitem.submenu && subitem.elink" [attr.href]="subitem.elink" [attr.target]="subitem.target"
+               href title="{{subitem.text}}">
+              <span *ngIf="subitem.alert" [ngClass]="subitem.label || 'badge badge-success'"
+                    class="float-right">{{subitem.alert}}</span>
+              <em *ngIf="subitem.icon" class="{{subitem.icon}}"></em>
               <span>{{(subitem.translate | translate) || subitem.text}}</span>
             </a>
             <!-- sublevel: single menu item  -->
-            <a href *ngIf="!subitem.submenu && !subitem.elink" [routerLink]="subitem.link" [attr.route]="subitem.link"
+            <a *ngIf="!subitem.submenu && !subitem.elink" [attr.route]="subitem.link" [routerLink]="subitem.link" href
                title="{{subitem.text}}">
-              <span class="float-right" *ngIf="subitem.alert"
-                    [ngClass]="subitem.label || 'badge badge-success'">{{subitem.alert}}</span>
-              <em class="{{subitem.icon}}" *ngIf="subitem.icon"></em>
+              <span *ngIf="subitem.alert" [ngClass]="subitem.label || 'badge badge-success'"
+                    class="float-right">{{subitem.alert}}</span>
+              <em *ngIf="subitem.icon" class="{{subitem.icon}}"></em>
               <span>{{(subitem.translate | translate) || subitem.text}}</span>
             </a>
             <!-- sublevel: has submenu -->
-            <a href *ngIf="subitem.submenu" title="{{subitem.text}}"
-               (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
-              <span class="float-right" *ngIf="subitem.alert"
-                    [ngClass]="subitem.label || 'badge badge-success'">{{subitem.alert}}</span>
-              <em class="{{subitem.icon}}" *ngIf="subitem.icon"></em>
+            <a (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)" *ngIf="subitem.submenu"
+               href title="{{subitem.text}}">
+              <span *ngIf="subitem.alert" [ngClass]="subitem.label || 'badge badge-success'"
+                    class="float-right">{{subitem.alert}}</span>
+              <em *ngIf="subitem.icon" class="{{subitem.icon}}"></em>
               <span>{{(subitem.translate | translate) || subitem.text}}</span> <em
               class="fa fa-angle-right float-right"></em>
             </a>
             <!-- SUBLEVEL 2 -->
-            <ul *ngIf="subitem.submenu" class="sidebar-nav sidebar-subnav level2" [routerLinkActive]="['opening']">
+            <ul *ngIf="subitem.submenu" [routerLinkActive]="['opening']" class="sidebar-nav sidebar-subnav level2">
               <li *ngFor='let subitem2 of subitem.submenu' [routerLinkActive]="['active']">
                 <!-- sublevel 2: single menu item  -->
-                <a href *ngIf="!subitem2.submenu" [routerLink]="subitem2.link" [attr.route]="subitem2.link"
+                <a *ngIf="!subitem2.submenu" [attr.route]="subitem2.link" [routerLink]="subitem2.link" href
                    title="{{subitem2.text}}">
-                  <span class="float-right" *ngIf="subitem2.alert"
-                        [ngClass]="subitem2.label || 'badge badge-success'">{{subitem2.alert}}</span>
-                  <em class="{{subitem2.icon}}" *ngIf="subitem2.icon"></em>
+                  <span *ngIf="subitem2.alert" [ngClass]="subitem2.label || 'badge badge-success'"
+                        class="float-right">{{subitem2.alert}}</span>
+                  <em *ngIf="subitem2.icon" class="{{subitem2.icon}}"></em>
                   <span>{{(subitem2.translate | translate) || subitem2.text}}</span>
                 </a>
                 <!-- sublevel2: has submenu -->
-                <a href *ngIf="subitem2.submenu" title="{{subitem2.text}}"
-                   (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
-                  <span class="float-right" *ngIf="subitem2.alert"
-                        [ngClass]="subitem2.label || 'badge badge-success'">{{subitem2.alert}}</span>
-                  <em class="{{subitem2.icon}}" *ngIf="subitem2.icon"></em>
+                <a (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)" *ngIf="subitem2.submenu"
+                   href title="{{subitem2.text}}">
+                  <span *ngIf="subitem2.alert" [ngClass]="subitem2.label || 'badge badge-success'"
+                        class="float-right">{{subitem2.alert}}</span>
+                  <em *ngIf="subitem2.icon" class="{{subitem2.icon}}"></em>
                   <span>{{(subitem2.translate | translate) || subitem2.text}}</span>
                 </a>
                 <!-- SUBLEVEL 3 -->
-                <ul *ngIf="subitem2.submenu" class="sidebar-nav sidebar-subnav level3" [routerLinkActive]="['opening']">
+                <ul *ngIf="subitem2.submenu" [routerLinkActive]="['opening']" class="sidebar-nav sidebar-subnav level3">
                   <li *ngFor='let subitem3 of subitem2.submenu' [routerLinkActive]="['active']">
                     <!-- sublevel 2: single menu item  -->
-                    <a href *ngIf="!subitem3.submenu" [routerLink]="subitem3.link" [attr.route]="subitem3.link"
+                    <a *ngIf="!subitem3.submenu" [attr.route]="subitem3.link" [routerLink]="subitem3.link" href
                        title="{{subitem3.text}}">
-                      <span class="float-right" *ngIf="subitem3.alert"
-                            [ngClass]="subitem3.label || 'badge badge-success'">{{subitem3.alert}}</span>
-                      <em class="{{subitem3.icon}}" *ngIf="subitem3.icon"></em>
+                      <span *ngIf="subitem3.alert" [ngClass]="subitem3.label || 'badge badge-success'"
+                            class="float-right">{{subitem3.alert}}</span>
+                      <em *ngIf="subitem3.icon" class="{{subitem3.icon}}"></em>
                       <span>{{(subitem3.translate | translate) || subitem3.text}}</span>
                     </a>
                     <!-- sublevel3: has submenu -->
-                    <a href *ngIf="subitem3.submenu" title="{{subitem3.text}}"
-                       (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
-                      <span class="float-right" *ngIf="subitem3.alert"
-                            [ngClass]="subitem3.label || 'badge badge-success'">{{subitem3.alert}}</span>
-                      <em class="{{subitem3.icon}}" *ngIf="subitem3.icon"></em>
+                    <a (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)" *ngIf="subitem3.submenu"
+                       href title="{{subitem3.text}}">
+                      <span *ngIf="subitem3.alert" [ngClass]="subitem3.label || 'badge badge-success'"
+                            class="float-right">{{subitem3.alert}}</span>
+                      <em *ngIf="subitem3.icon" class="{{subitem3.icon}}"></em>
                       <span>{{(subitem3.translate | translate) || subitem3.text}}</span>
                     </a>
                     <!-- SUBLEVEL 4 -->
-                    <ul *ngIf="subitem3.submenu" class="sidebar-nav sidebar-subnav level3"
-                        [routerLinkActive]="['opening']">
+                    <ul *ngIf="subitem3.submenu" [routerLinkActive]="['opening']"
+                        class="sidebar-nav sidebar-subnav level3">
                       <li *ngFor='let subitem4 of subitem3.submenu' [routerLinkActive]="['active']">
                         <!-- sublevel 2: single menu item  -->
-                        <a href *ngIf="!subitem4.submenu" [routerLink]="subitem4.link" [attr.route]="subitem4.link"
+                        <a *ngIf="!subitem4.submenu" [attr.route]="subitem4.link" [routerLink]="subitem4.link" href
                            title="{{subitem4.text}}">
-                          <span class="float-right" *ngIf="subitem4.alert"
-                                [ngClass]="subitem4.label || 'badge badge-success'">{{subitem4.alert}}</span>
-                          <em class="{{subitem4.icon}}" *ngIf="subitem4.icon"></em>
+                          <span *ngIf="subitem4.alert" [ngClass]="subitem4.label || 'badge badge-success'"
+                                class="float-right">{{subitem4.alert}}</span>
+                          <em *ngIf="subitem4.icon" class="{{subitem4.icon}}"></em>
                           <span>{{(subitem4.translate | translate) || subitem4.text}}</span>
                         </a>
                       </li>

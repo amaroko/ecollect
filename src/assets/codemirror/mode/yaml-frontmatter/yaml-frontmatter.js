@@ -10,14 +10,14 @@
     mod(CodeMirror)
 })(function (CodeMirror) {
 
-    const START = 0, FRONTMATTER = 1, BODY = 2;
+  const START = 0, FRONTMATTER = 1, BODY = 2;
 
-    // a mixed mode for Markdown text with an optional YAML front matter
+  // a mixed mode for Markdown text with an optional YAML front matter
   CodeMirror.defineMode("yaml-frontmatter", function (config, parserConfig) {
-      const yamlMode = CodeMirror.getMode(config, "yaml");
-      const innerMode = CodeMirror.getMode(config, parserConfig && parserConfig.base || "gfm");
+    const yamlMode = CodeMirror.getMode(config, "yaml");
+    const innerMode = CodeMirror.getMode(config, parserConfig && parserConfig.base || "gfm");
 
-      function curMode(state) {
+    function curMode(state) {
       return state.state == BODY ? innerMode : yamlMode
     }
 
@@ -45,9 +45,9 @@
             return innerMode.token(stream, state.inner)
           }
         } else if (state.state == FRONTMATTER) {
-            const end = stream.sol() && stream.match(/---/, false);
-            const style = yamlMode.token(stream, state.inner);
-            if (end) {
+          const end = stream.sol() && stream.match(/---/, false);
+          const style = yamlMode.token(stream, state.inner);
+          if (end) {
             state.state = BODY;
             state.inner = CodeMirror.startState(innerMode)
           }
@@ -60,8 +60,8 @@
         return {mode: curMode(state), state: state.inner}
       },
       blankLine: function (state) {
-          const mode = curMode(state);
-          if (mode.blankLine) return mode.blankLine(state.inner)
+        const mode = curMode(state);
+        if (mode.blankLine) return mode.blankLine(state.inner)
       }
     }
   })

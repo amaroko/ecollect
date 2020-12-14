@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-
-declare var $: any;
 import {environment} from '../../../../environments/environment';
 import {EcolService} from '../../../services/ecol.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-home',

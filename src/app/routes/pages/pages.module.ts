@@ -1,12 +1,11 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxSelectModule} from 'ngx-select-ex';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 import {DataService} from '../../services/data.service';
-import {CustomFormsModule} from 'ng2-validation';
 import {BsDatepickerModule} from 'ngx-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
 
@@ -41,7 +40,7 @@ import {PtpsComponent} from './activitylog/ptps/ptps.component';
 import {WriteoffstoryComponent} from './activitylog/writeoffstory/writeoffstory.component';
 import {NgxSmartModalModule} from 'ngx-smart-modal';
 import {DatePipe} from '@angular/common';
-import {AgGridModule} from "@ag-grid-community/angular";
+import {AgGridModule} from '@ag-grid-community/angular';
 
 
 /* Use this routes definition in case you want to make them lazy-loaded */

@@ -1,16 +1,15 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {SettingsService} from '../../../../core/settings/settings.service';
 import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {saveAs} from 'file-saver';
 import {environment} from '../../../../../environments/environment';
-import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {HttpClient, HttpEventType} from '@angular/common/http';
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
+import {HttpEventType} from '@angular/common/http';
 import * as XLSX from 'xlsx';
-import {ViewChild} from '@angular/core';
 import {DataService} from '../../../../services/data.service';
-
+import * as introJs from 'intro.js/intro.js';
 const URL = environment.xlsuploadapi;
 
 @Component({
@@ -19,6 +18,7 @@ const URL = environment.xlsuploadapi;
   styleUrls: ['./bulknotes.component.scss']
 })
 export class BulknotesComponent implements OnInit {
+  introJS = introJs();
   custnumber;
   accnumber;
   username: string;
@@ -33,14 +33,6 @@ export class BulknotesComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
 
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
@@ -61,6 +53,38 @@ export class BulknotesComponent implements OnInit {
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
 
   }
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
+  }
+
+
+  BulknotesSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#template',
+            intro: 'Pressing this button will download, the template that is required to use to upload ' +
+              'notes'
+          },
+          {
+            element: '#input',
+            intro: 'Select here to choose your file and upload it to the server'
+          }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
 
   ngOnInit() {
     // check if logged in
@@ -132,11 +156,6 @@ export class BulknotesComponent implements OnInit {
       swal('Error!', ' Cannot download template  file!', 'error');
     });
   }
-
-
-
-
-
 
 
   // xls to json

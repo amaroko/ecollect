@@ -3,14 +3,14 @@
     <ng-template tabHeading>
       <em class="icon-equalizer fa-lg"></em>
     </ng-template>
-    <h3 class="text-center text-thin mt-4" [innerHTML]="'offsidebar.setting.SETTINGS' | translate"></h3>
+    <h3 [innerHTML]="'offsidebar.setting.SETTINGS' | translate" class="text-center text-thin mt-4"></h3>
     <div class="p-2">
       <h4 class="text-muted text-thin">Themes</h4>
       <div class="row row-flush mb-2">
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="A"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -24,7 +24,7 @@
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="B"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -38,7 +38,7 @@
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="C"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -52,7 +52,7 @@
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="D"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -68,7 +68,7 @@
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="E"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -82,7 +82,7 @@
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="F"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -96,7 +96,7 @@
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="G"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -110,7 +110,7 @@
         <div class="col mb-2">
           <div class="setting-color">
             <label>
-              <input type="radio" name="setting-theme" [(ngModel)]="currentTheme" (ngModelChange)="setTheme()"
+              <input (ngModelChange)="setTheme()" [(ngModel)]="currentTheme" name="setting-theme" type="radio"
                      value="H"/>
               <span class="icon-check"></span>
               <span class="split">
@@ -129,9 +129,9 @@
         <p class="float-left">Fixed</p>
         <div class="float-right">
           <label class="switch">
-            <input type="checkbox"
+            <input (ngModelChange)="settings.setLayoutSetting('isFixed', $event)"
                    [ngModel]="settings.getLayoutSetting('isFixed')"
-                   (ngModelChange)="settings.setLayoutSetting('isFixed', $event)"/>
+                   type="checkbox"/>
             <span></span>
           </label>
         </div>
@@ -140,9 +140,9 @@
         <p class="float-left">Boxed</p>
         <div class="float-right">
           <label class="switch">
-            <input type="checkbox"
+            <input (ngModelChange)="settings.setLayoutSetting('isBoxed', $event)"
                    [ngModel]="settings.getLayoutSetting('isBoxed')"
-                   (ngModelChange)="settings.setLayoutSetting('isBoxed', $event)"/>
+                   type="checkbox"/>
             <span></span>
           </label>
         </div>
@@ -159,16 +159,16 @@
 </div>
 -->
     </div>
-    <div class="p-2" *ngIf="!settings.getLayoutSetting('horizontal')">
+    <div *ngIf="!settings.getLayoutSetting('horizontal')" class="p-2">
       <h4 class="text-muted text-thin">Aside</h4>
       <div class="clearfix">
         <p class="float-left">Collapsed</p>
         <div class="float-right">
           <label class="switch">
-            <input type="checkbox"
+            <input (ngModelChange)="settings.setLayoutSetting('isCollapsed', $event)"
+                   [disabled]="settings.getLayoutSetting('isCollapsedText')"
                    [ngModel]="settings.getLayoutSetting('isCollapsed')"
-                   (ngModelChange)="settings.setLayoutSetting('isCollapsed', $event)"
-                   [disabled]="settings.getLayoutSetting('isCollapsedText')"/>
+                   type="checkbox"/>
             <span></span>
           </label>
         </div>
@@ -177,10 +177,10 @@
         <p class="float-left">Collapsed Text</p>
         <div class="float-right">
           <label class="switch">
-            <input type="checkbox"
+            <input (ngModelChange)="settings.setLayoutSetting('isCollapsedText', $event)"
+                   [disabled]="settings.getLayoutSetting('isCollapsed')"
                    [ngModel]="settings.getLayoutSetting('isCollapsedText')"
-                   (ngModelChange)="settings.setLayoutSetting('isCollapsedText', $event)"
-                   [disabled]="settings.getLayoutSetting('isCollapsed')"/>
+                   type="checkbox"/>
             <span></span>
           </label>
         </div>
@@ -189,9 +189,9 @@
         <p class="float-left">Float</p>
         <div class="float-right">
           <label class="switch">
-            <input type="checkbox"
+            <input (ngModelChange)="settings.setLayoutSetting('isFloat', $event)"
                    [ngModel]="settings.getLayoutSetting('isFloat')"
-                   (ngModelChange)="settings.setLayoutSetting('isFloat', $event)"/>
+                   type="checkbox"/>
             <span></span>
           </label>
         </div>
@@ -200,9 +200,9 @@
         <p class="float-left">Hover</p>
         <div class="float-right">
           <label class="switch">
-            <input type="checkbox"
+            <input (ngModelChange)="settings.setLayoutSetting('asideHover', $event)"
                    [ngModel]="settings.getLayoutSetting('asideHover')"
-                   (ngModelChange)="settings.setLayoutSetting('asideHover', $event)"/>
+                   type="checkbox"/>
             <span></span>
           </label>
         </div>
@@ -211,9 +211,9 @@
         <p class="float-left">Show Scrollbar</p>
         <div class="float-right">
           <label class="switch">
-            <input type="checkbox"
+            <input (ngModelChange)="settings.setLayoutSetting('asideScrollbar', $event)"
                    [ngModel]="settings.getLayoutSetting('asideScrollbar')"
-                   (ngModelChange)="settings.setLayoutSetting('asideScrollbar', $event)"/>
+                   type="checkbox"/>
             <span></span>
           </label>
         </div>
@@ -222,8 +222,8 @@
     <div class="p-2">
       <h4 class="text-muted text-thin">Language</h4>
       <label>
-        <select class="form-control" [ngModel]="selectedLanguage" (ngModelChange)="setLang($event)">
-          <option [value]="lang.code" *ngFor="let lang of getLangs()">{{lang.text}}</option>
+        <select (ngModelChange)="setLang($event)" [ngModel]="selectedLanguage" class="form-control">
+          <option *ngFor="let lang of getLangs()" [value]="lang.code">{{lang.text}}</option>
         </select>
       </label>
     </div>
@@ -243,7 +243,7 @@
            style="min-height: 500px; max-height: 500px; overflow-y: auto; width: 100%">
         <div class="list-group-item list-group-item-action border-0">
           <div class="media">
-            <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user.png" alt="Image">
+            <img alt="Image" class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user.png">
             <div class="media-body text-truncate">
               <a href="#">
                 <strong>Juan Sims</strong>

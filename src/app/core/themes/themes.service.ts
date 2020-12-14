@@ -25,14 +25,6 @@ export class ThemesService {
     this.setTheme(this.show);
   }
 
-  private createStyle() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    this.styleTag = document.createElement('style');
-    this.styleTag.type = 'text/css';
-    this.styleTag.id = 'appthemes';
-    head.appendChild(this.styleTag);
-  }
-
   setTheme(name) {
     switch (name) {
       case 'A':
@@ -68,6 +60,14 @@ export class ThemesService {
 
   getDefaultTheme() {
     return this.defaultTheme;
+  }
+
+  private createStyle() {
+    const head = document.head || document.getElementsByTagName('head')[0];
+    this.styleTag = document.createElement('style');
+    this.styleTag.type = 'text/css';
+    this.styleTag.id = 'appthemes';
+    head.appendChild(this.styleTag);
   }
 
 }

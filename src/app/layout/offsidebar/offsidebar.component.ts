@@ -1,10 +1,9 @@
-import {Component, OnInit, OnDestroy, ElementRef} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 
 import {SettingsService} from '../../core/settings/settings.service';
 import {ThemesService} from '../../core/themes/themes.service';
 import {TranslatorService} from '../../core/translator/translator.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {CustomValidators} from 'ng2-validation';
+import {Router} from '@angular/router';
 import {EcolService} from '../../services/ecol.service';
 import swal from 'sweetalert2';
 

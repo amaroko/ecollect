@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
-import {TestBed, async, inject} from '@angular/core/testing';
+import {async, inject, TestBed} from '@angular/core/testing';
 import {SidebarComponent} from './sidebar.component';
-import {RouterModule, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 import {MenuService} from '../../core/menu/menu.service';
 import {SettingsService} from '../../core/settings/settings.service';

@@ -1,14 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SettingsService} from '../../../../core/settings/settings.service';
 import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
-import {environment} from '../../../../../environments/environment';
-import {NgbActiveModal, NgbModal, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgxSmartModalService} from 'ngx-smart-modal';
 import * as moment from 'moment';
 import swal from 'sweetalert2';
 import {DatePipe} from '@angular/common';
-
+import * as introJs from 'intro.js/intro.js';
 @Component({
   selector: 'app-ptps',
   templateUrl: './ptps.component.html',
@@ -16,7 +15,7 @@ import {DatePipe} from '@angular/common';
   providers: [{provide: NgbModal, useClass: NgbActiveModal}, DatePipe]
 })
 export class PtpsComponent implements OnInit {
-
+  introJS = introJs();
   accnumber: string;
   custnumber: string;
   username: string;
@@ -52,6 +51,25 @@ export class PtpsComponent implements OnInit {
     // this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
 
   }
+
+  PtpsSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#ptptable',
+            intro: 'Here, you will find a list of the available Promises to Pay for this account'
+          }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
+
 
   ngOnInit() {
     // check if logged in

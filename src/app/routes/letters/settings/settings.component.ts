@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import {environment} from '../../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 import {NgxSpinnerService} from 'ngx-spinner';
 

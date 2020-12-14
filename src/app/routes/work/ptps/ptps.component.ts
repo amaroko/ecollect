@@ -1,16 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EcolService} from '../../../services/ecol.service';
 import {environment} from '../../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {
-  GridOptions,
-  IDatasource,
-  IGetRowsParams,
-  GridApi,
-  InfiniteRowModelModule,
-  Module
-} from '@ag-grid-community/all-modules';
-import {AllCommunityModules} from '@ag-grid-community/all-modules';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({

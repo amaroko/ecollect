@@ -3,7 +3,7 @@
 
 // Modelica support for CodeMirror, copyright (c) by Lennart Ochel
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
@@ -12,30 +12,30 @@
     mod(CodeMirror);
 })
 
-(function(CodeMirror) {
+(function (CodeMirror) {
   "use strict";
 
-  CodeMirror.defineMode("modelica", function(config, parserConfig) {
+  CodeMirror.defineMode("modelica", function (config, parserConfig) {
 
-      const indentUnit = config.indentUnit;
-      const keywords = parserConfig.keywords || {};
-      const builtin = parserConfig.builtin || {};
-      const atoms = parserConfig.atoms || {};
+    const indentUnit = config.indentUnit;
+    const keywords = parserConfig.keywords || {};
+    const builtin = parserConfig.builtin || {};
+    const atoms = parserConfig.atoms || {};
 
-      const isSingleOperatorChar = /[;=\(:\),{}.*<>+\-\/^\[\]]/;
-      const isDoubleOperatorChar = /(:=|<=|>=|==|<>|\.\+|\.\-|\.\*|\.\/|\.\^)/;
-      const isDigit = /[0-9]/;
-      const isNonDigit = /[_a-zA-Z]/;
+    const isSingleOperatorChar = /[;=\(:\),{}.*<>+\-\/^\[\]]/;
+    const isDoubleOperatorChar = /(:=|<=|>=|==|<>|\.\+|\.\-|\.\*|\.\/|\.\^)/;
+    const isDigit = /[0-9]/;
+    const isNonDigit = /[_a-zA-Z]/;
 
-      function tokenLineComment(stream, state) {
+    function tokenLineComment(stream, state) {
       stream.skipToEnd();
       state.tokenize = null;
       return "comment";
     }
 
     function tokenBlockComment(stream, state) {
-        let maybeEnd = false, ch;
-        while (ch = stream.next()) {
+      let maybeEnd = false, ch;
+      while (ch = stream.next()) {
         if (maybeEnd && ch == "/") {
           state.tokenize = null;
           break;
@@ -46,8 +46,8 @@
     }
 
     function tokenString(stream, state) {
-        let escaped = false, ch;
-        while ((ch = stream.next()) != null) {
+      let escaped = false, ch;
+      while ((ch = stream.next()) != null) {
         if (ch == '"' && !escaped) {
           state.tokenize = null;
           state.sol = false;
@@ -61,13 +61,14 @@
 
     function tokenIdent(stream, state) {
       stream.eatWhile(isDigit);
-      while (stream.eat(isDigit) || stream.eat(isNonDigit)) { }
+      while (stream.eat(isDigit) || stream.eat(isNonDigit)) {
+      }
 
 
-        const cur = stream.current();
+      const cur = stream.current();
 
-        if(state.sol && (cur == "package" || cur == "model" || cur == "when" || cur == "connector")) state.level++;
-      else if(state.sol && cur == "end" && state.level > 0) state.level--;
+      if (state.sol && (cur == "package" || cur == "model" || cur == "when" || cur == "connector")) state.level++;
+      else if (state.sol && cur == "end" && state.level > 0) state.level--;
 
       state.tokenize = null;
       state.sol = false;
@@ -79,12 +80,13 @@
     }
 
     function tokenQIdent(stream, state) {
-      while (stream.eat(/[^']/)) { }
+      while (stream.eat(/[^']/)) {
+      }
 
       state.tokenize = null;
       state.sol = false;
 
-      if(stream.eat("'"))
+      if (stream.eat("'"))
         return "variable";
       else
         return "error";
@@ -108,7 +110,7 @@
 
     // Interface
     return {
-      startState: function() {
+      startState: function () {
         return {
           tokenize: null,
           level: 0,
@@ -116,56 +118,56 @@
         };
       },
 
-      token: function(stream, state) {
-        if(state.tokenize != null) {
+      token: function (stream, state) {
+        if (state.tokenize != null) {
           return state.tokenize(stream, state);
         }
 
-        if(stream.sol()) {
+        if (stream.sol()) {
           state.sol = true;
         }
 
         // WHITESPACE
-        if(stream.eatSpace()) {
+        if (stream.eatSpace()) {
           state.tokenize = null;
           return null;
         }
 
-          const ch = stream.next();
+        const ch = stream.next();
 
-          // LINECOMMENT
-        if(ch == '/' && stream.eat('/')) {
+        // LINECOMMENT
+        if (ch == '/' && stream.eat('/')) {
           state.tokenize = tokenLineComment;
         }
         // BLOCKCOMMENT
-        else if(ch == '/' && stream.eat('*')) {
+        else if (ch == '/' && stream.eat('*')) {
           state.tokenize = tokenBlockComment;
         }
         // TWO SYMBOL TOKENS
-        else if(isDoubleOperatorChar.test(ch+stream.peek())) {
+        else if (isDoubleOperatorChar.test(ch + stream.peek())) {
           stream.next();
           state.tokenize = null;
           return "operator";
         }
         // SINGLE SYMBOL TOKENS
-        else if(isSingleOperatorChar.test(ch)) {
+        else if (isSingleOperatorChar.test(ch)) {
           state.tokenize = null;
           return "operator";
         }
         // IDENT
-        else if(isNonDigit.test(ch)) {
+        else if (isNonDigit.test(ch)) {
           state.tokenize = tokenIdent;
         }
         // Q-IDENT
-        else if(ch == "'" && stream.peek() && stream.peek() != "'") {
+        else if (ch == "'" && stream.peek() && stream.peek() != "'") {
           state.tokenize = tokenQIdent;
         }
         // STRING
-        else if(ch == '"') {
+        else if (ch == '"') {
           state.tokenize = tokenString;
         }
         // UNSIGNED_NUBER
-        else if(isDigit.test(ch)) {
+        else if (isDigit.test(ch)) {
           state.tokenize = tokenUnsignedNuber;
         }
         // ERROR
@@ -177,18 +179,18 @@
         return state.tokenize(stream, state);
       },
 
-      indent: function(state, textAfter) {
+      indent: function (state, textAfter) {
         if (state.tokenize != null) return CodeMirror.Pass;
 
-          let level = state.level;
-          if(/(algorithm)/.test(textAfter)) level--;
-        if(/(equation)/.test(textAfter)) level--;
-        if(/(initial algorithm)/.test(textAfter)) level--;
-        if(/(initial equation)/.test(textAfter)) level--;
-        if(/(end)/.test(textAfter)) level--;
+        let level = state.level;
+        if (/(algorithm)/.test(textAfter)) level--;
+        if (/(equation)/.test(textAfter)) level--;
+        if (/(initial algorithm)/.test(textAfter)) level--;
+        if (/(initial equation)/.test(textAfter)) level--;
+        if (/(end)/.test(textAfter)) level--;
 
-        if(level > 0)
-          return indentUnit*level;
+        if (level > 0)
+          return indentUnit * level;
         else
           return 0;
       },
@@ -200,23 +202,23 @@
   });
 
   function words(str) {
-      const obj = {}, words = str.split(" ");
-      for (let i=0; i<words.length; ++i)
+    const obj = {}, words = str.split(" ");
+    for (let i = 0; i < words.length; ++i)
       obj[words[i]] = true;
     return obj;
   }
 
-    const modelicaKeywords = "algorithm and annotation assert block break class connect connector constant constrainedby der discrete each else elseif elsewhen encapsulated end enumeration equation expandable extends external false final flow for function if import impure in initial inner input loop model not operator or outer output package parameter partial protected public pure record redeclare replaceable return stream then true type when while within";
-    const modelicaBuiltin = "abs acos actualStream asin atan atan2 cardinality ceil cos cosh delay div edge exp floor getInstanceName homotopy inStream integer log log10 mod pre reinit rem semiLinear sign sin sinh spatialDistribution sqrt tan tanh";
-    const modelicaAtoms = "Real Boolean Integer String";
+  const modelicaKeywords = "algorithm and annotation assert block break class connect connector constant constrainedby der discrete each else elseif elsewhen encapsulated end enumeration equation expandable extends external false final flow for function if import impure in initial inner input loop model not operator or outer output package parameter partial protected public pure record redeclare replaceable return stream then true type when while within";
+  const modelicaBuiltin = "abs acos actualStream asin atan atan2 cardinality ceil cos cosh delay div edge exp floor getInstanceName homotopy inStream integer log log10 mod pre reinit rem semiLinear sign sin sinh spatialDistribution sqrt tan tanh";
+  const modelicaAtoms = "Real Boolean Integer String";
 
-    function def(mimes, mode) {
+  function def(mimes, mode) {
     if (typeof mimes == "string")
       mimes = [mimes];
 
-      const words = [];
+    const words = [];
 
-      function add(obj) {
+    function add(obj) {
       if (obj)
         for (let prop in obj)
           if (obj.hasOwnProperty(prop))
@@ -232,7 +234,7 @@
       CodeMirror.registerHelper("hintWords", mimes[0], words);
     }
 
-    for (let i=0; i<mimes.length; ++i)
+    for (let i = 0; i < mimes.length; ++i)
       CodeMirror.defineMIME(mimes[i], mode);
   }
 

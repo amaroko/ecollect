@@ -1,10 +1,11 @@
 <div class="content-heading">Account information</div>
+<button (click)="activityHomeSteps()" class="btn btn-primary">SHOW ME STEPS</button>
 <div class="card">
   <ngb-tabset (tabChange)="beforeChange($event)">
-    <ngb-tab title="Account info">
+    <ngb-tab id="step1" title="Account info">
       <ng-template ngbTabContent>
         <div>
-          <div class="loader" *ngIf="loader"></div>
+          <div *ngIf="loader" class="loader"></div>
           <fieldset>
             <div class="form-group row">
               <label class="col-lg-2 col-form-label">account number:</label>
@@ -64,14 +65,14 @@
         </div>
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Other accounts">
+    <ngb-tab id="step2" title="Other accounts">
       <ng-template ngbTabContent>
         <!--<form>
             <div class="form-group form-inline">
                 Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
             </div> ; index as i  <th scope="row">{{ i + 1 }}</th> <th scope="col">#</th>
         </form>-->
-        <div class="loader" *ngIf="loader"></div>
+        <div *ngIf="loader" class="loader"></div>
         <table class="table table-striped">
           <thead>
           <tr>
@@ -96,9 +97,9 @@
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Collateral info">
+    <ngb-tab id="step3" title="Collateral info">
       <ng-template ngbTabContent>
-        <div class="loader" *ngIf="loader"></div>
+        <div *ngIf="loader" class="loader"></div>
         <table class="table table-striped">
           <thead>
           <tr>
@@ -122,9 +123,9 @@
         .
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Directors">
+    <ngb-tab id="step4" title="Directors">
       <ng-template ngbTabContent>
-        <div class="loader" *ngIf="loader"></div>
+        <div *ngIf="loader" class="loader"></div>
         <table class="table table-striped">
           <thead>
           <tr>
@@ -150,14 +151,14 @@
         .
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Credit card">
+    <ngb-tab id="step5" title="Credit card">
       <ng-template ngbTabContent>
         <!--<form>
                         <div class="form-group form-inline">
                             Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
                         </div>
                     </form>-->
-        <div class="loader" *ngIf="loader"></div>
+        <div *ngIf="loader" class="loader"></div>
         <table class="table table-striped">
           <thead>
           <tr>
@@ -189,7 +190,7 @@
         .
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="with same idNumber">
+    <ngb-tab id="step6" title="with same idNumber">
       <ng-template ngbTabContent>
         <!--<form>
                             <div class="form-group form-inline">

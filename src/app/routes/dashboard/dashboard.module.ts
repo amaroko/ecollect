@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../../shared/shared.module';
 
 import {Dashboardv1Component} from './dashboardv1/dashboardv1.component';

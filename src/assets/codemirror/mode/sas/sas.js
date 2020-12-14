@@ -21,41 +21,42 @@
 //  atom
 //  def
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   CodeMirror.defineMode("sas", function () {
-      const words = {};
-      const isDoubleOperatorSym = {
-          eq: 'operator',
-          lt: 'operator',
-          le: 'operator',
-          gt: 'operator',
-          ge: 'operator',
-          "in": 'operator',
-          ne: 'operator',
-          or: 'operator'
-      };
-      const isDoubleOperatorChar = /(<=|>=|!=|<>)/;
-      const isSingleOperatorChar = /[=\(:\),{}.*<>+\-\/^\[\]]/;
+    const words = {};
+    const isDoubleOperatorSym = {
+      eq: 'operator',
+      lt: 'operator',
+      le: 'operator',
+      gt: 'operator',
+      ge: 'operator',
+      "in": 'operator',
+      ne: 'operator',
+      or: 'operator'
+    };
+    const isDoubleOperatorChar = /(<=|>=|!=|<>)/;
+    const isSingleOperatorChar = /[=\(:\),{}.*<>+\-\/^\[\]]/;
 
-      // Takes a string of words separated by spaces and adds them as
+    // Takes a string of words separated by spaces and adds them as
     // keys with the value of the first argument 'style'
     function define(style, string, context) {
       if (context) {
-          const split = string.split(' ');
-          for (let i = 0; i < split.length; i++) {
+        const split = string.split(' ');
+        for (let i = 0; i < split.length; i++) {
           words[split[i]] = {style: style, state: context};
         }
       }
     }
+
     //datastep
     define('def', 'stack pgm view source debug nesting nolist', ['inDataStep']);
     define('def', 'if while until for do do; end end; then else cancel', ['inDataStep']);
@@ -94,9 +95,9 @@
     // Main function
     function tokenize(stream, state) {
       // Finally advance the stream
-        const ch = stream.next();
+      const ch = stream.next();
 
-        // BLOCKCOMMENT
+      // BLOCKCOMMENT
       if (ch === '/' && stream.eat('*')) {
         state.continueComment = true;
         return "comment";
@@ -117,13 +118,13 @@
       }
 
       // DoubleOperator match
-        const doubleOperator = ch + stream.peek();
+      const doubleOperator = ch + stream.peek();
 
-        // Match all line comments.
-        const myString = stream.string;
-        const myRegexp = /(?:^\s*|[;]\s*)(\*.*?);/ig;
-        const match = myRegexp.exec(myString);
-        if (match !== null) {
+      // Match all line comments.
+      const myString = stream.string;
+      const myRegexp = /(?:^\s*|[;]\s*)(\*.*?);/ig;
+      const match = myRegexp.exec(myString);
+      if (match !== null) {
         if (match.index === 0 && (stream.column() !== (match.index + match[0].length - 1))) {
           stream.backUp(stream.column());
           stream.skipTo(';');
@@ -174,8 +175,8 @@
       }
 
       // Matches one whole word -- even if the word is a character
-        let word;
-        if (stream.match(/[%&;\w]+/, false) != null) {
+      let word;
+      if (stream.match(/[%&;\w]+/, false) != null) {
         word = ch + stream.match(/[%&;\w]+/, true);
         if (/&/.test(word)) return 'variable'
       } else {
@@ -205,8 +206,8 @@
         }
         // do we have a DATA Step keyword
         if (word && words.hasOwnProperty(word) &&
-            (words[word].state.indexOf("inDataStep") !== -1 ||
-             words[word].state.indexOf("ALL") !== -1)) {
+          (words[word].state.indexOf("inDataStep") !== -1 ||
+            words[word].state.indexOf("ALL") !== -1)) {
           //backup to the start of the word
           if (stream.start < stream.pos)
             stream.backUp(stream.pos - stream.start);
@@ -223,8 +224,8 @@
         }
         // do we have a proc keyword
         if (word && words.hasOwnProperty(word) &&
-            (words[word].state.indexOf("inProc") !== -1 ||
-             words[word].state.indexOf("ALL") !== -1)) {
+          (words[word].state.indexOf("inProc") !== -1 ||
+            words[word].state.indexOf("ALL") !== -1)) {
           stream.match(/[\w]+/);
           return words[word].style;
         }
@@ -237,8 +238,8 @@
           return 'builtin';
         }
         if (word && words.hasOwnProperty(word) &&
-            (words[word].state.indexOf("inMacro") !== -1 ||
-             words[word].state.indexOf("ALL") !== -1)) {
+          (words[word].state.indexOf("inMacro") !== -1 ||
+            words[word].state.indexOf("ALL") !== -1)) {
           stream.match(/[\w]+/);
           return words[word].style;
         }

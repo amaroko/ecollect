@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpEventType} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import swal from 'sweetalert2';
 import {Router} from '@angular/router';
@@ -27,6 +27,16 @@ export class EcolService {
         swal.showLoading();
       }*/
     });
+  }
+
+  getMainReason() {
+    const url = environment.api + '/api/mainexcuse';
+    return this.httpClient.get(url);
+  }
+
+  getSubReason(ID) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/subexcuse?filter[where][EXCUSEID]=' + ID);
   }
 
   bulktotblcardsstatic(body) {
@@ -112,7 +122,18 @@ export class EcolService {
   }
 
   getexcuse() {
-    const url = environment.api + '/api/excuse?filter[order]=excuse ASC';
+    // const url = environment.api + '/api/excuse?filter[order]=excuse ASC';
+    // So that other can be the lastpostactivitylogs option
+    const url = environment.api + '/api/excuse';
+    return this.httpClient.get(url);
+  }
+
+  getExcuseDetails(EXCUSEID: any) {
+    return this.httpClient.get<any>(environment.api + '/api/excusedetailed?filter[where][excuseid]=' + EXCUSEID);
+  }
+
+  getAllReminders() {
+    const url = environment.api + '/api/tqall/reminders';
     return this.httpClient.get(url);
   }
 
@@ -128,6 +149,11 @@ export class EcolService {
 
   getparty1() {
     const url = environment.api + '/api/sptypes';
+    return this.httpClient.get(url);
+  }
+
+  getreminders() {
+    const url = environment.api + '/api/tqall/reminders';
     return this.httpClient.get(url);
   }
 
@@ -154,6 +180,14 @@ export class EcolService {
 
   newdc(body) {
     return this.httpClient.post<any>(environment.api + '/api/tbldebtcollectors', body);
+  }
+
+  newreminder(body) {
+    return this.httpClient.post<any>(environment.api + '/api/tblreminders', body);
+  }
+
+  reminderpopped(id, body) {
+    return this.httpClient.patch<any>(environment.api + '/api/tblreminders/' + id , body);
   }
 
   newyard(body) {
@@ -190,9 +224,7 @@ export class EcolService {
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
     /* save data */
-    const data = (XLSX.utils.sheet_to_json(ws, {header: 1})) as XLSX.AOA2SheetOpts;
-
-    return data;
+    return (XLSX.utils.sheet_to_json(ws, {header: 1})) as XLSX.AOA2SheetOpts;
   }
 
 
@@ -733,10 +765,12 @@ export class EcolService {
     localStorage.removeItem('userpermission');
     localStorage.removeItem('profile');
 
+
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('accountInfo');
     sessionStorage.removeItem('userpermission');
     sessionStorage.removeItem('profile');
+
   }
 
   getloggedinusers() {
@@ -803,6 +837,13 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/notehis/total?custnumber=' + custnumber);
   }
 
+  unreadreminders(submittedby) {
+    return this.httpClient.get<any>(environment.api + '/api/tblreminders?filter[where][READ]=0&filter[where][SUBMITTEDBY]=' + submittedby + '&filter[where][TIMEOVER]=true');
+  }
+
+  ralerts(submittedby) {
+    return this.httpClient.get<any>(environment.api + '/api/reminderalerts?filter[where][SUBMITTEDBY]=' + submittedby);
+  }
   totalguarantors(custnumber) {
     return this.httpClient.get<any>(environment.api + '/api/guarantordetails/total?custnumber=' + custnumber);
   }
@@ -844,6 +885,15 @@ export class EcolService {
   assigndebtcollector(body) {
     const url = environment.api + '/api/tbldebtcollectors/assigndebtcoll';
     return this.httpClient.post(url, body);
+  }
+
+  updateReminderData(body) {
+    const url = environment.api + '/api/tblreminders/updatereminder';
+    return this.httpClient.post(url, body);
+  }
+
+  deleteReminder(id) {
+    return this.httpClient.post<any>(environment.api + '/api/tblreminders/deleterreminder', id);
   }
 
   updateaccdebtcollector(body) {

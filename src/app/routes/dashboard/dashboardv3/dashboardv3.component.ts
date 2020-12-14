@@ -1,8 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-
-import {ColorsService} from '../../../shared/colors/colors.service';
-import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-dashboardv3',

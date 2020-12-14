@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../../shared/shared.module';
 
 import {ListComponent} from './list/list.component';

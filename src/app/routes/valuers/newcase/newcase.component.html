@@ -1,4 +1,4 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" color="#fff" size="medium" type="ball-spin-fade">
   <p style="font-size: 20px; color: white">Processing ...</p>
 </ngx-spinner>
 <div>
@@ -7,8 +7,8 @@
       <strong>New Valuer activity </strong> capture
     </div>
     <!--    (ngSubmit)="onSubmitted($event)"-->
-    <form [formGroup]="newcase" (ngSubmit)="onSubmit(newcase)"  autocomplete="off" novalidate>
-      <div  class="card-body" >
+    <form (ngSubmit)="onSubmit(newcase)" [formGroup]="newcase" autocomplete="off" novalidate>
+      <div class="card-body">
         <div class="row">
           <div class="col-xl-2 col-md-3">
             Search
@@ -16,10 +16,10 @@
           <div class="col-md-9">
             <div class="col-md-12">
               <label for="typeahead-http"></label>
-              <input  [(ngModel)]="model" [class.is-invalid]="searchFailed" [inputFormatter]="inputFormatBandListValue"
-                      [ngbTypeahead]="search" [resultFormatter]="resultFormatBandListValue" class="form-control"
-                      id="typeahead-http"
-                      formControlName="Search" placeholder="Search" type="text" value="search"/>
+              <input [(ngModel)]="model" [class.is-invalid]="searchFailed" [inputFormatter]="inputFormatBandListValue"
+                     [ngbTypeahead]="search" [resultFormatter]="resultFormatBandListValue" class="form-control"
+                     formControlName="Search"
+                     id="typeahead-http" placeholder="Search" type="text" value="search"/>
               <!--              <small *ngIf="searching" class="form-text text-muted">searching...</small>-->
               <img *ngIf="searching" alt="Loading Icon" src="assets/img/user/loading.gif">
               <div>
@@ -36,9 +36,9 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input  [ngModel]="model.CUSTNUMBER"  class="form-control"
-                      formControlName="custnumber"
-                      required="" type="text">
+              <input [ngModel]="model.CUSTNUMBER" class="form-control"
+                     formControlName="custnumber"
+                     required="" type="text">
             </div>
             <!--            <span *ngIf="!newcase.get('custnumber').valid" class="validation-error">Customer Number Required</span>-->
           </div>
@@ -47,8 +47,8 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input  [ngModel]="model.ACCNUMBER"
-                      class="form-control" id="accountnumber" formControlName="accountnumber" type="text">
+              <input [ngModel]="model.ACCNUMBER"
+                     class="form-control" formControlName="accountnumber" id="accountnumber" type="text">
             </div>
           </div>
         </div>
@@ -59,7 +59,8 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input [ngModel]="model.CLIENT_NAME" class="form-control" id="customername"  formControlName="customername" type="text">
+              <input [ngModel]="model.CLIENT_NAME" class="form-control" formControlName="customername" id="customername"
+                     type="text">
             </div>
           </div>
           <div class="col-md-3">
@@ -67,8 +68,8 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input  class="form-control" [ngModel]="model.ORIGBALANCE"
-                      id="accountbalance" formControlName="accountbalance" type="text">
+              <input [ngModel]="model.ORIGBALANCE" class="form-control"
+                     formControlName="accountbalance" id="accountbalance" type="text">
             </div>
           </div>
         </div>
@@ -79,7 +80,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input  class="form-control" id="vehiclemake" formControlName="vehiclemake" type="text">
+              <input class="form-control" formControlName="vehiclemake" id="vehiclemake" type="text">
             </div>
           </div>
           <div class="col-md-3">
@@ -87,7 +88,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input [ngModel]="model.AROCODE" class="form-control" id="arocode" formControlName="arocode" type="text">
+              <input [ngModel]="model.AROCODE" class="form-control" formControlName="arocode" id="arocode" type="text">
             </div>
           </div>
         </div>
@@ -98,7 +99,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input class="form-control" id="cancelcomment" formControlName="cancelcomment"  type="text" >
+              <input class="form-control" formControlName="cancelcomment" id="cancelcomment" type="text">
             </div>
           </div>
           <div class="col-md-3">
@@ -106,7 +107,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input  class="form-control" id="yard" formControlName="yard" type="text" >
+              <input class="form-control" formControlName="yard" id="yard" type="text">
             </div>
           </div>
         </div>
@@ -118,10 +119,11 @@
           <div class="col-md-3">
             <div class="col-md-12">
               <div class="input-group">
-                <input bsDatepicker class="form-control" placement="top" formControlName="stagedate" placeholder="Dateinput"
-                       type="text"  >
+                <input bsDatepicker class="form-control" formControlName="stagedate" placeholder="Dateinput"
+                       placement="top"
+                       type="text">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-primary"  type="button"><span><i
+                  <button class="btn btn-outline-primary" type="button"><span><i
                     class="fa fa-calendar"></i>
                     </span></button>
                 </div>
@@ -134,10 +136,11 @@
           <div class="col-md-3">
             <div class="col-md-12">
               <div class="input-group">
-                <input #dp="bsDatepicker" bsDatepicker placement="top" class="form-control" formControlName="dateinput" ngModel
-                       placeholder="Dateinput" type="text"  >
+                <input #dp="bsDatepicker" bsDatepicker class="form-control" formControlName="dateinput" ngModel
+                       placeholder="Dateinput"
+                       placement="top" type="text">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-primary"  type="button"><span><i
+                  <button class="btn btn-outline-primary" type="button"><span><i
                     class="fa fa-calendar"></i>
                     </span></button>
                 </div>
@@ -152,15 +155,15 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input [ngModel]="model.COLOFFICER" class="form-control" id="owner" formControlName="owner" type="text" >
+              <input [ngModel]="model.COLOFFICER" class="form-control" formControlName="owner" id="owner" type="text">
             </div>
           </div>
           <div class="col-md-3">
             Ownership
           </div>
-          <div  class="col-md-3">
+          <div class="col-md-3">
             <div class="col-md-12">
-              <input class="form-control" id="ownership" formControlName="ownership" ngModel type="text" >
+              <input class="form-control" formControlName="ownership" id="ownership" ngModel type="text">
             </div>
           </div>
         </div>
@@ -171,7 +174,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input class="form-control" id="regowner" formControlName="regowner" type="text" >
+              <input class="form-control" formControlName="regowner" id="regowner" type="text">
             </div>
           </div>
           <div class="col-md-3">
@@ -179,7 +182,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input class="form-control" id="newstatus" formControlName="newstatus" ngModel type="text" >
+              <input class="form-control" formControlName="newstatus" id="newstatus" ngModel type="text">
             </div>
           </div>
         </div>
@@ -190,7 +193,8 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input [ngModel]="model.FILENO" class="form-control" id="filenumber" formControlName="filenumber" type="text">
+              <input [ngModel]="model.FILENO" class="form-control" formControlName="filenumber" id="filenumber"
+                     type="text">
             </div>
           </div>
           <div class="col-md-3">
@@ -198,15 +202,17 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input  class="form-control" id="propertyno" formControlName="propertyno" type="text" >
+              <input class="form-control" formControlName="propertyno" id="propertyno" type="text">
             </div>
           </div>
         </div>
       </div>
       <div class="card-footer">
-        <button [disabled]="!newcase.valid" class="btn btn-sm btn-primary"  type="submit"><i
-          class="fa fa-dot-circle-o"></i> Submit</button>
-        <a [routerLink]="['/valuers/allcases']" class="btn btn-sm btn-danger" type="reset" ><i class="fa fa-ban"></i> Reset</a>
+        <button [disabled]="!newcase.valid" class="btn btn-sm btn-primary" type="submit"><i
+          class="fa fa-dot-circle-o"></i> Submit
+        </button>
+        <a [routerLink]="['/valuers/allcases']" class="btn btn-sm btn-danger" type="reset"><i class="fa fa-ban"></i>
+          Reset</a>
       </div>
     </form>
     <!--<pre>{{actionForm.valid | json}}</pre>

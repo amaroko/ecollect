@@ -1,17 +1,17 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
-  CodeMirror.defineMode("elm", function() {
+  CodeMirror.defineMode("elm", function () {
 
     function switchState(source, setState, f) {
       setState(f);
@@ -19,15 +19,15 @@
     }
 
     // These should all be Unicode extended, as per the Haskell 2010 report
-      const smallRE = /[a-z_]/;
-      const largeRE = /[A-Z]/;
-      const digitRE = /[0-9]/;
-      const hexitRE = /[0-9A-Fa-f]/;
-      const octitRE = /[0-7]/;
-      const idRE = /[a-z_A-Z0-9\']/;
-      const symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:\u03BB\u2192]/;
-      const specialRE = /[(),;[\]`{}]/;
-      const whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
+    const smallRE = /[a-z_]/;
+    const largeRE = /[A-Z]/;
+    const digitRE = /[0-9]/;
+    const hexitRE = /[0-9A-Fa-f]/;
+    const octitRE = /[0-7]/;
+    const idRE = /[a-z_A-Z0-9\']/;
+    const symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:\u03BB\u2192]/;
+    const specialRE = /[(),;[\]`{}]/;
+    const whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
 
     function normal() {
       return function (source, setState) {
@@ -35,8 +35,8 @@
           return null;
         }
 
-          const ch = source.next();
-          if (specialRE.test(ch)) {
+        const ch = source.next();
+        if (specialRE.test(ch)) {
           if (ch == '{' && source.eat('-')) {
             var t = "comment";
             if (source.eat('#')) t = "meta";
@@ -68,8 +68,8 @@
         }
 
         if (smallRE.test(ch)) {
-            const isDef = source.pos === 1;
-            source.eatWhile(idRE);
+          const isDef = source.pos === 1;
+          source.eatWhile(idRE);
           return isDef ? "variable-3" : "variable";
         }
 
@@ -118,11 +118,11 @@
       if (nest == 0) {
         return normal();
       }
-      return function(source, setState) {
-          let currNest = nest;
-          while (!source.eol()) {
-            const ch = source.next();
-            if (ch == '{' && source.eat('-')) {
+      return function (source, setState) {
+        let currNest = nest;
+        while (!source.eol()) {
+          const ch = source.next();
+          if (ch == '{' && source.eat('-')) {
             ++currNest;
           } else if (ch == '-' && source.eat('}')) {
             --currNest;
@@ -139,8 +139,8 @@
 
     function stringLiteral(source, setState) {
       while (!source.eol()) {
-          const ch = source.next();
-          if (ch == '"') {
+        const ch = source.next();
+        if (ch == '"') {
           setState(normal());
           return "string";
         }
@@ -166,37 +166,41 @@
     }
 
 
-      const wellKnownWords = (function () {
-          const wkw = {};
+    const wellKnownWords = (function () {
+      const wkw = {};
 
-          const keywords = [
-              "case", "of", "as",
-              "if", "then", "else",
-              "let", "in",
-              "infix", "infixl", "infixr",
-              "type", "alias",
-              "input", "output", "foreign", "loopback",
-              "module", "where", "import", "exposing",
-              "_", "..", "|", ":", "=", "\\", "\"", "->", "<-"
-          ];
+      const keywords = [
+        "case", "of", "as",
+        "if", "then", "else",
+        "let", "in",
+        "infix", "infixl", "infixr",
+        "type", "alias",
+        "input", "output", "foreign", "loopback",
+        "module", "where", "import", "exposing",
+        "_", "..", "|", ":", "=", "\\", "\"", "->", "<-"
+      ];
 
-          for (let i = keywords.length; i--;)
-              wkw[keywords[i]] = "keyword";
+      for (let i = keywords.length; i--;)
+        wkw[keywords[i]] = "keyword";
 
-          return wkw;
-      })();
+      return wkw;
+    })();
 
 
-      return {
-      startState: function ()  { return { f: normal() }; },
-      copyState:  function (s) { return { f: s.f }; },
+    return {
+      startState: function () {
+        return {f: normal()};
+      },
+      copyState: function (s) {
+        return {f: s.f};
+      },
 
-      token: function(stream, state) {
-          const t = state.f(stream, function (s) {
-              state.f = s;
-          });
-          const w = stream.current();
-          return (wellKnownWords.hasOwnProperty(w)) ? wellKnownWords[w] : t;
+      token: function (stream, state) {
+        const t = state.f(stream, function (s) {
+          state.f = s;
+        });
+        const w = stream.current();
+        return (wellKnownWords.hasOwnProperty(w)) ? wellKnownWords[w] : t;
       }
     };
 

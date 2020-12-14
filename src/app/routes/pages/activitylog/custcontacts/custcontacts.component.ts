@@ -3,9 +3,9 @@ import {SettingsService} from '../../../../core/settings/settings.service';
 import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import {environment} from '../../../../../environments/environment';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {DataService} from '../../../../services/data.service';
+import * as introJs from 'intro.js/intro.js';
 
 @Component({
   selector: 'app-custcontacts',
@@ -13,7 +13,7 @@ import {DataService} from '../../../../services/data.service';
   styleUrls: ['./custcontacts.component.scss']
 })
 export class CustContactsComponent implements OnInit {
-
+  introJS = introJs();
   accnumber: string;
   custnumber: string;
   contacts: [];
@@ -31,6 +31,46 @@ export class CustContactsComponent implements OnInit {
               public dataService: DataService) {
     //
   }
+
+
+
+  ContactsSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#contactnumber',
+            intro: 'This is where you type in the phone number of the customer. Kindly use ' +
+              'the format of 0712345678'
+          },
+          {
+            element: '#email',
+            intro: 'This is where you input a valid email of the customer. This should follow the standard ' +
+              'format of johdoe@something.com'
+          },
+          {
+            element: '#active',
+            intro: 'Here you specify whether the phone number is active-currently in use or inactive-never available ' +
+              'or out of service'
+          },
+          {
+            element: '#contactsubmit',
+            intro: 'Pressing this button will submit the contact details and link it to the specified account'
+          },
+          {
+            element: '#contacttable',
+            intro: 'Here you will find a list of all the manually added phone numbers, you can then edit them or ' +
+              'update the contact if need be'
+          }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
 
   ngOnInit() {
     /** spinner starts on init */

@@ -6,17 +6,17 @@
  * Licence: MIT
  */
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
-  CodeMirror.defineMode("stex", function() {
+  CodeMirror.defineMode("stex", function () {
     "use strict";
 
     function pushCommand(state, command) {
@@ -32,23 +32,27 @@
     }
 
     function popCommand(state) {
-        const plug = state.cmdState.pop();
-        if (plug) {
+      const plug = state.cmdState.pop();
+      if (plug) {
         plug.closeBracket();
       }
     }
 
     // returns the non-default plugin closest to the end of the list
     function getMostPowerful(state) {
-        const context = state.cmdState;
-        for (let i = context.length - 1; i >= 0; i--) {
-          const plug = context[i];
-          if (plug.name == "DEFAULT") {
+      const context = state.cmdState;
+      for (let i = context.length - 1; i >= 0; i--) {
+        const plug = context[i];
+        if (plug.name == "DEFAULT") {
           continue;
         }
         return plug;
       }
-      return { styleIdentifier: function() { return null; } };
+      return {
+        styleIdentifier: function () {
+          return null;
+        }
+      };
     }
 
     function addPluginPattern(pluginName, cmdStyle, styles) {
@@ -59,20 +63,21 @@
         this.styles = styles;
         this.argument = null;   // \begin and \end have arguments that follow. These are stored in the plugin
 
-        this.styleIdentifier = function() {
+        this.styleIdentifier = function () {
           return this.styles[this.bracketNo - 1] || null;
         };
-        this.openBracket = function() {
+        this.openBracket = function () {
           this.bracketNo++;
           return "bracket";
         };
-        this.closeBracket = function() {};
+        this.closeBracket = function () {
+        };
       };
     }
 
-      const plugins = {};
+    const plugins = {};
 
-      plugins["importmodule"] = addPluginPattern("importmodule", "tag", ["string", "builtin"]);
+    plugins["importmodule"] = addPluginPattern("importmodule", "tag", ["string", "builtin"]);
     plugins["documentclass"] = addPluginPattern("documentclass", "tag", ["", "atom"]);
     plugins["usepackage"] = addPluginPattern("usepackage", "tag", ["atom"]);
     plugins["begin"] = addPluginPattern("begin", "tag", ["atom"]);
@@ -82,7 +87,8 @@
       this.name = "DEFAULT";
       this.style = "tag";
 
-      this.styleIdentifier = this.openBracket = this.closeBracket = function() {};
+      this.styleIdentifier = this.openBracket = this.closeBracket = function () {
+      };
     };
 
     function setState(state, f) {
@@ -91,11 +97,11 @@
 
     // called when in a normal (no environment) context
     function normal(source, state) {
-        let plug;
-        // Do we look like '\command' ?  If so, attempt to apply the plugin 'command'
+      let plug;
+      // Do we look like '\command' ?  If so, attempt to apply the plugin 'command'
       if (source.match(/^\\[a-zA-Z@]+/)) {
-          const cmdName = source.current().slice(1);
-          plug = plugins[cmdName] || plugins["DEFAULT"];
+        const cmdName = source.current().slice(1);
+        plug = plugins[cmdName] || plugins["DEFAULT"];
         plug = new plug();
         pushCommand(state, plug);
         setState(state, beginParams);
@@ -114,20 +120,26 @@
 
       // find if we're starting various math modes
       if (source.match("\\[")) {
-        setState(state, function(source, state){ return inMathMode(source, state, "\\]"); });
+        setState(state, function (source, state) {
+          return inMathMode(source, state, "\\]");
+        });
         return "keyword";
       }
       if (source.match("$$")) {
-        setState(state, function(source, state){ return inMathMode(source, state, "$$"); });
+        setState(state, function (source, state) {
+          return inMathMode(source, state, "$$");
+        });
         return "keyword";
       }
       if (source.match("$")) {
-        setState(state, function(source, state){ return inMathMode(source, state, "$"); });
+        setState(state, function (source, state) {
+          return inMathMode(source, state, "$");
+        });
         return "keyword";
       }
 
-        const ch = source.next();
-        if (ch == "%") {
+      const ch = source.next();
+      if (ch == "%") {
         source.skipToEnd();
         return "comment";
       } else if (ch == '}' || ch == ']') {
@@ -190,8 +202,8 @@
       if (source.match(/^(\d+\.\d*|\d*\.\d+|\d+)/)) {
         return "number";
       }
-        const ch = source.next();
-        if (ch == "{" || ch == "}" || ch == "[" || ch == "]" || ch == "(" || ch == ")") {
+      const ch = source.next();
+      if (ch == "{" || ch == "}" || ch == "[" || ch == "]" || ch == "(" || ch == ")") {
         return "bracket";
       }
 
@@ -203,9 +215,9 @@
     }
 
     function beginParams(source, state) {
-        const ch = source.peek();
-        let lastPlug;
-        if (ch == '{' || ch == '[') {
+      const ch = source.peek();
+      let lastPlug;
+      if (ch == '{' || ch == '[') {
         lastPlug = peekCommand(state);
         lastPlug.openBracket(ch);
         source.eat(ch);
@@ -223,22 +235,22 @@
     }
 
     return {
-      startState: function() {
+      startState: function () {
         return {
           cmdState: [],
           f: normal
         };
       },
-      copyState: function(s) {
+      copyState: function (s) {
         return {
           cmdState: s.cmdState.slice(),
           f: s.f
         };
       },
-      token: function(stream, state) {
+      token: function (stream, state) {
         return state.f(stream, state);
       },
-      blankLine: function(state) {
+      blankLine: function (state) {
         state.f = normal;
         state.cmdState.length = 0;
       },

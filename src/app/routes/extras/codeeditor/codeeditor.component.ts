@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {TreeNode, TREE_ACTIONS, KEYS, IActionMapping} from 'angular-tree-component';
+import {TreeNode} from 'angular-tree-component';
 import * as CodeMirror from 'codemirror';
 
 import {SettingsService} from '../../../core/settings/settings.service';

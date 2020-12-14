@@ -1,6 +1,6 @@
 <div class="wrapper container">
   <toaster-container [toasterconfig]="config"></toaster-container>
-  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" color="#fff" size="medium" type="ball-spin-fade">
     <p style="font-size: 20px; color: white">Processing ...</p>
   </ngx-spinner>
   <div class="card">
@@ -10,13 +10,13 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-4">
-          <form #ptpForm="ngForm" (ngSubmit)="ptpfunc(ptpForm)" novalidate autocomplete="off">
+          <form #ptpForm="ngForm" (ngSubmit)="ptpfunc(ptpForm)" autocomplete="off" novalidate>
             <div class="form-group">
               <label>Promise Amount:</label>
               <label>
-                <input class="form-control" #ptpamount="ngModel"
-                       [(ngModel)]="ptp.ptpamount" name="ptpamount" placeholder="ptp amount"
-                       [ngClass]="{ 'is-invalid': ptpamount.errors }" required/>
+                <input #ptpamount="ngModel" [(ngModel)]="ptp.ptpamount"
+                       [ngClass]="{ 'is-invalid': ptpamount.errors }" class="form-control" name="ptpamount"
+                       placeholder="ptp amount" required/>
               </label>
 
             </div>
@@ -24,27 +24,27 @@
               <label>Promise Date:</label>
               <div class="input-group">
                 <label>
-                  <input class="form-control" placeholder="yyyy-mm-dd"
-                         name="ptpdate" [(ngModel)]="ptp.ptpdate" ngbDatepicker #d="ngbDatepicker" required>
+                  <input #d="ngbDatepicker" [(ngModel)]="ptp.ptpdate"
+                         class="form-control" name="ptpdate" ngbDatepicker placeholder="yyyy-mm-dd" required>
                 </label>
                 <div class="input-group-append">
                   <div class="input-group-append">
-                    <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i
+                    <button (click)="d.toggle()" class="btn btn-outline-primary" type="button"><span><i
                       class="fa fa-calendar"></i>
                                   </span></button>
                   </div>
                 </div>
               </div>
             </div>
-            <button *ngIf="!edit" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label"
-                    type="submit" class="btn btn-sm btn-outline-primary" [disabled]="!ptpForm.valid">Add
+            <button *ngIf="!edit" [disabled]="!ptpForm.valid"
+                    class="btn btn-sm btn-outline-primary" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="submit">Add
             </button>
-            <button *ngIf="edit" [disabled]="ptpForm.invalid"
-                    class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button"
-                    (click)="updateptp(ptp)">Update
+            <button (click)="updateptp(ptp)" *ngIf="edit"
+                    [disabled]="ptpForm.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label"
+                    type="button">Update
             </button>
-            <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label" type="button"
-                    (click)="cancel()">Cancel
+            <button (click)="cancel()" *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label"
+                    type="button">Cancel
             </button>
           </form>
         </div>
@@ -69,7 +69,7 @@
                 <!--<button class="btn btn-outline-success btn-sm" (click)="editptp(p)">
                     <i class="fas fa-edit"></i> edit
                   </button>-->
-                <button class="btn btn-outline-danger btn-sm" (click)="deleteptp(p)">
+                <button (click)="deleteptp(p)" class="btn btn-outline-danger btn-sm">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </td>
@@ -77,7 +77,7 @@
             </tbody>
           </table>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
-          <button [disabled]="!isptptosave" class="btn btn-block btn-outline-success" (click)="saveallptps()">Save all
+          <button (click)="saveallptps()" [disabled]="!isptptosave" class="btn btn-block btn-outline-success">Save all
             Promises
           </button>
         </div>

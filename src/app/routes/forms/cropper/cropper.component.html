@@ -5,20 +5,20 @@
       <div class="card">
         <div class="card-header">Select an image file</div>
         <div class="card-body">
-          <label for="image-input" class="file-upload">
+          <label class="file-upload" for="image-input">
             <button class="btn btn-secondary btn-block">Upload Image</button>
-            <input id="image-input" type="file" (change)="fileChangeListener($event)">
+            <input (change)="fileChangeListener($event)" id="image-input" type="file">
           </label>
           <p class="pv">Crop type:</p>
           <div class="btn-group btn-group-justified mb">
-            <label class="btn btn-secondary" (click)="setRoundedMethod(false)"
-                   [class.active]="!cropperSettings.rounded">Square</label>
-            <label class="btn btn-secondary" (click)="setRoundedMethod(true)" [class.active]="cropperSettings.rounded">Circle</label>
+            <label (click)="setRoundedMethod(false)" [class.active]="!cropperSettings.rounded"
+                   class="btn btn-secondary">Square</label>
+            <label (click)="setRoundedMethod(true)" [class.active]="cropperSettings.rounded" class="btn btn-secondary">Circle</label>
           </div>
-          <div class="result" *ngIf="data1.image">
+          <div *ngIf="data1.image" class="result">
             <p class="pv">Cropped image</p>
-            <img class="img-fluid img-thumbnail" [class.rounded-circle]="cropperSettings.rounded" [src]="data1.image"
-                 [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+            <img [class.rounded-circle]="cropperSettings.rounded" [height]="cropperSettings.croppedHeight" [src]="data1.image"
+                 [width]="cropperSettings.croppedWidth" class="img-fluid img-thumbnail">
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
     <div class="col-lg-8">
       <div class="card">
         <div class="card-body">
-          <img-cropper #cropper [image]="data1" [settings]="cropperSettings" (onCrop)="cropped($event)"></img-cropper>
+          <img-cropper #cropper (onCrop)="cropped($event)" [image]="data1" [settings]="cropperSettings"></img-cropper>
         </div>
       </div>
     </div>

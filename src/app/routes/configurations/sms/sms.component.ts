@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {environment} from '../../../../environments/environment';
@@ -6,7 +6,6 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {GridOptions} from '@ag-grid-community/all-modules';
 import {NgxSpinnerService} from 'ngx-spinner';
-import * as _ from 'lodash';
 
 declare var $: any;
 

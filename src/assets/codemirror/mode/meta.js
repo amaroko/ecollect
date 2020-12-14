@@ -1,31 +1,48 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   CodeMirror.modeInfo = [
     {name: "APL", mime: "text/apl", mode: "apl", ext: ["dyalog", "apl"]},
-    {name: "PGP", mimes: ["application/pgp", "application/pgp-keys", "application/pgp-signature"], mode: "asciiarmor", ext: ["pgp"]},
+    {
+      name: "PGP",
+      mimes: ["application/pgp", "application/pgp-keys", "application/pgp-signature"],
+      mode: "asciiarmor",
+      ext: ["pgp"]
+    },
     {name: "ASN.1", mime: "text/x-ttcn-asn", mode: "asn.1", ext: ["asn", "asn1"]},
     {name: "Asterisk", mime: "text/x-asterisk", mode: "asterisk", file: /^extensions\.conf$/i},
     {name: "Brainfuck", mime: "text/x-brainfuck", mode: "brainfuck", ext: ["b", "bf"]},
     {name: "C", mime: "text/x-csrc", mode: "clike", ext: ["c", "h"]},
-    {name: "C++", mime: "text/x-c++src", mode: "clike", ext: ["cpp", "c++", "cc", "cxx", "hpp", "h++", "hh", "hxx"], alias: ["cpp"]},
+    {
+      name: "C++",
+      mime: "text/x-c++src",
+      mode: "clike",
+      ext: ["cpp", "c++", "cc", "cxx", "hpp", "h++", "hh", "hxx"],
+      alias: ["cpp"]
+    },
     {name: "Cobol", mime: "text/x-cobol", mode: "cobol", ext: ["cob", "cpy"]},
     {name: "C#", mime: "text/x-csharp", mode: "clike", ext: ["cs"], alias: ["csharp"]},
     {name: "Clojure", mime: "text/x-clojure", mode: "clojure", ext: ["clj", "cljc", "cljx"]},
     {name: "ClojureScript", mime: "text/x-clojurescript", mode: "clojure", ext: ["cljs"]},
     {name: "Closure Stylesheets (GSS)", mime: "text/x-gss", mode: "css", ext: ["gss"]},
     {name: "CMake", mime: "text/x-cmake", mode: "cmake", ext: ["cmake", "cmake.in"], file: /^CMakeLists.txt$/},
-    {name: "CoffeeScript", mime: "text/x-coffeescript", mode: "coffeescript", ext: ["coffee"], alias: ["coffee", "coffee-script"]},
+    {
+      name: "CoffeeScript",
+      mime: "text/x-coffeescript",
+      mode: "coffeescript",
+      ext: ["coffee"],
+      alias: ["coffee", "coffee-script"]
+    },
     {name: "Common Lisp", mime: "text/x-common-lisp", mode: "commonlisp", ext: ["cl", "lisp", "el"], alias: ["lisp"]},
     {name: "Cypher", mime: "application/x-cypher-query", mode: "cypher", ext: ["cyp", "cypher"]},
     {name: "Cython", mime: "text/x-cython", mode: "python", ext: ["pyx", "pxd", "pxi"]},
@@ -69,9 +86,20 @@
     {name: "Pug", mime: "text/x-pug", mode: "pug", ext: ["jade", "pug"], alias: ["jade"]},
     {name: "Java", mime: "text/x-java", mode: "clike", ext: ["java"]},
     {name: "Java Server Pages", mime: "application/x-jsp", mode: "htmlembedded", ext: ["jsp"], alias: ["jsp"]},
-    {name: "JavaScript", mimes: ["text/javascript", "text/ecmascript", "application/javascript", "application/x-javascript", "application/ecmascript"],
-     mode: "javascript", ext: ["js"], alias: ["ecmascript", "js", "node"]},
-    {name: "JSON", mimes: ["application/json", "application/x-json"], mode: "javascript", ext: ["json", "map"], alias: ["json5"]},
+    {
+      name: "JavaScript",
+      mimes: ["text/javascript", "text/ecmascript", "application/javascript", "application/x-javascript", "application/ecmascript"],
+      mode: "javascript",
+      ext: ["js"],
+      alias: ["ecmascript", "js", "node"]
+    },
+    {
+      name: "JSON",
+      mimes: ["application/json", "application/x-json"],
+      mode: "javascript",
+      ext: ["json", "map"],
+      alias: ["json5"]
+    },
     {name: "JSON-LD", mime: "application/ld+json", mode: "javascript", ext: ["jsonld"], alias: ["jsonld"]},
     {name: "JSX", mime: "text/jsx", mode: "jsx", ext: ["jsx"]},
     {name: "Jinja2", mime: "null", mode: "jinja2"},
@@ -104,7 +132,13 @@
     {name: "Plain Text", mime: "text/plain", mode: "null", ext: ["txt", "text", "conf", "def", "list", "log"]},
     {name: "PLSQL", mime: "text/x-plsql", mode: "sql", ext: ["pls"]},
     {name: "PowerShell", mime: "application/x-powershell", mode: "powershell", ext: ["ps1", "psd1", "psm1"]},
-    {name: "Properties files", mime: "text/x-properties", mode: "properties", ext: ["properties", "ini", "in"], alias: ["ini", "properties"]},
+    {
+      name: "Properties files",
+      mime: "text/x-properties",
+      mode: "properties",
+      ext: ["properties", "ini", "in"],
+      alias: ["ini", "properties"]
+    },
     {name: "ProtoBuf", mime: "text/x-protobuf", mode: "protobuf", ext: ["proto"]},
     {name: "Python", mime: "text/x-python", mode: "python", ext: ["BUILD", "bzl", "py", "pyw"], file: /^(BUCK|BUILD)$/},
     {name: "Puppet", mime: "text/x-puppet", mode: "puppet", ext: ["pp"]},
@@ -120,7 +154,14 @@
     {name: "Scala", mime: "text/x-scala", mode: "clike", ext: ["scala"]},
     {name: "Scheme", mime: "text/x-scheme", mode: "scheme", ext: ["scm", "ss"]},
     {name: "SCSS", mime: "text/x-scss", mode: "css", ext: ["scss"]},
-    {name: "Shell", mime: "text/x-sh", mode: "shell", ext: ["sh", "ksh", "bash"], alias: ["bash", "sh", "zsh"], file: /^PKGBUILD$/},
+    {
+      name: "Shell",
+      mime: "text/x-sh",
+      mode: "shell",
+      ext: ["sh", "ksh", "bash"],
+      alias: ["bash", "sh", "zsh"],
+      file: /^PKGBUILD$/
+    },
     {name: "Sieve", mime: "application/sieve", mode: "sieve", ext: ["siv", "sieve"]},
     {name: "Slim", mimes: ["text/x-slim", "application/x-slim"], mode: "slim", ext: ["slim"]},
     {name: "Smalltalk", mime: "text/x-stsrc", mode: "smalltalk", ext: ["st"]},
@@ -154,7 +195,13 @@
     {name: "Velocity", mime: "text/velocity", mode: "velocity", ext: ["vtl"]},
     {name: "Verilog", mime: "text/x-verilog", mode: "verilog", ext: ["v"]},
     {name: "VHDL", mime: "text/x-vhdl", mode: "vhdl", ext: ["vhd", "vhdl"]},
-    {name: "XML", mimes: ["application/xml", "text/xml"], mode: "xml", ext: ["xml", "xsl", "xsd"], alias: ["rss", "wsdl", "xsd"]},
+    {
+      name: "XML",
+      mimes: ["application/xml", "text/xml"],
+      mode: "xml",
+      ext: ["xml", "xsl", "xsd"],
+      alias: ["rss", "wsdl", "xsd"]
+    },
     {name: "XQuery", mime: "application/xquery", mode: "xquery", ext: ["xy", "xquery"]},
     {name: "Yacas", mime: "text/x-yacas", mode: "yacas", ext: ["ys"]},
     {name: "YAML", mime: "text/x-yaml", mode: "yaml", ext: ["yaml", "yml"], alias: ["yml"]},
@@ -169,39 +216,39 @@
     if (info.mimes) info.mime = info.mimes[0];
   }
 
-  CodeMirror.findModeByMIME = function(mime) {
+  CodeMirror.findModeByMIME = function (mime) {
     mime = mime.toLowerCase();
     for (let i = 0; i < CodeMirror.modeInfo.length; i++) {
-        const info = CodeMirror.modeInfo[i];
-        if (info.mime == mime) return info;
+      const info = CodeMirror.modeInfo[i];
+      if (info.mime == mime) return info;
       if (info.mimes) for (let j = 0; j < info.mimes.length; j++)
         if (info.mimes[j] == mime) return info;
     }
   };
 
-  CodeMirror.findModeByExtension = function(ext) {
+  CodeMirror.findModeByExtension = function (ext) {
     for (let i = 0; i < CodeMirror.modeInfo.length; i++) {
-        const info = CodeMirror.modeInfo[i];
-        if (info.ext) for (let j = 0; j < info.ext.length; j++)
+      const info = CodeMirror.modeInfo[i];
+      if (info.ext) for (let j = 0; j < info.ext.length; j++)
         if (info.ext[j] == ext) return info;
     }
   };
 
-  CodeMirror.findModeByFileName = function(filename) {
+  CodeMirror.findModeByFileName = function (filename) {
     for (let i = 0; i < CodeMirror.modeInfo.length; i++) {
-        const info = CodeMirror.modeInfo[i];
-        if (info.file && info.file.test(filename)) return info;
+      const info = CodeMirror.modeInfo[i];
+      if (info.file && info.file.test(filename)) return info;
     }
-      const dot = filename.lastIndexOf(".");
-      const ext = dot > -1 && filename.substring(dot + 1, filename.length);
-      if (ext) return CodeMirror.findModeByExtension(ext);
+    const dot = filename.lastIndexOf(".");
+    const ext = dot > -1 && filename.substring(dot + 1, filename.length);
+    if (ext) return CodeMirror.findModeByExtension(ext);
   };
 
-  CodeMirror.findModeByName = function(name) {
+  CodeMirror.findModeByName = function (name) {
     name = name.toLowerCase();
     for (let i = 0; i < CodeMirror.modeInfo.length; i++) {
-        const info = CodeMirror.modeInfo[i];
-        if (info.name.toLowerCase() == name) return info;
+      const info = CodeMirror.modeInfo[i];
+      if (info.name.toLowerCase() == name) return info;
       if (info.alias) for (let j = 0; j < info.alias.length; j++)
         if (info.alias[j].toLowerCase() == name) return info;
     }

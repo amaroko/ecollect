@@ -1,4 +1,4 @@
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
 import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';

@@ -8,23 +8,23 @@
       <div class="card b">
         <div class="card-header bg-gray-lighter text-bold">Roles</div>
         <div class="list-group">
-          <a href="#" class="list-group-item" (click)="permission(settingActive=1, 'admin')"
-             [ngClass]="{'active': (settingActive == 1)}">Administrator</a>
-          <a href="#" class="list-group-item" (click)="permission(settingActive=2, 'telecollector')"
-             [ngClass]="{'active': (settingActive == 2)}">Tele Collector</a>
-          <a href="#" class="list-group-item" (click)="permission(settingActive=3, 'teamleader')"
-             [ngClass]="{'active': (settingActive == 3)}">Team
+          <a (click)="permission(settingActive=1, 'admin')" [ngClass]="{'active': (settingActive == 1)}" class="list-group-item"
+             href="#">Administrator</a>
+          <a (click)="permission(settingActive=2, 'telecollector')" [ngClass]="{'active': (settingActive == 2)}" class="list-group-item"
+             href="#">Tele Collector</a>
+          <a (click)="permission(settingActive=3, 'teamleader')" [ngClass]="{'active': (settingActive == 3)}" class="list-group-item"
+             href="#">Team
             Leader</a>
-          <a href="#" class="list-group-item" (click)="permission(settingActive=4, 'branchmanager')"
-             [ngClass]="{'active': (settingActive == 4)}">Branch
+          <a (click)="permission(settingActive=4, 'branchmanager')" [ngClass]="{'active': (settingActive == 4)}" class="list-group-item"
+             href="#">Branch
             Manager</a>
-          <a href="#" class="list-group-item" (click)="permission(settingActive=5, 'branchuser')"
-             [ngClass]="{'active': (settingActive == 5)}">Branch
+          <a (click)="permission(settingActive=5, 'branchuser')" [ngClass]="{'active': (settingActive == 5)}" class="list-group-item"
+             href="#">Branch
             User</a>
-          <a href="#" class="list-group-item" (click)="permission(settingActive=6, 'remedial')"
-             [ngClass]="{'active': (settingActive == 6)}">Remedial</a>
-          <a href="#" class="list-group-item" (click)="permission(settingActive=7, 'creditcards')"
-             [ngClass]="{'active': (settingActive == 7)}">Credit
+          <a (click)="permission(settingActive=6, 'remedial')" [ngClass]="{'active': (settingActive == 6)}" class="list-group-item"
+             href="#">Remedial</a>
+          <a (click)="permission(settingActive=7, 'creditcards')" [ngClass]="{'active': (settingActive == 7)}" class="list-group-item"
+             href="#">Credit
             Cards</a>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="card b">
         <div class="card-header bg-gray-lighter text-bold">Permissions</div>
         <div class="card-body">
-          <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)"
+          <form (submit)="submitForm($event, valForm.value)" [formGroup]="valForm" class="form-validate form-horizontal"
                 novalidate="">
             <div class="list-group">
               <div class="list-group-item d-flex align-items-center">
@@ -43,8 +43,8 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="administrator"
-                           [formControl]="valForm.controls['administrator']"/>
+                    <input [formControl]="valForm.controls['administrator']" formControlName="administrator"
+                           type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="activity" [formControl]="valForm.controls['activity']"/>
+                    <input [formControl]="valForm.controls['activity']" formControlName="activity" type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="teamleader" [formControl]="valForm.controls['teamleader']"/>
+                    <input [formControl]="valForm.controls['teamleader']" formControlName="teamleader" type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -77,8 +77,8 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="external_agents"
-                           [formControl]="valForm.controls['external_agents']"/>
+                    <input [formControl]="valForm.controls['external_agents']" formControlName="external_agents"
+                           type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -89,8 +89,8 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="configurations"
-                           [formControl]="valForm.controls['configurations']"/>
+                    <input [formControl]="valForm.controls['configurations']" formControlName="configurations"
+                           type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="mcoopcash" [formControl]="valForm.controls['mcoopcash']"/>
+                    <input [formControl]="valForm.controls['mcoopcash']" formControlName="mcoopcash" type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="collection" [formControl]="valForm.controls['collection']"/>
+                    <input [formControl]="valForm.controls['collection']" formControlName="collection" type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -123,7 +123,7 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="dashboard" [formControl]="valForm.controls['dashboard']"/>
+                    <input [formControl]="valForm.controls['dashboard']" formControlName="dashboard" type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -134,8 +134,8 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="remedial" [formControl]="valForm.controls['remedial']"
-                           checked=""/>
+                    <input [formControl]="valForm.controls['remedial']" checked="" formControlName="remedial"
+                           type="checkbox"/>
                   </label>
                 </div>
               </div>
@@ -146,8 +146,8 @@
                 </div>
                 <div class="ml-auto">
                   <label>
-                    <input type="checkbox" formControlName="creditcards"
-                           [formControl]="valForm.controls['creditcards']"/>
+                    <input [formControl]="valForm.controls['creditcards']" formControlName="creditcards"
+                           type="checkbox"/>
                   </label>
                 </div>
               </div>

@@ -3,32 +3,32 @@
 
 // Brainfuck mode created by Michael Kaminsky https://github.com/mkaminsky11
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object")
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd)
     define(["../../lib/codemirror"], mod);
   else
     mod(CodeMirror)
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
-    const reserve = "><+-.,[]".split("");
-    /*
-    comments can be either:
-    placed behind lines
+  const reserve = "><+-.,[]".split("");
+  /*
+  comments can be either:
+  placed behind lines
 
-          +++    this is a comment
+        +++    this is a comment
 
-    where reserved characters cannot be used
-    or in a loop
-    [
-      this is ok to use [ ] and stuff
-    ]
-    or preceded by #
-    */
-  CodeMirror.defineMode("brainfuck", function() {
+  where reserved characters cannot be used
+  or in a loop
+  [
+    this is ok to use [ ] and stuff
+  ]
+  or preceded by #
+  */
+  CodeMirror.defineMode("brainfuck", function () {
     return {
-      startState: function() {
+      startState: function () {
         return {
           commentLine: false,
           left: 0,
@@ -36,50 +36,45 @@
           commentLoop: false
         }
       },
-      token: function(stream, state) {
+      token: function (stream, state) {
         if (stream.eatSpace()) return null;
-        if(stream.sol()){
+        if (stream.sol()) {
           state.commentLine = false;
         }
-          const ch = stream.next().toString();
-          if(reserve.indexOf(ch) !== -1){
-          if(state.commentLine === true){
-            if(stream.eol()){
+        const ch = stream.next().toString();
+        if (reserve.indexOf(ch) !== -1) {
+          if (state.commentLine === true) {
+            if (stream.eol()) {
               state.commentLine = false;
             }
             return "comment";
           }
-          if(ch === "]" || ch === "["){
-            if(ch === "["){
+          if (ch === "]" || ch === "[") {
+            if (ch === "[") {
               state.left++;
-            }
-            else{
+            } else {
               state.right++;
             }
             return "bracket";
-          }
-          else if(ch === "+" || ch === "-"){
+          } else if (ch === "+" || ch === "-") {
             return "keyword";
-          }
-          else if(ch === "<" || ch === ">"){
+          } else if (ch === "<" || ch === ">") {
             return "atom";
-          }
-          else if(ch === "." || ch === ","){
+          } else if (ch === "." || ch === ",") {
             return "def";
           }
-        }
-        else{
+        } else {
           state.commentLine = true;
-          if(stream.eol()){
+          if (stream.eol()) {
             state.commentLine = false;
           }
           return "comment";
         }
-        if(stream.eol()){
+        if (stream.eol()) {
           state.commentLine = false;
         }
       }
     };
   });
-CodeMirror.defineMIME("text/x-brainfuck","brainfuck")
+  CodeMirror.defineMIME("text/x-brainfuck", "brainfuck")
 });

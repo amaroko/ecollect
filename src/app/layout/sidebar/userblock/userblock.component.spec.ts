@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import {TestBed, async, inject} from '@angular/core/testing';
+import {async, inject, TestBed} from '@angular/core/testing';
 
 import {UserblockComponent} from './userblock.component';
 import {UserblockService} from './userblock.service';

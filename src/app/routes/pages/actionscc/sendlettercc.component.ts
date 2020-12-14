@@ -5,8 +5,8 @@ import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {saveAs} from 'file-saver';
 import {environment} from '../../../../environments/environment';
-import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {ToasterService, ToasterConfig} from 'angular2-toaster/angular2-toaster';
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
+import {ToasterConfig, ToasterService} from 'angular2-toaster/angular2-toaster';
 import {NgxSpinnerService} from 'ngx-spinner';
 
 const URL = environment.valor;
@@ -17,6 +17,38 @@ const URL = environment.valor;
   styleUrls: ['./sendlettercc.component.scss']
 })
 export class SendLetterccComponent implements OnInit {
+
+  cardacct: string;
+  accountdetails: any;
+  guarantors: [];
+  teles: [];
+  model: any = {};
+  emails: any = [];
+  postcodes: any = [];
+  addresses: any = [];
+  letterbody: any = {};
+  filepath: string;
+  demands: any;
+  smsMessage: string;
+  file: string;
+  username: string;
+  uploadedfilepath: string;
+  demandtosend: string;
+  demandid: string;
+  demandhisdetails = {};
+  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
+  public uploader: FileUploader = new FileUploader({
+    url: URL
+  });
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      animation: 'fade'
+    });
 
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
@@ -70,40 +102,6 @@ export class SendLetterccComponent implements OnInit {
       // error server response
     };
   }
-
-  cardacct: string;
-  accountdetails: any;
-  guarantors: [];
-  teles: [];
-  model: any = {};
-  emails: any = [];
-  postcodes: any = [];
-  addresses: any = [];
-  letterbody: any = {};
-  filepath: string;
-  demands: any;
-  smsMessage: string;
-  file: string;
-  username: string;
-  uploadedfilepath: string;
-  demandtosend: string;
-  demandid: string;
-  demandhisdetails = {};
-  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
-
-  public uploader: FileUploader = new FileUploader({
-    url: URL
-  });
-  public hasBaseDropZoneOver = false;
-  public hasAnotherDropZoneOver = false;
-
-  public config: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: true,
-      tapToDismiss: false,
-      positionClass: 'toast-top-right',
-      animation: 'fade'
-    });
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;

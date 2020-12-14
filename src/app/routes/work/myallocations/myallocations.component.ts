@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GridOptions} from '@ag-grid-community/all-modules';
-import { environment } from '../../../../environments/environment';
-import { HttpClient} from '@angular/common/http';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 // import { EcolService } from '../../../services/ecol.ervice';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
@@ -33,9 +33,9 @@ export class MyallocationsComponent implements OnInit {
   public model: any = {};
   username: string;
   modules = AllModules;
-  private str: string;
   pivotPanelShow = true;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  private str: string;
 
   constructor(public http: HttpClient) {
     this.gridOptions = <GridOptions>{
@@ -83,62 +83,62 @@ export class MyallocationsComponent implements OnInit {
             return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'CUSTNUMBER',
         field: 'custnumber',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CUSTNAME',
         field: 'client_name',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'DAYSINARREARS',
         field: 'daysinarr',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'TOTALARREARS',
         field: 'instamount',
         valueFormatter: this.currencyFormatter,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'OUSTBALANCE',
         field: 'oustbalance',
         valueFormatter: this.currencyFormatter,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'BUCKET',
         field: 'bucket',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'AROCODE',
         field: 'arocode',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'RROCODE',
         field: 'rrocode',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'SECTION',
         field: 'section',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'COLOFFICER',
         field: 'colofficer',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       }
     ];
-    this.sortingOrder = ['desc', 'asc', null ];
+    this.sortingOrder = ['desc', 'asc', null];
     this.defaultColDef = {
       width: 120,
       resizable: true,
@@ -160,9 +160,9 @@ export class MyallocationsComponent implements OnInit {
           statusPanel: 'agTotalRowCountComponent',
           align: 'center'
         },
-        { statusPanel: 'agFilteredRowCountComponent' },
-        { statusPanel: 'agSelectedRowCountComponent' },
-        { statusPanel: 'agAggregationComponent' }
+        {statusPanel: 'agFilteredRowCountComponent'},
+        {statusPanel: 'agSelectedRowCountComponent'},
+        {statusPanel: 'agAggregationComponent'}
       ]
     };
   }

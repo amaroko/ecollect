@@ -17,7 +17,7 @@
               <div>Switch Small</div>
               <div class="ml-auto">
                 <label class="switch switch-sm m-0">
-                  <input type="checkbox" checked="checked"/>
+                  <input checked="checked" type="checkbox"/>
                   <span></span>
                 </label>
               </div>
@@ -26,7 +26,7 @@
               <div>Switch</div>
               <div class="ml-auto">
                 <label class="switch m-0">
-                  <input type="checkbox" checked="checked"/>
+                  <input checked="checked" type="checkbox"/>
                   <span></span>
                 </label>
               </div>
@@ -35,7 +35,7 @@
               <div>Switch Large</div>
               <div class="ml-auto">
                 <label class="switch switch-lg m-0">
-                  <input type="checkbox" checked="checked"/>
+                  <input checked="checked" type="checkbox"/>
                   <span></span>
                 </label>
               </div>
@@ -44,11 +44,11 @@
               <div>Switch Radio</div>
               <div class="ml-auto d-flex">
                 <label class="switch switch-lg m-0 mr-2">
-                  <input type="radio" checked="checked" name="radioSwitch"/>
+                  <input checked="checked" name="radioSwitch" type="radio"/>
                   <span></span>
                 </label>
                 <label class="switch switch-lg m-0">
-                  <input type="radio" name="radioSwitch"/>
+                  <input name="radioSwitch" type="radio"/>
                   <span></span>
                 </label>
               </div>
@@ -65,9 +65,9 @@
                 <div class="card card-default">
                   <div class="card-header">Input</div>
                   <div class="card-body">
-                    <label for="" [style.color]="colorDemo1">Show me color</label>
+                    <label [style.color]="colorDemo1" for="">Show me color</label>
                     <label>
-                      <input class="form-control" [(colorPicker)]="colorDemo1" [value]="colorDemo1"/>
+                      <input [(colorPicker)]="colorDemo1" [value]="colorDemo1" class="form-control"/>
                     </label>
                   </div>
                 </div>
@@ -76,8 +76,8 @@
                 <div class="card card-default">
                   <div class="card-header">Html element:</div>
                   <div class="card-body">
-                    <div class="h1 clickable mt-lg" [(colorPicker)]="colorDemo2" [cpPosition]="'bottom'"
-                         [style.color]="colorDemo2" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true">Change
+                    <div [(colorPicker)]="colorDemo2" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true"
+                         [cpPosition]="'bottom'" [style.color]="colorDemo2" class="h1 clickable mt-lg">Change
                       me!
                     </div>
                   </div>
@@ -90,8 +90,8 @@
                   <div class="card-header">Cancel button</div>
                   <div class="card-body">
                     <label>
-                      <input class="form-control" [(colorPicker)]="colorDemo3" [value]="colorDemo3"
-                             [cpCancelButton]="true" [cpHeight]="'310px'"/>
+                      <input [(colorPicker)]="colorDemo3" [cpCancelButton]="true" [cpHeight]="'310px'"
+                             [value]="colorDemo3" class="form-control"/>
                     </label>
                   </div>
                 </div>
@@ -101,8 +101,8 @@
                   <div class="card-header">Output format</div>
                   <div class="card-body">
                     <label>
-                      <input class="form-control" [(colorPicker)]="colorDemo4" [value]="colorDemo4"
-                             [cpOutputFormat]="'rgba'"/>
+                      <input [(colorPicker)]="colorDemo4" [cpOutputFormat]="'rgba'" [value]="colorDemo4"
+                             class="form-control"/>
                     </label>
                   </div>
                 </div>
@@ -117,12 +117,12 @@
           <div class="col-md-6">
             <p>Basic</p>
             <label>
-              <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                     name="dp-basic" [bsConfig]="bsConfig">
+              <input #dp="bsDatepicker" [bsConfig]="bsConfig" [bsValue]="bsValue" bsDatepicker class="form-control"
+                     name="dp-basic" type="text">
             </label>
             <p class="mt-3">Range</p>
             <label>
-              <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="bsConfig">
+              <input #drp="bsDaterangepicker" [bsConfig]="bsConfig" bsDaterangepicker class="form-control">
             </label>
           </div>
         </div>
@@ -151,13 +151,13 @@
           <label class="col-md-2 col-form-label">ngSelect2</label>
           <div class="col-md-6">
             <label class="mt">Single Select</label>
-            <ngx-select [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)"
-                        (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)"
+            <ngx-select (data)="refreshValue($event)" (removed)="removed($event)" (selected)="selected($event)" (typed)="typed($event)"
+                        [allowClear]="true" [disabled]="disabled" [items]="items"
                         placeholder="No city selected">
             </ngx-select>
             <label class="mt">Multiple</label>
-            <ngx-select (data)="value" [multiple]="true" [items]="items" [disabled]="disabled"
-                        (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)"
+            <ngx-select (data)="value" (data)="refreshValue($event)" (removed)="removed($event)" (selected)="selected($event)"
+                        [disabled]="disabled" [items]="items" [multiple]="true"
                         placeholder="No city selected"></ngx-select>
           </div>
         </div>
@@ -170,22 +170,22 @@
               Using
               <code>NgModel</code>
             </label>
-            <label for="1"></label><input id="1" name="phone" [(ngModel)]="myModel" [textMask]="{mask: mask}"
-                                          type="text" class="form-control"/>
+            <label for="1"></label><input [(ngModel)]="myModel" [textMask]="{mask: mask}" class="form-control" id="1"
+                                          name="phone" type="text"/>
             <div>Model value: {{myModel || "[empty]"}}</div>
             <label class="mt">
               Using
               <code>NgModel</code> with initial value
             </label>
-            <label for="2"></label><input id="2" name="phoneWithValue" [(ngModel)]="modelWithValue"
-                                          [textMask]="{mask: mask}" type="text" class="form-control"/>
+            <label for="2"></label><input [(ngModel)]="modelWithValue" [textMask]="{mask: mask}" class="form-control"
+                                          id="2" name="phoneWithValue" type="text"/>
             <div>Model value: {{modelWithValue || "[empty]"}}</div>
             <label class="mt">
               Using
               <code>FormControl</code> with initial value
             </label>
-            <label for="3"></label><input id="3" name="phoneFormControl" [formControl]='formControlInput'
-                                          [textMask]="{mask: mask}" type="text" class="form-control"/>
+            <label for="3"></label><input [formControl]='formControlInput' [textMask]="{mask: mask}" class="form-control"
+                                          id="3" name="phoneFormControl" type="text"/>
             <div>Model value: {{formControlInput.value || "[empty]"}}</div>
           </div>
         </div>
@@ -198,21 +198,21 @@
           <div class="col-md-10">
             <div class="mb-2">
               <label class="mt">Simple Input with two items</label>
-              <tag-input theme='minimal' name="tagName1" [ngModel]="['Typescript', 'Angular 2']"></tag-input>
+              <tag-input [ngModel]="['Typescript', 'Angular 2']" name="tagName1" theme='minimal'></tag-input>
             </div>
             <div class="mb-2">
               <label class="mt-lg">Input tag that allows max 3 tags</label>
-              <tag-input theme='minimal' name="tagName2" [ngModel]="['Javascript', 'Typescript']" [maxItems]="3"
-                         placeholder="Insert a new item"></tag-input>
+              <tag-input [maxItems]="3" [ngModel]="['Javascript', 'Typescript']" name="tagName2" placeholder="Insert a new item"
+                         theme='minimal'></tag-input>
             </div>
             <div class="mb-2">
               <label class="mt-lg">A read-only tag input</label>
-              <tag-input theme='minimal' name="tagName3" [ngModel]="['Javascript', 'Typescript']"></tag-input>
+              <tag-input [ngModel]="['Javascript', 'Typescript']" name="tagName3" theme='minimal'></tag-input>
             </div>
             <div class="mb-2">
               <label class="mt-lg">An input which requires all tags to start with '@' and end with '$'</label>
-              <tag-input theme='minimal' name="tagName4" [ngModel]="['@item$']" [errorMessages]="errorMessages"
-                         [validators]="validators"></tag-input>
+              <tag-input [errorMessages]="errorMessages" [ngModel]="['@item$']" [validators]="validators" name="tagName4"
+                         theme='minimal'></tag-input>
             </div>
           </div>
         </div>

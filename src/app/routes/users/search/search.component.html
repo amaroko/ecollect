@@ -5,7 +5,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-12">
-      <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)"
+      <form (submit)="submitForm($event, valForm.value)" [formGroup]="valForm" class="form-validate form-horizontal"
             novalidate="">
         <!-- START card-->
         <div class="card card-default">
@@ -14,12 +14,12 @@
               <div class="col-xl-12 col-lg-6 form-inline">
                 <label> </label>
                 <label>
-                  <input class="form-control" type="text" formControlName="username" placeholder="username"
-                         [formControl]="valForm.controls['username']"
-                         [ngClass]="{ 'is-invalid': valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched) }"/>
+                  <input [formControl]="valForm.controls['username']" [ngClass]="{ 'is-invalid': valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched) }" class="form-control" formControlName="username"
+                         placeholder="username"
+                         type="text"/>
                 </label>
-                <button type="button" class="btn btn-outline-inverse" (click)="search(valForm.value.username)"
-                        [disabled]="valForm.controls['username'].hasError('required')"><span
+                <button (click)="search(valForm.value.username)" [disabled]="valForm.controls['username'].hasError('required')" class="btn btn-outline-inverse"
+                        type="button"><span
                   class="fa fa-search"></span>
                   Search
                 </button>
@@ -30,29 +30,29 @@
               <div class="col-lg-4 mb-3">
                 <label>First Name</label>
                 <label>
-                  <input class="form-control" type="text" formControlName="firstname"
-                         [formControl]="valForm.controls['firstname']"/>
+                  <input [formControl]="valForm.controls['firstname']" class="form-control" formControlName="firstname"
+                         type="text"/>
                 </label>
-                <span class="text-danger"
-                      *ngIf="valForm.controls['firstname'].hasError('required') && (valForm.controls['firstname'].dirty || valForm.controls['firstname'].touched)">firstname
+                <span *ngIf="valForm.controls['firstname'].hasError('required') && (valForm.controls['firstname'].dirty || valForm.controls['firstname'].touched)"
+                      class="text-danger">firstname
                   is required</span>
               </div>
               <div class="col-lg-4 mb-3">
                 <label>Last Name</label>
                 <label>
-                  <input class="form-control" type="text" formControlName="lastname"
-                         [formControl]="valForm.controls['lastname']"/>
+                  <input [formControl]="valForm.controls['lastname']" class="form-control" formControlName="lastname"
+                         type="text"/>
                 </label>
-                <span class="text-danger"
-                      *ngIf="valForm.controls['lastname'].hasError('required') && (valForm.controls['lastname'].dirty || valForm.controls['lastname'].touched)">lastname
+                <span *ngIf="valForm.controls['lastname'].hasError('required') && (valForm.controls['lastname'].dirty || valForm.controls['lastname'].touched)"
+                      class="text-danger">lastname
                   is required</span>
               </div>
               <div class="col-lg-4 mb-3">
                 <label>Surname</label>
                 <div class="input-group">
                   <label>
-                    <input class="form-control" type="text" formControlName="surname"
-                           [formControl]="valForm.controls['surname']"/>
+                    <input [formControl]="valForm.controls['surname']" class="form-control" formControlName="surname"
+                           type="text"/>
                   </label>
                 </div>
               </div>
@@ -61,7 +61,7 @@
               <div class="col-lg-4 mb-3">
                 <label>Division</label>
                 <label>
-                  <select class="form-control" formControlName="division" [formControl]="valForm.controls['division']">
+                  <select [formControl]="valForm.controls['division']" class="form-control" formControlName="division">
                     <option value="">Please select</option>
                     <option value="SUPPORT">SUPPORT</option>
                     <option value="REMEDIAL">REMEDIAL</option>
@@ -70,28 +70,28 @@
                     <option value="TELECOLLECTOR">TELECOLLECTOR</option>
                   </select>
                 </label>
-                <span class="text-danger"
-                      *ngIf="valForm.controls['division'].hasError('required') && (valForm.controls['division'].dirty || valForm.controls['division'].touched)">division
+                <span *ngIf="valForm.controls['division'].hasError('required') && (valForm.controls['division'].dirty || valForm.controls['division'].touched)"
+                      class="text-danger">division
                   is required</span>
               </div>
               <div class="col-lg-4 mb-3">
                 <label>Branch</label>
                 <label>
-                  <select class="form-control" formControlName="branch" [formControl]="valForm.controls['branch']">
+                  <select [formControl]="valForm.controls['branch']" class="form-control" formControlName="branch">
                     <option value="">Please select</option>
                     <option *ngFor="let b of branches" [value]="b?.branchcode">{{b?.branchname}}</option>
                   </select>
                 </label>
-                <span class="text-danger"
-                      *ngIf="valForm.controls['branch'].hasError('required') && (valForm.controls['branch'].dirty || valForm.controls['branch'].touched)">branch
+                <span *ngIf="valForm.controls['branch'].hasError('required') && (valForm.controls['branch'].dirty || valForm.controls['branch'].touched)"
+                      class="text-danger">branch
                   is required</span>
               </div>
               <div class="col-lg-4 mb-3">
                 <label>Manager</label>
                 <div class="input-group">
                   <label>
-                    <input class="form-control" type="text" formControlName="manager"
-                           [formControl]="valForm.controls['manager']"/>
+                    <input [formControl]="valForm.controls['manager']" class="form-control" formControlName="manager"
+                           type="text"/>
                   </label>
                 </div>
               </div>
@@ -100,8 +100,8 @@
               <div class="col-lg-4 mb-3">
                 <label>Email</label>
                 <label>
-                  <input class="form-control" type="text" formControlName="email"
-                         [formControl]="valForm.controls['email']"/>
+                  <input [formControl]="valForm.controls['email']" class="form-control" formControlName="email"
+                         type="text"/>
                 </label>
               </div>
               <!--<div class="col-lg-4 mb-3">
@@ -112,7 +112,7 @@
               <div class="col-lg-4 mb-3">
                 <label>Team</label>
                 <label>
-                  <select class="form-control" formControlName="team" [formControl]="valForm.controls['team']">
+                  <select [formControl]="valForm.controls['team']" class="form-control" formControlName="team">
                     <option value="">Please select</option>
                     <option value="CMD-COLLECTIONS">CMD-COLLECTIONS</option>
                     <option value="CMD-REMEDIAL">CMD-REMEDIAL</option>
@@ -121,17 +121,17 @@
                     <option value="OTHER">OTHER</option>
                   </select>
                 </label>
-                <span class="text-danger"
-                      *ngIf="valForm.controls['team'].hasError('required') && (valForm.controls['team'].dirty || valForm.controls['team'].touched)">Team
+                <span *ngIf="valForm.controls['team'].hasError('required') && (valForm.controls['team'].dirty || valForm.controls['team'].touched)"
+                      class="text-danger">Team
                   is required</span>
               </div>
               <div class="col-lg-4 mb-3">
                 <label>Expiry Date</label>
                 <div class="input-group">
                   <label>
-                    <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                           name="dp-basic" [bsConfig]="bsConfig" formControlName="expirydate"
-                           [formControl]="valForm.controls['expirydate']"/>
+                    <input #dp="bsDatepicker" [bsConfig]="bsConfig" [bsValue]="bsValue" [formControl]="valForm.controls['expirydate']" bsDatepicker
+                           class="form-control" formControlName="expirydate" name="dp-basic"
+                           type="text"/>
                   </label>
                 </div>
               </div>
@@ -142,8 +142,8 @@
                 <div class="col-md-10">
                   <div class="ml-auto">
                     <label class="switch switch-lg m-0">
-                      <input type="checkbox" checked="checked" formControlName="active"
-                             [formControl]="valForm.controls['active']"/>
+                      <input [formControl]="valForm.controls['active']" checked="checked" formControlName="active"
+                             type="checkbox"/>
                       <span></span>
                     </label>
                   </div>
@@ -157,44 +157,44 @@
                 <div class="col-md-10">
                   <div class="c-radio">
                     <label>
-                      <input type="radio" name="role" value="admin" formControlName="role"
-                             [formControl]="valForm.controls['role']"/>
+                      <input [formControl]="valForm.controls['role']" formControlName="role" name="role" type="radio"
+                             value="admin"/>
                       <span class="fa fa-circle"></span>Administrator</label>
                   </div>
                   <div class="c-radio">
                     <label>
-                      <input type="radio" name="role" value="telecollector" checked="" formControlName="role"
-                             [formControl]="valForm.controls['role']"/>
+                      <input [formControl]="valForm.controls['role']" checked="" formControlName="role" name="role" type="radio"
+                             value="telecollector"/>
                       <span class="fa fa-circle"></span>Tele Collector</label>
                   </div>
                   <div class="c-radio">
                     <label>
-                      <input type="radio" name="role" value="teamleader" formControlName="role"
-                             [formControl]="valForm.controls['role']"/>
+                      <input [formControl]="valForm.controls['role']" formControlName="role" name="role" type="radio"
+                             value="teamleader"/>
                       <span class="fa fa-circle"></span>Team Leader</label>
                   </div>
                   <div class="c-radio">
                     <label>
-                      <input type="radio" name="role" value="remedial" formControlName="role"
-                             [formControl]="valForm.controls['role']"/>
+                      <input [formControl]="valForm.controls['role']" formControlName="role" name="role" type="radio"
+                             value="remedial"/>
                       <span class="fa fa-circle"></span>Remedial</label>
                   </div>
                   <div class="c-radio">
                     <label>
-                      <input type="radio" name="role" value="branchuser" formControlName="role"
-                             [formControl]="valForm.controls['role']"/>
+                      <input [formControl]="valForm.controls['role']" formControlName="role" name="role" type="radio"
+                             value="branchuser"/>
                       <span class="fa fa-circle"></span>Branch User</label>
                   </div>
                   <div class="c-radio">
                     <label>
-                      <input type="radio" name="role" value="branchmanager" formControlName="role"
-                             [formControl]="valForm.controls['role']"/>
+                      <input [formControl]="valForm.controls['role']" formControlName="role" name="role" type="radio"
+                             value="branchmanager"/>
                       <span class="fa fa-circle"></span>Branch Manager</label>
                   </div>
                   <div class="c-radio">
                     <label>
-                      <input type="radio" name="role" value="creditcards" formControlName="role"
-                             [formControl]="valForm.controls['role']"/>
+                      <input [formControl]="valForm.controls['role']" formControlName="role" name="role" type="radio"
+                             value="creditcards"/>
                       <span class="fa fa-circle"></span>Credit Cards</label>
                   </div>
                 </div>

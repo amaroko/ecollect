@@ -4,32 +4,32 @@
   <div class="navbar-header">
     <a class="navbar-brand" href="#/">
       <div class="brand-logo">
-        <img class="img-fluid" src="assets/img/logo.png" alt="App Logo"/>
+        <img alt="App Logo" class="img-fluid" src="assets/img/logo.png"/>
       </div>
       <div class="brand-logo-collapsed">
-        <img class="img-fluid" src="assets/img/logo-single.png" alt="App Logo"/>
+        <img alt="App Logo" class="img-fluid" src="assets/img/logo-single.png"/>
       </div>
     </a>
-    <button class="navbar-toggler" type="button" (click)="navCollapsed = !navCollapsed">
+    <button (click)="navCollapsed = !navCollapsed" class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
   <!-- END navbar header-->
   <!-- START Nav wrapper-->
-  <div class="navbar-collapse collapse" [collapse]="navCollapsed">
+  <div [collapse]="navCollapsed" class="navbar-collapse collapse">
     <!-- Navbar Menu -->
     <ul class="nav navbar-nav mr-auto flex-column flex-lg-row">
-      <li class="nav-item" *ngFor="let item of menuItems" [ngClass]="{'dropdown': item.submenu}" dropdown>
-        <a class="nav-link" *ngIf="!item.heading && !item.submenu" [routerLink]="item.link" [title]="item.text">
+      <li *ngFor="let item of menuItems" [ngClass]="{'dropdown': item.submenu}" class="nav-item" dropdown>
+        <a *ngIf="!item.heading && !item.submenu" [routerLink]="item.link" [title]="item.text" class="nav-link">
           <span>{{(item.translate | translate) || item.text}}</span>
         </a>
-        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle *ngIf="item.submenu">
+        <a *ngIf="item.submenu" class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
           <span>{{(item.translate | translate) || item.text}}</span>
         </a>
         <!-- START Dropdown menu-->
         <div *dropdownMenu class="dropdown-menu animated fadeInUp">
-          <a class="dropdown-item" *ngFor="let subitem of item.submenu" [routerLink]="subitem.link"
-             [title]="subitem.text">
+          <a *ngFor="let subitem of item.submenu" [routerLink]="subitem.link" [title]="subitem.text"
+             class="dropdown-item">
             <span>{{(subitem.translate | translate) || subitem.text}}</span>
           </a>
         </div>
@@ -40,20 +40,20 @@
     <ul class="navbar-nav flex-row">
       <!-- START lock screen-->
       <li class="nav-item">
-        <a class="nav-link" title="Lock screen" [routerLink]="'/lock'">
+        <a [routerLink]="'/lock'" class="nav-link" title="Lock screen">
           <em class="icon-lock"></em>
         </a>
       </li>
       <!-- END lock screen-->
       <!-- Search icon-->
       <li class="nav-item">
-        <a class="nav-link" (click)="openNavSearch($event)">
+        <a (click)="openNavSearch($event)" class="nav-link">
           <em class="icon-magnifier"></em>
         </a>
       </li>
       <!-- Fullscreen (only desktops)-->
       <li class="nav-item d-none d-md-block">
-        <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)">
+        <a #fsbutton (click)="toggleFullScreen($event)" class="nav-link">
           <em class="fa fa-expand"></em>
         </a>
       </li>
@@ -144,7 +144,7 @@
       <!-- END User menu-->
       <!-- START Offsidebar button-->
       <li class="nav-item">
-        <a class="nav-link" (click)="toggleOffsidebar(); $event.stopPropagation()">
+        <a (click)="toggleOffsidebar(); $event.stopPropagation()" class="nav-link">
           <em class="icon-notebook"></em>
         </a>
       </li>
@@ -153,6 +153,6 @@
     <!-- END Right Navbar-->
   </div>
   <!-- END Nav wrapper-->
-  <app-navsearch [visible]="getNavSearchVisible()" (onclose)="setNavSearchVisible(false)"></app-navsearch>
+  <app-navsearch (onclose)="setNavSearchVisible(false)" [visible]="getNavSearchVisible()"></app-navsearch>
 </nav>
 <!-- END Top Navbar-->

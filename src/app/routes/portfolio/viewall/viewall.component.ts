@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {JqxDomService} from '../../../shared/jqwidgets-dom.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import * as $ from 'jquery';
 import {jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import {jqxGridComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import {EcolService} from '../../../services/ecol.service';
@@ -21,11 +19,6 @@ export class ViewallComponent implements OnInit {
   total: any = {};
   custnumber: string;
   user = JSON.parse(localStorage.getItem('currentUser'));
-
-  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
-
-  }
-
   source: any =
     {
       url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=150',
@@ -49,9 +42,7 @@ export class ViewallComponent implements OnInit {
         ],
       datatype: 'json'
     };
-
   dataAdapter: any = new jqx.dataAdapter(this.source);
-
   columns: any[] =
     [
       {
@@ -86,8 +77,11 @@ export class ViewallComponent implements OnInit {
       {text: 'STATUS', datafield: 'status', filtertype: 'input'}
 
     ];
-
   accnumber: String;
+
+  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
+
+  }
 
   onClickMe(event, rowdata) {
     // console.log('ACCNUMBER: ' + event.target.textContent);

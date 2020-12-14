@@ -63,10 +63,10 @@
                   <p class="mb-0">Fast and simple check out</p>
                   <p>Quick access to order history</p>
                   <div class="my-3">
-                    <button class="btn btn-primary" type="button" (click)="stepgroup2.isOpen = true">Register</button>
+                    <button (click)="stepgroup2.isOpen = true" class="btn btn-primary" type="button">Register</button>
                   </div>
                   <hr/>
-                  <button class="btn btn-secondary" type="button" (click)="stepgroup2.isOpen = true">Checkout as Guest
+                  <button (click)="stepgroup2.isOpen = true" class="btn btn-secondary" type="button">Checkout as Guest
                   </button>
                 </div>
                 <div class="col-lg-6">
@@ -75,13 +75,13 @@
                   </div>
                   <div class="form-group">
                     <label>
-                      <input class="form-control" type="text" name="login-name" required=""
-                             placeholder="Email Address"/>
+                      <input class="form-control" name="login-name" placeholder="Email Address" required=""
+                             type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>
-                      <input class="form-control" type="text" name="login-password" required="" placeholder="Password"/>
+                      <input class="form-control" name="login-password" placeholder="Password" required="" type="text"/>
                     </label>
                   </div>
                   <p><a href="#">Forgot password?</a>
@@ -100,13 +100,13 @@
                   <div class="form-group">
                     <label>First Name*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-name" required=""/>
+                      <input class="form-control" name="checkout-name" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Company</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-company"/>
+                      <input class="form-control" name="checkout-company" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -114,13 +114,13 @@
                   <div class="form-group">
                     <label>Last Name*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-lastname" required=""/>
+                      <input class="form-control" name="checkout-lastname" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Email Address*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-email" required=""/>
+                      <input class="form-control" name="checkout-email" required="" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -130,7 +130,7 @@
                   <div class="form-group">
                     <label>Address</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-address" required=""/>
+                      <input class="form-control" name="checkout-address" required="" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -140,19 +140,19 @@
                   <div class="form-group">
                     <label>City*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-city" required=""/>
+                      <input class="form-control" name="checkout-city" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Zip/Postal Code*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-zip" required=""/>
+                      <input class="form-control" name="checkout-zip" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Telephone*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-telephone" required=""/>
+                      <input class="form-control" name="checkout-telephone" required="" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -160,19 +160,19 @@
                   <div class="form-group">
                     <label>State/Province*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-state" required=""/>
+                      <input class="form-control" name="checkout-state" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Country*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-country" required=""/>
+                      <input class="form-control" name="checkout-country" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Fax</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-fax"/>
+                      <input class="form-control" name="checkout-fax" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -180,12 +180,12 @@
               <div class="my-2">
                 <div class="c-radio">
                   <label>
-                    <input id="chk-guest" type="radio" name="checkout-ship-to" value="address"/>
+                    <input id="chk-guest" name="checkout-ship-to" type="radio" value="address"/>
                     <span class="fa fa-check"></span>Ship to this address</label>
                 </div>
                 <div class="c-radio">
                   <label>
-                    <input id="chk-guest" type="radio" name="checkout-ship-to" value="other"/>
+                    <input id="chk-guest" name="checkout-ship-to" type="radio" value="other"/>
                     <span class="fa fa-check"></span>Ship to different address</label>
                 </div>
               </div>
@@ -193,7 +193,7 @@
                 <p class="float-right text-sm"><i>Fields marked with (*) are required</i>
                 </p>
                 <div class="float-left">
-                  <button class="btn btn-primary" type="button" (click)="stepgroup3.isOpen = true">Continue</button>
+                  <button (click)="stepgroup3.isOpen = true" class="btn btn-primary" type="button">Continue</button>
                 </div>
               </div>
             </div>
@@ -207,13 +207,13 @@
                   <div class="form-group">
                     <label>First Name*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-name" required=""/>
+                      <input class="form-control" name="checkout-ship-name" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Company</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-company"/>
+                      <input class="form-control" name="checkout-ship-company" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -221,13 +221,13 @@
                   <div class="form-group">
                     <label>Last Name*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-lastname" required=""/>
+                      <input class="form-control" name="checkout-ship-lastname" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Email Address*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-email" required=""/>
+                      <input class="form-control" name="checkout-ship-email" required="" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -237,7 +237,7 @@
                   <div class="form-group">
                     <label>Address</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-address" required=""/>
+                      <input class="form-control" name="checkout-ship-address" required="" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -247,19 +247,19 @@
                   <div class="form-group">
                     <label>City*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-city" required=""/>
+                      <input class="form-control" name="checkout-ship-city" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Zip/Postal Code*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-zip" required=""/>
+                      <input class="form-control" name="checkout-ship-zip" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Telephone*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-telephone" required=""/>
+                      <input class="form-control" name="checkout-ship-telephone" required="" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -267,19 +267,19 @@
                   <div class="form-group">
                     <label>State/Province*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-state" required=""/>
+                      <input class="form-control" name="checkout-ship-state" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Country*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-country" required=""/>
+                      <input class="form-control" name="checkout-ship-country" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
                     <label>Fax</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-ship-fax"/>
+                      <input class="form-control" name="checkout-ship-fax" type="text"/>
                     </label>
                   </div>
                 </div>
@@ -287,7 +287,7 @@
               <div class="my-2">
                 <div class="checkbox c-checkbox">
                   <label>
-                    <input id="chk-guest" type="checkbox" name="checkout-use-bill-address"/>
+                    <input id="chk-guest" name="checkout-use-bill-address" type="checkbox"/>
                     <span class="fa fa-check"></span>Use Billing Address</label>
                 </div>
               </div>
@@ -295,7 +295,7 @@
                 <p class="float-right text-sm"><i>Fields marked with (*) are required</i>
                 </p>
                 <div class="float-left">
-                  <button class="btn btn-primary" type="button" (click)="stepgroup4.isOpen = true">Continue</button>
+                  <button (click)="stepgroup4.isOpen = true" class="btn btn-primary" type="button">Continue</button>
                 </div>
               </div>
             </div>
@@ -320,7 +320,7 @@
                   <td>
                     <div class="c-radio">
                       <label>
-                        <input id="chk-guest" type="radio" name="checkout-ship" value="free"/>
+                        <input id="chk-guest" name="checkout-ship" type="radio" value="free"/>
                         <span class="fa fa-check"></span>
                       </label>
                     </div>
@@ -337,7 +337,7 @@
                   <td>
                     <div class="c-radio">
                       <label>
-                        <input id="chk-guest" type="radio" name="checkout-ship" value="std"/>
+                        <input id="chk-guest" name="checkout-ship" type="radio" value="std"/>
                         <span class="fa fa-check"></span>
                       </label>
                     </div>
@@ -354,7 +354,7 @@
                   <td>
                     <div class="c-radio">
                       <label>
-                        <input id="chk-guest" type="radio" name="checkout-ship" value="next"/>
+                        <input id="chk-guest" name="checkout-ship" type="radio" value="next"/>
                         <span class="fa fa-check"></span>
                       </label>
                     </div>
@@ -371,7 +371,7 @@
               </table>
               <div class="pt-2 clearfix">
                 <div class="float-left">
-                  <button class="btn btn-primary" type="button" (click)="stepgroup5.isOpen = true">Continue</button>
+                  <button (click)="stepgroup5.isOpen = true" class="btn btn-primary" type="button">Continue</button>
                 </div>
               </div>
             </div>
@@ -385,29 +385,29 @@
                   <div class="form-group">
                     <div class="c-radio">
                       <label>
-                        <input class="form-control" id="chk-guest" type="radio" name="checkout-pay" value="paypal"
-                               checked="checked"/>
+                        <input checked="checked" class="form-control" id="chk-guest" name="checkout-pay" type="radio"
+                               value="paypal"/>
                         <span class="fa fa-check"></span>Paypal</label>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="c-radio">
                       <label>
-                        <input class="form-control" id="chk-guest" type="radio" name="checkout-pay" value="check"/>
+                        <input class="form-control" id="chk-guest" name="checkout-pay" type="radio" value="check"/>
                         <span class="fa fa-check"></span>Check / Money order</label>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="c-radio">
                       <label>
-                        <input class="form-control" id="chk-guest" type="radio" name="checkout-pay" value="creditcard"/>
+                        <input class="form-control" id="chk-guest" name="checkout-pay" type="radio" value="creditcard"/>
                         <span class="fa fa-check"></span>Credit Card (saved)</label>
                     </div>
                   </div>
                   <div class="form-group">
                     <label>Name on Card*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-cc-name" required=""/>
+                      <input class="form-control" name="checkout-cc-name" required="" type="text"/>
                     </label>
                   </div>
                   <div class="form-group">
@@ -424,7 +424,7 @@
                   <div class="form-group">
                     <label>Credit Card Number*</label>
                     <label>
-                      <input class="form-control" type="text" name="checkout-cc-number" required=""/>
+                      <input class="form-control" name="checkout-cc-number" required="" type="text"/>
                     </label>
                   </div>
                   <div class="row">
@@ -472,7 +472,7 @@
                       <div class="form-group">
                         <label>CNV*</label>
                         <label>
-                          <input class="form-control" type="text" name="checkout-cc-verification" required=""/>
+                          <input class="form-control" name="checkout-cc-verification" required="" type="text"/>
                         </label>
                       </div>
                     </div>
@@ -484,7 +484,7 @@
               <p class="float-right text-sm"><i>Fields marked with (*) are required</i>
               </p>
               <div class="float-left">
-                <button class="btn btn-primary" type="button" (click)="stepgroup6.isOpen = true">Continue</button>
+                <button (click)="stepgroup6.isOpen = true" class="btn btn-primary" type="button">Continue</button>
               </div>
             </div>
           </accordion-group>
@@ -538,7 +538,7 @@
                     <td class="order-item-name">Lorem Ipsum dolor</td>
                     <td class="order-qty">
                       <label>
-                        <input class="form-control" type="text" name="checkout-qty" value="1"/>
+                        <input class="form-control" name="checkout-qty" type="text" value="1"/>
                       </label>
                     </td>
                     <td class="order-price">$825.00</td>
@@ -552,7 +552,7 @@
                     <td class="order-item-name">Lorem Ipsum dolor</td>
                     <td class="order-qty">
                       <label>
-                        <input class="form-control" type="text" name="checkout-qty" value="1"/>
+                        <input class="form-control" name="checkout-qty" type="text" value="1"/>
                       </label>
                     </td>
                     <td class="order-price">$825.00</td>
@@ -563,7 +563,7 @@
                 </table>
               </div>
               <div class="mt-3">
-                <button class="btn btn-info" type="button" (click)="stepgroup1.isOpen = true">Submit Order</button>
+                <button (click)="stepgroup1.isOpen = true" class="btn btn-info" type="button">Submit Order</button>
               </div>
             </div>
           </accordion-group>

@@ -1,15 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-
-const screenfull = require('screenfull');
-
 import {UserblockService} from '../sidebar/userblock/userblock.service';
 import {SettingsService} from '../../core/settings/settings.service';
 import {MenuService} from '../../core/menu/menu.service';
 import {EcolService} from '../../services/ecol.service';
 import swal from 'sweetalert2';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {NgxSmartModalService} from 'ngx-smart-modal';
+import {DataService} from '../../services/data.service';
+import {pipe} from 'rxjs';
+import {ToasterService, ToasterConfig, Toast, BodyOutputType} from 'angular2-toaster';
+import {formatDate} from '@angular/common';
+import {SafeHtml} from '@angular/platform-browser';
+
+const screenfull = require('screenfull');
 
 @Component({
   selector: 'app-header',
@@ -28,6 +32,7 @@ export class HeaderComponent implements OnInit {
   totalCases = 0;
   userdata: any;
   userperm: any;
+  reminder: number;
   user: any;
   totalBrokenPtps: any;
   str: string;
@@ -35,16 +40,38 @@ export class HeaderComponent implements OnInit {
   str2: string;
   time: any;
   time2: any;
+  clock;
+  int;
+  submittedby: string;
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: { 'warning': true, 'error': false, 'success': true },
+      tapToDismiss: false,
+      preventDuplicates: true,
+      newestOnTop: true,
+      timeout: 0,
+      positionClass: 'toast-top-right',
+      animation: 'flyLeft',
+      limit: 7
+      // closeHtml: '<button class="btn btn-danger">Close</button>'
+    });
 
   isNavSearchVisible: boolean;
   @ViewChild('fsbutton') fsbutton;  // the fullscreen button
+  remalerts: any;
+  remID: any;
+  reminderalert: any;
+  remAccount: any;
+  remDescp: any;
 
   constructor(
     public menu: MenuService,
     public userblockService: UserblockService,
     public settings: SettingsService,
     public ecolService: EcolService,
+    public dataService: DataService,
     public ngxsmartModalService: NgxSmartModalService,
+    public toasterService: ToasterService,
     public router: Router) {
 
     // show only a few items on demo
@@ -55,6 +82,15 @@ export class HeaderComponent implements OnInit {
 
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.userperm = JSON.parse(localStorage.getItem('userpermission'));
+    this.getreminderalerts(this.userdata.USERNAME);
+    this.int = setInterval(() => {
+      this.clock = new Date(); // shows clock on header
+      this.getGreetings();  // greeting text
+      this.getUnreadReminders(this.userdata.USERNAME);
+
+
+
+    }, 1000);    // sync counter with database in realtime
 
     this.user = {
       picture: 'assets/img/user/coop.jpg',
@@ -65,6 +101,17 @@ export class HeaderComponent implements OnInit {
       surname: this.userdata.SURNAME
     };
 
+    dataService.getReminderData().subscribe(data => {
+      this.reminder = data;
+      console.log(data);
+
+    });
+
+    dataService.getReminderalert().subscribe(data => {
+      this.reminderalert = data;
+      console.log(data);
+    });
+
   }
 
   ngOnInit() {
@@ -72,6 +119,9 @@ export class HeaderComponent implements OnInit {
     this.getcardlettersdue(); // gets count of demand letters due for creditcards
     this.lettersdue();
     this.getGreetings();
+
+
+
 
     this.isNavSearchVisible = false;
 
@@ -103,7 +153,7 @@ export class HeaderComponent implements OnInit {
         this.time = JSON.stringify(data[i][2]);
         this.time2 = JSON.parse(this.time);
 
-        console.log(JSON.parse(this.time));
+        // console.log(JSON.parse(this.time));
       }
     }
   }
@@ -194,6 +244,11 @@ export class HeaderComponent implements OnInit {
     localStorage.setItem('timeout', '1');
   }
 
+  openreminderModal() {
+    this.ngxsmartModalService.getModal('reminderModal').open();
+
+  }
+
   logout() {
     swal({
       title: (this.user.firstname).toUpperCase() + ', are you sure?',
@@ -206,8 +261,73 @@ export class HeaderComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.ecolService.logout();
+        clearInterval(this.int); // to prevent the callback of ngx smart modal on login page
         this.router.navigate(['/login']);
+        localStorage.removeItem('useralerted');
+        sessionStorage.removeItem('useralerted');
       }
     });
   }
+  popsuccessToast(msg) {
+
+    const toast: Toast = {
+      type: 'success',
+      title: 'Hello, ' + this.userdata.USERNAME,
+      body: msg,
+      bodyOutputType: BodyOutputType.TrustedHtml,
+      onShowCallback: () => console.log('I have been shown')
+    };
+    this.toasterService.pop(toast);
+
+
+
+  }
+
+  poperrorToast(error) {
+    this.toasterService.pop('error', 'Error', error);
+
+  }
+
+  popinfoToast(info) {
+    this.toasterService.pop('info', 'Info', info);
+
+  }
+
+  getUnreadReminders(submittedby) {
+    this.ecolService.unreadreminders(submittedby).subscribe(data => {
+      this.reminder = data.length;
+      if (data.length > 0 && !localStorage.getItem('useralerted')) {
+        // this.openreminderModal();
+        this.popsuccessToast('You have New reminders That you Missed');
+
+        localStorage.setItem('useralerted', '1');
+        sessionStorage.setItem('useralerted', '1');
+      }
+
+
+    });
+  }
+
+  getreminderalerts(submittedby) {
+
+    this.ecolService.ralerts(submittedby).subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.remID = data[i].ID;
+        this.remAccount = data[i].ACCNUMBER;
+        this.remDescp = data[i].DESCRIPTION;
+
+
+        // this.remID = data[0].ID;
+        console.log(this.remID);
+        this.popsuccessToast('New Reminder on Account ' + '<b style="color: yellow">' + this.remAccount + '</b>' + '<br>' + this.remDescp);
+
+// if (data.length > 0) {
+//   this.popsuccessToast('This is Reminder Alerts' + this.remID);
+// }
+      }
+      }
+    );
+  }
+
+
 }

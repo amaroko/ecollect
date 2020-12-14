@@ -8,7 +8,7 @@
       <div class="card card-default">
         <div class="card-header">Classic Map</div>
         <div class="card-body">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="scrollwheel" class="gmap">
+          <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="scrollwheel" [zoom]="zoom" class="gmap">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
           </agm-map>
         </div>
@@ -18,7 +18,7 @@
       <div class="card card-default">
         <div class="card-header">Custom zoom</div>
         <div class="card-body">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="19" [scrollwheel]="scrollwheel" class="gmap">
+          <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="scrollwheel" [zoom]="19" class="gmap">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
           </agm-map>
         </div>
@@ -30,7 +30,7 @@
       <div class="card card-default">
         <div class="card-header">Different Map Type (not supported yet)</div>
         <div class="card-body">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="scrollwheel" class="gmap">
+          <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="scrollwheel" [zoom]="zoom" class="gmap">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
           </agm-map>
         </div>
@@ -40,7 +40,7 @@
       <div class="card card-default">
         <div class="card-header">Multiple Markers</div>
         <div class="card-body">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="scrollwheel" class="gmap">
+          <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="scrollwheel" [zoom]="zoom" class="gmap">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             <agm-marker [latitude]="33.787453" [longitude]="lng"></agm-marker>
           </agm-map>
@@ -53,7 +53,7 @@
       <div class="card card-default">
         <div class="card-header">Styled Maps</div>
         <div class="card-body">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [scrollwheel]="scrollwheel" [styles]="mapStyles"
+          <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="scrollwheel" [styles]="mapStyles" [zoom]="zoom"
                    class="gmap">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
           </agm-map>

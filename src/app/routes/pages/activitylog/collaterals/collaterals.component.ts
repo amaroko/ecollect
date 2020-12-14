@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {environment} from '../../../../../environments/environment';
-
+import * as introJs from 'intro.js/intro.js';
 const URL = environment.valor;
 
 @Component({
@@ -13,7 +13,7 @@ const URL = environment.valor;
   styleUrls: ['./collaterals.component.scss']
 })
 export class CollateralsComponent implements OnInit {
-
+  introJS = introJs();
   custnumber: string;
   accnumber: string;
   username: string;
@@ -27,6 +27,112 @@ export class CollateralsComponent implements OnInit {
               private ecolService: EcolService) {
     //
   }
+
+
+  CollateralsSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#collateraltable',
+            intro: 'Here you will find a list of all collaterals placed under the specified account ' +
+              'you could then edit the collaterals if need be'
+          }
+          // {
+          //   element: '#custnumber',
+          //   intro: 'This is the 7 digit number of the customer'
+          // }
+          // {
+          //   element: '#smsmessage',
+          //   intro: 'This is where you can view the selected message template. As well as edit the message if you feel so. ' +
+          //     'Keep in much that you are limited to the amount of characters that you type'
+          // },
+          // {
+          //   element: '#callback',
+          //   intro: 'Here you can put the number to which the customer can call for enquiries. You can also leave it as default'
+          // },
+          // {
+          //   element: '#sendsms',
+          //   intro: 'Pressing this button will send the message to the selected customer phone number'
+          // },
+          // {
+          //   element: '#historysms',
+          //   intro: 'Here is where the history of sent sms can be viewed in a listed format'
+          // }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
+  CollateralsSteps2(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#custnumber',
+            intro: 'This is the 7 digit customer number. You can only view it'
+          },
+          {
+            element: '#accnumber',
+            intro: 'This is the 14 digit number of the customer. You can only view it'
+          },
+          {
+            element: '#collateralname',
+            intro: 'Here, you have to provide the Name of the Collateral that you are about to add'
+          },
+          {
+            element: '#regowner',
+            intro: 'Here, you have to enter the details of the registered owners of the collateral ' +
+              'at hand'
+          },
+          {
+            element: '#forcedsale',
+            intro: 'This is the value that the bank has decided to place on the collateral'
+          },
+          {
+            element: '#marketvalue',
+            intro: 'This is the Marked Market value of the collateral'
+          },
+          {
+            element: '#insurancevalue',
+            intro: 'This is the specified insurance value of the collateral'
+          },
+          {
+            element: '#valuationdate',
+            intro: 'This is the date on which the collaterals was valued'
+          },
+          {
+            element: '#tenure',
+            intro: 'This is the tenure of the collateral'
+          },
+          {
+            element: '#valuer',
+            intro: 'This is the details of the valuer who valuated the collateral at hand'
+          },
+          {
+            element: '#collateralsubmit',
+            intro: 'Pressing this button will submit your information to the server. If disabled, please check ' +
+              'to see if there is a field you left out'
+          },
+          {
+            element: '#collateralreset',
+            intro: 'Pressing this button will reset your form to empty,so that you may start filling the ' +
+              'information again'
+          }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
+
 
   ngOnInit() {
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');

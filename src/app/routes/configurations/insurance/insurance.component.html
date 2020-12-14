@@ -24,7 +24,8 @@
         <div class="form-group row">
           <label class="col-xl-3 col-form-label">Insurance Name</label>
           <div class="col-xl-6">
-            <label for="insurancename"></label><input #insurancename="ngModel" [(ngModel)]="model.insurancename" class="form-control"
+            <label for="insurancename"></label><input #insurancename="ngModel" [(ngModel)]="model.insurancename"
+                                                      class="form-control"
                                                       id="insurancename"
                                                       name="insurancename" required
                                                       type="text"/>
@@ -33,7 +34,8 @@
         <div class="form-group row">
           <label class="col-xl-3 col-form-label">Physical Address</label>
           <div class="col-xl-6">
-            <label for="physicaladdress"></label><input #physicaladdress="ngModel" [(ngModel)]="model.physicaladdress" class="form-control"
+            <label for="physicaladdress"></label><input #physicaladdress="ngModel" [(ngModel)]="model.physicaladdress"
+                                                        class="form-control"
                                                         id="physicaladdress"
                                                         name="physicaladdress" required
                                                         type="text"/>
@@ -42,7 +44,8 @@
         <div class="form-group row">
           <label class="col-xl-3 col-form-label">Postal Address</label>
           <div class="col-xl-6">
-            <label for="postaladdress"></label><input #postaladdress="ngModel" [(ngModel)]="model.postaladdress" [ngClass]="{ 'is-invalid': postaladdress.invalid }"
+            <label for="postaladdress"></label><input #postaladdress="ngModel" [(ngModel)]="model.postaladdress"
+                                                      [ngClass]="{ 'is-invalid': postaladdress.invalid }"
                                                       class="form-control"
                                                       id="postaladdress" name="postaladdress"
                                                       required type="text"/>
@@ -54,7 +57,8 @@
         <div class="form-group row">
           <label class="col-xl-3 col-form-label">Email Address</label>
           <div class="col-xl-6">
-            <label for="emailaddress"></label><input #emailaddress="ngModel" [(ngModel)]="model.emailaddress" [ngClass]="{ 'is-invalid': emailaddress.invalid }"
+            <label for="emailaddress"></label><input #emailaddress="ngModel" [(ngModel)]="model.emailaddress"
+                                                     [ngClass]="{ 'is-invalid': emailaddress.invalid }"
                                                      class="form-control"
                                                      id="emailaddress" name="emailaddress"
                                                      required type="email"/>
@@ -67,7 +71,8 @@
         <div class="form-group row">
           <label class="col-xl-3 col-form-label">Contact Person</label>
           <div class="col-xl-6">
-            <label for="contactperson"></label><input #contactperson="ngModel" [(ngModel)]="model.contactperson" [ngClass]="{ 'is-invalid': contactperson.invalid }"
+            <label for="contactperson"></label><input #contactperson="ngModel" [(ngModel)]="model.contactperson"
+                                                      [ngClass]="{ 'is-invalid': contactperson.invalid }"
                                                       class="form-control"
                                                       id="contactperson" name="contactperson"
                                                       required type="text"/>
@@ -96,7 +101,8 @@
             <button [disabled]="!newGuarantorForm.valid || !newGuarantorForm.dirty"
                     class="btn btn-sm btn-outline-primary" type="submit">Submit
             </button>
-            <button (click)="closenewInsuranceModal()" class="btn btn-sm btn-outline-danger" tooltip="Go Back to Insurance Grid"
+            <button (click)="closenewInsuranceModal()" class="btn btn-sm btn-outline-danger"
+                    tooltip="Go Back to Insurance Grid"
                     type="button">Back
             </button>
           </div>
@@ -173,8 +179,10 @@
           <label class="col-xl-3 col-form-label">Date of Last Update</label>
           <div class="col-xl-6">
             <label>
-              <input title="Today's Date" type="text" placeholder="Last Updated Date" class="form-control" formControlName="editupdatedate"
-                     name="editupdatedate"  #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
+              <input #dp="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" bsDatepicker class="form-control"
+                     formControlName="editupdatedate"
+                     name="editupdatedate" placeholder="Last Updated Date" title="Today's Date"
+                     type="text">
             </label>
 
           </div>

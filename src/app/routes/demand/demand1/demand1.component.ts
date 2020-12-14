@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {JqxDomService} from '../../../shared/jqwidgets-dom.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import * as $ from 'jquery';
 import {jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import {jqxGridComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import {EcolService} from '../../../services/ecol.service';
@@ -22,11 +20,6 @@ export class Demand1Component implements OnInit {
   rowValue: any;
   custnumber: string;
   user = JSON.parse(localStorage.getItem('currentUser'));
-
-  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
-
-  }
-
   source: any =
     {
       url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=150',
@@ -50,9 +43,7 @@ export class Demand1Component implements OnInit {
         ],
       datatype: 'json'
     };
-
   dataAdapter: any = new jqx.dataAdapter(this.source);
-
   columns: any[] =
     [
       {
@@ -87,8 +78,11 @@ export class Demand1Component implements OnInit {
       {text: 'STATUS', datafield: 'status', filtertype: 'input'}
 
     ];
-
   accnumber: String;
+
+  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
+
+  }
 
   onClickMe(event, rowdata) {
     this.accnumber = event.target.textContent;

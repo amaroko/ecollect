@@ -1,21 +1,21 @@
 <div class="content-heading">
   <div>Todo List
     <small>Keeping track of tasks</small></div>
-  <button class="ml-auto btn btn-danger" (click)="clearAll()">Clear All Items</button>
+  <button (click)="clearAll()" class="ml-auto btn btn-danger">Clear All Items</button>
 </div>
 <div class="row todo">
   <div class="col-lg-3">
     <div class="pr-3">
-      <form class="mb-4" (submit)="addTodo()">
+      <form (submit)="addTodo()" class="mb-4">
         <div class="form-group">
           <label>
-            <input class="form-control" type="text" name="todoTitle" [(ngModel)]="todo.title" placeholder="Task title.."
-                   required="required"/>
+            <input [(ngModel)]="todo.title" class="form-control" name="todoTitle" placeholder="Task title.." required="required"
+                   type="text"/>
           </label>
         </div>
         <div class="form-group">
           <label>
-            <textarea class="form-control" name="todoDescription" [(ngModel)]="todo.description"
+            <textarea [(ngModel)]="todo.description" class="form-control" name="todoDescription"
                       placeholder="Type a description.." rows="8"></textarea>
           </label>
         </div>
@@ -24,28 +24,28 @@
     </div>
   </div>
   <div class="col-lg-9 todo-item-list">
-    <div class="lead text-muted text-center" *ngIf="!items.length">No tasks...</div>
+    <div *ngIf="!items.length" class="lead text-muted text-center">No tasks...</div>
     <accordion [closeOthers]="true">
-      <accordion-group panelClass="todo-item {{item.complete?'todo-complete':''}}"
-                       *ngFor="let item of items; let i = index" [isDisabled]="item.complete">
+      <accordion-group *ngFor="let item of items; let i = index"
+                       [isDisabled]="item.complete" panelClass="todo-item {{item.complete?'todo-complete':''}}">
         <div accordion-heading>
-          <span class="close" (click)="removeTodo($index, $event)">×</span>
+          <span (click)="removeTodo($index, $event)" class="close">×</span>
           <div class="inline checkbox c-checkbox">
             <label (click)="$event.stopPropagation()" class="mb-0">
-              <input type="checkbox" [(ngModel)]="item.complete" id="{{'todo-item-'+$index}}" [disabled]="editingTodo"/>
+              <input [(ngModel)]="item.complete" [disabled]="editingTodo" id="{{'todo-item-'+$index}}" type="checkbox"/>
               <span class="fa fa-check"></span>
             </label>
           </div>
-          <span class="todo-title" [innerHTML]="item.todo.title">Task title</span>
-          <span class="todo-edit fas fa-pencil-alt" (click)="editTodo(i, $event)"></span>
+          <span [innerHTML]="item.todo.title" class="todo-title">Task title</span>
+          <span (click)="editTodo(i, $event)" class="todo-edit fas fa-pencil-alt"></span>
         </div>
         <p>
           <span [innerHTML]="item.todo.description"></span>
-          <span class="text-muted" *ngIf="item.todo.description === ''">No item description</span>
+          <span *ngIf="item.todo.description === ''" class="text-muted">No item description</span>
         </p>
       </accordion-group>
     </accordion>
-    <p class="text-right" *ngIf="items.length &gt; 0">
+    <p *ngIf="items.length &gt; 0" class="text-right">
       <span>{{ totalCompleted() }} Completed</span>-
       <span>{{ totalPending() }} Pending</span>
     </p>

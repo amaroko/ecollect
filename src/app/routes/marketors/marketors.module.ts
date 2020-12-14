@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AgGridModule} from '@ag-grid-community/angular';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';

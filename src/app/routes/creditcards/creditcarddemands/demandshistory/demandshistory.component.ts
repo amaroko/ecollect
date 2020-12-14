@@ -1,6 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {environment} from '../../../../../environments/environment';
-import * as $ from 'jquery';
+import {Component, OnInit} from '@angular/core';
 import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {saveAs} from 'file-saver';

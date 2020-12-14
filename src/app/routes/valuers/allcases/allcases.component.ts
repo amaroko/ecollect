@@ -16,7 +16,6 @@ export class AllCasesComponent implements OnInit {
 
   public gridApi;
   public gridColumnApi;
-  private statusBar;
   public gridOptions: GridOptions;
   public columnDefs;
   public defaultColDef;
@@ -25,15 +24,14 @@ export class AllCasesComponent implements OnInit {
   public maxBlocksInCache;
   public rowData: [];
   public sortingOrder;
-  private str: string;
-
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
   searchText: string;
   model: any = {};
   pivotPanelShow = true;
-
   modules = AllModules;
+  private statusBar;
+  private str: string;
 
   constructor(public ngxSmartModalService: NgxSmartModalService,
               public http: HttpClient) {
@@ -81,7 +79,7 @@ export class AllCasesComponent implements OnInit {
 
 
     this.columnDefs = [
-      { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
       {
         field: 'ACCNUMBER',
         cellRenderer: function (params) {
@@ -91,22 +89,22 @@ export class AllCasesComponent implements OnInit {
             return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
-      { field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
 
-      { field: 'LOANSETTLEMENTACC', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'FILENO', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ACCBALANCE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'CANCELCOMMENT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'REGION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'STAGEDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DATEINPUT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'OWNER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'TOWN', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ADDRESS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'LOANSETTLEMENTACC', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'FILENO', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'ACCBALANCE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'CANCELCOMMENT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'REGION', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'STAGEDATE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DATEINPUT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'OWNER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'TOWN', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'ADDRESS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
     ];
     this.defaultColDef = {
       width: 120,
@@ -119,7 +117,7 @@ export class AllCasesComponent implements OnInit {
       enablePivot: true,
       pivot: true
     };
-    this.sortingOrder = ['desc', 'asc', null ];
+    this.sortingOrder = ['desc', 'asc', null];
     this.defaultColDef = {
       width: 120,
       resizable: true,
@@ -147,7 +145,6 @@ export class AllCasesComponent implements OnInit {
       ]
     };
   }
-
 
 
   public ngOnInit(): void {

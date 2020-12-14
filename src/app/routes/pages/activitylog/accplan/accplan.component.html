@@ -1,15 +1,15 @@
-Click <a href="#" target="_blank" (click)="openaccplan()">here</a> to open detailed account plan
+Click <a (click)="openaccplan()" href="#" target="_blank">here</a> to open detailed account plan
 <hr>
 Current Plan:
-<label for="plan"></label><select id="plan" #plan="ngModel" [(ngModel)]="model.plan" name="plan" class="form-control"
-                                  [ngClass]="{ 'is-invalid': plan.errors }" (ngModelChange)="changeAction(plan.value)">
+<label for="plan"></label><select #plan="ngModel" (ngModelChange)="changeAction(plan.value)" [(ngModel)]="model.plan" [ngClass]="{ 'is-invalid': plan.errors }" class="form-control"
+                                  id="plan" name="plan">
   <option value="">Please select</option>
   <option *ngFor="let plan of allplans" [value]="plan.planid">
     {{plan.plantitle}}</option>
 </select>
 <!--<pre>{{model | json}}</pre>-->
-<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-  <table class="table" cellspacing="0">
+<div aria-labelledby="nav-home-tab" class="tab-pane fade show active" id="nav-home" role="tabpanel">
+  <table cellspacing="0" class="table">
     <thead>
     <tr>
       <th>Plan action</th>
@@ -22,13 +22,13 @@ Current Plan:
     <tr *ngFor="let current of currentplan; let in = index">
       <!--<td>{{current.actionid}}</td>-->
       <td><label>
-        <input type="text" name="actiontitle-{{in}}" [(ngModel)]="current.actiontitle" [disabled]="true">
+        <input [(ngModel)]="current.actiontitle" [disabled]="true" name="actiontitle-{{in}}" type="text">
       </label></td>
       <td>
         <div class="checkbox c-checkbox form-check-inline">
           <label>
-            <input type="checkbox" [checked]="current.completed" name="completed-{{in}}"
-                   [(ngModel)]="current.completed"/>
+            <input [(ngModel)]="current.completed" [checked]="current.completed" name="completed-{{in}}"
+                   type="checkbox"/>
             <span class="fa fa-check"></span></label>
         </div>
       </td>
@@ -47,5 +47,5 @@ Current Plan:
     </tr>
     </tbody>
   </table>
-  <button class="btn btn-block btn-outline-success" (click)="saveplan()">Save Plan</button>
+  <button (click)="saveplan()" class="btn btn-block btn-outline-success">Save Plan</button>
 </div>

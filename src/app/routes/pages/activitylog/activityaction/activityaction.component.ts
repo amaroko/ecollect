@@ -1,19 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {SettingsService} from '../../../../core/settings/settings.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
 import {DataService} from '../../../../services/data.service';
 import swal from 'sweetalert2';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateAdapter, NgbDateNativeAdapter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {environment} from '../../../../../environments/environment';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {NgOption} from '@ng-select/ng-select';
 import * as moment from 'moment';
 import {NgxSmartModalService} from 'ngx-smart-modal';
+import * as introJs from 'intro.js/intro.js';
+import 'rxjs/operator/filter';
+import {Observable} from 'rxjs';
+import { map, filter, scan } from 'rxjs/operators';
 
 const URL = environment.valor;
-
 @Component({
   selector: 'app-sendletter',
   templateUrl: './activityaction.component.html',
@@ -21,7 +24,8 @@ const URL = environment.valor;
   providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class ActivityActionComponent implements OnInit {
-
+  @ViewChild('reason') inputOne: ElementRef;
+  introJS = introJs();
   bsValue = new Date();
   public minDate: NgbDateStruct;
   minxDate: Date;
@@ -58,7 +62,11 @@ export class ActivityActionComponent implements OnInit {
   p = 1;
   autodial_telnumber: string;
   ptpid: any = 0;
-
+  mappedexcuse:  string [];
+  MainReasonID:  string [];
+  mappedexcusedetails:  string [];
+  excusedetails:  string [];
+  mappedid:  string [];
   collectoraction: any = [
     {collectoractionid: 'OC', collectoraction: 'OUTGOING CALL'},
     {collectoractionid: 'IC', collectoraction: 'INCOMING CALL'},
@@ -85,8 +93,15 @@ export class ActivityActionComponent implements OnInit {
     {id: 'Yes', name: 'Yes'},
   ];
 
+  // subReason: any = {};
+  subReason: any = [];
+  mainReason: any = [];
+  models: any = [];
+  selectedtext: string;
+
   constructor(
     public settings: SettingsService,
+    private el: ElementRef,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private ecolService: EcolService,
@@ -100,6 +115,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
+
   get f() {
     return this.actionForm.controls;
   }
@@ -112,8 +128,64 @@ export class ActivityActionComponent implements OnInit {
     return day + '-' + month + '-' + year;
   }
 
+  CollectoractionSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#collectoraction',
+            intro: 'Here you are to select the action that you want to do. Keep in mind that ' +
+              'fields will show according to the selected option'
+          },
+          {
+            element: '#reason',
+            intro: 'This is a mandatory field. This means that you cannot submit the form without saying ' +
+              'the reason why the customer defaulted'
+          },
+          {
+            element: '#cmdstatus',
+            intro: 'This is the collections status of the account'
+          },
+          {
+            element: '#route',
+            intro: 'This enables you to escalate an account to your superior. The names of available supervisors ' +
+              'are listed. The supervisor will then have the account on their queue'
+          },
+          {
+            element: '#review',
+            intro: 'This is the date of your next review of the account in action'
+          },
+          {
+            element: '#collectornote',
+            intro: 'This is where you write down the comment or note about the account. This ' +
+              'information will show up in the notes history'
+          },
+          {
+            element: '#flag',
+            intro: 'Here you are able to mark the comment as important. This is important especially when you ' +
+              'come back to review the account'
+          },
+          {
+            element: '#submit',
+            intro: 'This button will submit all the recorded information to the server'
+          },
+          {
+            element: '#reset',
+            intro: 'This button will clear your form. This is vital especially when you have made an error ' +
+              'and want to begin again'
+          }
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
   ngOnInit() {
+
     // check if logged!
+
     this.ecolService.ifLogged();
     this.ecolService.ifclosed();
 
@@ -151,7 +223,12 @@ export class ActivityActionComponent implements OnInit {
     this.getreviewers();
     this.getparty();
     // this.getcollectoraction();
+    // gets the MAin Reason
     this.getexcuse();
+    // gets the main reason
+    this.ecolService.getexcuse().subscribe(
+      data => this.mainReason = data
+    );
     //
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
@@ -166,6 +243,19 @@ export class ActivityActionComponent implements OnInit {
 
     }
 
+  }
+
+  onChangeExcuse(excuseid: any) {
+    if (JSON.stringify(excuseid.reason)) {
+      this.ecolService.getExcuseDetails(JSON.stringify(excuseid.reason[0].id)).subscribe(
+        data => {
+          this.subReason = data;
+          console.log(data);
+        }
+      );
+    } else {
+      this.subReason = null;
+    }
   }
 
   getaccount(accnumber) {
@@ -257,6 +347,8 @@ export class ActivityActionComponent implements OnInit {
     });
   }
 
+
+
   getmcoop(loanaccnumber) {
     this.ecolService.getmcoopcashAccount(loanaccnumber).subscribe(data => {
       this.account = data[0];
@@ -289,8 +381,14 @@ export class ActivityActionComponent implements OnInit {
   }
 
   getexcuse() {
-    this.ecolService.getexcuse().subscribe(excuse => {
-      this.excuse = excuse;
+    this.ecolService.getexcuse().subscribe(data => {
+      this.excuse = data;
+      this.mappedexcuse = Array.from(new Set(this.excuse.map(({EXCUSE}) => EXCUSE)));
+      this.mappedid = Array.from(new Set(this.excuse.map(({ID}) => ID)));
+      this.mappedexcusedetails = Array.from(new Set(this.excuse.map(({EXCUSEDETAILS}) => EXCUSEDETAILS)));
+      console.log(this.mappedexcuse);
+      console.log(this.excuse);
+      console.log(this.mappedexcusedetails);
     });
   }
 
@@ -316,6 +414,7 @@ export class ActivityActionComponent implements OnInit {
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [''],
       reason: [null, Validators.required],
+      reasondetails: [{value: '', disabled: false}],
       cmdstatus: [null],
       flag: [false],
       route: [null],
@@ -353,7 +452,7 @@ export class ActivityActionComponent implements OnInit {
     this.ecolService.loader();
     this.savebody = {
       collectoraction: this.f.collectoraction.value,
-      party: this.f.party.value,
+      party: this.f.party.value[0].exd,
       ptpamount: this.f.ptpamount.value,
       ptp: this.f.ptp.value,
       ptpdate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
@@ -365,7 +464,8 @@ export class ActivityActionComponent implements OnInit {
       // tslint:disable-next-line:max-line-length + '   Reason details: ' + this.f.rfdother.value + '   Reason for default: ' + this.f.reason.value
       collectornote: this.f.collectornote.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
-      reason: this.f.reason.value,
+      reason: this.f.reason.value[0].ex,
+      reasondetails: this.f.reasondetails.value[0].exd,
       cmdstatus: this.f.cmdstatus.value,
       route: this.f.route.value,
       paymode: this.f.paymode.value,
@@ -382,7 +482,7 @@ export class ActivityActionComponent implements OnInit {
     if (this.f.flag.value) {
       this.savebody.noteimp = 'Y';
     }
-   // resolves the invalid date issue in db
+    // resolves the invalid date issue in db
     if (moment(this.f.ptpdate.value).format('DD-MMM-YYYY') === 'Invalid date') {
       this.savebody.ptpdate = '';
     }
@@ -489,6 +589,10 @@ export class ActivityActionComponent implements OnInit {
     });
   }
 
+  changeFn(val: any) {
+    console.log('Dropdown selection:', val);
+  }
+
   reset() {
     this.spinner.show();
     if (this.sys === 'cc') {
@@ -515,9 +619,10 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeParty(form) {
-    if (form.party === 1 || form.party === 4 || form.party === 5) {
+    if (form.party[0].id === 1  || form.party[0].id === 4 || form.party[0].id === 5) {
       this.actionForm.controls.ptp.enable();
       // this.actionForm.controls.paymode.enable();
+      // JSON.stringify(excuseid.reason[0].id)
     } else {
       this.actionForm.controls.ptp.disable();
       // this.actionForm.controls.paymode.disable();
@@ -560,7 +665,7 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptpdate.disable();
       this.actionForm.controls.ptptype.disable();
       this.actionForm.controls.ptpamount.setValue(0);
-      this.actionForm.controls.ptpdate.setValue( '');
+      this.actionForm.controls.ptpdate.setValue('');
       this.actionForm.controls.ptptype.setValue('');
       this.actionForm.controls.ptpemail.setValue('');
       this.actionForm.controls.ptpemail.disable();
@@ -629,5 +734,11 @@ export class ActivityActionComponent implements OnInit {
       console.log(error);
       swal('Error!', 'Error occurred during processing!', 'error');
     });
+  }
+  selectInput() {
+
+  }
+  onKey(event) {const inputValue = event.target.value;
+  console.log(event.target.value);
   }
 }

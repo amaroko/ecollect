@@ -1,37 +1,37 @@
 <div class="content-heading">MailBox</div>
 <div class="row">
   <div class="col-xl-3 col-lg-4">
-    <div class="d-flex mb-2" *ngIf="!routeIsActive('/extras/mailbox/compose')">
-      <a class="btn btn-purple btn-sm mb-compose-button" [routerLink]="'/extras/mailbox/compose'">
+    <div *ngIf="!routeIsActive('/extras/mailbox/compose')" class="d-flex mb-2">
+      <a [routerLink]="'/extras/mailbox/compose'" class="btn btn-purple btn-sm mb-compose-button">
         <em class="fas fa-pencil-alt mr-1"></em>
         <span>Compose</span>
       </a>
-      <button class="btn btn-sm btn-secondary mb-toggle-button ml-auto" type="button"
-              (click)="mailboxMenuCollapsed = !mailboxMenuCollapsed">
+      <button (click)="mailboxMenuCollapsed = !mailboxMenuCollapsed" class="btn btn-sm btn-secondary mb-toggle-button ml-auto"
+              type="button">
         <em class="fa fa-bars fa-fw fa-lg"></em>
       </button>
     </div>
     <!-- START mailbox list-->
-    <div class="mb-boxes" [hidden]="mailboxMenuCollapsed">
+    <div [hidden]="mailboxMenuCollapsed" class="mb-boxes">
       <div class="card card-default">
         <div class="card-body">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item p-2">
               <small class="text-muted">MAILBOXES</small>
             </li>
-            <li class="nav-item" routerLinkActive="active" *ngFor="let fold of folders">
-              <a class="nav-link d-flex align-items-center" [routerLink]="['/extras/mailbox/folder', fold.folder]">
-                <em class="fa-fw fa-lg mr-2" [ngClass]="fold.icon"></em>
+            <li *ngFor="let fold of folders" class="nav-item" routerLinkActive="active">
+              <a [routerLink]="['/extras/mailbox/folder', fold.folder]" class="nav-link d-flex align-items-center">
+                <em [ngClass]="fold.icon" class="fa-fw fa-lg mr-2"></em>
                 <span>{{fold.name}}</span>
-                <span class="badge badge-green ml-auto" *ngIf="fold.alert">{{fold.alert}}</span>
+                <span *ngIf="fold.alert" class="badge badge-green ml-auto">{{fold.alert}}</span>
               </a>
             </li>
             <li class="nav-item p-2">
               <small class="text-muted">LABELS</small>
             </li>
-            <li class="nav-item" *ngFor="let labl of labels">
+            <li *ngFor="let labl of labels" class="nav-item">
               <a class="py-1 nav-link" href="#">
-                <span class="circle" [ngClass]="'bg-' + labl.color"></span>
+                <span [ngClass]="'bg-' + labl.color" class="circle"></span>
                 <span>{{labl.name}}</span>
               </a>
             </li>

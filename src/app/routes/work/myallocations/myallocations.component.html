@@ -1,4 +1,3 @@
-
 <div class="content-heading">
   <div>Work List
     <small>My allocations</small></div>
@@ -34,12 +33,13 @@
 
 <!-- START card-->
 
-<ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham" style="width: 100%; height: 550px;"
-                 [columnDefs]="columnDefs"
-                 [defaultColDef]="defaultColDef" [paginationAutoPageSize]="true"
-                 [gridOptions]="gridOptions" [pagination]="true" [statusBar]="statusBar" [floatingFilter]="true" [rowData]="rowData"
-                 [modules]="modules" [pivotPanelShow]="pivotPanelShow" [sideBar]="true"
-                 [animateRows]="true" (rowClicked)='onRowDoubleClicked($event)'>
+<ag-grid-angular #agGrid (rowClicked)='onRowDoubleClicked($event)' [animateRows]="true" [columnDefs]="columnDefs"
+                 [defaultColDef]="defaultColDef"
+                 [floatingFilter]="true" [gridOptions]="gridOptions"
+                 [modules]="modules" [paginationAutoPageSize]="true" [pagination]="true" [pivotPanelShow]="pivotPanelShow"
+                 [rowData]="rowData"
+                 [sideBar]="true" [statusBar]="statusBar" class="ag-theme-balham"
+                 id="myGrid" style="width: 100%; height: 550px;">
 
 </ag-grid-angular>
 

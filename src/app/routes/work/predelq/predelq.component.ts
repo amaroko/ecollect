@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EcolService} from '../../../services/ecol.service';
 import {environment} from '../../../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {GridOptions, IDatasource, IGetRowsParams, GridApi} from '@ag-grid-community/all-modules';
+import {HttpClient} from '@angular/common/http';
+import {GridOptions} from '@ag-grid-community/all-modules';
 import * as $ from 'jquery';
 
 @Component({
@@ -22,13 +22,12 @@ export class PredelqComponent implements OnInit {
   model: any = {};
   noTotal: number;
   gridOptions: GridOptions;
-
+  rowData: any = [];
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
   private gridApi;
   private gridColumnApi;
-
   private columnDefs;
   private defaultColDef;
-  rowData: any = [];
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.columnDefs = [
@@ -80,9 +79,6 @@ export class PredelqComponent implements OnInit {
     ];
     this.defaultColDef = {resizable: true};
   }
-
-
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));

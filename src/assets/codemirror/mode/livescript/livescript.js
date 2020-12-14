@@ -6,17 +6,17 @@
  * https://github.com/duralog/CodeMirror
  */
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
-  CodeMirror.defineMode('livescript', function(){
+  CodeMirror.defineMode('livescript', function () {
     const tokenBase = function (stream, state) {
       const next_rule = state.next || "start";
       if (next_rule) {

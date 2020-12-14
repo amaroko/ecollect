@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import * as $ from 'jquery';
 import {EcolService} from '../../../services/ecol.service';
-import {GridOptions, IDatasource, IGetRowsParams, GridApi} from '@ag-grid-community/all-modules';
+import {GridApi, GridOptions, IDatasource, IGetRowsParams} from '@ag-grid-community/all-modules';
 
 @Component({
   selector: 'app-myworklist',
@@ -12,19 +12,7 @@ import {GridOptions, IDatasource, IGetRowsParams, GridApi} from '@ag-grid-commun
 })
 export class MyworklistComponent implements OnInit {
 
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      headerHeight: 40,
-      pagination: true,
-      rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
-    };
-  }
-
   user = JSON.parse(localStorage.getItem('currentUser'));
-
   resizeEvent = 'resize.ag-grid';
   $win = $(window);
   new = true;
@@ -32,11 +20,8 @@ export class MyworklistComponent implements OnInit {
   searchText: string;
   model: any = {};
   noTotal: number;
-
   gridOptions: GridOptions;
   gridApi: GridApi;
-  // private rowClassRules;
-
   columnDefs = [
     {
       headerName: 'LOANACCNUMBER',
@@ -83,9 +68,8 @@ export class MyworklistComponent implements OnInit {
       field: 'arocode'
     }
   ];
+  // private rowClassRules;
   rowData1: any;
-
-
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
 
@@ -100,6 +84,17 @@ export class MyworklistComponent implements OnInit {
       });
     }
   };
+
+  constructor(private ecolService: EcolService, private http: HttpClient) {
+    this.gridOptions = <GridOptions>{
+      headerHeight: 40,
+      pagination: true,
+      rowSelection: 'single',
+      rowModelType: 'infinite',
+      cacheBlockSize: 20,
+      paginationPageSize: 20
+    };
+  }
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;

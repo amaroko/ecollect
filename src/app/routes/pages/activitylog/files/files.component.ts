@@ -6,8 +6,8 @@ import {DataService} from '../../../../services/data.service';
 import swal from 'sweetalert2';
 import {saveAs} from 'file-saver';
 import {environment} from '../../../../../environments/environment';
-import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
+import * as introJs from 'intro.js/intro.js';
 const URL = environment.filesapi;
 
 @Component({
@@ -16,7 +16,7 @@ const URL = environment.filesapi;
   styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
-
+  introJS = introJs();
   accnumber: string;
   custnumber: string;
 
@@ -33,14 +33,6 @@ export class FilesComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
 
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
@@ -100,6 +92,75 @@ export class FilesComponent implements OnInit {
       swal('Oooops!', 'unable to upload file!', 'error');
     };
   }
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
+  }
+
+
+
+  UploadedFilesSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#uploadedfiles',
+            intro: 'Here you will find a list of the existing files that have been uploaded to ' +
+              'this account'
+          }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
+
+
+  UploadedFilesSteps2(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#userdesctype',
+            intro: 'Here, you get to choose the type of document that you are about to upload, ' +
+              'this helps in categoriing each documnet under its place'
+          },
+          {
+            element: '#filedesc',
+            intro: 'Here, you provide a description for  the document to be uploaded'
+          },
+          {
+            element: '#drop',
+            intro: 'This is thee drag and drop feature. You could drop files here for upload'
+          },
+          {
+            element: '#selmultiple',
+            intro: 'Select this option if you are uploading multiple files at the same time'
+          },
+          {
+            element: '#single',
+            intro: 'Select this option if you are uploading single files'
+          },
+          {
+            element: '#progress',
+            intro: 'Here, you can view the status and progress of your uploads'
+          }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
+  }
+
 
   ngOnInit() {
 

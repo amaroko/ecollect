@@ -1,10 +1,9 @@
-import {Component, OnInit, Injector, OnDestroy} from '@angular/core';
+import {Component, Injector, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-
-declare var $: any;
-
 import {MenuService} from '../../core/menu/menu.service';
 import {SettingsService} from '../../core/settings/settings.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-sidebar',
@@ -18,6 +17,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
   sbclickEvent = 'click.sidebar-toggle';
   $doc: any = null;
   userperm = [];
+
+
+
 
   constructor(public menu: MenuService, public settings: SettingsService, public injector: Injector) {
 

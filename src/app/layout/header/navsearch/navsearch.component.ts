@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange, ElementRef} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
 
 @Component({
   selector: 'app-navsearch',

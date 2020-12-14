@@ -29,6 +29,7 @@ import {CollateralsComponent} from './pages/activitylog/collaterals/collaterals.
 import {ActivitydashComponent} from './pages/activitydash/activitydash.component';
 import {PtpsComponent} from './pages/activitylog/ptps/ptps.component';
 import {WriteoffstoryComponent} from './pages/activitylog/writeoffstory/writeoffstory.component';
+// import { ProductsComponent } from './pages/activitylog/products/products.component';
 
 export const routes = [
 
@@ -38,6 +39,7 @@ export const routes = [
     children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},
       {path: 'home', loadChildren: './home/home.module#HomeModule'},
+      {path: 'reminders', loadChildren: './reminders/reminders.module#RemindersModule'},
       {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule'},
       {path: 'guarantors', loadChildren: './guarantors/guarantors.module#GuarantorsModule'},
       {path: 'letters', loadChildren: './letters/letters.module#LettersModule'},
@@ -56,16 +58,19 @@ export const routes = [
       {path: 'marketors', loadChildren: './marketors/marketors.module#MarketorsModule'},
       {path: 'auctioneers', loadChildren: './auctioneers/auctioneers.module#AuctioneersModule'},
       {path: 'repossessors', loadChildren: './repossessors/repossessors.module#RepossessorsModule'},
+      {path: 'writeoffs', loadChildren: './writeoffs/writeoffs.module#WriteoffsModule'},
       {path: 'investigators', loadChildren: './investigators/investigators.module#InvestigatorsModule'},
       {path: 'valuers', loadChildren: './valuers/valuers.module#ValuersModule'},
-      {path: 'yards', loadChildren: './yards/yards.module#YardsModule'},
+      {path: 'invoices', loadChildren: './invoices/invoices.module#InvoicesModule'},
       {path: 'spportal', loadChildren: './spportal/spportal.module#SpPortalModule'},
-      {path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule'}
+      {path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule'},
+      {path: 'assetfinance', loadChildren: './assetfinance/assetfinance.module#AssetfinanceModule'},
+      {path: 'teamleader', loadChildren: './teamleader/teamleader.module#TeamLeaderModule'},
     ],
     canActivate: [AuthGuard]
   },
 
-  // Not lazy-loaded routes
+  // Not lazy-loaded routes..
   {path: 'login', component: LoginComponent},
   {path: 'extletters', component: ExtloginComponent},
   {path: 'register', component: RegisterComponent},
@@ -96,13 +101,14 @@ export const routes = [
       {path: 'editnote', component: EditnoteComponent},
       {path: 'ptps', component: PtpsComponent},
       {path: 'writeoffstory', component: WriteoffstoryComponent},
+      // { path: 'products', component: ProductsComponent },
       {path: '**', redirectTo: 'notes'}
     ],
     canActivate: [AuthGuard]
 
   },
 
-  // Not found
+  // Not found..
   {path: '', redirectTo: 'extlettersx', pathMatch: 'full'},
   {path: '**', redirectTo: 'home'}
 

@@ -4,9 +4,9 @@
 </div>
 <div class="row">
   <div class="col-xl-4 col-lg-6 form-inline">
-    <label for="accnumber"></label><input class="form-control mb" type="text" id="accnumber" name="accnumber" #accnumber
-                                          placeholder="accnumber"/>
-    <button type="button" class="btn btn-outline-inverse" (click)="getguarantors(accnumber.value)"><span
+    <label for="accnumber"></label><input #accnumber class="form-control mb" id="accnumber" name="accnumber" placeholder="accnumber"
+                                          type="text"/>
+    <button (click)="getguarantors(accnumber.value)" class="btn btn-outline-inverse" type="button"><span
       class="fa fa-search"></span>
       Search
     </button>
@@ -50,7 +50,7 @@
         <span *ngIf="!g.active" class="badge badge-danger">{{g.active}}</span>
       </td>
       <td class="text-right">
-        <button class="btn btn-sm btn-secondary" type="button" (click)="update(g.id)">
+        <button (click)="update(g.id)" class="btn btn-sm btn-secondary" type="button">
           <em class="fas fa-pencil-alt"></em>
         </button>
         <button class="btn btn-sm btn-danger" type="button">

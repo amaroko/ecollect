@@ -5,7 +5,7 @@
   </div>
 </div>
 <div class="container-fluid">
-  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" color="#fff" size="medium" type="ball-spin-fade">
     <p style="font-size: 20px; color: white">Processing ...</p>
   </ngx-spinner>
   <div id="accordion">
@@ -15,50 +15,50 @@
           Service Providers
         </a>
       </div>
-      <div id="collapseOne" class="collapse show" data-parent="#accordion">
+      <div class="collapse show" data-parent="#accordion" id="collapseOne">
         <div class="card-body">
           <div class="row">
             <div class="col-xl-4">
               <div class="card card-primary">
                 <div class="card-body">
-                  <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(settingsForm)"
-                        *ngIf="new">
+                  <form #settingsForm="ngForm" (ngSubmit)="editSubmit(settingsForm)" *ngIf="new"
+                        class="form-horizontal">
                     <div class="form-group row mb">
                       <div class="col-md-12">
                         <div class="form-group">
                           <p>Service Provider</p>
-                          <label for="SPTITLE"></label><input class="form-control" name="SPTITLE" id="SPTITLE"
-                                                              #SPTITLE="ngModel"
-                                                              [(ngModel)]="model.SPTITLE" [disabled]="false" required
-                                                              autocomplete="off"/>
+                          <label for="SPTITLE"></label><input #SPTITLE="ngModel" [(ngModel)]="model.SPTITLE" [disabled]="false"
+                                                              autocomplete="off"
+                                                              class="form-control" id="SPTITLE" name="SPTITLE"
+                                                              required/>
                         </div>
 
                         <p class="my-2"></p>
                         <div class="form-group">
                           <p>Contact Person</p>
-                          <label for="CONTACTPERSON"></label><input class="form-control" name="CONTACTPERSON"
-                                                                    id="CONTACTPERSON" #CONTACTPERSON="ngModel"
-                                                                    [(ngModel)]="model.CONTACTPERSON" [disabled]="false"
-                                                                    required autocomplete="off"/>
+                          <label for="CONTACTPERSON"></label><input #CONTACTPERSON="ngModel" [(ngModel)]="model.CONTACTPERSON"
+                                                                    [disabled]="false" autocomplete="off"
+                                                                    class="form-control" id="CONTACTPERSON"
+                                                                    name="CONTACTPERSON" required/>
                         </div>
                       </div>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Telephone</p>
-                      <label for="TELEPHONE"></label><input class="form-control" name="TELEPHONE" id="TELEPHONE"
-                                                            #TELEPHONE="ngModel"
-                                                            [(ngModel)]="model.TELEPHONE" [disabled]="false" required
-                                                            autocomplete="off"/>
+                      <label for="TELEPHONE"></label><input #TELEPHONE="ngModel" [(ngModel)]="model.TELEPHONE" [disabled]="false"
+                                                            autocomplete="off"
+                                                            class="form-control" id="TELEPHONE" name="TELEPHONE"
+                                                            required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>SPCode</p>
-                      <label for="SPCODE"></label><select class="form-control" name="SPCODE" id="SPCODE"
-                                                          #SPCODE="ngModel"
-                                                          [(ngModel)]="model.SPCODE" [disabled]="false" required
-                                                          autocomplete="off">
-                      <option value="" selected>Choose...</option>
+                      <label for="SPCODE"></label><select #SPCODE="ngModel" [(ngModel)]="model.SPCODE" [disabled]="false"
+                                                          autocomplete="off"
+                                                          class="form-control" id="SPCODE" name="SPCODE"
+                                                          required>
+                      <option selected value="">Choose...</option>
                       <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
                       <option>DEBT COLLECTORS</option>
                       <option>INVESTIGATORS</option>
@@ -71,13 +71,13 @@
                       <p>Start Date</p>
 
                       <div class="input-group">
-                        <label for="STARTDATE"></label><input type="text" placeholder="Start Date" class="form-control"
-                                                              name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
-                                                              [(ngModel)]="model.STARTDATE" [disabled]="false" required
-                                                              #dp="bsDatepicker" bsDatepicker
-                                                              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
+                        <label for="STARTDATE"></label><input #STARTDATE="ngModel" #dp="bsDatepicker" [(ngModel)]="model.STARTDATE"
+                                                              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [disabled]="false" bsDatepicker
+                                                              class="form-control" id="STARTDATE" name="STARTDATE"
+                                                              placeholder="Start Date" required
+                                                              type="text">
                         <div class="input-group-append">
-                          <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
+                          <button (click)="dp.toggle()" class="btn btn-outline-primary" type="button"><span><i
                             class="fa fa-calendar"></i>
                                 </span></button>
                         </div>
@@ -88,48 +88,48 @@
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Account Number</p>
-                      <label for="ACCNUMBER"></label><input class="form-control" name="ACCNUMBER" id="ACCNUMBER"
-                                                            #ACCNUMBER="ngModel"
-                                                            [(ngModel)]="model.ACCNUMBER" [disabled]="false" required
-                                                            autocomplete="off"/>
+                      <label for="ACCNUMBER"></label><input #ACCNUMBER="ngModel" [(ngModel)]="model.ACCNUMBER" [disabled]="false"
+                                                            autocomplete="off"
+                                                            class="form-control" id="ACCNUMBER" name="ACCNUMBER"
+                                                            required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Coverage</p>
-                      <label for="COVERAGE"></label><input class="form-control" name="COVERAGE" id="COVERAGE"
-                                                           #COVERAGE="ngModel"
-                                                           [(ngModel)]="model.COVERAGE" [disabled]="false" required
-                                                           autocomplete="off"/>
+                      <label for="COVERAGE"></label><input #COVERAGE="ngModel" [(ngModel)]="model.COVERAGE" [disabled]="false"
+                                                           autocomplete="off"
+                                                           class="form-control" id="COVERAGE" name="COVERAGE"
+                                                           required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Address</p>
-                      <label for="ADDRESS"></label><input class="form-control" name="ADDRESS" id="ADDRESS"
-                                                          #ADDRESS="ngModel"
-                                                          [(ngModel)]="model.ADDRESS" [disabled]="false"
-                                                          autocomplete="off"/>
+                      <label for="ADDRESS"></label><input #ADDRESS="ngModel" [(ngModel)]="model.ADDRESS" [disabled]="false"
+                                                          autocomplete="off"
+                                                          class="form-control" id="ADDRESS"
+                                                          name="ADDRESS"/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>End of Indemnity</p>
-                      <label for="ENDOFINDEMNITY"></label><input class="form-control" name="ENDOFINDEMNITY"
-                                                                 id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel"
-                                                                 [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false"
-                                                                 required autocomplete="off"/>
+                      <label for="ENDOFINDEMNITY"></label><input #ENDOFINDEMNITY="ngModel" [(ngModel)]="model.ENDOFINDEMNITY"
+                                                                 [disabled]="false" autocomplete="off"
+                                                                 class="form-control" id="ENDOFINDEMNITY"
+                                                                 name="ENDOFINDEMNITY" required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Email</p>
-                      <label for="EMAIL"></label><input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel"
-                                                        [(ngModel)]="model.EMAIL" [disabled]="false" required
-                                                        autocomplete="off"/>
+                      <label for="EMAIL"></label><input #EMAIL="ngModel" [(ngModel)]="model.EMAIL" [disabled]="false" autocomplete="off"
+                                                        class="form-control" id="EMAIL" name="EMAIL"
+                                                        required/>
                     </div>
                     <fieldset>
                       <div class="form-group row">
                         <div class="col-md-10">
                           <label class="checkbox c-checkbox">
-                            <input type="checkbox" name="active" id="active" #active="ngModel"
-                                   [(ngModel)]="model.active" [checked]="model.active"/>
+                            <input #active="ngModel" [(ngModel)]="model.active" [checked]="model.active" id="active"
+                                   name="active" type="checkbox"/>
                             <span class="fa fa-check"></span> Active</label>
                         </div>
                       </div>
@@ -146,39 +146,39 @@
                       </div>
                     </div>
                   </form>
-                  <form #editForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(editForm)" *ngIf="!new">
+                  <form #editForm="ngForm" (ngSubmit)="editSubmit(editForm)" *ngIf="!new" class="form-horizontal">
                     <p class="lead mt-3"></p>
                     <div class="form-group">
                       <p>Service Provider</p>
-                      <label for="SPTITLE"></label><input class="form-control" name="SPTITLE" id="SPTITLE"
-                                                          #SPTITLE="ngModel"
-                                                          [(ngModel)]="model.SPTITLE" [disabled]="true" required
-                                                          autocomplete="off"/>
+                      <label for="SPTITLE"></label><input #SPTITLE="ngModel" [(ngModel)]="model.SPTITLE" [disabled]="true"
+                                                          autocomplete="off"
+                                                          class="form-control" id="SPTITLE" name="SPTITLE"
+                                                          required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Contact Person</p>
-                      <label for="CONTACTPERSON"></label><input class="form-control" name="CONTACTPERSON"
-                                                                id="CONTACTPERSON" #CONTACTPERSON="ngModel"
-                                                                [(ngModel)]="model.CONTACTPERSON" [disabled]="false"
-                                                                required autocomplete="off"/>
+                      <label for="CONTACTPERSON"></label><input #CONTACTPERSON="ngModel" [(ngModel)]="model.CONTACTPERSON"
+                                                                [disabled]="false" autocomplete="off"
+                                                                class="form-control" id="CONTACTPERSON"
+                                                                name="CONTACTPERSON" required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Telephone</p>
-                      <label for="TELEPHONE"></label><input class="form-control" name="TELEPHONE" id="TELEPHONE"
-                                                            #TELEPHONE="ngModel"
-                                                            [(ngModel)]="model.TELEPHONE" [disabled]="false" required
-                                                            autocomplete="off"/>
+                      <label for="TELEPHONE"></label><input #TELEPHONE="ngModel" [(ngModel)]="model.TELEPHONE" [disabled]="false"
+                                                            autocomplete="off"
+                                                            class="form-control" id="TELEPHONE" name="TELEPHONE"
+                                                            required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>SPCode</p>
-                      <label for="SPCODE"></label><select class="form-control" name="SPCODE" id="SPCODE"
-                                                          #SPCODE="ngModel"
-                                                          [(ngModel)]="model.SPCODE" [disabled]="false" required
-                                                          autocomplete="off">
-                      <option value="" selected>Choose...</option>
+                      <label for="SPCODE"></label><select #SPCODE="ngModel" [(ngModel)]="model.SPCODE" [disabled]="false"
+                                                          autocomplete="off"
+                                                          class="form-control" id="SPCODE" name="SPCODE"
+                                                          required>
+                      <option selected value="">Choose...</option>
                       <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
                       <option>DEBT COLLECTORS</option>
                       <option>INVESTIGATORS</option>
@@ -191,13 +191,13 @@
                       <p>Start Date</p>
 
                       <div class="input-group">
-                        <label for="STARTDATE"></label><input type="text" placeholder="Start Date" class="form-control"
-                                                              name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
-                                                              [(ngModel)]="model.STARTDATE" [disabled]="false" required
-                                                              #dp="bsDatepicker" bsDatepicker
-                                                              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
+                        <label for="STARTDATE"></label><input #STARTDATE="ngModel" #dp="bsDatepicker" [(ngModel)]="model.STARTDATE"
+                                                              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [disabled]="false" bsDatepicker
+                                                              class="form-control" id="STARTDATE" name="STARTDATE"
+                                                              placeholder="Start Date" required
+                                                              type="text">
                         <div class="input-group-append">
-                          <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
+                          <button (click)="dp.toggle()" class="btn btn-outline-primary" type="button"><span><i
                             class="fa fa-calendar"></i>
                               </span></button>
                         </div>
@@ -207,60 +207,60 @@
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Account Number</p>
-                      <label for="ACCNUMBER"></label><input class="form-control" name="ACCNUMBER" id="ACCNUMBER"
-                                                            #ACCNUMBER="ngModel"
-                                                            [(ngModel)]="model.ACCNUMBER" [disabled]="false" required
-                                                            autocomplete="off"/>
+                      <label for="ACCNUMBER"></label><input #ACCNUMBER="ngModel" [(ngModel)]="model.ACCNUMBER" [disabled]="false"
+                                                            autocomplete="off"
+                                                            class="form-control" id="ACCNUMBER" name="ACCNUMBER"
+                                                            required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Coverage</p>
-                      <label for="COVERAGE"></label><input class="form-control" name="COVERAGE" id="COVERAGE"
-                                                           #COVERAGE="ngModel"
-                                                           [(ngModel)]="model.COVERAGE" [disabled]="false" required
-                                                           autocomplete="off"/>
+                      <label for="COVERAGE"></label><input #COVERAGE="ngModel" [(ngModel)]="model.COVERAGE" [disabled]="false"
+                                                           autocomplete="off"
+                                                           class="form-control" id="COVERAGE" name="COVERAGE"
+                                                           required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Address</p>
-                      <label for="ADDRESS"></label><input class="form-control" name="ADDRESS" id="ADDRESS"
-                                                          #ADDRESS="ngModel"
-                                                          [(ngModel)]="model.ADDRESS" [disabled]="false"
-                                                          autocomplete="off"/>
+                      <label for="ADDRESS"></label><input #ADDRESS="ngModel" [(ngModel)]="model.ADDRESS" [disabled]="false"
+                                                          autocomplete="off"
+                                                          class="form-control" id="ADDRESS"
+                                                          name="ADDRESS"/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>End of Indemnity</p>
-                      <label for="ENDOFINDEMNITY"></label><input class="form-control" name="ENDOFINDEMNITY"
-                                                                 id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel"
-                                                                 [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false"
-                                                                 required autocomplete="off"/>
+                      <label for="ENDOFINDEMNITY"></label><input #ENDOFINDEMNITY="ngModel" [(ngModel)]="model.ENDOFINDEMNITY"
+                                                                 [disabled]="false" autocomplete="off"
+                                                                 class="form-control" id="ENDOFINDEMNITY"
+                                                                 name="ENDOFINDEMNITY" required/>
                     </div>
                     <p class="my-2"></p>
                     <div class="form-group">
                       <p>Email</p>
-                      <label for="EMAIL"></label><input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel"
-                                                        [(ngModel)]="model.EMAIL" [disabled]="false" required
-                                                        autocomplete="off"/>
+                      <label for="EMAIL"></label><input #EMAIL="ngModel" [(ngModel)]="model.EMAIL" [disabled]="false" autocomplete="off"
+                                                        class="form-control" id="EMAIL" name="EMAIL"
+                                                        required/>
                     </div>
                     <fieldset>
                       <div class="form-group row">
                         <div class="col-md-10">
-                          <label for="active" class="checkbox c-checkbox">
-                            <input type="checkbox" name="ACTIVE" id="ACTIVE" #ACTIVE="ngModel"
-                                   [(ngModel)]="model.ACTIVE" [checked]="model.ACTIVE"/>
+                          <label class="checkbox c-checkbox" for="active">
+                            <input #ACTIVE="ngModel" [(ngModel)]="model.ACTIVE" [checked]="model.ACTIVE" id="ACTIVE"
+                                   name="ACTIVE" type="checkbox"/>
                             <span class="fa fa-check"></span> Active</label>
                         </div>
                       </div>
                     </fieldset>
 
                     <div class="float-left">
-                      <button type="submit" class="btn btn-outline-primary" type="submit">
+                      <button class="btn btn-outline-primary" type="submit" type="submit">
                         <em class="fa fa-pencil fa-fw"></em>Update
                       </button>
                     </div>
                     <div class="float-left">
-                      <button class="btn btn-outline-warning" (click)="shownew()">
+                      <button (click)="shownew()" class="btn btn-outline-warning">
                         <em class="fa fa-check fa-fw"></em>Cancel
                       </button>
                     </div>
@@ -282,15 +282,15 @@
                 <div class="row">
                   <div class="col-xl-4 col-lg-6">
                     <label>
-                      <input class="mb form-control" placeholder="Filter..." type="text"
-                             (keyup)="onQuickFilterChanged($event)"/>
+                      <input (keyup)="onQuickFilterChanged($event)" class="mb form-control" placeholder="Filter..."
+                             type="text"/>
                     </label>
                   </div>
                 </div>
-                <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 700px"
-                                 [gridOptions]="gridOptions"
-                                 (rowClicked)='onRowClicked($event)'
-                                 (gridReady)="gridReady($event)">
+                <ag-grid-angular #agGrid (gridReady)="gridReady($event)" (rowClicked)='onRowClicked($event)' [gridOptions]="gridOptions"
+                                 [rowData]="rowData1"
+                                 class="ag-angle"
+                                 style="width: 100%; height: 700px">
                 </ag-grid-angular>
               </div>
             </div>

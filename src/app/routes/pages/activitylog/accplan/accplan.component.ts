@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {environment} from '../../../../../environments/environment';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 @Component({

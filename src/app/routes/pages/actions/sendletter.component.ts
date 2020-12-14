@@ -5,8 +5,8 @@ import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {saveAs} from 'file-saver';
 import {environment} from '../../../../environments/environment';
-import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {ToasterService, ToasterConfig} from 'angular2-toaster/angular2-toaster';
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
+import {ToasterConfig, ToasterService} from 'angular2-toaster/angular2-toaster';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {license} from '../../../../../env';
 import {HttpClient} from '@angular/common/http';
@@ -22,6 +22,41 @@ const apiUrl = environment.letters_api;
 export class SendLetterComponent implements OnInit {
 
   demandid: string;
+  accnumber: string;
+  custnumber: string;
+  accountdetails: any;
+  guarantors: any = [];
+  teles: any = [];
+  emails: any = [];
+  addresses: any = [];
+  postcodes: any = [];
+  guarantoremails = '';
+  model: any = {};
+  bodyletter: any = {};
+  filepath: string;
+  demands: any;
+  file: string;
+  smsMessage: string;
+  username: string;
+  emaildata: any = {};
+  section: string;
+  uploadedfilepath: string;
+  demandtosend: string;
+  demandhisdetails = {};
+  autodial_telnumber: string;
+  totalTeles: number;
+  // tslint:disable-next-line:max-line-length
+  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
+  public uploader: FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      animation: 'fade'
+    });
 
   constructor(
     public settings: SettingsService,
@@ -76,44 +111,6 @@ export class SendLetterComponent implements OnInit {
       // error server response
     };
   }
-
-  accnumber: string;
-  custnumber: string;
-  accountdetails: any;
-  guarantors: any = [];
-  teles: any = [];
-  emails: any = [];
-  addresses: any = [];
-  postcodes: any = [];
-  guarantoremails = '';
-  model: any = {};
-  bodyletter: any = {};
-  filepath: string;
-  demands: any;
-  file: string;
-  smsMessage: string;
-  username: string;
-  emaildata: any = {};
-  section: string;
-  uploadedfilepath: string;
-  demandtosend: string;
-  demandhisdetails = {};
-  autodial_telnumber: string;
-  totalTeles: number;
-  // tslint:disable-next-line:max-line-length
-  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
-
-  public uploader: FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver = false;
-  public hasAnotherDropZoneOver = false;
-
-  public config: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: true,
-      tapToDismiss: false,
-      positionClass: 'toast-top-right',
-      animation: 'fade'
-    });
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;

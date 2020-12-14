@@ -19,6 +19,7 @@ const PARAMS = new HttpParams({
 @Injectable()
 export class EcollectService {
   private rows: any;
+
   constructor(private http: HttpClient) {
   }
 
@@ -46,9 +47,6 @@ export class EcollectService {
   providers: [EcollectService],
 })
 export class NewcaseComponent implements OnInit {
-  constructor(private _service: EcollectService, private ecolService: EcolService, public router: Router,
-              private spinner: NgxSpinnerService ) {
-  }
   town = ['NAIROBI', 'KISUMU'];
   searching = false;
   searchFailed = false;
@@ -76,7 +74,11 @@ export class NewcaseComponent implements OnInit {
   submitted = false;
   newcase: FormGroup;
 
-  search = (text$:  Observable<any>) =>
+  constructor(private _service: EcollectService, private ecolService: EcolService, public router: Router,
+              private spinner: NgxSpinnerService) {
+  }
+
+  search = (text$: Observable<any>) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -90,17 +92,17 @@ export class NewcaseComponent implements OnInit {
           }))
       ),
       tap(() => this.searching = false)
-    )
+    );
 
   ngOnInit() {
     this.formBuilder();
   }
 
 // for the search input
-  inputFormatBandListValue(value: any)   {
+  inputFormatBandListValue(value: any) {
 
-    if (value.CLIENT_NAME ) {
-      return [ 'CUSTNUMBER=>' + value.CUSTNUMBER, 'ACCNUMBER=>' + value.ACCNUMBER, 'CLIENTNAME=>' +  value.CLIENT_NAME ];
+    if (value.CLIENT_NAME) {
+      return ['CUSTNUMBER=>' + value.CUSTNUMBER, 'ACCNUMBER=>' + value.ACCNUMBER, 'CLIENTNAME=>' + value.CLIENT_NAME];
     }
 
     return value;
@@ -109,9 +111,8 @@ export class NewcaseComponent implements OnInit {
 
 // results format
   resultFormatBandListValue(value: any) {
-    return [value.CUSTNUMBER, value.ACCNUMBER, value.CLIENT_NAME ];
+    return [value.CUSTNUMBER, value.ACCNUMBER, value.CLIENT_NAME];
   }
-
 
 
   onSubmit(newcase) {
@@ -159,30 +160,30 @@ export class NewcaseComponent implements OnInit {
 
   formBuilder() {
     this.newcase = new FormGroup({
-      'Search' : new FormControl(null),
-      'custnumber' : new FormControl(null, Validators.required),
-      'accountnumber' : new FormControl(null, Validators.required),
-      'customername' : new FormControl(null, Validators.required),
-      'accountbalance' : new FormControl(null, Validators.required),
-      'daysoverdue' : new FormControl(null, Validators.required),
-      'arocode' : new FormControl(null, Validators.required),
-      'cancelcomment' : new FormControl(null, Validators.required),
-      'owner' : new FormControl(null, Validators.required),
-      'stagedate' : new FormControl(null, Validators.required),
-      'dateinput' : new FormControl(null, Validators.required),
-      'rforinv' : new FormControl(null, Validators.required),
-      'region' : new FormControl(null, Validators.required),
-      'propertyno' : new FormControl(null, Validators.required),
-      'newstatus' : new FormControl(null, Validators.required),
-      'filenumber' : new FormControl(null, Validators.required),
-      'duedatext' : new FormControl(null, Validators.required),
-      'dateoffeenote' : new FormControl(null, Validators.required),
-      'feenote' : new FormControl(null, Validators.required),
-      'dtofsv' : new FormControl(null, Validators.required),
-      'nofdayext' : new FormControl(null, Validators.required),
-      'dateofext' : new FormControl(null, Validators.required),
-      'duedate' : new FormControl(null, Validators.required),
-      'feenotepaid' : new FormControl(null, Validators.required),
+      'Search': new FormControl(null),
+      'custnumber': new FormControl(null, Validators.required),
+      'accountnumber': new FormControl(null, Validators.required),
+      'customername': new FormControl(null, Validators.required),
+      'accountbalance': new FormControl(null, Validators.required),
+      'daysoverdue': new FormControl(null, Validators.required),
+      'arocode': new FormControl(null, Validators.required),
+      'cancelcomment': new FormControl(null, Validators.required),
+      'owner': new FormControl(null, Validators.required),
+      'stagedate': new FormControl(null, Validators.required),
+      'dateinput': new FormControl(null, Validators.required),
+      'rforinv': new FormControl(null, Validators.required),
+      'region': new FormControl(null, Validators.required),
+      'propertyno': new FormControl(null, Validators.required),
+      'newstatus': new FormControl(null, Validators.required),
+      'filenumber': new FormControl(null, Validators.required),
+      'duedatext': new FormControl(null, Validators.required),
+      'dateoffeenote': new FormControl(null, Validators.required),
+      'feenote': new FormControl(null, Validators.required),
+      'dtofsv': new FormControl(null, Validators.required),
+      'nofdayext': new FormControl(null, Validators.required),
+      'dateofext': new FormControl(null, Validators.required),
+      'duedate': new FormControl(null, Validators.required),
+      'feenotepaid': new FormControl(null, Validators.required),
     });
   }
 

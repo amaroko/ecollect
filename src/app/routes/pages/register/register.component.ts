@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingsService} from '../../../core/settings/settings.service';
-import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CustomValidators} from 'ng2-validation';
 
 @Component({

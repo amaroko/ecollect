@@ -11,15 +11,15 @@
         <div class="card-body">
           <form>
             <label>
-              <input class="form-control" #filter (keyup)="filterNodes(filter.value, tree)" placeholder="filter nodes"/>
+              <input #filter (keyup)="filterNodes(filter.value, tree)" class="form-control" placeholder="filter nodes"/>
             </label>
           </form>
-          <tree-root #tree [nodes]="nodes" [focused]="true" [options]="customTemplateStringOptions"
-                     (onEvent)="onEvent($event)">
+          <tree-root #tree (onEvent)="onEvent($event)" [focused]="true" [nodes]="nodes"
+                     [options]="customTemplateStringOptions">
             <ng-template #treeNodeTemplate let-node>
               <span title="{{node.data.subTitle}}">{{ node.data.name }}</span>
               <span class="float-right">{{ childrenCount(node) }}</span>
-              <button class="btn btn-secondary btn-xs" (click)="go($event)"><em
+              <button (click)="go($event)" class="btn btn-secondary btn-xs"><em
                 class="fa fa-exclamation text-muted"></em></button>
             </ng-template>
             <ng-template #loadingTemplate>Loading, please hold....</ng-template>
@@ -30,33 +30,33 @@
     <div class="col-xl-3 col-md-6 col-xl-pull-4 col-md-pull-6">
       <h5>Tree Control API:</h5>
       <div class="btn-group btn-group-justified mb">
-        <a class="btn btn-secondary" (click)="tree.treeModel.focusNextNode()">next node</a>
-        <a class="btn btn-secondary" (click)="tree.treeModel.focusPreviousNode()">previous node</a>
+        <a (click)="tree.treeModel.focusNextNode()" class="btn btn-secondary">next node</a>
+        <a (click)="tree.treeModel.focusPreviousNode()" class="btn btn-secondary">previous node</a>
       </div>
       <div class="btn-group btn-group-justified mb">
-        <a class="btn btn-secondary" (click)="tree.treeModel.focusDrillDown()">drill down</a>
-        <a class="btn btn-secondary" (click)="tree.treeModel.focusDrillUp()">drill up</a>
+        <a (click)="tree.treeModel.focusDrillDown()" class="btn btn-secondary">drill down</a>
+        <a (click)="tree.treeModel.focusDrillUp()" class="btn btn-secondary">drill up</a>
       </div>
       <div class="btn-group btn-group-justified mb">
-        <a class="btn btn-secondary" [class.disabled]="!tree.treeModel.getFocusedNode()"
-           (click)="tree.treeModel.getFocusedNode().toggleActivated()">
+        <a (click)="tree.treeModel.getFocusedNode().toggleActivated()" [class.disabled]="!tree.treeModel.getFocusedNode()"
+           class="btn btn-secondary">
           {{ tree.treeModel.getFocusedNode()?.isActive ? 'deactivate' : 'activate' }}
         </a>
-        <a class="btn btn-secondary" [class.disabled]="!tree.treeModel.getFocusedNode()"
-           (click)="tree.treeModel.getFocusedNode().toggleExpanded()">
+        <a (click)="tree.treeModel.getFocusedNode().toggleExpanded()" [class.disabled]="!tree.treeModel.getFocusedNode()"
+           class="btn btn-secondary">
           {{ tree.treeModel.getFocusedNode()?.isExpanded ? 'collapse' : 'expand' }}
         </a>
       </div>
       <div class="btn-group btn-group-justified mb">
-        <a class="btn btn-secondary" [class.disabled]="!tree.treeModel.getFocusedNode()"
-           (click)="tree.treeModel.getFocusedNode().blur()">
+        <a (click)="tree.treeModel.getFocusedNode().blur()" [class.disabled]="!tree.treeModel.getFocusedNode()"
+           class="btn btn-secondary">
           blur
         </a>
-        <a class="btn btn-secondary" (click)="addNode(tree)">
+        <a (click)="addNode(tree)" class="btn btn-secondary">
           Add Node
         </a>
       </div>
-      <a class="btn btn-secondary btn-block" (click)="activateSubSub(tree)">
+      <a (click)="activateSubSub(tree)" class="btn btn-secondary btn-block">
         Activate inner node
       </a>
     </div>

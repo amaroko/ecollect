@@ -3,11 +3,7 @@ import {environment} from '../../../../environments/environment';
 // import { HttpClient} from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 import {NgxSmartModalService} from 'ngx-smart-modal';
-import swal from 'sweetalert2';
-import {EcolService} from '../../../services/ecol.service';
 import * as moment from 'moment';
-import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {GridOptions} from '@ag-grid-community/all-modules';
 
@@ -20,7 +16,6 @@ import {GridOptions} from '@ag-grid-community/all-modules';
 export class AllCasesComponent implements OnInit {
   public gridApi;
   public gridColumnApi;
-  private statusBar;
   public gridOptions: GridOptions;
   public columnDefs;
   public defaultColDef;
@@ -29,15 +24,14 @@ export class AllCasesComponent implements OnInit {
   public maxBlocksInCache;
   public rowData: [];
   public sortingOrder;
-  private str: string;
-
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
   searchText: string;
   model: any = {};
   pivotPanelShow = true;
-
   modules = AllModules;
+  private statusBar;
+  private str: string;
 
   constructor(public ngxSmartModalService: NgxSmartModalService,
               public http: HttpClient) {
@@ -85,7 +79,7 @@ export class AllCasesComponent implements OnInit {
 
 
     this.columnDefs = [
-      { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
       {
         field: 'ACCNUMBER',
         cellRenderer: function (params) {
@@ -95,31 +89,31 @@ export class AllCasesComponent implements OnInit {
             return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
           }
         },
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
-      { field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
 
-      { field: 'PROPERTYNO', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'FILENO', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'ACCBALANCE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'CANCELCOMMENT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'REASONFORINV', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'STAGEDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DATEINPUT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DAYSOVERDUE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'OWNER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'REGION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DUEDATE_EXT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'FEENOTEPAID', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DATEFEENOTE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'FEENOTE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DATEOFSERVICE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'NOOFDAYSEXT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DATEOFEXT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DUEDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {field: 'PROPERTYNO', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'FILENO', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'ACCBALANCE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'CANCELCOMMENT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'REASONFORINV', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'STAGEDATE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DATEINPUT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DAYSOVERDUE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'OWNER', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'NEWSTATUS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'REGION', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DUEDATE_EXT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'FEENOTEPAID', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DATEFEENOTE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'FEENOTE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DATEOFSERVICE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'NOOFDAYSEXT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DATEOFEXT', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
+      {field: 'DUEDATE', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
 
     ];
     this.defaultColDef = {
@@ -133,7 +127,7 @@ export class AllCasesComponent implements OnInit {
       enablePivot: true,
       pivot: true
     };
-    this.sortingOrder = ['desc', 'asc', null ];
+    this.sortingOrder = ['desc', 'asc', null];
     this.defaultColDef = {
       width: 120,
       resizable: true,
@@ -161,7 +155,6 @@ export class AllCasesComponent implements OnInit {
       ]
     };
   }
-
 
 
   public ngOnInit(): void {

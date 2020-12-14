@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingsService} from '../../../core/settings/settings.service';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EcolService} from '../../../services/ecol.service';
 
 @Component({

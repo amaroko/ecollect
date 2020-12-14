@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ColorPickerModule, ColorPickerService} from 'ngx-color-picker';
 import {NgxSelectModule} from 'ngx-select-ex';
 import {TextMaskModule} from 'angular2-text-mask';

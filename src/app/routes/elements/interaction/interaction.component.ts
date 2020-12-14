@@ -3,7 +3,6 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {TypeaheadMatch} from 'ngx-bootstrap/typeahead';
 import {mergeMap} from 'rxjs/operators';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-interaction',

@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {environment} from '../../../../../environments/environment';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 const URL = environment.valor;
 
@@ -29,6 +29,11 @@ export class EditnoteComponent implements OnInit {
               private ecolService: EcolService,
               private formBuilder: FormBuilder) {
     //
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.editnoteForm.controls;
   }
 
   ngOnInit() {
@@ -104,11 +109,6 @@ export class EditnoteComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-  }
-
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.editnoteForm.controls;
   }
 
   buildForm() {

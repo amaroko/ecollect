@@ -5,6 +5,7 @@ import {EcolService} from '../../../../services/ecol.service';
 import {DataService} from '../../../../services/data.service';
 import swal from 'sweetalert2';
 import * as moment from 'moment';
+import * as introJs from 'intro.js/intro.js';
 
 @Component({
   selector: 'app-sms',
@@ -12,7 +13,7 @@ import * as moment from 'moment';
   styleUrls: ['./sms.component.scss']
 })
 export class SmsComponent implements OnInit {
-
+  introJS = introJs();
   accnumber: string;
   custnumber: string;
   accountdetails: any;
@@ -41,6 +42,47 @@ export class SmsComponent implements OnInit {
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
     return day + '-' + month + '-' + year;
+  }
+
+
+
+  SmsSteps(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#mobile',
+            intro: 'This is where you select the mobile phone number of the customer. The ' +
+              'numbers will be listed here'
+          },
+          {
+            element: '#template',
+            intro: 'Here you have to select the sms template according to the Status'
+          },
+          {
+            element: '#smsmessage',
+            intro: 'This is where you can view the selected message template. As well as edit the message if you feel so. ' +
+              'Keep in much that you are limited to the amount of characters that you type'
+          },
+          {
+            element: '#callback',
+            intro: 'Here you can put the number to which the customer can call for enquiries. You can also leave it as default'
+          },
+          {
+            element: '#sendsms',
+            intro: 'Pressing this button will send the message to the selected customer phone number'
+          },
+          {
+            element: '#historysms',
+            intro: 'Here is where the history of sent sms can be viewed in a listed format'
+          }
+
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true
+      })
+      .start();
   }
 
   ngOnInit() {

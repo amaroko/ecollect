@@ -1,4 +1,5 @@
 <div>
+  <button (click)="BulknotesSteps()" class="btn btn-primary">SHOW ME STEPS</button>
   <h2>Bulk notes from xlsx file </h2>
   <div id="accordion">
     <!--<div class="card">
@@ -107,7 +108,7 @@
     <div class="card">
       <div class="card-body">
         <div>
-          <button class="btn btn-outline-success btn-sm" (click)="downloadFile()">
+          <button id="template" (click)="downloadFile()" class="btn btn-outline-success btn-sm">
             <i class="fa fa-download"> template</i>
           </button>
         </div>
@@ -115,8 +116,8 @@
 
         Select xlsx file to upload
 
-        <input #myInput type="file" placeholder="File Name" name="myInput" (change)="onFileChange($event)"
-               accept=".xlsx"/>
+        <input id="input" #myInput (change)="onFileChange($event)" accept=".xlsx" name="myInput" placeholder="File Name"
+               type="file"/>
 
         <div id="output"></div>
         <br>
@@ -127,9 +128,9 @@
           Upload progress: {{ fileUploadProgress }}%
         </div>
         <!-- Progress Bar -->
-        <div class="progress form-group" *ngIf="fileUploadProgress > 0">
-          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
-               [style.width.%]="fileUploadProgress">
+        <div *ngIf="fileUploadProgress > 0" class="progress form-group">
+          <div [style.width.%]="fileUploadProgress" class="progress-bar progress-bar-striped bg-success"
+               role="progressbar">
           </div>
         </div>
       </div>

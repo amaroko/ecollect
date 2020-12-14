@@ -4,17 +4,8 @@ import {SettingsService} from './core/settings/settings.service';
 import {BnNgIdleService} from 'bn-ng-idle';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {NgxSmartModalService} from 'ngx-smart-modal';
-import {
-  NavigationCancel,
-  Event,
-  NavigationEnd,
-  NavigationError,
-  NavigationStart,
-  Router,
-  ActivatedRoute
-} from '@angular/router';
+import {ActivatedRoute, Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 import {EcolService} from './services/ecol.service';
-import swal from 'sweetalert2';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../environments/environment';
 
@@ -26,6 +17,7 @@ const ADLOGIN = environment.adlogin;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
   username: string | null;
   USERNAME: any;
   vallForm: FormGroup;
@@ -35,49 +27,6 @@ export class AppComponent implements OnInit {
   error = '';
   data: any;
   code: any;
-
-  @HostBinding('class.layout-fixed') get isFixed() {
-    return this.settings.getLayoutSetting('isFixed');
-  }
-
-  @HostBinding('class.aside-collapsed') get isCollapsed() {
-    return this.settings.getLayoutSetting('isCollapsed');
-  }
-
-  @HostBinding('class.layout-boxed') get isBoxed() {
-    return this.settings.getLayoutSetting('isBoxed');
-  }
-
-  @HostBinding('class.layout-fs') get useFullLayout() {
-    return this.settings.getLayoutSetting('useFullLayout');
-  }
-
-  @HostBinding('class.hidden-footer') get hiddenFooter() {
-    return this.settings.getLayoutSetting('hiddenFooter');
-  }
-
-  @HostBinding('class.layout-h') get horizontal() {
-    return this.settings.getLayoutSetting('horizontal');
-  }
-
-  @HostBinding('class.aside-float') get isFloat() {
-    return this.settings.getLayoutSetting('isFloat');
-  }
-
-  @HostBinding('class.offsidebar-open') get offsidebarOpen() {
-    return this.settings.getLayoutSetting('offsidebarOpen');
-  }
-
-  @HostBinding('class.aside-toggled') get asideToggled() {
-    return this.settings.getLayoutSetting('asideToggled');
-  }
-
-  @HostBinding('class.aside-collapsed-text') get isCollapsedText() {
-    return this.settings.getLayoutSetting('isCollapsedText');
-  }
-
-  // constructor(public settings: SettingsService) { }
-  // constructor(public settings: SettingsService) { }
 
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
@@ -115,19 +64,47 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private navigationInterceptor(event: Event): void {
-    if (event instanceof NavigationStart) {
-      this._loadingBar.start();
-    }
-    if (event instanceof NavigationEnd) {
-      this._loadingBar.complete();
-    }
-    if (event instanceof NavigationCancel) {
-      this._loadingBar.stop();
-    }
-    if (event instanceof NavigationError) {
-      this._loadingBar.stop();
-    }
+  @HostBinding('class.layout-fixed') get isFixed() {
+    return this.settings.getLayoutSetting('isFixed');
+  }
+
+  @HostBinding('class.aside-collapsed') get isCollapsed() {
+    return this.settings.getLayoutSetting('isCollapsed');
+  }
+
+  @HostBinding('class.layout-boxed') get isBoxed() {
+    return this.settings.getLayoutSetting('isBoxed');
+  }
+
+  @HostBinding('class.layout-fs') get useFullLayout() {
+    return this.settings.getLayoutSetting('useFullLayout');
+  }
+
+  @HostBinding('class.hidden-footer') get hiddenFooter() {
+    return this.settings.getLayoutSetting('hiddenFooter');
+  }
+
+  @HostBinding('class.layout-h') get horizontal() {
+    return this.settings.getLayoutSetting('horizontal');
+  }
+
+  @HostBinding('class.aside-float') get isFloat() {
+    return this.settings.getLayoutSetting('isFloat');
+  }
+
+  @HostBinding('class.offsidebar-open') get offsidebarOpen() {
+    return this.settings.getLayoutSetting('offsidebarOpen');
+  }
+
+  @HostBinding('class.aside-toggled') get asideToggled() {
+    return this.settings.getLayoutSetting('asideToggled');
+  }
+
+  // constructor(public settings: SettingsService) { }
+  // constructor(public settings: SettingsService) { }
+
+  @HostBinding('class.aside-collapsed-text') get isCollapsedText() {
+    return this.settings.getLayoutSetting('isCollapsedText');
   }
 
   submitFormm($ev, value: any) {
@@ -168,6 +145,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // check if logged!
+
     this.onreload();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.ecolService.ifLogged();
@@ -188,15 +166,15 @@ export class AppComponent implements OnInit {
     this.ngxSmartModalService.getModal('lockModal').open();
   }
 
-  // openpersistanceModal() {
-  //   // open modal
-  //   this.ngxSmartModalService.getModal('lockModal').open();
-  // }
-
   closetimeoutModal() {
     // close modal
     this.ngxSmartModalService.getModal('lockModal').close();
   }
+
+  // openpersistanceModal() {
+  //   // open modal
+  //   this.ngxSmartModalService.getModal('lockModal').open();
+  // }
 
   newsession() {
     // Logs out user when they claim the timeout page was not theirs
@@ -260,6 +238,21 @@ export class AppComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  private navigationInterceptor(event: Event): void {
+    if (event instanceof NavigationStart) {
+      this._loadingBar.start();
+    }
+    if (event instanceof NavigationEnd) {
+      this._loadingBar.complete();
+    }
+    if (event instanceof NavigationCancel) {
+      this._loadingBar.stop();
+    }
+    if (event instanceof NavigationError) {
+      this._loadingBar.stop();
+    }
   }
 
 }

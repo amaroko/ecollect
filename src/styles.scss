@@ -22,6 +22,7 @@
 @import '~@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 @import '~@ag-grid-community/all-modules/dist/styles/ag-theme-fresh.css';
 @import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+@import "~@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
 
 @import '~ika.jvectormap/jquery-jvectormap-1.2.2.css';
 
@@ -37,12 +38,17 @@
 @import "./app/shared/styles/bootstrap.scss";
 //== Application
 @import "./app/shared/styles/app.scss";
+
 .validation-error {
-    color: red;
+  color: red;
 }
 
+@import "../node_modules/ng-pick-datetime/assets/style/picker.min.css";
 @import "../node_modules/ng2-slim-loading-bar/style.css";
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
+@import '~intro.js/minified/introjs.min.css';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+//@import '~intro.js/themes/introjs-royal.css';

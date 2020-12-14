@@ -5,11 +5,13 @@ import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {saveAs} from 'file-saver';
 import {environment} from '../../../../../environments/environment';
-import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {ToasterService, ToasterConfig} from 'angular2-toaster/angular2-toaster';
+import {ToasterConfig, ToasterService} from 'angular2-toaster/angular2-toaster';
 import {license} from '../../../../../../env';
 import {HttpClient} from '@angular/common/http';
+import {Howl} from 'howler';
+import * as introJs from 'intro.js/intro.js';
 
 const URL = environment.filesapi;
 const apiUrl = environment.letters_api;
@@ -20,7 +22,7 @@ const apiUrl = environment.letters_api;
   styleUrls: ['./demandletters.component.scss']
 })
 export class DemandLettersComponent implements OnInit {
-
+  introJS = introJs();
   accnumber: string;
   demandid: string;
   custnumber: string;
@@ -60,30 +62,6 @@ export class DemandLettersComponent implements OnInit {
       positionClass: 'toast-top-right',
       animation: 'fade'
     });
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
-
-  currentDate() {
-    const currentDate = new Date();
-    let day = '' + currentDate.getDate();
-    let month = '' + (currentDate.getMonth() + 1);
-    const year = currentDate.getFullYear();
-
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    if (day.length < 2) {
-      day = '0' + day;
-    }
-
-    return year + '-' + month + '-' + day;
-  }
 
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
@@ -135,6 +113,156 @@ export class DemandLettersComponent implements OnInit {
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
       // error server response
     };
+  }
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
+  }
+
+  currentDate() {
+    const currentDate = new Date();
+    let day = '' + currentDate.getDate();
+    let month = '' + (currentDate.getMonth() + 1);
+    const year = currentDate.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return year + '-' + month + '-' + day;
+  }
+
+  // DemandletternSteps(): void {
+  //   this.introJS
+  //     .addHints()
+  //     .showHints();
+  // }
+  //
+  // DemandletternSteps2(id): void {
+  //   this.introJS
+  //     .hideHint(id);
+  // }
+  // DemandletternSteps3(): void {
+  //   this.introJS
+  //     .hideHints();
+  // }
+
+  Demand(): void {
+    this.introJS
+      .setOptions({
+        steps: [
+          {
+            element: '#demand',
+            position: 'left',
+            intro: 'Here you get to select the demand type that you want to send manually eg Demad letter' +
+              '1, Prelisting etc'
+          },
+          {
+            element: '#accnumber',
+            tooltipPosition: 'left',
+            intro: 'This is the account number of the customer. It is a 14 digit code eg 016C7184210202'
+          },
+          {
+            element: '#custnumber',
+            tooltipPosition: 'auto',
+            intro: 'This is 7 digit number of the customer derived from the account number eg 1842102'
+          },
+          {
+            element: '#addressline1',
+            position: 'left',
+            intro: 'This is the P. O Box address provided by the customer. It is vital especially' +
+              'when sending a letter by mail box. In some cases you may have to fill it manually if it\'s not available'
+          },
+          {
+            element: '#postcode',
+            position: 'top',
+            intro: 'This is the standard postal code that accompanies a mail box number to understand its destination ' +
+              'In some cases you may have to fill it manually if it\'s not available'
+          },
+          {
+            element: '#emailaddress',
+            position: 'left',
+            intro: 'This is the customer email address. It should follow the standard email format i.e ' +
+              'janedoe@somethingmail.com otherwise the e-mail will not be delivered In ' +
+              'some cases you may have to fill it manually if it\'s not available'
+          },
+          {
+            element: '#celnumber',
+            position: 'left',
+            intro: 'This is the mobile number of the customer. In some cases you may have to fill it manually if it\'s not available'
+          },
+          {
+            element: '#savecontacts',
+            position: 'left',
+            intro: 'Here you may decide to save the cell number that you enteredd in the previous field. This  ' +
+              'number will be linked to this customer'
+          },
+          {
+            element: '#showlogofooter',
+            position: 'left',
+            intro: 'Check this box if you want to generate a letter that has the default Co-operative Bank of Kenya ' +
+              'logo and footer'
+          },
+          {
+            element: '#generateword',
+            intro: 'Check this box if you want to generate a word document. This is the recommended format if you want to ' +
+              'download and edit the letter. Keep in mind, Word documents are not sent to customers'
+          },
+          {
+            element: '#generatepdf',
+            intro: 'Check this box, to generate a pdf document that will be sent to the customer as per the provided details ' +
+              'in the above fields'
+          },
+          {
+            element: '#previewtosend',
+            intro: 'Check this box if you do not want the system to send the letter. ' +
+              'This means the letter will be generated and downloaded ' +
+              'to your computer for you to take further steps'
+          },
+          {
+            element: '#previewletter',
+            intro: 'Press this button to preview the letter that is to be sent. This button does not ' +
+              'send the letter but instead downloads the letter to your computer so that you can ' +
+              'confirm the details before sending to customer'
+          },
+          {
+            element: '#sendemailinput',
+            intro: 'Check this box if you want to send the letter via email. The email address should be available and valid'
+          },
+          {
+            element: '#sendpostal',
+            intro: 'Check this box, to queue the letter for physical sending via the mail box. The postal address ' +
+              'and postal code should be available'
+          },
+          {
+            element: '#sendbysms',
+            intro: 'Check this box, to send a link of the letter to the customers phone number. The customer ' +
+              'then follows the link to view the letter'
+          },
+          {
+            element: '#generateandsend',
+            intro: 'This is the final step. After confirming that all details are correct, this button sends the ' +
+              'letter as per the provided details'
+          }
+        ],
+        hidePrev: true,
+        hideNext: true,
+        showProgress: true,
+        // tooltipPosition: 'auto',
+        showStepNumbers: true,
+        showBullets: true,
+        scrollToElement: true,
+        exitOnOverlayClick: false
+
+      })
+      .start();
   }
 
   ngOnInit() {
@@ -273,14 +401,17 @@ export class DemandLettersComponent implements OnInit {
 
   popsuccessToast(msg) {
     this.toasterService.pop('success', 'Success', msg);
+    this.audio();
   }
 
   poperrorToast(error) {
     this.toasterService.pop('error', 'Error', error);
+    this.audio();
   }
 
   popinfoToast(info) {
     this.toasterService.pop('info', 'Info', info);
+    this.audio();
   }
 
   openletter(letter) {
@@ -512,6 +643,7 @@ export class DemandLettersComponent implements OnInit {
   async generateletter(letter) {
     // swal.close();
     this.popinfoToast('Letter in queue');
+    // this.audio();
     // await letter generation
     const uploaddata = await this.httpClient.post<any>(apiUrl + letter.demand + '/download', letter).toPromise();
     // console.log("Data: " + JSON.stringify(uploaddata));
@@ -744,6 +876,7 @@ export class DemandLettersComponent implements OnInit {
   generatelettercc(letter, emaildata: any) {
     swal.close();
     this.popinfoToast('Letter Queued to be sent');
+    // this.audio();
     this.ecolService.generateLettercc(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {
         //
@@ -945,5 +1078,14 @@ export class DemandLettersComponent implements OnInit {
         'error'
       );
     });
+  }
+
+  audio() {
+    const sound = new Howl({
+      src: 'assets/sound.wav'
+    });
+
+    sound.play();
+
   }
 }

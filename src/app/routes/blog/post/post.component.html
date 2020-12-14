@@ -66,7 +66,7 @@
           fermentum molestie massa at congue. Vestibulum congue tempus odio ac posuere. Integer lorem metus, rutrum non
           rhoncus sed, fringilla interdum urna.</p>
         <hr/>
-        <div class="btn-group" role="group" aria-label="...">
+        <div aria-label="..." class="btn-group" role="group">
           <button class="btn btn-secondary" type="button">
             <em class="fab fa-facebook-f text-muted"></em>
           </button>
@@ -132,21 +132,21 @@
         <em class="fas fa-pencil-alt mr-2"></em>Add your Comment
       </div>
       <div class="card-body">
-        <form class="form-horizontal" action="/">
+        <form action="/" class="form-horizontal">
           <div class="form-group row">
             <div class="col-6">
-              <label for="post-firstname"></label><input class="form-control" id="post-firstname" type="text"
-                                                         name="post-firstname" placeholder="Your firstname"/>
+              <label for="post-firstname"></label><input class="form-control" id="post-firstname" name="post-firstname"
+                                                         placeholder="Your firstname" type="text"/>
             </div>
             <div class="col-6">
-              <label for="post-lastname"></label><input class="form-control" id="post-lastname" type="text"
-                                                        name="post-lastname" placeholder="Your lastname"/>
+              <label for="post-lastname"></label><input class="form-control" id="post-lastname" name="post-lastname"
+                                                        placeholder="Your lastname" type="text"/>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-12">
               <label for="post-comment"></label><textarea class="form-control" id="post-comment" name="post-comment"
-                                                          rows="4" placeholder="Comment here.."></textarea>
+                                                          placeholder="Comment here.." rows="4"></textarea>
             </div>
           </div>
           <div class="form-group row">
@@ -169,7 +169,7 @@
             <form class="form-horizontal">
               <div class="input-group">
                 <label>
-                  <input class="form-control" type="text" placeholder="Search for..."/>
+                  <input class="form-control" placeholder="Search for..." type="text"/>
                 </label>
                 <span class="input-group-btn">
                                     <button class="btn btn-secondary" type="button">
@@ -216,7 +216,7 @@
         <div class="card card-default">
           <div class="card-header">Tag Cloud</div>
           <div class="card-body">
-            <div jqcloud class="mw-100" [words]="words" [width]="240" [height]="200" [steps]="7"></div>
+            <div [height]="200" [steps]="7" [width]="240" [words]="words" class="mw-100" jqcloud></div>
           </div>
         </div>
       </div>

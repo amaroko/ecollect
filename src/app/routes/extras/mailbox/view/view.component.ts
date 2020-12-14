@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 
@@ -11,8 +11,8 @@ import {SettingsService} from '../../../../core/settings/settings.service';
 })
 export class ViewComponent implements OnInit {
 
-  private sub: any;
   mail: any = {};
+  private sub: any;
 
   constructor(public route: ActivatedRoute, public http: HttpClient, public settings: SettingsService) {
 

@@ -1,6 +1,6 @@
-import {Component, OnInit, Injector} from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import {SettingsService} from '../../../core/settings/settings.service';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 @Component({

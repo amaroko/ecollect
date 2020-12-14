@@ -1,14 +1,14 @@
-
 <div class="content-heading">
   <div>My Work List
     <small>view my worklist</small></div>
 </div>
 
-<ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham"  style="width: 100%; height: 550px;" [columnDefs]="columnDefs"
+<ag-grid-angular #agGrid (rowClicked)='onRowDoubleClicked($event)' [animateRows]="true" [columnDefs]="columnDefs"
                  [defaultColDef]="defaultColDef"
-                 [gridOptions]="gridOptions"   [pagination]="true" [floatingFilter]="true" [rowData]="rowData"
-                 [modules]="modules" [pivotPanelShow]="pivotPanelShow" [sideBar]="true"
-                 [animateRows]="true" (rowClicked)='onRowDoubleClicked($event)' >
+                 [floatingFilter]="true"
+                 [gridOptions]="gridOptions" [modules]="modules" [pagination]="true" [pivotPanelShow]="pivotPanelShow"
+                 [rowData]="rowData" [sideBar]="true" class="ag-theme-balham"
+                 id="myGrid" style="width: 100%; height: 550px;">
 
 </ag-grid-angular>
 

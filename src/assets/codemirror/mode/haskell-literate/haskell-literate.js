@@ -12,9 +12,9 @@
   "use strict";
 
   CodeMirror.defineMode("haskell-literate", function (config, parserConfig) {
-      const baseMode = CodeMirror.getMode(config, (parserConfig && parserConfig.base) || "haskell");
+    const baseMode = CodeMirror.getMode(config, (parserConfig && parserConfig.base) || "haskell");
 
-      return {
+    return {
       startState: function () {
         return {
           inCode: false,

@@ -2,8 +2,8 @@
 <div class="container-fluid">
   <alert type="info">
     <em class="fa fa-exclamation-circle fa-lg fa-fw"></em>
-    <span>There is an autosaved version of this article that is more recent than the version below. <a href="#"
-                                                                                                       class="text-white">Restore</a></span>
+    <span>There is an autosaved version of this article that is more recent than the version below. <a class="text-white"
+                                                                                                       href="#">Restore</a></span>
   </alert>
   <div class="row">
     <!-- Article Content-->
@@ -12,11 +12,11 @@
         <div class="card-body">
           <form action="">
             <label>
-              <input class="mb-3 form-control form-control-lg" type="text" name="article-title"
-                     placeholder="Article title..."/>
+              <input class="mb-3 form-control form-control-lg" name="article-title" placeholder="Article title..."
+                     type="text"/>
             </label>
             <!-- Wysiswyg editor-->
-            <div id="summernote" class="summernote">
+            <div class="summernote" id="summernote">
               <span>Rich text presentation here..</span>
             </div>
             <br/>
@@ -145,7 +145,7 @@
                 <button class="btn btn-sm btn-secondary" type="button">
                   <em class="fas fa-pencil-alt"></em>
                 </button>
-                <button class="btn btn-sm btn-danger" type="button" disabled="">
+                <button class="btn btn-sm btn-danger" disabled="" type="button">
                   <em class="fas fa-trash-alt"></em>
                 </button>
                 <button class="btn btn-sm btn-success" type="button">
@@ -164,28 +164,28 @@
         <div class="card-body">
           <p class="lead">Article Data</p>
           <p class="my-2">Categories</p>
-          <ngx-select (data)="valueCategory" [multiple]="true" [items]="itemsCategories"></ngx-select>
+          <ngx-select (data)="valueCategory" [items]="itemsCategories" [multiple]="true"></ngx-select>
           <p class="my-2">Tags</p>
-          <ngx-select (data)="valueTag" [multiple]="true" [items]="itemsTags"></ngx-select>
+          <ngx-select (data)="valueTag" [items]="itemsTags" [multiple]="true"></ngx-select>
           <p class="my-2">Reviewers</p>
-          <ngx-select (data)="valueReview" [multiple]="true" [items]="itemsReview"></ngx-select>
+          <ngx-select (data)="valueReview" [items]="itemsReview" [multiple]="true"></ngx-select>
           <p class="lead mt-3">SEO Metadata</p>
           <div class="form-group">
             <p>Title</p>
             <label>
-              <input class="form-control" type="text" placeholder="Brief description.."/>
+              <input class="form-control" placeholder="Brief description.." type="text"/>
             </label>
           </div>
           <div class="form-group">
             <p>Description</p>
             <label>
-              <textarea class="form-control" rows="5" placeholder="Max 255 characters..."></textarea>
+              <textarea class="form-control" placeholder="Max 255 characters..." rows="5"></textarea>
             </label>
           </div>
           <div class="form-group">
             <p>Keywords</p>
             <label>
-              <textarea class="form-control" rows="5" placeholder="Max 1000 characters..."></textarea>
+              <textarea class="form-control" placeholder="Max 1000 characters..." rows="5"></textarea>
             </label>
           </div>
         </div>

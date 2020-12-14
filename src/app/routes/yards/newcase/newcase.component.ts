@@ -17,10 +17,10 @@ const PARAMS = new HttpParams({
 });
 
 
-
 @Injectable()
 export class EcollectService {
   private rows: any;
+
   constructor(private http: HttpClient) {
   }
 
@@ -50,9 +50,6 @@ export class EcollectService {
 export class NewcaseComponent implements OnInit {
 
 
-  constructor(private _service: EcollectService, private ecolService: EcolService, public router: Router,
-              private spinner: NgxSpinnerService ) {
-  }
   town = ['NAIROBI', 'KISUMU'];
   searching = false;
   searchFailed = false;
@@ -80,7 +77,11 @@ export class NewcaseComponent implements OnInit {
   submitted = false;
   newcase: FormGroup;
 
-  search = (text$:  Observable<any>) =>
+  constructor(private _service: EcollectService, private ecolService: EcolService, public router: Router,
+              private spinner: NgxSpinnerService) {
+  }
+
+  search = (text$: Observable<any>) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -94,17 +95,17 @@ export class NewcaseComponent implements OnInit {
           }))
       ),
       tap(() => this.searching = false)
-    )
+    );
 
   ngOnInit() {
     this.formBuilder();
   }
 
 // for the search input
-  inputFormatBandListValue(value: any)   {
+  inputFormatBandListValue(value: any) {
 
-    if (value.CLIENT_NAME ) {
-      return [ 'CUSTNUMBER=>' + value.CUSTNUMBER, 'ACCNUMBER=>' + value.ACCNUMBER, 'CLIENTNAME=>' +  value.CLIENT_NAME ];
+    if (value.CLIENT_NAME) {
+      return ['CUSTNUMBER=>' + value.CUSTNUMBER, 'ACCNUMBER=>' + value.ACCNUMBER, 'CLIENTNAME=>' + value.CLIENT_NAME];
     }
 
     return value;
@@ -113,9 +114,8 @@ export class NewcaseComponent implements OnInit {
 
 // results format
   resultFormatBandListValue(value: any) {
-    return [value.CUSTNUMBER, value.ACCNUMBER, value.CLIENT_NAME ];
+    return [value.CUSTNUMBER, value.ACCNUMBER, value.CLIENT_NAME];
   }
-
 
 
   onSubmit(newcase) {
@@ -151,18 +151,18 @@ export class NewcaseComponent implements OnInit {
 
   formBuilder() {
     this.newcase = new FormGroup({
-      'Search' : new FormControl(null),
-      'custnumber' : new FormControl(null, Validators.required),
-      'accountnumber' : new FormControl(null, Validators.required),
-      'customername' : new FormControl(null, Validators.required),
-      'accbalance' : new FormControl(null, Validators.required),
-      'fileno' : new FormControl(null, Validators.required),
-      'arocode' : new FormControl(null, Validators.required),
-      'vehicleregno' : new FormControl(null, Validators.required),
-      'vehiclemake' : new FormControl(null, Validators.required),
-      'stagedate' : new FormControl(null, Validators.required),
-      'dateinput' : new FormControl(null, Validators.required),
-      'owner' : new FormControl(null, Validators.required),
+      'Search': new FormControl(null),
+      'custnumber': new FormControl(null, Validators.required),
+      'accountnumber': new FormControl(null, Validators.required),
+      'customername': new FormControl(null, Validators.required),
+      'accbalance': new FormControl(null, Validators.required),
+      'fileno': new FormControl(null, Validators.required),
+      'arocode': new FormControl(null, Validators.required),
+      'vehicleregno': new FormControl(null, Validators.required),
+      'vehiclemake': new FormControl(null, Validators.required),
+      'stagedate': new FormControl(null, Validators.required),
+      'dateinput': new FormControl(null, Validators.required),
+      'owner': new FormControl(null, Validators.required),
     });
   }
 

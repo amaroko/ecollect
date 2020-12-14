@@ -1,11 +1,11 @@
 <!-- START Search form-->
-<form class="navbar-form" role="search" action="search.html" [class.open]="visible" (submit)="handleForm()">
+<form (submit)="handleForm()" [class.open]="visible" action="search.html" class="navbar-form" role="search">
   <div class="form-group">
     <label>
-      <input [(ngModel)]="term" name="term" class="form-control" type="text"
-             placeholder="{{'header.search.PLACEHOLDER' | translate}}"/>
+      <input [(ngModel)]="term" class="form-control" name="term" placeholder="{{'header.search.PLACEHOLDER' | translate}}"
+             type="text"/>
     </label>
-    <div class="fa fa-times navbar-form-close" (click)="closeNavSearch()"></div>
+    <div (click)="closeNavSearch()" class="fa fa-times navbar-form-close"></div>
   </div>
   <button class="d-none" type="submit">Submit</button>
 </form>

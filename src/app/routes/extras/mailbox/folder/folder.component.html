@@ -23,8 +23,8 @@
 <!-- END action buttons-->
 <div class="card card-default">
   <div class="card-body">
-    <p class="lead text-center" *ngIf="!folderMailsCount()">No mails here</p>
-    <table class="table table-hover mb-mails" *ngIf="folderMailsCount()">
+    <p *ngIf="!folderMailsCount()" class="lead text-center">No mails here</p>
+    <table *ngIf="folderMailsCount()" class="table table-hover mb-mails">
       <tbody>
       <tr *ngFor="let mail of folderMails()" [class.mb-mail-active]="mail.unread">
         <td class="d-none d-lg-table-cell">
@@ -36,15 +36,15 @@
           </div>
         </td>
         <td class="d-none d-lg-table-cell text-center">
-          <em class="fa-lg" [ngClass]="mail.folder=='starred'?'fas fa-star text-warning':'far fa-star text-muted'"></em>
+          <em [ngClass]="mail.folder=='starred'?'fas fa-star text-warning':'far fa-star text-muted'" class="fa-lg"></em>
         </td>
         <td [routerLink]="['/extras/mailbox/view',mail.id]">
           <div class="d-flex">
-            <img class="mb-mail-avatar mr-2" [src]="mail.from.avatar" alt="Mail Avatar"/>
+            <img [src]="mail.from.avatar" alt="Mail Avatar" class="mb-mail-avatar mr-2"/>
             <div class="mb-mail-meta">
               <div class="mb-mail-subject">{{mail.subject}}</div>
               <div class="mb-mail-from">{{mail.from.name}}</div>
-              <div class="mb-mail-preview d-none d-md-block" [innerHTML]="mail.content"></div>
+              <div [innerHTML]="mail.content" class="mb-mail-preview d-none d-md-block"></div>
             </div>
             <div class="mb-mail-date ml-auto">{{mail.date}}</div>
           </div>

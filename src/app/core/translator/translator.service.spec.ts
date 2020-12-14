@@ -1,8 +1,8 @@
 /* tslint:disable:no-unused-variable */
 
-import {TestBed, async, inject} from '@angular/core/testing';
-import {TranslateService, TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {inject, TestBed} from '@angular/core/testing';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import {TranslatorService} from './translator.service';
 import {createTranslateLoader} from '../../app.module';

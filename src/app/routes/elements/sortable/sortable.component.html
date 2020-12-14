@@ -7,9 +7,9 @@
         Favorite drinks
       </div>
       <div class="card-body">
-        <ul class="list-group" dnd-sortable-container [sortableData]="listOne">
-          <li *ngFor="let item of listOne; let i = index" class="list-group-item" dnd-sortable
-              [sortableIndex]="i">{{item}}</li>
+        <ul [sortableData]="listOne" class="list-group" dnd-sortable-container>
+          <li *ngFor="let item of listOne; let i = index" [sortableIndex]="i" class="list-group-item"
+              dnd-sortable>{{item}}</li>
         </ul>
       </div>
     </div>
@@ -31,10 +31,10 @@
       <div class="card-header">
         Available boxers
       </div>
-      <div class="card-body" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="listBoxers">
+      <div [dropZones]="['boxers-zone']" [sortableData]="listBoxers" class="card-body" dnd-sortable-container>
         <ul class="list-group">
-          <li *ngFor="let item of listBoxers; let i = index" class="list-group-item" dnd-sortable
-              [sortableIndex]="i">{{item}}</li>
+          <li *ngFor="let item of listBoxers; let i = index" [sortableIndex]="i" class="list-group-item"
+              dnd-sortable>{{item}}</li>
         </ul>
       </div>
     </div>
@@ -44,10 +44,10 @@
       <div class="card-header">
         First Team
       </div>
-      <div class="card-body" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="listTeamOne">
+      <div [dropZones]="['boxers-zone']" [sortableData]="listTeamOne" class="card-body" dnd-sortable-container>
         <ul class="list-group">
-          <li *ngFor="let item of listTeamOne; let i = index" class="list-group-item" dnd-sortable
-              [sortableIndex]="i">{{item}}</li>
+          <li *ngFor="let item of listTeamOne; let i = index" [sortableIndex]="i" class="list-group-item"
+              dnd-sortable>{{item}}</li>
         </ul>
       </div>
     </div>
@@ -57,10 +57,10 @@
       <div class="card-header">
         Second Team
       </div>
-      <div class="card-body" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="listTeamTwo">
+      <div [dropZones]="['boxers-zone']" [sortableData]="listTeamTwo" class="card-body" dnd-sortable-container>
         <ul class="list-group">
-          <li *ngFor="let item of listTeamTwo; let i = index" class="list-group-item" dnd-sortable
-              [sortableIndex]="i">{{item}}</li>
+          <li *ngFor="let item of listTeamTwo; let i = index" [sortableIndex]="i" class="list-group-item"
+              dnd-sortable>{{item}}</li>
         </ul>
       </div>
     </div>
@@ -75,9 +75,9 @@
       <div class="card">
         <div class="card-header">Available products</div>
         <div class="card-body">
-          <div *ngFor="let product of availableProducts" class="card card-default text-color" dnd-draggable
-               [dragEnabled]="product.quantity>0" [dragData]="product" (onDragSuccess)="orderedProduct($event)"
-               [dropZones]="['demo1']">
+          <div (onDragSuccess)="orderedProduct($event)" *ngFor="let product of availableProducts" [dragData]="product"
+               [dragEnabled]="product.quantity>0" [dropZones]="['demo1']" class="card card-default text-color"
+               dnd-draggable>
             <div class="card-body">
               <div [hidden]="product.quantity===0">{{product.name}} - ${{product.cost}}
                 <br>(available: {{product.quantity}})
@@ -92,10 +92,10 @@
       </div>
     </div>
     <div class="col-lg-4">
-      <div dnd-droppable (onDropSuccess)="addToBasket($event)" [dropZones]="['demo1']" class="card">
+      <div (onDropSuccess)="addToBasket($event)" [dropZones]="['demo1']" class="card" dnd-droppable>
         <div class="card-header">Shopping Basket
           <div class="float-right">
-            <button class="btn btn-secondary btn-sm" (click)="resetBasket()"><em class="far fa-trash-alt"></em></button>
+            <button (click)="resetBasket()" class="btn btn-secondary btn-sm"><em class="far fa-trash-alt"></em></button>
           </div>
           <br>(to pay: ${{ totalCost() }})
         </div>

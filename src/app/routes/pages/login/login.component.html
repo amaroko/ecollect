@@ -8,7 +8,7 @@
         <div class="left_grid_info">
           <h1>E-Collect&trade;</h1>
           <p>Loan management, business-debt management, consumer-debt management, credit card and reporting</p>
-          <img src="../../assets/img/cooop.jpeg" alt=""/>
+          <img alt="" src="../../assets/img/cooop.jpeg"/>
         </div>
       </div>
 
@@ -17,27 +17,27 @@
 
         <h2></h2>
         <p>Enter your details to login.</p>
-        <form [formGroup]="valForm" role="form" name="loginForm" novalidate=""
-              (submit)="submitForm($event, valForm.value)">
+        <form (submit)="submitForm($event, valForm.value)" [formGroup]="valForm" name="loginForm" novalidate=""
+              role="form">
           <label>Username</label>
           <div class="input-group">
-            <span class="fa fa-envelope" aria-hidden="true"></span>
-            <label for="username"></label><input type="text" placeholder="Enter Your Username" id="username" type="text"
-                                                 name="username" autocomplete="off" formControlName="username"
-                                                 required="">
+            <span aria-hidden="true" class="fa fa-envelope"></span>
+            <label for="username"></label><input autocomplete="off" formControlName="username" id="username" name="username"
+                                                 placeholder="Enter Your Username" required="" type="text"
+                                                 type="text">
           </div>
-          <div class="text-danger"
-               *ngIf="valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched)">
+          <div *ngIf="valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched)"
+               class="text-danger">
             Username is required
           </div>
           <label>Password</label>
           <div class="input-group">
-            <span class="fa fa-lock" aria-hidden="true"></span>
-            <label for="password"></label><input type="Password" id="password" placeholder="Enter Password"
-                                                 autocomplete="off" formControlName="password" required="">
+            <span aria-hidden="true" class="fa fa-lock"></span>
+            <label for="password"></label><input autocomplete="off" formControlName="password" id="password"
+                                                 placeholder="Enter Password" required="" type="Password">
           </div>
-          <div class="text-danger"
-               *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)">
+          <div *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)"
+               class="text-danger">
             Password is required
           </div>
           <button [disabled]="!valForm.valid" class="btn btn-block btn-primary mt-3" type="submit">Login</button>
@@ -45,7 +45,7 @@
               <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
           </div><br>-->
           <br/><br/><br/>
-          <div class="loader" *ngIf="loading"></div>
+          <div *ngIf="loading" class="loader"></div>
           <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
         </form>
       </div>

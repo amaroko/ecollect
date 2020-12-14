@@ -4,7 +4,7 @@
     <small>Topic ID: {{ topid }}</small>
   </div>
   <div class="ml-auto">
-    <a class="btn btn-sm btn-secondary text-sm" [routerLink]="'/extras/forum'">&lt; back</a>
+    <a [routerLink]="'/extras/forum'" class="btn btn-sm btn-secondary text-sm">&lt; back</a>
   </div>
 </div>
 <div class="card card-default">
@@ -37,7 +37,7 @@
       <td class="text-center" style="width: 15%">
         <div class="mt-2">
           <a>
-            <img class="rounded-circle thumb64" src="assets/img/user/01.jpg" alt="avatar"/>
+            <img alt="avatar" class="rounded-circle thumb64" src="assets/img/user/01.jpg"/>
           </a>
         </div>
         <small>98 Posts</small>
@@ -67,7 +67,7 @@
       <td class="text-center">
         <div class="mt-2">
           <a>
-            <img class="rounded-circle thumb64" src="assets/img/user/02.jpg" alt="avatar"/>
+            <img alt="avatar" class="rounded-circle thumb64" src="assets/img/user/02.jpg"/>
           </a>
         </div>
         <small>87 Posts</small>
@@ -98,7 +98,7 @@
       <td class="text-center">
         <div class="mt-2">
           <a>
-            <img class="rounded-circle thumb64" src="assets/img/user/03.jpg" alt="avatar"/>
+            <img alt="avatar" class="rounded-circle thumb64" src="assets/img/user/03.jpg"/>
           </a>
         </div>
         <small>333 Posts</small>
@@ -135,7 +135,7 @@
       <td class="text-center">
         <div class="mt-2">
           <a>
-            <img class="rounded-circle thumb64" src="assets/img/user/04.jpg" alt="avatar"/>
+            <img alt="avatar" class="rounded-circle thumb64" src="assets/img/user/04.jpg"/>
           </a>
         </div>
         <small>123 Posts</small>
@@ -164,7 +164,7 @@
       <td class="text-center">
         <div class="mt-2">
           <a>
-            <img class="rounded-circle thumb64" src="assets/img/user/05.jpg" alt="avatar"/>
+            <img alt="avatar" class="rounded-circle thumb64" src="assets/img/user/05.jpg"/>
           </a>
         </div>
         <small>6588 Posts</small>
@@ -186,7 +186,7 @@
   </table>
 </div>
 <div class="text-center mb-3">
-  <button class="btn btn-primary" (click)="answerCollapsed = !answerCollapsed">Reply to this topic</button>
+  <button (click)="answerCollapsed = !answerCollapsed" class="btn btn-primary">Reply to this topic</button>
 </div>
 <div *ngIf="answerCollapsed">
   <div class="text-center">
@@ -196,10 +196,10 @@
   </div>
   <div class="d-flex justify-content-center">
     <div class="col-xl-6">
-      <form class="form-horizontal" action="/" method="post">
+      <form action="/" class="form-horizontal" method="post">
         <div class="form-group">
           <label for="reply-message"></label><textarea class="form-control" id="reply-message" name="reply-message"
-                                                       rows="5" placeholder="Type your answer..."></textarea>
+                                                       placeholder="Type your answer..." rows="5"></textarea>
         </div>
         <div class="form-group text-center">
           <button class="btn btn-sm btn-primary" type="button">Post Answer</button>

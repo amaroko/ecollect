@@ -3,10 +3,9 @@ import {SettingsService} from '../../../core/settings/settings.service';
 import {ActivatedRoute} from '@angular/router';
 import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import {environment} from '../../../../environments/environment';
-import {ToasterService, ToasterConfig} from 'angular2-toaster/angular2-toaster';
+import {ToasterConfig, ToasterService} from 'angular2-toaster/angular2-toaster';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateAdapter, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 @Component({
@@ -16,15 +15,6 @@ import * as moment from 'moment';
   providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class MultipleptpComponent implements OnInit {
-
-  constructor(
-    public settings: SettingsService,
-    public toasterService: ToasterService,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
-    private ecolService: EcolService) {
-
-  }
 
   accnumber: string;
   custnumber: string;
@@ -37,7 +27,6 @@ export class MultipleptpComponent implements OnInit {
   edit = false;
   isptptosave = false;
   p = 1;
-
   public config: ToasterConfig =
     new ToasterConfig({
       showCloseButton: true,
@@ -45,6 +34,15 @@ export class MultipleptpComponent implements OnInit {
       positionClass: 'toast-top-right',
       animation: 'fade'
     });
+
+  constructor(
+    public settings: SettingsService,
+    public toasterService: ToasterService,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    private ecolService: EcolService) {
+
+  }
 
   ngOnInit() {
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');

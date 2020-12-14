@@ -4,7 +4,7 @@
     <div class="d-flex align-items-center">
       <small class="mr-2">Single column</small>
       <label class="switch m-0">
-        <input type="checkbox" checked="checked" [(ngModel)]="timelineAlt"/>
+        <input [(ngModel)]="timelineAlt" checked="checked" type="checkbox"/>
         <span></span>
       </label>
     </div>
@@ -84,7 +84,7 @@
         <div class="popover-body">
           <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam.</p>
           <div class="btn-group" dropdown>
-            <a dropdownToggle class="dropdown-toggle" href="#">
+            <a class="dropdown-toggle" dropdownToggle href="#">
               <em class="fa fa-paperclip"></em>
             </a>
             <ul *dropdownMenu class="dropdown-menu text-left">

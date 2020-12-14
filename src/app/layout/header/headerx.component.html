@@ -14,7 +14,7 @@
         <span style="color: white"><strong>E-Collect&reg;</strong></span>
       </div>
       <div class="brand-logo-collapsed">
-        <img class="img-fluid" src="assets/img/logo-single.png" alt="App Logo"/>
+        <img alt="App Logo" class="img-fluid" src="assets/img/logo-single.png"/>
       </div>
     </a>
   </div>
@@ -23,13 +23,13 @@
   <ul class="navbar-nav mr-auto flex-row">
     <li class="nav-item">
       <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-      <a class="nav-link d-none d-md-block d-lg-block d-xl-block"
-         (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
+      <a (click)="toggleCollapsedSideabar()"
+         *ngIf="!isCollapsedText()" class="nav-link d-none d-md-block d-lg-block d-xl-block">
         <em class="fas fa-bars"></em>
       </a>
       <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
-      <a class="nav-link sidebar-toggle d-md-none"
-         (click)="settings.toggleLayoutSetting('asideToggled'); $event.stopPropagation()">
+      <a (click)="settings.toggleLayoutSetting('asideToggled'); $event.stopPropagation()"
+         class="nav-link sidebar-toggle d-md-none">
         <em class="fas fa-bars"></em>
       </a>
     </li>
@@ -59,19 +59,19 @@
   <ul class="navbar-nav flex-row">
     <!-- Search icon-->
     <li class="nav-item">
-      <a class="nav-link" (click)="openNavSearch($event)">
+      <a (click)="openNavSearch($event)" class="nav-link">
         <em class="icon-magnifier"></em>
       </a>
     </li>
     <!-- Fullscreen (only desktops)-->
     <li class="nav-item d-none d-md-block">
-      <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)" title="Go Fullscreen">
+      <a #fsbutton (click)="toggleFullScreen($event)" class="nav-link" title="Go Fullscreen">
         <em class="fa fa-expand"></em>
       </a>
     </li>
     <!-- START Alert menu-->
     <li class="nav-item dropdown dropdown-list" dropdown>
-      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" title="Overdue" dropdownToggle>
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle title="Overdue">
         <em class="icon-bell"></em>
         <span class="badge badge-danger">{{nu_of_alerts}}</span>
       </a>
@@ -144,13 +144,13 @@
     <!-- END Alert menu-->
     <!-- START Offsidebar button-->
     <li class="nav-item">
-      <a class="nav-link" (click)="toggleOffsidebar(); $event.stopPropagation()" title="Theme settings">
+      <a (click)="toggleOffsidebar(); $event.stopPropagation()" class="nav-link" title="Theme settings">
         <em class="fas fa-paint-brush"></em>
       </a>
     </li>
     <!-- END Offsidebar menu-->
     <li class="nav-item">
-      <a class="nav-link" title="Logout" (click)="logout()">
+      <a (click)="logout()" class="nav-link" title="Logout">
         <em class="fas fa-sign-out-alt"></em>
       </a>
     </li>
@@ -213,7 +213,7 @@
   </ul>
   <!-- END Right Navbar-->
 
-  <app-navsearch [visible]="getNavSearchVisible()" (onclose)="setNavSearchVisible(false)"></app-navsearch>
+  <app-navsearch (onclose)="setNavSearchVisible(false)" [visible]="getNavSearchVisible()"></app-navsearch>
 
 </nav>
 <!-- END Top Navbar-->

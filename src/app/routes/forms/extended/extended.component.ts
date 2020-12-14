@@ -9,31 +9,11 @@ import {FormControl} from '@angular/forms';
 })
 export class ExtendedComponent implements OnInit {
 
-  public get disabledV(): string {
-    return this._disabledV;
-  }
-
-  public set disabledV(value: string) {
-    this._disabledV = value;
-    this.disabled = this._disabledV === '1';
-  }
-
-  constructor() {
-    this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-    this.myModel = '';
-    this.modelWithValue = '5554441234';
-    this.formControlInput.setValue('5555551234');
-    // Datepicker
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
-    this.bsRangeValue = [this.bsValue, this.maxDate];
-  }
-
   // Color Picker
   colorDemo1 = '#555555';
   colorDemo2 = '#555555';
   colorDemo3 = '#555555';
   colorDemo4 = '#555555';
-
   // ng2Select
   public items: Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -45,11 +25,8 @@ export class ExtendedComponent implements OnInit {
     'Rotterdam', 'Seville', 'Sheffield', 'Sofia', 'Stockholm', 'Stuttgart',
     'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
     'Zagreb', 'Zaragoza', 'Łódź'];
-
   public value: any = {};
-  public _disabledV = '0';
   public disabled = false;
-
   // Datepicker
   bsValue = new Date();
   bsRangeValue: Date[];
@@ -59,19 +36,38 @@ export class ExtendedComponent implements OnInit {
   };
   // Time picker
   mytime: Date = new Date();
-
   // TextMask
   public myModel: string;
   public modelWithValue: string;
   public formControlInput: FormControl = new FormControl();
   public mask: Array<string | RegExp>;
-
   // Tags Input
   public validators = [this.startsWithAt, this.endsWith$];
   public errorMessages = {
     'startsWithAt@': 'Your items need to start with "@"',
     'endsWith$': 'Your items need to end with "$"'
   };
+
+  constructor() {
+    this.mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    this.myModel = '';
+    this.modelWithValue = '5554441234';
+    this.formControlInput.setValue('5555551234');
+    // Datepicker
+    this.maxDate.setDate(this.maxDate.getDate() + 7);
+    this.bsRangeValue = [this.bsValue, this.maxDate];
+  }
+
+  public _disabledV = '0';
+
+  public get disabledV(): string {
+    return this._disabledV;
+  }
+
+  public set disabledV(value: string) {
+    this._disabledV = value;
+    this.disabled = this._disabledV === '1';
+  }
 
   public selected(value: any): void {
     console.log('Selected value is: ', value);

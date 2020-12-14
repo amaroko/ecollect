@@ -4,19 +4,19 @@
     <div class="card card-flat">
       <div class="card-header text-center bg-dark">
         <a href="#">
-          <img class="block-center rounded" src="assets/img/logo.png" alt="Image"/>
+          <img alt="Image" class="block-center rounded" src="assets/img/logo.png"/>
         </a>
       </div>
       <div class="card-body">
         <p class="text-center py-2">SIGNUP TO GET INSTANT ACCESS.</p>
-        <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="registerForm" novalidate=""
-              (submit)="submitForm($event, valForm.value)">
+        <form (submit)="submitForm($event, valForm.value)" [formGroup]="valForm" class="form-validate mb-3" name="registerForm" novalidate=""
+              role="form">
           <div class="form-group">
             <label class="text-muted mb-1">Email address</label>
             <div class="input-group with-focus">
               <label>
-                <input class="form-control border-right-0" type="email" name="account_email" placeholder="Enter email"
-                       autocomplete="off" formControlName="email" required=""/>
+                <input autocomplete="off" class="form-control border-right-0" formControlName="email" name="account_email"
+                       placeholder="Enter email" required="" type="email"/>
               </label>
               <div class="input-group-append">
                                 <span class="input-group-text text-muted bg-transparent border-left-0">
@@ -24,12 +24,12 @@
                                 </span>
               </div>
             </div>
-            <div class="text-danger"
-                 *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+            <div *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)"
+                 class="text-danger">
               This field is required
             </div>
-            <div class="text-danger"
-                 *ngIf="valForm.controls['email'].hasError('email') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+            <div *ngIf="valForm.controls['email'].hasError('email') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)"
+                 class="text-danger">
               This field must be a valid email address
             </div>
           </div>
@@ -37,21 +37,21 @@
             <div class="form-group">
               <label class="text-muted mb-1">Password</label>
               <div class="input-group with-focus">
-                <label for="id-password"></label><input class="form-control border-right-0" id="id-password"
-                                                        type="password" name="password" formControlName="password"
-                                                        [formControl]="valForm.get('passwordGroup.password')"/>
+                <label for="id-password"></label><input [formControl]="valForm.get('passwordGroup.password')" class="form-control border-right-0"
+                                                        formControlName="password" id="id-password" name="password"
+                                                        type="password"/>
                 <div class="input-group-append">
                                     <span class="input-group-text text-muted bg-transparent border-left-0">
                                         <em class="fa fa-lock"></em>
                                     </span>
                 </div>
               </div>
-              <div class="text-danger"
-                   *ngIf="valForm.get('passwordGroup.password').hasError('required') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)">
+              <div *ngIf="valForm.get('passwordGroup.password').hasError('required') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)"
+                   class="text-danger">
                 This field is required
               </div>
-              <div class="text-danger"
-                   *ngIf="valForm.get('passwordGroup.password').hasError('pattern') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)">
+              <div *ngIf="valForm.get('passwordGroup.password').hasError('pattern') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)"
+                   class="text-danger">
                 Input should match 'a-zA-Z0-9' and 6-10 length
               </div>
             </div>
@@ -59,9 +59,9 @@
               <label class="text-muted mb-1">Retype Password</label>
               <div class="input-group with-focus">
                 <label>
-                  <input class="form-control border-right-0" type="password" name="confirmPassword"
-                         formControlName="confirmPassword"
-                         [formControl]="valForm.get('passwordGroup.confirmPassword')"/>
+                  <input [formControl]="valForm.get('passwordGroup.confirmPassword')" class="form-control border-right-0" formControlName="confirmPassword"
+                         name="confirmPassword"
+                         type="password"/>
                 </label>
                 <div class="input-group-append">
                                     <span class="input-group-text text-muted bg-transparent border-left-0">
@@ -69,11 +69,11 @@
                                     </span>
                 </div>
               </div>
-              <div class="text-danger"
-                   *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('required') && (valForm.get('passwordGroup.confirmPassword').dirty || valForm.get('passwordGroup.confirmPassword').touched)">
+              <div *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('required') && (valForm.get('passwordGroup.confirmPassword').dirty || valForm.get('passwordGroup.confirmPassword').touched)"
+                   class="text-danger">
                 This field is required
               </div>
-              <div class="text-danger" *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('equalTo')">Password
+              <div *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('equalTo')" class="text-danger">Password
                 does Not match
               </div>
             </div>
@@ -81,19 +81,19 @@
           <div class="clearfix">
             <div class="checkbox c-checkbox float-left mt0">
               <label>
-                <input type="checkbox" required="" name="account_agreed" formControlName="accountagreed"/>
+                <input formControlName="accountagreed" name="account_agreed" required="" type="checkbox"/>
                 <span class="fa fa-check"></span>I agree with the
                 <a href="#">terms</a>
               </label>
             </div>
           </div>
-          <span class="text-danger"
-                *ngIf="valForm.controls['accountagreed'].hasError('required') && (valForm.controls['accountagreed'].dirty || valForm.controls['accountagreed'].touched)">You must agree the terms</span>
+          <span *ngIf="valForm.controls['accountagreed'].hasError('required') && (valForm.controls['accountagreed'].dirty || valForm.controls['accountagreed'].touched)"
+                class="text-danger">You must agree the terms</span>
           <button class="btn btn-block btn-primary mt-3" type="submit">Create account</button>
         </form>
         <!-- <div class="alert alert-danger text-center"></div> -->
         <p class="pt-3 text-center">Have an account?</p>
-        <a class="btn btn-block btn-secondary" [routerLink]="'/login'">Signup</a>
+        <a [routerLink]="'/login'" class="btn btn-block btn-secondary">Signup</a>
       </div>
     </div>
     <!-- END card-->

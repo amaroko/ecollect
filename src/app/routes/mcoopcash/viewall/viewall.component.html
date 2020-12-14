@@ -2,14 +2,15 @@
   <div>Viewall:
     <small>mcoopcash accounts in arrears</small></div>
 </div>
-<button (click)="onBtnExportDataAsExcel()" type="button" class="btn btn-labeled btn-warning">
-  <span class="btn-label"><i class="fas fa-download"></i></span>Export Excel</button>
-<ag-grid-angular #agGrid style="width: 100%; height: 700px;" id="myGrid" class="ag-theme-balham"
-                 [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowModelType]="rowModelType"
-                 [maxBlocksInCache]="maxBlocksInCache" [animateRows]="true"
+<button (click)="onBtnExportDataAsExcel()" class="btn btn-labeled btn-warning" type="button">
+  <span class="btn-label"><i class="fas fa-download"></i></span>Export Excel
+</button>
+<ag-grid-angular #agGrid (gridReady)="onGridReady($event)" (rowClicked)='onRowDoubleClicked($event)' [animateRows]="true"
+                 [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableColResize]="true"
+                 [enableFilter]="true" [enableSorting]="true"
                  [floatingFilter]="true"
+                 [maxBlocksInCache]="maxBlocksInCache"
+                 [modules]="modules" [paginationAutoPageSize]="true" [pagination]="true"
                  [rowData]="rowData"
-                 [pagination]="true" [enableSorting]="true" [enableFilter]="true"
-                 [modules]="modules"
-                 [enableColResize]="true" [paginationAutoPageSize]="true" (rowClicked)='onRowDoubleClicked($event)'
-                 (gridReady)="onGridReady($event)"></ag-grid-angular>
+                 [rowModelType]="rowModelType" class="ag-theme-balham" id="myGrid"
+                 style="width: 100%; height: 700px;"></ag-grid-angular>

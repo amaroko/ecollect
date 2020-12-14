@@ -22,6 +22,28 @@ export class ActivityLogComponent implements OnInit {
   totalguarantors: number;
   totalfiles: number;
   totalwoffstory: number;
+  accnumber: string;
+  custnumber: string;
+  accountdetails: any;
+  guarantors: [];
+  model: any = {};
+  bodyletter: any = {};
+  filepath: string;
+  demands: any;
+  file: string;
+  smsMessage: string;
+  username: string;
+  date = new Date();
+  sys: string;
+  collateralmenu = true;
+  guarantorsmenu = true;
+  demandlettersmenu = true;
+  autodial_telnumber: string;
+  files: any = [];
+  totalTeles: number;
+  totalPtps: number;
+  teles: any = [];
+  plan = 'NONE';
 
   constructor(
     public settings: SettingsService,
@@ -63,29 +85,6 @@ export class ActivityLogComponent implements OnInit {
       this.totalwoffstory = data;
     });
   }
-
-  accnumber: string;
-  custnumber: string;
-  accountdetails: any;
-  guarantors: [];
-  model: any = {};
-  bodyletter: any = {};
-  filepath: string;
-  demands: any;
-  file: string;
-  smsMessage: string;
-  username: string;
-  date = new Date();
-  sys: string;
-  collateralmenu = true;
-  guarantorsmenu = true;
-  demandlettersmenu = true;
-  autodial_telnumber: string;
-  files: any = [];
-  totalTeles: number;
-  totalPtps: number;
-  teles: any = [];
-  plan = 'NONE';
 
   ngOnInit() {
     // check if logged in
@@ -337,7 +336,6 @@ export class ActivityLogComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
-
 
 
 }

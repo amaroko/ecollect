@@ -9,21 +9,21 @@
       <div class="card card-default">
         <div class="card-header">Branch List</div>
         <div class="card-body">
-          <form #searchForm="ngForm" class="form-horizontal" novalidate autocomplete="off">
+          <form #searchForm="ngForm" autocomplete="off" class="form-horizontal" novalidate>
             <div class="row">
               <div class="col-xl-4 col-lg-6 form-inline">
                 <label>
-                  <input class="mb form-control" placeholder="Search..." type="text" [(ngModel)]="model.searchText"
-                         name="searchText" #searchText="ngModel" minlength="4" required/>
+                  <input #searchText="ngModel" [(ngModel)]="model.searchText" class="mb form-control" minlength="4"
+                         name="searchText" placeholder="Search..." required type="text"/>
                 </label>
-                <button type="button" class="btn btn-outline-inverse" (click)="onSearch()"
-                        [disabled]="!searchForm.valid || !searchForm.dirty"><span class="fa fa-search"></span>
+                <button (click)="onSearch()" [disabled]="!searchForm.valid || !searchForm.dirty" class="btn btn-outline-inverse"
+                        type="button"><span class="fa fa-search"></span>
                   Search
                 </button>
 
               </div>
               <div class="col-xl-4 col-lg-6 form-inline">
-                <button class="mr-1 mb-1 btn btn-outline-green" type="button" (click)="reset()"><span
+                <button (click)="reset()" class="mr-1 mb-1 btn btn-outline-green" type="button"><span
                   class="fa fa-search"></span> Reset
                 </button>
               </div>
@@ -44,7 +44,7 @@
                 <tbody>
                 <tr *ngFor="let b of branches">
                   <td>
-                    <button class="btn btn-link" (click)="update(b)">{{b.branchcode}}</button>
+                    <button (click)="update(b)" class="btn btn-link">{{b.branchcode}}</button>
                   </td>
                   <td>{{b.branchname}}</td>
                   <td>{{b.manager}}</td>
@@ -60,46 +60,46 @@
     <div class="col-lg-4">
       <div class="card card-default">
         <div class="card-body">
-          <form [formGroup]="branchForm" class="form-validate form-horizontal"
-                (submit)="submitForm($event, branchForm.value)" novalidate="" autocomplete="off">
+          <form (submit)="submitForm($event, branchForm.value)" [formGroup]="branchForm"
+                autocomplete="off" class="form-validate form-horizontal" novalidate="">
             <div class="form-group">
               <p>BranchCode#</p>
               <label>
-                <input class="form-control" type="text" formControlName="branchcode" name="branchcode"
-                       [formControl]="branchForm.controls['branchcode']"
-                       [ngClass]="{ 'is-invalid': f.branchcode.errors }"
-                       required/>
+                <input [formControl]="branchForm.controls['branchcode']" [ngClass]="{ 'is-invalid': f.branchcode.errors }" class="form-control" formControlName="branchcode"
+                       name="branchcode"
+                       required
+                       type="text"/>
               </label>
             </div>
             <div class="form-group">
               <p>Branch Name</p>
               <label>
-                <input class="form-control" type="text" formControlName="branchname"
-                       [formControl]="branchForm.controls['branchname']"
-                       [ngClass]="{ 'is-invalid': f.branchname.errors }"
-                       required/>
+                <input [formControl]="branchForm.controls['branchname']" [ngClass]="{ 'is-invalid': f.branchname.errors }" class="form-control"
+                       formControlName="branchname"
+                       required
+                       type="text"/>
               </label>
             </div>
             <div class="form-group">
               <p>Branch Manager</p>
               <label>
-                <input class="form-control" type="text" formControlName="manager"
-                       [formControl]="branchForm.controls['manager']" [ngClass]="{ 'is-invalid': f.manager.errors }"
-                       required/>
+                <input [formControl]="branchForm.controls['manager']" [ngClass]="{ 'is-invalid': f.manager.errors }" class="form-control"
+                       formControlName="manager" required
+                       type="text"/>
               </label>
             </div>
             <div class="form-group">
               <p>Branch Email</p>
               <label>
-                <input class="form-control" type="text" formControlName="branchemail"
-                       [formControl]="branchForm.controls['branchemail']"/>
+                <input [formControl]="branchForm.controls['branchemail']" class="form-control" formControlName="branchemail"
+                       type="text"/>
               </label>
             </div>
             <div class="form-group">
               <p>Region</p>
               <label>
-                <input class="form-control" type="text" formControlName="region"
-                       [formControl]="branchForm.controls['region']"/>
+                <input [formControl]="branchForm.controls['region']" class="form-control" formControlName="region"
+                       type="text"/>
               </label>
             </div>
             <div class="form-group">

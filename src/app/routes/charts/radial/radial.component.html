@@ -6,7 +6,7 @@
   <h4 class="page-header clearfix">
     <div class="float-left">Easypie Charts</div>
     <div class="float-right">
-      <button class="btn btn-sm btn-info" type="button" (click)="randomize()">
+      <button (click)="randomize()" class="btn btn-sm btn-info" type="button">
         <em class="fas fa-sync"></em>
       </button>
     </div>
@@ -16,7 +16,7 @@
       <div class="card">
         <div class="card-header">Default</div>
         <div class="card-body text-center">
-          <div class="easypie-chart" easypiechart [options]="pieOptions1" [percent]="easyPiePercent1">
+          <div [options]="pieOptions1" [percent]="easyPiePercent1" class="easypie-chart" easypiechart>
             <span>{{easyPiePercent1}}</span>
           </div>
         </div>
@@ -26,7 +26,7 @@
       <div class="card">
         <div class="card-header">Slim</div>
         <div class="card-body text-center">
-          <div class="easypie-chart" easypiechart [options]="pieOptions2" [percent]="easyPiePercent2">
+          <div [options]="pieOptions2" [percent]="easyPiePercent2" class="easypie-chart" easypiechart>
             <span>{{easyPiePercent2}}</span>
           </div>
         </div>
@@ -36,7 +36,7 @@
       <div class="card">
         <div class="card-header">Track color</div>
         <div class="card-body text-center">
-          <div class="easypie-chart" easypiechart [options]="pieOptions3" [percent]="easyPiePercent3">
+          <div [options]="pieOptions3" [percent]="easyPiePercent3" class="easypie-chart" easypiechart>
             <span>{{easyPiePercent3}}</span>
           </div>
         </div>
@@ -46,7 +46,7 @@
       <div class="card">
         <div class="card-header">Scale color</div>
         <div class="card-body text-center">
-          <div class="easypie-chart" easypiechart [options]="pieOptions4" [percent]="easyPiePercent4">
+          <div [options]="pieOptions4" [percent]="easyPiePercent4" class="easypie-chart" easypiechart>
             <span>{{easyPiePercent4}}</span>
           </div>
         </div>
@@ -90,22 +90,22 @@
         <div class="row">
           <div class="col-lg-3">
             <div class="radial-bar radial-bar-20 radial-bar radial-bar-danger">
-              <img src="assets/img/user/03.jpg" alt="Image"/>
+              <img alt="Image" src="assets/img/user/03.jpg"/>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="radial-bar radial-bar-35 radial-bar-warning" data-label="35%">
-              <img src="assets/img/user/01.jpg" alt="Image"/>
+              <img alt="Image" src="assets/img/user/01.jpg"/>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="radial-bar radial-bar-50 radial-bar-info" data-label="50%">
-              <img src="assets/img/user/04.jpg" alt="Image"/>
+              <img alt="Image" src="assets/img/user/04.jpg"/>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="radial-bar radial-bar-100 radial-bar-success" data-label="100%">
-              <img src="assets/img/user/05.jpg" alt="Image"/>
+              <img alt="Image" src="assets/img/user/05.jpg"/>
             </div>
           </div>
         </div>

@@ -239,7 +239,7 @@
             <form class="form-horizontal">
               <div class="input-group">
                 <label>
-                  <input class="form-control" type="text" placeholder="Search for..."/>
+                  <input class="form-control" placeholder="Search for..." type="text"/>
                 </label>
                 <span class="input-group-btn">
                                     <button class="btn btn-secondary" type="button">
@@ -286,7 +286,7 @@
         <div class="card card-default">
           <div class="card-header">Tag Cloud</div>
           <div class="card-body">
-            <div jqcloud class="mw-100" [words]="words" [width]="240" [height]="200" [steps]="7"></div>
+            <div [height]="200" [steps]="7" [width]="240" [words]="words" class="mw-100" jqcloud></div>
           </div>
         </div>
       </div>

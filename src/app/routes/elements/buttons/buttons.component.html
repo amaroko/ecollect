@@ -249,7 +249,7 @@
       <div class="card-body">
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
-          <button class="btn dropdown-toggle btn-secondary" type="button" dropdownToggle>Secondary
+          <button class="btn dropdown-toggle btn-secondary" dropdownToggle type="button">Secondary
             <span class="caret"></span>
           </button>
           <div *dropdownMenu class="dropdown-menu" role="menu">
@@ -263,7 +263,7 @@
         <!-- END button group-->
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
-          <button class="btn dropdown-toggle btn-primary" type="button" dropdownToggle>primary
+          <button class="btn dropdown-toggle btn-primary" dropdownToggle type="button">primary
             <span class="caret"></span>
           </button>
           <div *dropdownMenu class="dropdown-menu" role="menu">
@@ -277,7 +277,7 @@
         <!-- END button group-->
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
-          <button class="btn dropdown-toggle btn-success" type="button" dropdownToggle>success
+          <button class="btn dropdown-toggle btn-success" dropdownToggle type="button">success
             <span class="caret"></span>
           </button>
           <div *dropdownMenu class="dropdown-menu" role="menu">
@@ -291,7 +291,7 @@
         <!-- END button group-->
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
-          <button class="btn dropdown-toggle btn-info" type="button" dropdownToggle>info
+          <button class="btn dropdown-toggle btn-info" dropdownToggle type="button">info
             <span class="caret"></span>
           </button>
           <div *dropdownMenu class="dropdown-menu" role="menu">
@@ -305,7 +305,7 @@
         <!-- END button group-->
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
-          <button class="btn dropdown-toggle btn-warning" type="button" dropdownToggle>warning
+          <button class="btn dropdown-toggle btn-warning" dropdownToggle type="button">warning
             <span class="caret"></span>
           </button>
           <div *dropdownMenu class="dropdown-menu" role="menu">
@@ -319,7 +319,7 @@
         <!-- END button group-->
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
-          <button class="btn dropdown-toggle btn-danger" type="button" dropdownToggle>danger
+          <button class="btn dropdown-toggle btn-danger" dropdownToggle type="button">danger
             <span class="caret"></span>
           </button>
           <div *dropdownMenu class="dropdown-menu" role="menu">
@@ -333,7 +333,7 @@
         <!-- END button group-->
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
-          <button class="btn dropdown-toggle btn-inverse" type="button" dropdownToggle>inverse
+          <button class="btn dropdown-toggle btn-inverse" dropdownToggle type="button">inverse
             <span class="caret"></span>
           </button>
           <div *dropdownMenu class="dropdown-menu" role="menu">
@@ -359,7 +359,7 @@
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
           <button class="btn btn-secondary" type="button">Action</button>
-          <button class="btn dropdown-toggle dropdown-toggle-split btn-secondary" type="button" dropdownToggle>
+          <button class="btn dropdown-toggle dropdown-toggle-split btn-secondary" dropdownToggle type="button">
             <span class="caret"></span>
             <span class="sr-only">Secondary</span>
           </button>
@@ -375,7 +375,7 @@
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
           <button class="btn btn-primary" type="button">Action</button>
-          <button class="btn dropdown-toggle dropdown-toggle-split btn-primary" type="button" dropdownToggle>
+          <button class="btn dropdown-toggle dropdown-toggle-split btn-primary" dropdownToggle type="button">
             <span class="caret"></span>
             <span class="sr-only">primary</span>
           </button>
@@ -391,7 +391,7 @@
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
           <button class="btn btn-success" type="button">Action</button>
-          <button class="btn dropdown-toggle dropdown-toggle-split btn-success" type="button" dropdownToggle>
+          <button class="btn dropdown-toggle dropdown-toggle-split btn-success" dropdownToggle type="button">
             <span class="caret"></span>
             <span class="sr-only">success</span>
           </button>
@@ -407,7 +407,7 @@
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
           <button class="btn btn-info" type="button">Action</button>
-          <button class="btn dropdown-toggle dropdown-toggle-split btn-info" type="button" dropdownToggle>
+          <button class="btn dropdown-toggle dropdown-toggle-split btn-info" dropdownToggle type="button">
             <span class="caret"></span>
             <span class="sr-only">info</span>
           </button>
@@ -423,7 +423,7 @@
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
           <button class="btn btn-warning" type="button">Action</button>
-          <button class="btn dropdown-toggle dropdown-toggle-split btn-warning" type="button" dropdownToggle>
+          <button class="btn dropdown-toggle dropdown-toggle-split btn-warning" dropdownToggle type="button">
             <span class="caret"></span>
             <span class="sr-only">warning</span>
           </button>
@@ -439,7 +439,7 @@
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
           <button class="btn btn-danger" type="button">Action</button>
-          <button class="btn dropdown-toggle dropdown-toggle-split btn-danger" type="button" dropdownToggle>
+          <button class="btn dropdown-toggle dropdown-toggle-split btn-danger" dropdownToggle type="button">
             <span class="caret"></span>
             <span class="sr-only">danger</span>
           </button>
@@ -455,7 +455,7 @@
         <!-- START button group-->
         <div class="btn-group mb-1 mr-1" dropdown>
           <button class="btn btn-inverse" type="button">Action</button>
-          <button class="btn dropdown-toggle dropdown-toggle-split btn-inverse" type="button" dropdownToggle>
+          <button class="btn dropdown-toggle dropdown-toggle-split btn-inverse" dropdownToggle type="button">
             <span class="caret"></span>
             <span class="sr-only">inverse</span>
           </button>
@@ -485,29 +485,29 @@
       <div class="col-xl-4 mb-3">
         <h4>Single toggle</h4>
         <pre>{{singleModel}}</pre>
-        <button class="btn btn-primary" type="button" [(ngModel)]="singleModel" btnCheckbox>Single Toggle</button>
+        <button [(ngModel)]="singleModel" btnCheckbox class="btn btn-primary" type="button">Single Toggle</button>
       </div>
       <div class="col-xl-4 mb-3">
         <h4>Checkbox</h4>
         <pre>{{checkModel | json}}</pre>
         <div class="btn-group">
-          <label class="btn btn-primary" [(ngModel)]="checkModel.left" btnCheckbox>Left</label>
-          <label class="btn btn-primary" [(ngModel)]="checkModel.middle" btnCheckbox>Middle</label>
-          <label class="btn btn-primary" [(ngModel)]="checkModel.right" btnCheckbox>Right</label>
+          <label [(ngModel)]="checkModel.left" btnCheckbox class="btn btn-primary">Left</label>
+          <label [(ngModel)]="checkModel.middle" btnCheckbox class="btn btn-primary">Middle</label>
+          <label [(ngModel)]="checkModel.right" btnCheckbox class="btn btn-primary">Right</label>
         </div>
       </div>
       <div class="col-xl-4">
         <h4>Radio &amp; Uncheckable Radio</h4>
         <pre>{{radioModel || 'null'}}</pre>
         <div class="btn-group">
-          <label class="btn btn-primary" [(ngModel)]="radioModel" btnRadio="'Left'">Left</label>
-          <label class="btn btn-primary" [(ngModel)]="radioModel" btnRadio="'Middle'">Middle</label>
-          <label class="btn btn-primary" [(ngModel)]="radioModel" btnRadio="'Right'">Right</label>
+          <label [(ngModel)]="radioModel" btnRadio="'Left'" class="btn btn-primary">Left</label>
+          <label [(ngModel)]="radioModel" btnRadio="'Middle'" class="btn btn-primary">Middle</label>
+          <label [(ngModel)]="radioModel" btnRadio="'Right'" class="btn btn-primary">Right</label>
         </div>
         <div class="btn-group">
-          <label class="btn btn-success" [(ngModel)]="radioModel" btnRadio="'Left'" uncheckable>Left</label>
-          <label class="btn btn-success" [(ngModel)]="radioModel" btnRadio="'Middle'" uncheckable>Middle</label>
-          <label class="btn btn-success" [(ngModel)]="radioModel" btnRadio="'Right'" uncheckable>Right</label>
+          <label [(ngModel)]="radioModel" btnRadio="'Left'" class="btn btn-success" uncheckable>Left</label>
+          <label [(ngModel)]="radioModel" btnRadio="'Middle'" class="btn btn-success" uncheckable>Middle</label>
+          <label [(ngModel)]="radioModel" btnRadio="'Right'" class="btn btn-success" uncheckable>Right</label>
         </div>
       </div>
     </div>
@@ -524,25 +524,25 @@
       <div class="col-xl-6">
         <div>
           <h4>Default</h4>
-          <pagination [totalItems]="totalItems" [(ngModel)]="currentPage"
-                      (pageChanged)="pageChanged($event)"></pagination>
-          <pagination [directionLinks]="false" [totalItems]="totalItems" [(ngModel)]="currentPage"
-                      (numPages)="smallnumPages"></pagination>
+          <pagination (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage"
+                      [totalItems]="totalItems"></pagination>
+          <pagination (numPages)="smallnumPages" [(ngModel)]="currentPage" [directionLinks]="false"
+                      [totalItems]="totalItems"></pagination>
           <pre>The selected page no: {{currentPage}}</pre>
-          <button class="btn btn-info" (click)="setPage(3)">Set current page to: 3</button>
+          <button (click)="setPage(3)" class="btn btn-info">Set current page to: 3</button>
         </div>
       </div>
       <div class="col-xl-6">
         <h4>Pager</h4>
-        <pager [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
-               pageBtnClass="btn" [itemsPerPage]="10">
+        <pager (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage" [itemsPerPage]="10"
+               [totalItems]="totalItems" pageBtnClass="btn">
         </pager>
         <hr/>
         <h4>Limit the maximum visible buttons</h4>
-        <pagination class="pagination-sm" [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize"
-                    [boundaryLinks]="true"></pagination>
-        <pagination class="pagination-sm" [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize"
-                    [boundaryLinks]="true" [rotate]="false" (numPages)="numPages"></pagination>
+        <pagination [(ngModel)]="bigCurrentPage" [boundaryLinks]="true" [maxSize]="maxSize" [totalItems]="bigTotalItems"
+                    class="pagination-sm"></pagination>
+        <pagination (numPages)="numPages" [(ngModel)]="bigCurrentPage" [boundaryLinks]="true" [maxSize]="maxSize"
+                    [rotate]="false" [totalItems]="bigTotalItems" class="pagination-sm"></pagination>
         <pre>Page: {{bigCurrentPage}} / {{numPages}}</pre>
       </div>
     </div>

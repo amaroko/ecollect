@@ -5,22 +5,22 @@
 <div class="container-fluid">
   <!-- Basic Example-->
   <h4 class="page-header mt0">Basic Example</h4>
-  <ag-grid-angular #agGrid [rowData]="rowData1 | async" class="ag-angle" style="width: 100%; height: 400px"
-                   [gridOptions]="gridOptions" (gridReady)="gridReady($event)">
+  <ag-grid-angular #agGrid (gridReady)="gridReady($event)" [gridOptions]="gridOptions" [rowData]="rowData1 | async"
+                   class="ag-angle" style="width: 100%; height: 400px">
   </ag-grid-angular>
   <!-- Filter Example-->
   <h4 class="page-header">Filter Example</h4>
   <div class="row">
     <div class="col-xl-4 col-lg-6">
       <label>
-        <input class="mb form-control" placeholder="Filter..." type="text" (keyup)="onQuickFilterChanged($event)"/>
+        <input (keyup)="onQuickFilterChanged($event)" class="mb form-control" placeholder="Filter..." type="text"/>
       </label>
     </div>
   </div>
-  <ag-grid-angular #agGrid [rowData]="rowData2 | async" class="ag-angle" style="width: 100%; height: 400px"
-                   [gridOptions]="gridOptions1" (gridReady)="gridReady1($event)" enableFilter></ag-grid-angular>
+  <ag-grid-angular #agGrid (gridReady)="gridReady1($event)" [gridOptions]="gridOptions1" [rowData]="rowData2 | async"
+                   class="ag-angle" enableFilter style="width: 100%; height: 400px"></ag-grid-angular>
   <!-- Pinning Example-->
   <h4 class="page-header">Pinning Example</h4>
-  <ag-grid-angular #agGrid [rowData]="rowData3 | async" class="ag-angle" style="width: 100%; height: 400px"
-                   [gridOptions]="gridOptions2" (gridReady)="gridReady2($event)"></ag-grid-angular>
+  <ag-grid-angular #agGrid (gridReady)="gridReady2($event)" [gridOptions]="gridOptions2" [rowData]="rowData3 | async"
+                   class="ag-angle" style="width: 100%; height: 400px"></ag-grid-angular>
 </div>

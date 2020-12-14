@@ -1,27 +1,27 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   function errorIfNotEmpty(stream) {
-      const nonWS = stream.match(/^\s*\S/);
-      stream.skipToEnd();
+    const nonWS = stream.match(/^\s*\S/);
+    stream.skipToEnd();
     return nonWS ? "error" : null;
   }
 
-  CodeMirror.defineMode("asciiarmor", function() {
+  CodeMirror.defineMode("asciiarmor", function () {
     return {
-      token: function(stream, state) {
-          let m;
-          if (state.state == "top") {
+      token: function (stream, state) {
+        let m;
+        if (state.state == "top") {
           if (stream.sol() && (m = stream.match(/^-----BEGIN (.*)?-----\s*$/))) {
             state.state = "headers";
             state.type = m[1];
@@ -33,8 +33,8 @@
             state.state = "header";
             return "atom";
           } else {
-              const result = errorIfNotEmpty(stream);
-              if (result) state.state = "body";
+            const result = errorIfNotEmpty(stream);
+            if (result) state.state = "body";
             return result;
           }
         } else if (state.state == "header") {
@@ -58,10 +58,10 @@
           return errorIfNotEmpty(stream);
         }
       },
-      blankLine: function(state) {
+      blankLine: function (state) {
         if (state.state == "headers") state.state = "body";
       },
-      startState: function() {
+      startState: function () {
         return {state: "top", type: null};
       }
     };

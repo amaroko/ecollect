@@ -9,15 +9,15 @@
 
 
   <!-- END box placeholder-->
-  <jqxGrid #myGrid [theme]="'energyblue'" [width]="'100%'" [source]="dataAdapter" [columns]="columns"
-           [columnsresize]="true"
-           [sortable]="true" [pageable]="true" [autoheight]="false" [height]="550" [sortable]="true" [altrows]="true"
-           [enabletooltips]="true" [filterable]="true">
+  <jqxGrid #myGrid [altrows]="true" [autoheight]="false" [columns]="columns" [columnsresize]="true"
+           [enabletooltips]="true"
+           [filterable]="true" [height]="550" [pageable]="true" [sortable]="true" [sortable]="true" [source]="dataAdapter"
+           [theme]="'energyblue'" [width]="'100%'">
   </jqxGrid>
   <!-- Classc modal -->
-  <div class="modal fade" bsModal #classicModal="bs-modal" tabindex="-1" role="dialog"
-       aria-labelledby="mySmallModalLabel"
-       aria-hidden="true">
+  <div #classicModal="bs-modal" aria-hidden="true" aria-labelledby="mySmallModalLabel" bsModal class="modal fade"
+       role="dialog"
+       tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -27,14 +27,14 @@
                   <i class="fa fa-file-download"></i>
                 </span> Preview
           </button>
-          <button type="button" class="close" aria-label="Close" (click)="classicModal.hide()">
+          <button (click)="classicModal.hide()" aria-label="Close" class="close" type="button">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
               <!-- START card-->
               <div class="card card-default">
                 <div class="card-header">Customer Details</div>
@@ -96,7 +96,7 @@
                         <label class="col-md-0 col-form-label"></label>
                         <div class="col-md-12">
                           <label class="checkbox c-checkbox c-checkbox-rounded">
-                            <input id="roundedcheckbox10" type="checkbox" checked="checked"/>
+                            <input checked="checked" id="roundedcheckbox10" type="checkbox"/>
                             <span class="fa fa-check"></span>Send to email</label>
                           <label class="checkbox c-checkbox c-checkbox-rounded">
                             <input id="roundedcheckbox20" type="checkbox"/>
@@ -119,7 +119,7 @@
               </div>
               <!-- END card-->
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
 
             </div>
           </div>
@@ -130,7 +130,7 @@
     </div>
   </div>
   <!--hidden button-->
-  <button id="openModalButton" [hidden]="true" type="button" class="btn btn-primary mr-1" (click)="classicModal.show()">
+  <button (click)="classicModal.show()" [hidden]="true" class="btn btn-primary mr-1" id="openModalButton" type="button">
     Classc
     modal
   </button>

@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import {ActivatedRoute} from '@angular/router';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {NgOption} from '@ng-select/ng-select';
-import {listLazyRoutes} from '@angular/compiler/src/aot/lazy_routes';
 
 @Component({
   selector: 'app-accplans',

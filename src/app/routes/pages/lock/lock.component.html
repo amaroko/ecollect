@@ -9,21 +9,21 @@
     <div class="card b0">
       <div class="card-body">
         <p class="text-center">Please login to unlock your screen.</p>
-        <form [formGroup]="valForm" role="form" name="lockForm" (submit)="submitForm($event, valForm.value)">
+        <form (submit)="submitForm($event, valForm.value)" [formGroup]="valForm" name="lockForm" role="form">
           <div class="form-group">
             <div class="input-group with-focus">
               <label for="exampleInputPassword1"></label><input class="form-control border-right-0"
-                                                                id="exampleInputPassword1" type="password"
-                                                                placeholder="Password" name="password"
-                                                                formControlName="password"/>
+                                                                formControlName="password" id="exampleInputPassword1"
+                                                                name="password" placeholder="Password"
+                                                                type="password"/>
               <div class="input-group-append">
                                 <span class="input-group-text text-muted bg-transparent border-left-0">
                                     <em class="fa fa-lock"></em>
                                 </span>
               </div>
             </div>
-            <div class="text-danger"
-                 *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)">
+            <div *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)"
+                 class="text-danger">
               This field is required
             </div>
           </div>

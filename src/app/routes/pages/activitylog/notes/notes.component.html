@@ -1,33 +1,36 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" color="#fff" size="medium" type="ball-spin-fade">
   <p style="font-size: 20px; color: white">Loading more notes ...</p>
 </ngx-spinner>
 
 <div class="form-group row">
   <label class="col-md-0 col-form-label"></label>
 
-
+  <button (click)="NotesSteps()" class="btn btn-primary">SHOW ME STEPS</button>
   <div class="btn-group">
-    <button name="noteselector" value="bulk" (click)="handleChange('bulk')" class="btn-sample btn-outline btn btn-sm">
+    <button (click)="handleChange('bulk')" class="btn-sample btn-outline btn btn-sm" id="step1" name="noteselector"
+            value="bulk">
       Bulk uploaded&nbsp;&nbsp; <span
       class="badge badge-primary float-right">{{bulknotelength}}</span></button>
     &nbsp;&nbsp;
-    <button name="noteselector"
-            value="collector" (click)="handleChange('collector')" class="btn-sample btn-outline btn btn-sm">Collector
+    <button (click)="handleChange('collector')" class="btn-sample btn-outline btn btn-sm"
+            id="step2" name="noteselector" value="collector">Collector
       made&nbsp;&nbsp; <span
         class="badge badge-success float-right">{{noteslength}}</span></button>
     &nbsp;&nbsp;
-    <button name="noteselector"
-            value="flagged" (click)="handleChange('flagged')" class="btn-sample btn-outline btn btn-sm">Flagged
+    <button (click)="handleChange('flagged')" class="btn-sample btn-outline btn btn-sm"
+            id="step3" name="noteselector" value="flagged">Flagged
       important&nbsp;&nbsp; <span
         class="badge badge-success float-right">{{flaggedlength}}</span></button>
-    <button  name="noteselector"
-             value="view" (click)="handleChange('view')"  class="btn-sample btn-outline btn btn-sm">Export/View All Notes&nbsp;&nbsp; <span
-      class="badge badge-success float-right">NEW</span></button>
+    <button (click)="handleChange('view')" class="btn-sample btn-outline btn btn-sm"
+            id="step4" name="noteselector" value="view">Export/View All Notes&nbsp;&nbsp;
+      <span
+        class="badge badge-success float-right">NEW</span></button>
   </div>
 </div>
 
 <div class="form-group row">
-  <button type="button" (click)="download()" class="btn btn-outline-info" [disabled]="download_disabled"><span
+  <button (click)="download()" [disabled]="download_disabled" class="btn btn-outline-info" id="step5"
+          type="button"><span
     class="glyphicon glyphicon-save"></span> Download {{cust}} Notes
   </button>
 
@@ -38,24 +41,30 @@
     <li *ngFor="let note of noteData">
       <p *ngIf="note.NOTEIMP === 'Y'">Important Note</p>
       <a href="#"><small>{{note.OWNER}} {{note.NOTESRC}} on Account {{note.ACCNUMBER}}</small></a>
-      <a href="#" class="float-right">{{note.NOTEDATE}}</a>
+      <a class="float-right" href="#">{{note.NOTEDATE}}</a>
       <p>
         {{note.NOTEMADE}}
         <small><a (click)="editnote(note)" *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-success">
-          <span class="far fa-edit" aria-hidden="true"></span>
+          <span aria-hidden="true" class="far fa-edit"></span>
           <span style="color: red;"><strong>Edit</strong></span>
         </a></small>
       </p>
-      <p *ngIf="note.REASON !== ''">Reason for default: {{note.REASON}}</p>
+      <p *ngIf="note.REASON !== ''">Reason for default: {{note.REASON}}
+      </p>
+      <p *ngIf="note.REASONDETAILS !== ''">Reason Detail: {{note.REASONDETAILS}}
+      </p>
+      <p *ngIf="note.REASON === 'Other'">
+        {{note.RFDOTHER}}
+      </p>
     </li>
 
 
   </ul>
 
-  <button *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs" (click)="loadmore($event)">load more
+  <button (click)="loadmore($event)" *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs">load more
     notes...
   </button>
-  <button *ngIf="pager.reachedend" disabled="" class="mr-1 btn btn-danger btn-xs"> No Notes Available</button>
+  <button *ngIf="pager.reachedend" class="mr-1 btn btn-danger btn-xs" disabled=""> No Notes Available</button>
   <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
 </div>
 
@@ -76,7 +85,7 @@
   <ul class="timeline">
     <li *ngFor="let note of bulknote | paginate: { itemsPerPage: 3, currentPage: p }">
       <a href="#"><small>{{note.owner}} {{note.notesrc}} on Account {{note.accnumber}}</small></a>
-      <a href="#" class="float-right">{{note.notedate}}</a>
+      <a class="float-right" href="#">{{note.notedate}}</a>
       <p>{{note.notemade}}</p>
     </li>
   </ul>
@@ -89,7 +98,7 @@
   <ul class="timeline">
     <li *ngFor="let note of flaggedNotes | paginate: { itemsPerPage: 3, currentPage: p }">
       <a href="#"><small>{{note.owner}} {{note.notesrc}} on Account {{note.accnumber}}</small></a>
-      <a href="#" class="float-right">{{note.notedate}}</a>
+      <a class="float-right" href="#">{{note.notedate}}</a>
       <p>{{note.notemade}}</p>
     </li>
   </ul>
@@ -99,15 +108,16 @@
 </div>
 
 <div *ngIf="isSelected('view')">
-<!--  <button (click)="download()" type="button" class="btn btn-labeled btn-warning">-->
-<!--    <span class="btn-label"><i class="fas fa-download"></i></span>Export Excel</button>-->
+  <!--  <button (click)="download()" type="button" class="btn btn-labeled btn-warning">-->
+  <!--    <span class="btn-label"><i class="fas fa-download"></i></span>Export Excel</button>-->
   <!--grid-->
-  <ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham" style="width: 100%; height: 550px;"
-                   [columnDefs]="columnDefs"
+  <ag-grid-angular #agGrid (columnResized)="onColumnResized()" [animateRows]="true" [columnDefs]="columnDefs"
                    [defaultColDef]="defaultColDef"
-                   [gridOptions]="gridOptions" [pagination]="true" [statusBar]="statusBar" [floatingFilter]="true" [rowData]="rowData"
-                   [modules]="modules" [pivotPanelShow]="pivotPanelShow" [sideBar]="true"
-                   [animateRows]="true" (columnResized)="onColumnResized()">
+                   [floatingFilter]="true"
+                   [gridOptions]="gridOptions" [modules]="modules" [pagination]="true" [pivotPanelShow]="pivotPanelShow"
+                   [rowData]="rowData"
+                   [sideBar]="true" [statusBar]="statusBar" class="ag-theme-balham"
+                   id="myGrid" style="width: 100%; height: 550px;">
 
   </ag-grid-angular>
   <!--  end of grid-->

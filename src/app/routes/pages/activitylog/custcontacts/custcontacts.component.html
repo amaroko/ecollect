@@ -1,4 +1,4 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-circus">
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" color="#fff" size="medium" type="ball-circus">
   <p style="font-size: 20px; color: white">Contacts loading...</p>
 </ngx-spinner>
 
@@ -6,41 +6,42 @@
   <h2>Customer contacts</h2>
   <div id="accordion">
     <div class="card">
-      <div id="collapseupload" class="collapse show" data-parent="#accordion">
+      <div class="collapse show" data-parent="#accordion" id="collapseupload">
+        <button (click)="ContactsSteps()" class="btn btn-primary">SHOW ME STEPS</button>
         <div class="card-header">add or edit a contact</div>
 
         <div class="card-body">
           <div class="row">
             <div class="col-lg-4">
-              <form #custcontactsform="ngForm" class="form-horizontal" (ngSubmit)="savecontact(model)"
-                    autocomplete="off" novalidate>
+              <form #custcontactsform="ngForm" (ngSubmit)="savecontact(model)" autocomplete="off"
+                    class="form-horizontal" novalidate>
                 <div class="form-group row">
                   <label class="col-xl-4 col-form-label">Contact Number</label>
                   <div class="col-xl-8">
-                    <label for="contactnumber"></label><input class="form-control" type="text" name="contactnumber"
-                                                              id="contactnumber" [pattern]="mobNumberPattern"
-                                                              [(ngModel)]="model.contactnumber" #contactnumber="ngModel"
-                                                              [ngClass]="{ 'is-invalid': contactnumber.invalid }"
-                                                              required/>
+                    <label for="contactnumber"></label><input #contactnumber="ngModel" [(ngModel)]="model.contactnumber" [ngClass]="{ 'is-invalid': contactnumber.invalid }"
+                                                              [pattern]="mobNumberPattern" class="form-control"
+                                                              id="contactnumber" name="contactnumber"
+                                                              required
+                                                              type="text"/>
                   </div>
-                  <span style="color:Tomato;" *ngIf="!contactnumber.valid">Please match pattern e.g 0724000000</span>
+                  <span *ngIf="!contactnumber.valid" style="color:Tomato;">Please match pattern e.g 0724000000</span>
                 </div>
                 <div class="form-group row">
                   <label class="col-xl-4 col-form-label">Email</label>
                   <div class="col-xl-8">
-                    <label for="email"></label><input class="form-control" type="text" name="email" id="email"
-                                                      [(ngModel)]="model.email" [pattern]="emailPattern"
-                                                      #email="ngModel" [ngClass]="{ 'is-invalid': email.invalid }"
-                                                      required/>
+                    <label for="email"></label><input #email="ngModel" [(ngModel)]="model.email" [ngClass]="{ 'is-invalid': email.invalid }" [pattern]="emailPattern"
+                                                      class="form-control" id="email"
+                                                      name="email" required
+                                                      type="text"/>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-xl-4 col-form-label">Active</label>
                   <div class="col-xl-8">
-                    <label for="active"></label><select class="form-control" type="text" name="active" id="active"
-                                                        [(ngModel)]="model.active"
-                                                        #active="ngModel" [ngClass]="{ 'is-invalid': active.invalid }"
-                                                        required>
+                    <label for="active"></label><select #active="ngModel" [(ngModel)]="model.active" [ngClass]="{ 'is-invalid': active.invalid }" class="form-control"
+                                                        id="active"
+                                                        name="active" required
+                                                        type="text">
                     <option>Yes</option>
                     <option>No</option>
                   </select>
@@ -49,21 +50,21 @@
                 <div class="form-group row">
                   <label class="col-xl-4 col-form-label"></label>
                   <div class="col-xl-8">
-                    <button *ngIf="!edit" [disabled]="!custcontactsform.valid"
+                    <button id="contactsubmit" *ngIf="!edit" [disabled]="!custcontactsform.valid"
                             class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label" type="submit">Submit
                     </button>
-                    <button *ngIf="edit" [disabled]="custcontactsform.invalid"
-                            class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button"
-                            (click)="updatecontact(model)">Update
+                    <button (click)="updatecontact(model)" *ngIf="edit"
+                            [disabled]="custcontactsform.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label"
+                            type="button">Update
                     </button>
-                    <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label" type="button"
-                            (click)="cancel()">Cancel
+                    <button (click)="cancel()" *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label"
+                            type="button">Cancel
                     </button>
                   </div>
                 </div>
               </form>
             </div>
-            <div class="col-lg-8" style="margin-bottom: 40px">
+            <div id="contacttable" class="col-lg-8" style="margin-bottom: 40px">
               <table class="table table-hover table-bordered table-striped">
                 <thead>
                 <tr>
@@ -83,7 +84,7 @@
                   <td>{{c.owner}}</td>
                   <td>{{c.active}}</td>
                   <td class="text-center">
-                    <button class="btn btn-outline-success btn-sm" (click)="editcontact(c)">
+                    <button (click)="editcontact(c)" class="btn btn-outline-success btn-sm">
                       <i class="fas fa-edit"></i> edit
                     </button>
                   </td>

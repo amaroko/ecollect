@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import {Bounds, CropperSettings, ImageCropperComponent} from 'ng2-img-cropper';
 
 @Component({
   selector: 'app-cropper',

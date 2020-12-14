@@ -1,56 +1,56 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"), require("../htmlmixed/htmlmixed"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../htmlmixed/htmlmixed"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
-    const indentingTags = ["template", "literal", "msg", "fallbackmsg", "let", "if", "elseif",
-        "else", "switch", "case", "default", "foreach", "ifempty", "for",
-        "call", "param", "deltemplate", "delcall", "log"];
+  const indentingTags = ["template", "literal", "msg", "fallbackmsg", "let", "if", "elseif",
+    "else", "switch", "case", "default", "foreach", "ifempty", "for",
+    "call", "param", "deltemplate", "delcall", "log"];
 
-    CodeMirror.defineMode("soy", function(config) {
-      const textMode = CodeMirror.getMode(config, "text/plain");
-      const modes = {
-          html: CodeMirror.getMode(config, {
-              name: "text/html",
-              multilineTagIndentFactor: 2,
-              multilineTagIndentPastTag: false
-          }),
-          attributes: textMode,
-          text: textMode,
-          uri: textMode,
-          css: CodeMirror.getMode(config, "text/css"),
-          js: CodeMirror.getMode(config, {name: "text/javascript", statementIndent: 2 * config.indentUnit})
-      };
+  CodeMirror.defineMode("soy", function (config) {
+    const textMode = CodeMirror.getMode(config, "text/plain");
+    const modes = {
+      html: CodeMirror.getMode(config, {
+        name: "text/html",
+        multilineTagIndentFactor: 2,
+        multilineTagIndentPastTag: false
+      }),
+      attributes: textMode,
+      text: textMode,
+      uri: textMode,
+      css: CodeMirror.getMode(config, "text/css"),
+      js: CodeMirror.getMode(config, {name: "text/javascript", statementIndent: 2 * config.indentUnit})
+    };
 
-      function last(array) {
+    function last(array) {
       return array[array.length - 1];
     }
 
     function tokenUntil(stream, state, untilRegExp) {
-        const oldString = stream.string;
-        const match = untilRegExp.exec(oldString.substr(stream.pos));
-        if (match) {
+      const oldString = stream.string;
+      const match = untilRegExp.exec(oldString.substr(stream.pos));
+      if (match) {
         // We don't use backUp because it backs up just the position, not the state.
         // This uses an undocumented API.
         stream.string = oldString.substr(0, stream.pos + match.index);
       }
-        const result = stream.hideFirstChars(state.indent, function () {
-            return state.localMode.token(stream, state.localState);
-        });
-        stream.string = oldString;
+      const result = stream.hideFirstChars(state.indent, function () {
+        return state.localMode.token(stream, state.localState);
+      });
+      stream.string = oldString;
       return result;
     }
 
     return {
-      startState: function() {
+      startState: function () {
         return {
           kind: [],
           kindTag: [],
@@ -61,7 +61,7 @@
         };
       },
 
-      copyState: function(state) {
+      copyState: function (state) {
         return {
           tag: state.tag, // Last seen Soy tag.
           kind: state.kind.concat([]), // Values of kind="" attributes.
@@ -73,7 +73,7 @@
         };
       },
 
-      token: function(stream, state) {
+      token: function (stream, state) {
         var match;
 
         switch (last(state.soyState)) {
@@ -102,8 +102,8 @@
               return "keyword";
             } else if (stream.match(/^([\w?]+)(?==)/)) {
               if (stream.current() == "kind" && (match = stream.match(/^="([^"]+)/, false))) {
-                  const kind = match[1];
-                  state.kind.push(kind);
+                const kind = match[1];
+                state.kind.push(kind);
                 state.kindTag.push(state.tag);
                 state.localMode = modes[kind] || modes.html;
                 state.localState = CodeMirror.startState(state.localMode);
@@ -165,10 +165,10 @@
         return tokenUntil(stream, state, /\{|\s+\/\/|\/\*/);
       },
 
-      indent: function(state, textAfter) {
-          let indent = state.indent;
-          const top = last(state.soyState);
-          if (top == "comment") return CodeMirror.Pass;
+      indent: function (state, textAfter) {
+        let indent = state.indent;
+        const top = last(state.soyState);
+        if (top == "comment") return CodeMirror.Pass;
 
         if (top == "literal") {
           if (/^\{\/literal}/.test(textAfter)) indent -= config.indentUnit;
@@ -183,7 +183,7 @@
         return indent;
       },
 
-      innerMode: function(state) {
+      innerMode: function (state) {
         if (state.soyState.length && last(state.soyState) != "literal") return null;
         else return {state: state.localState, mode: state.localMode};
       },
@@ -198,7 +198,7 @@
   }, "htmlmixed");
 
   CodeMirror.registerHelper("hintWords", "soy", indentingTags.concat(
-      ["delpackage", "namespace", "alias", "print", "css", "debugger"]));
+    ["delpackage", "namespace", "alias", "print", "css", "debugger"]));
 
   CodeMirror.defineMIME("text/x-soy", "soy");
 });

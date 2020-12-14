@@ -20,7 +20,6 @@ export class InsuranceComponent implements OnInit {
 
   public gridApi;
   public gridColumnApi;
-  private statusBar;
   public gridOptions: GridOptions;
   public columnDefs;
   public defaultColDef;
@@ -29,8 +28,6 @@ export class InsuranceComponent implements OnInit {
   public maxBlocksInCache;
   public rowData: [];
   public sortingOrder;
-  private str: string;
-
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
   searchText: string;
@@ -43,15 +40,15 @@ export class InsuranceComponent implements OnInit {
   postaladdress: string;
   emailaddress: string;
   contactperson: string;
-
   editnoteForm: FormGroup;
   editinsurancename: any;
   editphysicaladdress: any;
   editpostaladdress: any;
   editemailaddress: any;
   editcontactperson: any;
-
   modules = AllModules;
+  private statusBar;
+  private str: string;
 
   constructor(public ngxSmartModalService: NgxSmartModalService, private ecolService: EcolService, private rout: Router,
               private formBuilder: FormBuilder, public http: HttpClient) {
@@ -188,6 +185,11 @@ export class InsuranceComponent implements OnInit {
 //   // this.gridApi.redrawRows();
 //   gridOptions.api.setRowData(data);
 //   gridOptions.api.refreshCells({force : true});
+
+  get f() {
+    return this.editnoteForm.controls;
+  }
+
 // }
   currentDate() {
     const currentDate = new Date();
@@ -222,10 +224,6 @@ export class InsuranceComponent implements OnInit {
 
   closenewInsuranceModal() {
     this.ngxSmartModalService.getModal('newInsurance').close();
-  }
-
-  get f() {
-    return this.editnoteForm.controls;
   }
 
   onSubmit(form) {

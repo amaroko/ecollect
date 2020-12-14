@@ -1,4 +1,4 @@
-import {NgModule, ModuleWithProviders} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
@@ -20,8 +20,7 @@ import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {PopoverModule} from 'ngx-bootstrap/popover';
 import {TypeaheadModule} from 'ngx-bootstrap/typeahead';
-import {DatepickerModule} from 'ngx-bootstrap/datepicker';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {BsDatepickerModule, DatepickerModule} from 'ngx-bootstrap/datepicker';
 
 import {FlotDirective} from './directives/flot/flot.directive';
 import {SparklineDirective} from './directives/sparkline/sparkline.directive';

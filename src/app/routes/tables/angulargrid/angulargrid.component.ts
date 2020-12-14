@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GridOptions} from '@ag-grid-community/all-modules';
 import {HttpClient} from '@angular/common/http';
 import * as _ from 'lodash';

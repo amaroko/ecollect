@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ChartsModule as Ng2ChartsModule} from 'ng2-charts/ng2-charts';
 
 import {SharedModule} from '../../shared/shared.module';

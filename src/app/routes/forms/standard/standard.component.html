@@ -9,13 +9,13 @@
   <div class="card-body">
     <form class="form-inline">
       <label class="sr-only" for="inlineFormInputName2">Name</label>
-      <input class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" type="text" placeholder="Jane Doe"/>
+      <input class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Jane Doe" type="text"/>
       <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
       <div class="input-group mb-2 mr-sm-2">
         <div class="input-group-prepend">
           <div class="input-group-text">@</div>
         </div>
-        <input class="form-control" id="inlineFormInputGroupUsername2" type="text" placeholder="Username"/>
+        <input class="form-control" id="inlineFormInputGroupUsername2" placeholder="Username" type="text"/>
       </div>
       <div class="form-check mb-2 mr-sm-2">
         <div class="checkbox c-checkbox">
@@ -40,18 +40,18 @@
           <div class="form-group">
             <label>Email address</label>
             <label>
-              <input class="form-control" type="email" placeholder="Enter email"/>
+              <input class="form-control" placeholder="Enter email" type="email"/>
             </label>
           </div>
           <div class="form-group">
             <label>Password</label>
             <label>
-              <input class="form-control" type="password" placeholder="Password"/>
+              <input class="form-control" placeholder="Password" type="password"/>
             </label>
           </div>
           <div class="checkbox c-checkbox mb-2">
             <label>
-              <input type="checkbox" checked=""/>
+              <input checked="" type="checkbox"/>
               <span class="fa fa-times"></span>Check me out</label>
           </div>
           <button class="btn btn-sm btn-secondary" type="submit">Submit</button>
@@ -70,7 +70,7 @@
             <label class="col-xl-2 col-form-label">Email</label>
             <div class="col-xl-10">
               <label>
-                <input class="form-control" type="email" placeholder="Email"/>
+                <input class="form-control" placeholder="Email" type="email"/>
               </label>
             </div>
           </div>
@@ -78,7 +78,7 @@
             <label class="col-xl-2 col-form-label">Password</label>
             <div class="col-xl-10">
               <label>
-                <input class="form-control" type="password" placeholder="Password"/>
+                <input class="form-control" placeholder="Password" type="password"/>
               </label>
             </div>
           </div>
@@ -87,7 +87,7 @@
             <div class="col-xl-10">
               <div class="checkbox c-checkbox">
                 <label>
-                  <input type="checkbox" checked=""/>
+                  <input checked="" type="checkbox"/>
                   <span class="fa fa-check"></span>Remember me</label>
               </div>
             </div>
@@ -109,7 +109,7 @@
 <div class="card card-default">
   <div class="card-header">Form elements</div>
   <div class="card-body">
-    <form class="form-horizontal" method="get" action="/">
+    <form action="/" class="form-horizontal" method="get">
       <fieldset>
         <legend>Classic inputs</legend>
         <div class="form-group row">
@@ -146,7 +146,7 @@
           <label class="col-md-2 col-form-label">Password</label>
           <div class="col-md-10">
             <label>
-              <input class="form-control" type="password" name="password"/>
+              <input class="form-control" name="password" type="password"/>
             </label>
           </div>
         </div>
@@ -156,7 +156,7 @@
           <label class="col-md-2 col-form-label">Placeholder</label>
           <div class="col-md-10">
             <label>
-              <input class="form-control" type="text" placeholder="placeholder"/>
+              <input class="form-control" placeholder="placeholder" type="text"/>
             </label>
           </div>
         </div>
@@ -166,7 +166,7 @@
           <label class="col-md-2 col-form-label">Disabled</label>
           <div class="col-md-10">
             <label>
-              <input class="form-control" type="text" placeholder="Disabled input here..." disabled=""/>
+              <input class="form-control" disabled="" placeholder="Disabled input here..." type="text"/>
             </label>
           </div>
         </div>
@@ -188,21 +188,21 @@
               <label class="form-check-label" for="defaultCheck1">Default checkbox</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" id="defaultCheck2" type="checkbox" value="" disabled=""/>
+              <input class="form-check-input" disabled="" id="defaultCheck2" type="checkbox" value=""/>
               <label class="form-check-label" for="defaultCheck2">Disabled checkbox</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" id="exampleRadios1" type="radio" name="exampleRadios" value="option1"
-                     checked=""/>
+              <input checked="" class="form-check-input" id="exampleRadios1" name="exampleRadios" type="radio"
+                     value="option1"/>
               <label class="form-check-label" for="exampleRadios1">Default radio</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2"/>
+              <input class="form-check-input" id="exampleRadios2" name="exampleRadios" type="radio" value="option2"/>
               <label class="form-check-label" for="exampleRadios2">Second default radio</label>
             </div>
             <div class="form-check disabled">
-              <input class="form-check-input" id="exampleRadios3" type="radio" name="exampleRadios" value="option3"
-                     disabled=""/>
+              <input class="form-check-input" disabled="" id="exampleRadios3" name="exampleRadios" type="radio"
+                     value="option3"/>
               <label class="form-check-label" for="exampleRadios3">Disabled radio</label>
             </div>
           </div>
@@ -221,20 +221,20 @@
               <label class="form-check-label" for="inlineCheckbox2">2</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" id="inlineCheckbox3" type="checkbox" value="option3" disabled=""/>
+              <input class="form-check-input" disabled="" id="inlineCheckbox3" type="checkbox" value="option3"/>
               <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" id="inlineRadio1" type="radio" name="inlineRadioOptions" value="option1"/>
+              <input class="form-check-input" id="inlineRadio1" name="inlineRadioOptions" type="radio" value="option1"/>
               <label class="form-check-label" for="inlineRadio1">1</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" id="inlineRadio2" type="radio" name="inlineRadioOptions" value="option2"/>
+              <input class="form-check-input" id="inlineRadio2" name="inlineRadioOptions" type="radio" value="option2"/>
               <label class="form-check-label" for="inlineRadio2">2</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" id="inlineRadio3" type="radio" name="inlineRadioOptions" value="option3"
-                     disabled=""/>
+              <input class="form-check-input" disabled="" id="inlineRadio3" name="inlineRadioOptions" type="radio"
+                     value="option3"/>
               <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
             </div>
           </div>
@@ -287,37 +287,37 @@
             </div>
             <div class="checkbox c-checkbox">
               <label>
-                <input type="checkbox" checked="" value=""/>
+                <input checked="" type="checkbox" value=""/>
                 <span class="fa fa-check"></span>Option two checked</label>
             </div>
             <div class="checkbox c-checkbox">
               <label>
-                <input type="checkbox" checked="" disabled="" value=""/>
+                <input checked="" disabled="" type="checkbox" value=""/>
                 <span class="fa fa-check"></span>Option three checked and disabled</label>
             </div>
             <div class="checkbox c-checkbox">
               <label>
-                <input type="checkbox" disabled="" value=""/>
+                <input disabled="" type="checkbox" value=""/>
                 <span class="fa fa-check"></span>Option four disabled</label>
             </div>
             <div class="c-radio">
               <label>
-                <input type="radio" name="a" value="option1"/>
+                <input name="a" type="radio" value="option1"/>
                 <span class="fa fa-circle"></span>Option one</label>
             </div>
             <div class="c-radio">
               <label>
-                <input type="radio" name="a" value="option2" checked=""/>
+                <input checked="" name="a" type="radio" value="option2"/>
                 <span class="fa fa-circle"></span>Option two checked</label>
             </div>
             <div class="c-radio">
               <label>
-                <input type="radio" value="option2" checked="" disabled=""/>
+                <input checked="" disabled="" type="radio" value="option2"/>
                 <span class="fa fa-circle"></span>Option three checked and disabled</label>
             </div>
             <div class="c-radio">
               <label>
-                <input type="radio" name="a" disabled=""/>
+                <input disabled="" name="a" type="radio"/>
                 <span class="fa fa-circle"></span>Option four disabled</label>
             </div>
           </div>
@@ -344,7 +344,7 @@
           <label class="col-md-2 col-form-label">Rounded</label>
           <div class="col-md-10">
             <label class="checkbox c-checkbox c-checkbox-rounded">
-              <input id="roundedcheckbox10" type="checkbox" checked="checked"/>
+              <input checked="checked" id="roundedcheckbox10" type="checkbox"/>
               <span class="fa fa-check"></span>Lorem</label>
             <label class="checkbox c-checkbox c-checkbox-rounded">
               <input id="roundedcheckbox20" type="checkbox"/>
@@ -357,13 +357,13 @@
           <label class="col-md-2 col-form-label">Inline radios</label>
           <div class="col-md-10">
             <label class="c-radio">
-              <input id="inlineradio1" type="radio" name="i-radio" value="option1" checked="checked"/>
+              <input checked="checked" id="inlineradio1" name="i-radio" type="radio" value="option1"/>
               <span class="fa fa-circle"></span>a</label>
             <label class="c-radio">
-              <input id="inlineradio2" type="radio" name="i-radio" value="option2"/>
+              <input id="inlineradio2" name="i-radio" type="radio" value="option2"/>
               <span class="fa fa-circle"></span>b</label>
             <label class="c-radio">
-              <input id="inlineradio3" type="radio" name="i-radio" value="option3"/>
+              <input id="inlineradio3" name="i-radio" type="radio" value="option3"/>
               <span class="fa fa-circle"></span>c</label>
           </div>
         </div>
@@ -373,23 +373,23 @@
           <label class="col-md-2 col-form-label">Custom icons</label>
           <div class="col-md-10">
             <label class="c-radio">
-              <input id="inlineradio10" type="radio" name="i-radio" value="option1" checked="checked"/>
+              <input checked="checked" id="inlineradio10" name="i-radio" type="radio" value="option1"/>
               <span class="fa fa-check"></span>a</label>
             <label class="c-radio">
-              <input id="inlineradio20" type="radio" name="i-radio" value="option2" checked="checked"/>
+              <input checked="checked" id="inlineradio20" name="i-radio" type="radio" value="option2"/>
               <span class="fa fa-user"></span>b</label>
             <label class="c-radio">
-              <input id="inlineradio30" type="radio" name="i-radio" value="option3" checked="checked"/>
+              <input checked="checked" id="inlineradio30" name="i-radio" type="radio" value="option3"/>
               <span class="fa fa-tint"></span>c</label>
             <br/>
             <label class="c-checkbox">
-              <input id="inlinecheckbox10" type="checkbox" value="option1" checked="checked"/>
+              <input checked="checked" id="inlinecheckbox10" type="checkbox" value="option1"/>
               <span class="fa fa-star"></span>a</label>
             <label class="c-checkbox">
-              <input id="inlinecheckbox20" type="checkbox" value="option2" checked="checked"/>
+              <input checked="checked" id="inlinecheckbox20" type="checkbox" value="option2"/>
               <span class="fa fa-heart"></span>b</label>
             <label class="c-checkbox">
-              <input id="inlinecheckbox30" type="checkbox" value="option3" checked="checked"/>
+              <input checked="checked" id="inlinecheckbox30" type="checkbox" value="option3"/>
               <span class="fa fa-bell"></span>c</label>
           </div>
         </div>
@@ -402,14 +402,14 @@
               <div class="form-row">
                 <div class="col-lg-4 mb-3">
                   <label for="validationServer01">First name</label>
-                  <input class="form-control is-valid" id="validationServer01" type="text" placeholder="First name"
-                         value="Mark" required=""/>
+                  <input class="form-control is-valid" id="validationServer01" placeholder="First name" required=""
+                         type="text" value="Mark"/>
                   <div class="valid-feedback">Looks good!</div>
                 </div>
                 <div class="col-lg-4 mb-3">
                   <label for="validationServer02">Last name</label>
-                  <input class="form-control is-valid" id="validationServer02" type="text" placeholder="Last name"
-                         value="Otto" required=""/>
+                  <input class="form-control is-valid" id="validationServer02" placeholder="Last name" required=""
+                         type="text" value="Otto"/>
                   <div class="valid-feedback">Looks good!</div>
                 </div>
                 <div class="col-lg-4 mb-3">
@@ -418,8 +418,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroupPrepend3">@</span>
                     </div>
-                    <input class="form-control is-invalid" id="validationServerUsername" type="text"
-                           placeholder="Username" aria-describedby="inputGroupPrepend3" required=""/>
+                    <input aria-describedby="inputGroupPrepend3" class="form-control is-invalid" id="validationServerUsername"
+                           placeholder="Username" required="" type="text"/>
                     <div class="invalid-feedback">Please choose a username.</div>
                   </div>
                 </div>
@@ -427,26 +427,26 @@
               <div class="form-row">
                 <div class="col-lg-6 mb-3">
                   <label for="validationServer03">City</label>
-                  <input class="form-control is-invalid" id="validationServer03" type="text" placeholder="City"
-                         required=""/>
+                  <input class="form-control is-invalid" id="validationServer03" placeholder="City" required=""
+                         type="text"/>
                   <div class="invalid-feedback">Please provide a valid city.</div>
                 </div>
                 <div class="col-lg-3 mb-3">
                   <label for="validationServer04">State</label>
-                  <input class="form-control is-invalid" id="validationServer04" type="text" placeholder="State"
-                         required=""/>
+                  <input class="form-control is-invalid" id="validationServer04" placeholder="State" required=""
+                         type="text"/>
                   <div class="invalid-feedback">Please provide a valid state.</div>
                 </div>
                 <div class="col-lg-3 mb-3">
                   <label for="validationServer05">Zip</label>
-                  <input class="form-control is-invalid" id="validationServer05" type="text" placeholder="Zip"
-                         required=""/>
+                  <input class="form-control is-invalid" id="validationServer05" placeholder="Zip" required=""
+                         type="text"/>
                   <div class="invalid-feedback">Please provide a valid zip.</div>
                 </div>
               </div>
               <div class="form-group mb-2">
                 <div class="form-check">
-                  <input class="form-check-input is-invalid" id="invalidCheck3" type="checkbox" value="" required=""/>
+                  <input class="form-check-input is-invalid" id="invalidCheck3" required="" type="checkbox" value=""/>
                   <label class="form-check-label" for="invalidCheck3">Agree to terms and conditions</label>
                   <div class="invalid-feedback">You must agree before submitting.</div>
                 </div>
@@ -463,17 +463,17 @@
             <div class="row">
               <div class="col-lg-2">
                 <label>
-                  <input class="form-control" type="text" placeholder=".col-lg-2"/>
+                  <input class="form-control" placeholder=".col-lg-2" type="text"/>
                 </label>
               </div>
               <div class="col-lg-3">
                 <label>
-                  <input class="form-control" type="text" placeholder=".col-lg-3"/>
+                  <input class="form-control" placeholder=".col-lg-3" type="text"/>
                 </label>
               </div>
               <div class="col-lg-4">
                 <label>
-                  <input class="form-control" type="text" placeholder=".col-lg-4"/>
+                  <input class="form-control" placeholder=".col-lg-4" type="text"/>
                 </label>
               </div>
             </div>
@@ -488,12 +488,12 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">@</span>
               </div>
-              <input class="form-control" type="text" placeholder="Username" aria-label="Username"
-                     aria-describedby="basic-addon1"/>
+              <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="Username"
+                     type="text"/>
             </div>
             <div class="input-group mb-3">
-              <input class="form-control" type="text" placeholder="Recipient's username"
-                     aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+              <input aria-describedby="basic-addon2" aria-label="Recipient's username" class="form-control"
+                     placeholder="Recipient's username" type="text"/>
               <div class="input-group-append">
                 <span class="input-group-text" id="basic-addon2">@example.com</span>
               </div>
@@ -503,13 +503,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
               </div>
-              <input class="form-control" id="basic-url" type="text" aria-describedby="basic-addon3"/>
+              <input aria-describedby="basic-addon3" class="form-control" id="basic-url" type="text"/>
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
               </div>
-              <input class="form-control" type="text" aria-label="Amount (to the nearest dollar)"/>
+              <input aria-label="Amount (to the nearest dollar)" class="form-control" type="text"/>
               <div class="input-group-append">
                 <span class="input-group-text">.00</span>
               </div>
@@ -518,7 +518,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">With textarea</span>
               </div>
-              <textarea class="form-control" aria-label="With textarea"></textarea>
+              <textarea aria-label="With textarea" class="form-control"></textarea>
             </div>
           </div>
         </div>
@@ -531,11 +531,11 @@
               <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" type="button">Button</button>
               </div>
-              <input class="form-control" type="text" placeholder="" aria-label="" aria-describedby="basic-addon1"/>
+              <input aria-describedby="basic-addon1" aria-label="" class="form-control" placeholder="" type="text"/>
             </div>
             <div class="input-group mb-3">
-              <input class="form-control" type="text" placeholder="Recipient's username"
-                     aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+              <input aria-describedby="basic-addon2" aria-label="Recipient's username" class="form-control"
+                     placeholder="Recipient's username" type="text"/>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button">Button</button>
               </div>
@@ -550,8 +550,8 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <div class="btn-group" dropdown>
-                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" dropdownToggle
-                          aria-haspopup="true" aria-expanded="false">Dropdown
+                  <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline-secondary dropdown-toggle"
+                          dropdownToggle type="button">Dropdown
                   </button>
                   <div *dropdownMenu class="dropdown-menu">
                     <a class="dropdown-item" href="#">Action</a>
@@ -562,14 +562,14 @@
                   </div>
                 </div>
               </div>
-              <input class="form-control" type="text" aria-label="Text input with dropdown button"/>
+              <input aria-label="Text input with dropdown button" class="form-control" type="text"/>
             </div>
             <div class="input-group">
-              <input class="form-control" type="text" aria-label="Text input with dropdown button"/>
+              <input aria-label="Text input with dropdown button" class="form-control" type="text"/>
               <div class="input-group-append">
                 <div class="btn-group" dropdown>
-                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" dropdownToggle
-                          aria-haspopup="true" aria-expanded="false">Dropdown
+                  <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline-secondary dropdown-toggle"
+                          dropdownToggle type="button">Dropdown
                   </button>
                   <div *dropdownMenu class="dropdown-menu dropdown-menu-right-forced">
                     <a class="dropdown-item" href="#">Action</a>
@@ -592,8 +592,8 @@
               <div class="input-group-prepend">
                 <div class="btn-group" dropdown>
                   <button class="btn btn-outline-secondary" type="button">Action</button>
-                  <button class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" type="button"
-                          dropdownToggle aria-haspopup="true" aria-expanded="false">
+                  <button aria-expanded="false" aria-haspopup="true"
+                          class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle type="button">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div *dropdownMenu class="dropdown-menu">
@@ -605,15 +605,15 @@
                   </div>
                 </div>
               </div>
-              <input class="form-control" type="text" aria-label="Text input with segmented dropdown button"/>
+              <input aria-label="Text input with segmented dropdown button" class="form-control" type="text"/>
             </div>
             <div class="input-group">
-              <input class="form-control" type="text" aria-label="Text input with segmented dropdown button"/>
+              <input aria-label="Text input with segmented dropdown button" class="form-control" type="text"/>
               <div class="input-group-append">
                 <div class="btn-group" dropdown>
                   <button class="btn btn-outline-secondary" type="button">Action</button>
-                  <button class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" type="button"
-                          dropdownToggle aria-haspopup="true" aria-expanded="false">
+                  <button aria-expanded="false" aria-haspopup="true"
+                          class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle type="button">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div *dropdownMenu class="dropdown-menu dropdown-menu-right-forced">

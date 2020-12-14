@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormControl, ValidatorFn} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EcolService} from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 

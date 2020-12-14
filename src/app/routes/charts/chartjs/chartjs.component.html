@@ -4,15 +4,15 @@
     <div class="col-xl-6">
       <h4>Line Chart</h4>
       <div>
-        <canvas baseChart [chartType]="'line'" [options]="lineOptions" [datasets]="lineData.datasets"
-                [colors]="lineColors" [labels]="lineData.labels" [legend]="false" height="120"></canvas>
+        <canvas [chartType]="'line'" [colors]="lineColors" [datasets]="lineData.datasets" [labels]="lineData.labels"
+                [legend]="false" [options]="lineOptions" baseChart height="120"></canvas>
       </div>
     </div>
     <div class="col-xl-6">
       <h4>Bar Chart</h4>
       <div>
-        <canvas baseChart [chartType]="'bar'" [options]="barOptions" [datasets]="barData.datasets" [colors]="barColors"
-                [labels]="barData.labels" [legend]="false" height="120"></canvas>
+        <canvas [chartType]="'bar'" [colors]="barColors" [datasets]="barData.datasets" [labels]="barData.labels" [legend]="false"
+                [options]="barOptions" baseChart height="120"></canvas>
       </div>
     </div>
   </div>
@@ -20,15 +20,15 @@
     <div class="col-xl-6">
       <h4>Polar Area Chart</h4>
       <div>
-        <canvas baseChart [chartType]="'polarArea'" [options]="polarOptions" [datasets]="polarData.datasets"
-                [labels]="polarData.labels" [colors]="polarColors" [legend]="false" height="180"></canvas>
+        <canvas [chartType]="'polarArea'" [colors]="polarColors" [datasets]="polarData.datasets" [labels]="polarData.labels"
+                [legend]="false" [options]="polarOptions" baseChart height="180"></canvas>
       </div>
     </div>
     <div class="col-xl-6">
       <h4>Radar Chart</h4>
       <div>
-        <canvas baseChart [chartType]="'radar'" [options]="radarOptions" [datasets]="radarData.datasets"
-                [colors]="radarColors" [labels]="radarData.labels" [legend]="false" height="180"></canvas>
+        <canvas [chartType]="'radar'" [colors]="radarColors" [datasets]="radarData.datasets" [labels]="radarData.labels"
+                [legend]="false" [options]="radarOptions" baseChart height="180"></canvas>
       </div>
     </div>
   </div>
@@ -36,15 +36,15 @@
     <div class="col-xl-6">
       <h4>Pie Chart</h4>
       <div>
-        <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData.datasets" [colors]="pieColors"
-                [labels]="pieData.labels" [legend]="false" height="80"></canvas>
+        <canvas [chartType]="'pie'" [colors]="pieColors" [datasets]="pieData.datasets" [labels]="pieData.labels" [legend]="false"
+                [options]="pieOptions" baseChart height="80"></canvas>
       </div>
     </div>
     <div class="col-xl-6">
       <h4>Doughnut Chart</h4>
       <div>
-        <canvas baseChart [chartType]="'doughnut'" [options]="doughnutOptions" [datasets]="doughnutData.datasets"
-                [colors]="doughnutColors" [labels]="doughnutData.labels" [legend]="false" height="80"></canvas>
+        <canvas [chartType]="'doughnut'" [colors]="doughnutColors" [datasets]="doughnutData.datasets" [labels]="doughnutData.labels"
+                [legend]="false" [options]="doughnutOptions" baseChart height="80"></canvas>
       </div>
     </div>
   </div>

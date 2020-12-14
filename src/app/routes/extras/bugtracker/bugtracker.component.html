@@ -7,7 +7,7 @@
         <p>Overvall progress</p>
         <div class="d-flex align-items-center mb-2">
           <div class="w-100">
-            <progressbar class="progress-xs m-0" value="48" type="info"></progressbar>
+            <progressbar class="progress-xs m-0" type="info" value="48"></progressbar>
           </div>
           <div class="ml-auto">
             <div class="col wd-xxs text-right">
@@ -21,25 +21,25 @@
         <div class="row text-center">
           <div class="col-3 col-lg-6 col-xl-3">
             <div class="inline my-2">
-              <div class="sparkline" [sparkline]="sparkOptionsInfo" values="20,80"></div>
+              <div [sparkline]="sparkOptionsInfo" class="sparkline" values="20,80"></div>
             </div>
             <p class="mt-3">Issues</p>
           </div>
           <div class="col-3 col-lg-6 col-xl-3">
             <div class="inline my-2">
-              <div class="sparkline" [sparkline]="sparkOptionsSuccess" values="60,40"></div>
+              <div [sparkline]="sparkOptionsSuccess" class="sparkline" values="60,40"></div>
             </div>
             <p class="mt-3">Bugs</p>
           </div>
           <div class="col-3 col-lg-6 col-xl-3">
             <div class="inline my-2">
-              <div class="sparkline" [sparkline]="sparkOptionsWarning" values="20,80"></div>
+              <div [sparkline]="sparkOptionsWarning" class="sparkline" values="20,80"></div>
             </div>
             <p class="mt-3">Hours</p>
           </div>
           <div class="col-3 col-lg-6 col-xl-3">
             <div class="inline my-2">
-              <div class="sparkline" [sparkline]="sparkOptionsDanger" values="30,70"></div>
+              <div [sparkline]="sparkOptionsDanger" class="sparkline" values="30,70"></div>
             </div>
             <p class="mt-3">Assigned</p>
           </div>
