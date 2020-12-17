@@ -21,7 +21,7 @@ import { OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule } fro
 import '@ag-grid-enterprise/all-modules';
 import {AgChartsAngularModule} from 'ag-charts-angular';
 import { NgDatepickerModule } from 'ng2-datepicker';
-// License goes here please....
+// License goes here please......
 import {LicenseManager} from '@ag-grid-enterprise/all-modules';
 import { CountdownModule } from 'ngx-countdown';
 const MY_NATIVE_FORMATS = {

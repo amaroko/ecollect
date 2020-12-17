@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit {
   reminderalert: any;
   remAccount: any;
   remDescp: any;
+  reminderID: any;
 
   constructor(
     public menu: MenuService,
@@ -82,12 +83,13 @@ export class HeaderComponent implements OnInit {
 
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.userperm = JSON.parse(localStorage.getItem('userpermission'));
-    this.getreminderalerts(this.userdata.USERNAME);
+    // loops through alerts....xperimental
+
     this.int = setInterval(() => {
       this.clock = new Date(); // shows clock on header
       this.getGreetings();  // greeting text
       this.getUnreadReminders(this.userdata.USERNAME);
-
+      this.getreminderalerts(this.userdata.USERNAME);
 
 
     }, 1000);    // sync counter with database in realtime
@@ -268,14 +270,19 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
-  popsuccessToast(msg) {
+  popsuccessToast(msg, id) {
 
     const toast: Toast = {
       type: 'success',
       title: 'Hello, ' + this.userdata.USERNAME,
       body: msg,
       bodyOutputType: BodyOutputType.TrustedHtml,
-      onShowCallback: () => console.log('I have been shown')
+      onHideCallback: () => this.ecolService.reminderReadTracker(id).subscribe(data => {
+console.log('deleted succesfully');
+
+      }, error => {
+        console.log('not working');
+      })
     };
     this.toasterService.pop(toast);
 
@@ -295,10 +302,11 @@ export class HeaderComponent implements OnInit {
 
   getUnreadReminders(submittedby) {
     this.ecolService.unreadreminders(submittedby).subscribe(data => {
+
       this.reminder = data.length;
       if (data.length > 0 && !localStorage.getItem('useralerted')) {
         // this.openreminderModal();
-        this.popsuccessToast('You have New reminders That you Missed');
+        this.popsuccessToast('You have New reminders That you Missed', this.reminder);
 
         localStorage.setItem('useralerted', '1');
         sessionStorage.setItem('useralerted', '1');
@@ -308,18 +316,46 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+ // looping through alerts...experimental
   getreminderalerts(submittedby) {
 
-    this.ecolService.ralerts(submittedby).subscribe(data => {
+    this.ecolService.unreadreminders(submittedby).subscribe(data => {
       for (let i = 0; i < data.length; i++) {
         this.remID = data[i].ID;
         this.remAccount = data[i].ACCNUMBER;
         this.remDescp = data[i].DESCRIPTION;
 
 
+
+
+
+        const toast: Toast = {
+          type: 'success',
+          title: 'Hello, ' + this.userdata.USERNAME,
+          body: 'New Reminder on Account ' + '<b style="color: yellow">' + this.remAccount + '</b>' + '<br>' + this.remDescp,
+          bodyOutputType: BodyOutputType.TrustedHtml,
+          onHideCallback: () => {
+            const body = {
+              ID: data[i].ID,
+            };
+            this.ecolService.reminderReadTracker(body).subscribe(res => {
+              console.log(body);
+              // swal('Successful!', 'Success!', 'success');
+              //
+            }, error => {
+              console.log(error);
+              // swal('Error!', 'Error occurred during processing!', 'error');
+            });
+
+          }
+        };
+
+
+
+
         // this.remID = data[0].ID;
         console.log(this.remID);
-        this.popsuccessToast('New Reminder on Account ' + '<b style="color: yellow">' + this.remAccount + '</b>' + '<br>' + this.remDescp);
+        this.toasterService.pop(toast);
 
 // if (data.length > 0) {
 //   this.popsuccessToast('This is Reminder Alerts' + this.remID);
@@ -327,6 +363,21 @@ export class HeaderComponent implements OnInit {
       }
       }
     );
+  }
+
+  getId(id) {
+    this.ecolService.reminderReadTracker(id).subscribe(res => {
+      this.reminderID = res;
+      console.log('deleted succesfully');
+      console.log(this.remID);
+
+    }, error => {
+      console.log('not working');
+
+      console.log(this.reminderID);
+      console.log(typeof this.remID);
+    });
+
   }
 
 

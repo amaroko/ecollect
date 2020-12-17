@@ -841,6 +841,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tblreminders?filter[where][READ]=0&filter[where][SUBMITTEDBY]=' + submittedby + '&filter[where][TIMEOVER]=true');
   }
 
+
+  reminderalerttracker(submittedby) {
+    return this.httpClient.get<any>(environment.api + '/api/tblreminders?filter[where][READ]=0&filter[where][SUBMITTEDBY]=' + submittedby + '&filter[where][TIMEOVER]=true');
+  }
+
   ralerts(submittedby) {
     return this.httpClient.get<any>(environment.api + '/api/reminderalerts?filter[where][SUBMITTEDBY]=' + submittedby);
   }
@@ -894,6 +899,15 @@ export class EcolService {
 
   deleteReminder(id) {
     return this.httpClient.post<any>(environment.api + '/api/tblreminders/deleterreminder', id);
+  }
+
+  // reminderReadTracker(id) {
+  //   return this.httpClient.post<any>(environment.api + '/api/tblreminders/reminderalerttracker', id);
+  // }
+
+  reminderReadTracker(body) {
+    const url = environment.api + '/api/tblreminders/reminderalerttracker';
+    return this.httpClient.post(url, body);
   }
 
   updateaccdebtcollector(body) {
