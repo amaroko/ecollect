@@ -70,7 +70,7 @@
     "jqwidgets-scripts": "^7.0.0",
     "lodash": "4.17.11",
     "modernizr": "3.6.0",
-    "moment": "^2.29.0",
+    "moment": "^2.29.4",
     "ng-http-loader": "^5.1.0",
     "ng-pick-datetime": "^7.0.0",
     "ng-pick-datetime-moment": "^1.0.8",
